@@ -9,5 +9,16 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/05/2021 --- </p>
+<ul>
+  <li>Made index.html actual HTML</li>
+  <li>Added Pixel Portrait Image</li>
+  <li>Added Kiwi Favicon Image</li>
+</ul>
 
-  
+<p> --- 01/04/2021 --- </p>
+<ul>
+  <li>Repo Created</li>
+  <li>This README was started</li>
+  <li>Added index.html with "Hello World" place holder</li>
+</ul>
