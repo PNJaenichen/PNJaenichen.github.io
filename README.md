@@ -9,6 +9,12 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/06/2021 --- </p>
+<ul>
+  <li>Added footer with links to Email, Github, Twitter, and Linkedin</li>
+  <li>Fixed size of Pixel Portrait</li>
+</ul>
+
 <p> --- 01/05/2021 --- </p>
 <ul>
   <li>Made index.html actual HTML</li>
