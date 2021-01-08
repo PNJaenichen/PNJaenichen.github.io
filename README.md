@@ -12,6 +12,7 @@
 <p> --- 01/07/2021 --- </p>
 <ul>
   <li>Added a top "menu" with links to a blog, projects, and Resume/CV page</li>
+  <li>Borrowed code from w3schools to create a more robust shell of the blog page</li>
   <li>Created blank template pages to add to those links</li>
   <li>Attempted to move the footer to the very bottom of the window vice bottom of the content</li>
 </ul>
