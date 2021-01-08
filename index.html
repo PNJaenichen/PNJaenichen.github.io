@@ -4,10 +4,32 @@
     <title>Nate "Kiwi" Jaenichen</title>
     <link rel="icon" href="media/kiwi_fav.png" sizes="16x16" type="image/png">
     <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            overflow: auto;
+            padding-bottom: 75px;
+        }
+        .topper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .top-menu {
+            display: flex;
+            flex-direction;
+            justify-content: space-evenly;
+            width: 70%;
+        }
         footer {
             display: flex;
             flex-direction: row;
             justify-content: center;
+            position: relative;
+            margin-top: 75px;
+            height: 75px;
+            clear: both;
         }
         footer img {
             width: 50px;
@@ -16,7 +38,14 @@
     </style>
 </head>
 <body>
-    <img src="media/pixel-jaenichen.png" alt="Pixel Image of Author" width="300" height="300">
+    <div class="topper">
+        <img src="media/pixel-jaenichen.png" alt="Pixel Image of Author" width="300" height="300">
+        <div class=top-menu>
+            <a href="blog.html">Blog</a>
+            <a href="projects.html">Projects</a>
+            <a href="resume_CV.html">Resume/CV</a>
+        </div>
+    </div>
     <p>This is the beginning of my page.</p>
     <p>My plan is to slowly improve upon this website as I learn and become better
     at front end development.</p>
