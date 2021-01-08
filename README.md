@@ -9,6 +9,13 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/07/2021 --- </p>
+<ul>
+  <li>Added a top "menu" with links to a blog, projects, and Resume/CV page</li>
+  <li>Created blank template pages to add to those links</li>
+  <li>Attempted to move the footer to the very bottom of the window vice bottom of the content</li>
+</ul>
+
 <p> --- 01/06/2021 --- </p>
 <ul>
   <li>Added footer with links to Email, Github, Twitter, and Linkedin</li>
