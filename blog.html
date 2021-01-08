@@ -1,14 +1,117 @@
+<!-- The style and main portion of the body was copied from w3schools from the
+following: https://www.w3schools.com/howto/howto_css_blog_layout.asp -->
+
 <!DOCTYPE html>
 <html>
 <head>
     <title></title>
     <link rel="icon" href="media/kiwi_fav.png" sizes="16x16" type="image/png">
     <style>
-        
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f1f1f1;
+        }
+
+        /* Header/Blog Title */
+        .header {
+            padding: 30px;
+            font-size: 40px;
+            text-align: center;
+            background: white;
+        }
+
+        /* Create two unequal columns that floats next to each other */
+        /* Left column */
+        .leftcolumn {
+            float: left;
+            width: 74%;
+        }
+
+        /* Right column */
+        .rightcolumn {
+            float: right;
+            width: 24%;
+            padding-left: 20px;
+        }
+
+        /* Fake image */
+        .fakeimg {
+            background-color: #aaa;
+            width: auto;
+            padding: 20px;
+        }
+
+        /* Add a card effect for articles */
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Footer */
+        footer {
+            padding: 20px;
+            text-align: center;
+            background: #ddd;
+            margin-top: 20px;
+        }
+
+        #follower img {
+            height: 50px;
+            width: 50px;
+
+        }
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 800px) {
+            .leftcolumn, .rightcolumn {
+                width: 98%;
+                padding: 0;
+          }
+        }
     </style>
 </head>
 <body>
-    <p>This is currently a placeholder page for future content</p>
+    <div class="header">
+        <h2>Blog Name</h2>
+    </div>
+    <div class="row">
+        <div class="leftcolumn">
+            <div class="card">
+                <h2>TITLE HEADING</h2>
+                <h5>Title description, Dec 7, 2017</h5>
+                <div class="fakeimg" style="height:200px;">Image</div>
+                <p>Some text..</p>
+            </div>
+            <div class="card">
+                <h2>TITLE HEADING</h2>
+                <h5>Title description, Sep 2, 2017</h5>
+                <div class="fakeimg" style="height:200px;">Image</div>
+                <p>Some text..</p>
+            </div>
+        </div>
+    <div class="rightcolumn">
+        <div class="card">
+            <h2>About Me</h2>
+            <div class="fakeimg" style="height:100px"><img src="media/pixel-jaenichen.png" style="height: 100px"></div>
+            <p>I'm a learning developer just writing about my journey.</p> 
+            <p>I dable in Python and front end development.</p>
+        </div>
+        <div id=follower class="card">
+            <a href="mailto:pnjaenichen@gmail.com"><img class="foot_img" src="media/email.png" alt="email icon to email author"></a>
+            <a href="https://github.com/PNJaenichen"><img class="foot_img" src="media/github.png" alt="link to author's Github page"></a>
+            <a href="https://www.linkedin.com/in/pauljaenichen/"><img class="foot_img" src="media/linkedin.png" alt="link to author's Linkedin profile"></a>
+            <a href="https://twitter.com/MeadyOkerGamer"><img class="foot_img" src="media/twitter.png" alt="link to author's twitter profile"></a>
+        </div>
+    </div>
+</div>
 </body>
 <footer>
     <a href="index.html">Return to Main Page</a>
