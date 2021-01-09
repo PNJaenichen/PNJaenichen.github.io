@@ -1,0 +1,39 @@
+body {
+    background-color: lightcyan;
+}
+
+#pixel-kiwi {
+    max-width: 100%;
+    display: block;
+    float: left;
+    width:300px;
+    height:300px;
+    margin: 5px;
+}
+
+#intro::first-letter {
+    font-size: 200%;
+    color: rgb(19, 95, 10);
+}
+
+#dayCounts {
+    display: block;
+    float: right;
+    background-color: linen;
+    margin: 5px;
+    border-radius: 25px;
+}
+
+p {
+    padding: 0px 10px 0px 10px;
+}
+
+#link-bar {
+    position: fixed; /* Set the navbar to fixed position */
+    bottom: 0; /* Position the navbar at the bottom of the page */
+    width: 100%; /* Full width */
+}
+
+.main {
+    margin-bottom: 30px;
+}

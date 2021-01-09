@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<!--My product landing page should have at least one media query.-->
+
+<html>    
+    <head>
+        <title>Product Landing Page</title>
+    </head>
+    <style>
+        #header {
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            background-color: white;
+            top: 0;
+            width: 90%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        #maindoc {
+            position: absolute;
+            margin: 100px auto auto 5px;
+        }
+        #Pricing {
+            display: flex;
+            grid-template-columns: auto auto auto;
+            justify-content: space-evenly;
+        }
+        @media only screen and (max-width: 600px) {
+            #Pricing {
+                grid-template-columns: auto;
+                grid-template-rows: auto auto auto;
+            }
+        }
+        .product {
+            display: grid;
+            align-content: flex-start;
+            justify-content: space-between;
+            justify-items: center;
+            text-align: center;
+            width: 33%;
+            border-style: solid;
+            margin: 5px;
+        }
+        .product h3 {
+            background-color:  rgb(107, 107, 107);
+            width: 100%;
+            height: auto;
+            margin: 0px 0px 5px 0px;
+            align-self: flex-start;
+            justify-self: center;
+            justify-content: space-between;
+        }
+        .center {
+            display: block;
+            justify-content: center;
+        }
+    </style>
+    <body>
+        <header id="header">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQv3FmP4ZcdTSsAJ1XzzIv84hxH765iXuSLbg&usqp=CAU" id="header-img" alt="Company Logo" height=100 width=100>
+            <nav id="nav-bar">
+                <a href="#Features" class="nav-link">Features</a>
+                <a href="#HowItWorks" class="nav-link">How It Works</a>
+                <a href="#Pricing" class="nav-link">Pricing</a>
+            </nav>
+        </header>
+        <main id="maindoc">
+            <section class="center">
+                <p>Join the mailing list:</p>
+                <form id="form" method="get" 
+            action="https://www.freecodecamp.com/email-submit">
+                    <input id="email" type="email" name="email"
+                required placeholder="Input Email Here">
+                    <input id="submit" type="submit" value="Submit">
+                </form>
+            <section>
+            <hr>      
+            <section id="Features">
+                <h3>Challenge</h3>
+                <p>A game is, at its core, a challenge.</p>
+                <h3>Choice</h3>
+                <p>Choice makes a challenge interesting, or specifically, meaningful choice does.</p>
+                <h3>Change</h3>
+                <p>A game is more than a singular challenge, change provides content.</p>
+                <h3>Chance</h3>
+                <p>A game without chance is simply a puzzle.</p>    
+            </section>
+            <section id="HowItWorks">
+                <iframe style="display: block; margin: 5px auto" id="video" width="893" height="502" 
+                    src="https://www.youtube.com/embed/fyvyhkF8Xr4" 
+                    frameborder="0" allow="accelerometer; autoplay; 
+                    encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>
+            </section>
+                    <hr>
+            <section id="Pricing">
+                <div class="product">
+                    <h3>Gloomhaven</h3>
+                    <img src="https://cf.geekdo-images.com/itemrep/img/P7MVqNuhAl8Y4fxiM6e74kMX6e0=/fit-in/246x300/pic2437871.jpg" alt="Gloomhaven Box">
+                    <p>Immerse yourself in a fantasy campaign of 
+                        creatures and puzzly card-driven gameplay.</p>
+                    <a href="https://www.amazon.com/dp/B01LZXVN4P?tag=itemtext-boardgamegeek-20&linkCode=ogi&th=1&psc=1">99.99 USD</a>
+                </div>
+                <div class="product">
+                    <h3>Pandemic Legacy: Season 1</h3>
+                    <img src="https://cf.geekdo-images.com/itemrep/img/n8626bWQOoE_1nqvLUXi_6QfYO0=/fit-in/246x300/pic2452831.png" alt="Pandemic Legacy: Season 1 Box">
+                    <p>Mutating diseases are spreading around the 
+                        world - can your team save humanity? </p>
+                        <a href="https://www.zmangames.com/en/products/pandemic-legacy-season-1/">79.99 USD</a>
+                </div>
+                <div class="product">
+                    <h3>Brass: Birmingham</h3>
+                    <img src="https://cf.geekdo-images.com/itemrep/img/_U34-eDDAf5K8Ftc9JDAi9vr-dE=/fit-in/246x300/pic3490053.jpg" 
+                        alt="Brass: Brimingham Box" height="180">
+                    <p>Build your industries and sell to markets during 
+                        the English Industrial Revolution.</p>
+                        <a href="https://www.amazon.com/dp/1988884047?tag=itemtext-boardgamegeek-20&linkCode=ogi&th=1&psc=1">69.99 USD</a>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

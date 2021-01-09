@@ -1,14 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title></title>
-    <link rel="icon" href="media/kiwi_fav.png" sizes="16x16" type="image/png">
+    <meta charset="utf-8">
+    <title>Projects</title>
+    <link rel="icon" href="assets/kiwi_fav.png" sizes="16x16" type="image/png">
     <style>
-        
+        .thumbnail {
+            position: relative;
+            -ms-zoom: 0.25;
+            -moz-transform: scale(0.25);
+            -moz-transform-origin: 0 0;
+            -o-transform: scale(0.25);
+            -o-transform-origin: 0 0;
+            -webkit-transform: scale(0.25);
+            -webkit-transform-origin: 0 0;
+        }
+        .thumbnail:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .thumbnail iframe {
+            width: 1440px;
+            height: 900px;
+        }
+        .thumbnail-container {
+            width: calc(1440px * 0.25);
+            height: calc(900px * 0.25);
+            display: inline-block;
+            overflow: hidden;
+            position: relative;
+        }
     </style>
 </head>
 <body>
-    <p>This is currently a placeholder page for future content</p>
+    <div class="thumbnail-container">
+        <div class="thumbnail">
+            <iframe src="../the_odin_project/google-homepage/index.html"
+            frameborder="1"></iframe>
+        </div>
+    </div>
+    <div class="thumbnail-container">
+        <div class="thumbnail">
+            <iframe src="projects/survey.html" frameborder="0"></iframe>
+        </div>
+    </div>
+    <div class="thumbnail-container">
+        <div class="thumbnail">
+            <iframe src="projects/technical.html" frameborder="0"></iframe>
+        </div>
+    </div>
+    <div class="thumbnail-container">
+        <div class="thumbnail">
+            <iframe src="projects/tribute.html" frameborder="0"></iframe>
+        </div>
+    </div>
 </body>
 <footer>
     <a href="index.html">Return to Main Page</a>

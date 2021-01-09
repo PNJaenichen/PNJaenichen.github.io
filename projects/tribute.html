@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>Tribute to LtGen Lewis "Chesty" Puller</title>
+        <style>
+            body {
+                background-color: linen;
+            }
+            .container {
+                display: grid;
+                grid-template-columns: 50% 50%;
+                grid-template-rows: 10% 80% 10%;
+                grid-template-areas:
+                    "header header"
+                    "content1 content2"
+                    "footer footer";
+            }
+            #img-div {
+                grid-area: content1;
+                align-content: center;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            img {
+                max-width: 100%;
+                display: block;
+            }
+            h1 {
+                grid-area: header;
+                text-align: center;
+            }
+            #tribute-info {
+                grid-area: content2;
+            }
+            #link-bar {
+                bottom: 0; 
+                width: 100%; 
+            }
+        </style>
+    </head>
+
+    <body id="main" class="container">
+        <h1 id="title">LtGen Lewis "Chesty" Puller, USMC</h1>
+        <div id="img-div" style="grid-area: content1">
+            <figure>
+                <img id="image" src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Chesty-puller.jpg" alt="Photograph of Chesty Puller during the Korean War">  
+                <figcaption id="img-caption">A photograph of then Colonel "Chesty" Puller during the Korean War.</figcaption>
+            </figure>
+        </div>
+        <ul id="tribute-info" style="grid-area: content2">
+            <li><strong>1930</strong> - Awarded first Navy Cross for actions in Nicaragua.</li>
+            <li><strong>1932</strong> - Awarded second Navy Cross for actions in Nicaragua during a second tour.</li>
+            <li><strong>1942</strong> - Awarded third Navy Cross for actions during the Battle of Guadalcanal.</li>
+            <li><strong>1944</strong> - Awarded fourth Navy Cross for actions at Cape Gloucester, New Britain.</li>
+            <li><strong>1950</strong> - Awarded fifth and final Navy Cross for actions during the Korean War.</li>
+        </ul>
+        <p style="grid-area: footer">For more information check out the <a id="tribute-link" href="https://en.wikipedia.org/wiki/Chesty_Puller" target="_blank">Lewis Puller wikipedia page</a> (will open a new tab in your browser).</p>
+        <nav id="link-bar">
+            <a href="index.html" class="link-bar">About Me</a>
+            <a href="survey.html" class="link-bar">Survey Sample Page</a>
+            <a href="technical.html" class="link-bar">Technical Sample Page</a>
+        </nav>
+    </body>
+</html>
