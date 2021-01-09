@@ -9,6 +9,13 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/09/2021 --- </p>
+<ul>
+  <li>Renamed 'media' folder to 'assets'</li>
+  <li>Added past projects to a 'projects' folder</li>
+  <li>Added iFrame 'thumbnails' to the projects page</li>
+</ul>
+
 <p> --- 01/07/2021 --- </p>
 <ul>
   <li>Added a top "menu" with links to a blog, projects, and Resume/CV page</li>
