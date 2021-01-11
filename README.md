@@ -9,6 +9,11 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/10/2021 --- </p>
+<ul>
+  <li>Added javascript file and link to index, comes from CS50 project</li>
+</ul>
+
 <p> --- 01/09/2021 --- </p>
 <ul>
   <li>Renamed 'media' folder to 'assets'</li>
