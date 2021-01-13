@@ -1,0 +1,30 @@
+html, body {
+    height: 100%;
+}
+body {
+    overflow: auto;
+    padding-bottom: 75px;
+}
+.topper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.top-menu {
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%;
+}
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    margin-top: 75px;
+    height: 75px;
+    clear: both;
+}
+footer img {
+    width: 50px;
+    height: 50px;
+}
