@@ -9,6 +9,14 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/12/2021 --- </p>
+<ul>
+  <li>Created a 'sheets' folder inside the 'assets' folder</li>
+  <li>Moved the index.js folder into the 'sheets' folder</li>
+  <li>Created a main.css file inside 'sheets' folder</li>
+  <li>Moved the code from the style tag on index.html to the main.css file</li>
+</ul>
+
 <p> --- 01/10/2021 --- </p>
 <ul>
   <li>Added javascript file and link to index, comes from CS50 project</li>
