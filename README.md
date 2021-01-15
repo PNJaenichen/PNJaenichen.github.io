@@ -9,6 +9,12 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/15/2021 --- </p>
+<ul>
+  <li>Added the 'Rock, Paper, Scissors' project from The Odin Project lessons to the project folder</li>
+  <li>Added the 'Etch-a-Sketch' project from The Odin Project lessons to the project folder</li>
+</ul>
+
 <p> --- 01/12/2021 --- </p>
 <ul>
   <li>Created a 'sheets' folder inside the 'assets' folder</li>
