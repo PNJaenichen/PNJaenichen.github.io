@@ -9,6 +9,13 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/16/2021 --- </p>
+<ul>
+  <li>Normalized CSS across the project with normalize.css from github.com/necolas/normalize.css</li>
+  <li>Added the main.css to all of the major pages in the project</li>
+  <li>Moved style portions from HTML files to their own CSS files for the blog and projects pages</li>
+</ul>
+
 <p> --- 01/15/2021 --- </p>
 <ul>
   <li>Added the 'Rock, Paper, Scissors' project from The Odin Project lessons to the project folder</li>
