@@ -9,6 +9,12 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/19/2021 --- </p>
+<ul>
+  <li>Updated projects folder with better organization</li>
+  <li>Updated the "Last Updated" date in the index.js file</li>
+</ul>
+
 <p> --- 01/16/2021 --- </p>
 <ul>
   <li>Normalized CSS across the project with normalize.css from github.com/necolas/normalize.css</li>
