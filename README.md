@@ -9,6 +9,11 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/20/2021 --- </p>
+<ul>
+  <li>Cheated a bit for this one ... added a blog post</li>
+</ul>
+
 <p> --- 01/16/2021 --- </p>
 <ul>
   <li>Normalized CSS across the project with normalize.css from github.com/necolas/normalize.css</li>
