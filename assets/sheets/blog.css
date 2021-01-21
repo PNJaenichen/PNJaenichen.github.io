@@ -30,6 +30,7 @@ body {
 .fakeimg {
     background-color: #aaa;
     width: auto;
+    height: 200px;
     padding: 20px;
 }
 
