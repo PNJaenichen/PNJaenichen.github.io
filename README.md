@@ -9,9 +9,16 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<<<<<<< HEAD
 <p> --- 01/20/2021 --- </p>
 <ul>
   <li>Cheated a bit for this one ... added a blog post</li>
+=======
+<p> --- 01/19/2021 --- </p>
+<ul>
+  <li>Updated projects folder with better organization</li>
+  <li>Updated the "Last Updated" date in the index.js file</li>
+>>>>>>> c22d41aea52a7188403ee3d12f1f6c5f53e36476
 </ul>
 
 <p> --- 01/16/2021 --- </p>
