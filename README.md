@@ -18,7 +18,8 @@
 <p> --- 01/20/2021 --- </p>
 <ul>
   <li>Cheated a bit for this one ... added a blog post</li>
-  
+</ul>
+
 <p> --- 01/19/2021 --- </p>
 <ul>
   <li>Updated projects folder with better organization</li>
