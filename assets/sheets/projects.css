@@ -1,3 +1,6 @@
+body {
+    width: 99%;
+}
 .thumbnail {
     position: relative;
     zoom: normal;
@@ -30,4 +33,18 @@
     display: inline-block;
     overflow: hidden;
     position: relative;
+}
+.project {
+    display: flex;
+    width: 100%;
+}
+
+.left-column {
+    float: left;
+    width: 39%;
+}
+.right-column {
+    float: right;
+    width: 59%;
+    padding-left: 10px;
 }
