@@ -9,6 +9,11 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 01/25/2021 --- </p>
+<ul>
+  <li>Updated the Resume/CV page with a better layout</li>
+</ul>
+
 <p> --- 01/24/2021 --- </p>
 <ul>
   <li>Updated the projects page with a better layout</li>
