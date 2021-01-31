@@ -8,33 +8,33 @@
         "centerLeft centerCenter centerRight"
         "bottomLeft bottomCenter bottomRight";
   }
-.topLeft { 
+#topLeft { 
     grid-area: topLeft; 
 }
-.topCenter { 
+#topCenter { 
     grid-area: topCenter;
 }
-.topRight { 
+#topRight { 
     grid-area: topRight;
 }
-.centerLeft { 
+#centerLeft { 
     grid-area: centerLeft; 
 }
-.centerCenter { 
+#centerCenter { 
     grid-area: centerCenter;
     text-align: center;
     border: 2px solid black;
 }
-.centerRight { 
+#centerRight { 
     grid-area: centerRight; 
 }
-.bottomLeft { 
+#bottomLeft { 
     grid-area: bottomLeft; 
 }
-.bottomCenter { 
+#bottomCenter { 
     grid-area: bottomCenter;
 }
-.bottomRight {
+#bottomRight {
     grid-area: bottomRight;
 }
 .topBorder {

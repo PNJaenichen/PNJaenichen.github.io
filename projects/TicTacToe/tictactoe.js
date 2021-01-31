@@ -4,12 +4,52 @@
 // them with factories
 
 // TODO save gameboard as array in Gameboard object
-const Gameboard = () => {
-    let topRow = ["","",""];
-    let middleRow = ["","",""];
-    let bottomRow = ["","",""];
-    return {topRow, middleRow, bottomRow}
-};
+var boardModule = (function() {
+    let gameBoard = [
+        ['','',''],
+        ['','',''],
+        ['','',''] ];
+    function updateGameBoard(loc, side) {
+        gameBoard[loc[0]][loc[1]] = side;
+        renderGameBoard();
+    }
+    function renderGameBoard() {
+        const spaces = [
+            ['topLeft', 'topCenter', 'topRight'], 
+            ['centerLeft', 'centerCenter', 'centerRight'], 
+            ['bottomLeft', 'bottomCenter', 'bottomRight'] ];
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                let space = document.getElementById(spaces[i][j]);
+                space.textContent = gameBoard[i][j];
+            }
+        }
+    }
+    function checkForWin() {
+        const diagOne = [gameBoard[0][0], gameBoard[1][1], gameBoard[2][2]]
+        const diagTwo = [gameBoard[0][2], gameBoard[1][1], gameBoard[2][0]]
+        console.log(diagOne);
+        for (let i = 0; i < 3; i++) {
+            if (gameBoard[i].every(x => x === gameBoard[i][0])) {
+                return true;
+            } else if (diagOne.every(x => x === diagOne[0])) {
+                return true;
+            } else if (diagTwo.every(x => x === diagTwo[0])) {
+                return true;
+            } else {
+                let column = [];
+                for (let j = 0; j < 3; j++) {
+                    column.push(gameBoard[i][j])
+                }
+                if (column.every(x => x === column[0])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    return {updateGameBoard, renderGameBoard, checkForWin}
+})();
 
 // TODO create player objects
 const Player = (name, side) => {
@@ -20,37 +60,13 @@ const Player = (name, side) => {
 
 // TODO create game flow object
 
-// TODO Create HTML and JS to render the gameboard array
-
 // TODO create function to allow player to mark a spot by clicking on the
 // board location, make sure it doesn't change if it's already taken
 
 // Each function should be worked into game, player, or gameboard objects
 
 // TODO Create logic to check for game over, win condition and ties
-function checkForWin(board) {
-    const boardState = [board.topRow, board.middleRow, board.bottomRow];
-    const diagOne = [boardState[0][0], boardState[1][1], boardState[2,2]]
-    const diagTwo = [boardState[0][2], boardState[1][1], boardState[2,0]]
-    for (let i = 0; i < 3; i++) {
-        if (boardState[i].every(x => x === boardState[i][0])) {
-            return true;
-        } else if (diagOne.every(x => x === diagOne[0])) {
-            return true;
-        } else if (diagTwo.every(x => x === diagTwo[0])) {
-            return true;
-        } else {
-            let column = [];
-            for (let j = 0; j < 3; j++) {
-                column.push(boardState[i][j])
-            }
-            if (column.every(x => x === x[0])) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
+
 // TODO Create interface to take and display player name
 
 // TODO Include start/restart button
@@ -60,4 +76,14 @@ function checkForWin(board) {
 // OPTIONAL TODO Create AI for Computer
 // Start with picking legal move and then make it smart
 
-var gameBoard = Gameboard();
+boardModule.renderGameBoard();
+boardModule.updateGameBoard([0,0],'O');
+boardModule.updateGameBoard([0,1],'O');
+boardModule.updateGameBoard([0,2],'X');
+boardModule.updateGameBoard([1,0],'X');
+boardModule.updateGameBoard([1,1],'X');
+boardModule.updateGameBoard([1,2],'O');
+boardModule.updateGameBoard([2,0],'O');
+boardModule.updateGameBoard([2,1],'X');
+boardModule.updateGameBoard([2,2],'O');
+console.log(boardModule.checkForWin());
