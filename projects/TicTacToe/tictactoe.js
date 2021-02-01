@@ -3,7 +3,6 @@
 // use a module. If you need multiples of something (players!), create
 // them with factories
 
-// TODO save gameboard as array in Gameboard object
 var boardModule = (function() {
     let gameBoard = [
         ['','',''],
@@ -24,6 +23,14 @@ var boardModule = (function() {
                 space.textContent = gameBoard[i][j];
             }
         }
+    }
+    function checkForSpaces() {
+        for (let i = 0; i < 3; i++) {
+            if (gameBoard[i].some(x => x === "")) {
+                return true;
+            } 
+        }
+        return checkForWin();
     }
     function checkForWin() {
         const diagOne = [gameBoard[0][0], gameBoard[1][1], gameBoard[2][2]]
@@ -48,21 +55,53 @@ var boardModule = (function() {
         }
         return false;
     }
-    return {updateGameBoard, renderGameBoard, checkForWin}
+    return {updateGameBoard, checkForSpaces, renderGameBoard, checkForWin}
 })();
 
-// TODO create player objects
 const Player = (name, side) => {
     const getName = () => name;
     const getSide = () => side;
-    return {getName, getSide}
+    return {getName, getSide, boardChoice}
 };
 
 // TODO create game flow object
+var gameFlow = (function() {
+//    var currentPlayer = playerOne;
+//    return {}
+})();
 
 // TODO create function to allow player to mark a spot by clicking on the
 // board location, make sure it doesn't change if it's already taken
+const playerOne = Player('Steve', 'X');
+const playerTwo = Player('Bearhands', 'O');
+var currentPlayer = playerOne;
 
+var boardChoice = addEventListener('click', function(e) {
+    let row;
+    let column;
+    if (e.target.id.startsWith('top')) {
+        row = 0;
+    } else if (e.target.id.startsWith('center')) {
+        row = 1;
+    } else {
+        row = 2;
+    }
+    if (e.target.id.endsWith('Left')) {
+        column = 0;
+    } else if (e.target.id.endsWith('Center')) {
+        column = 1;
+    } else {
+        column = 2;
+    }
+    if (!e.target.textContent) {
+        boardModule.updateGameBoard([row,column],currentPlayer.getSide());
+    }
+    if (currentPlayer === playerOne) {
+        currentPlayer = playerTwo;
+    } else {
+        currentPlayer = playerOne;
+    }
+});
 // Each function should be worked into game, player, or gameboard objects
 
 // TODO Create logic to check for game over, win condition and ties
@@ -76,14 +115,11 @@ const Player = (name, side) => {
 // OPTIONAL TODO Create AI for Computer
 // Start with picking legal move and then make it smart
 
+
 boardModule.renderGameBoard();
-boardModule.updateGameBoard([0,0],'O');
-boardModule.updateGameBoard([0,1],'O');
-boardModule.updateGameBoard([0,2],'X');
-boardModule.updateGameBoard([1,0],'X');
-boardModule.updateGameBoard([1,1],'X');
-boardModule.updateGameBoard([1,2],'O');
-boardModule.updateGameBoard([2,0],'O');
-boardModule.updateGameBoard([2,1],'X');
-boardModule.updateGameBoard([2,2],'O');
-console.log(boardModule.checkForWin());
+// boardModule.updateGameBoard([0,0],'O');
+// boardModule.updateGameBoard([0,1],'O');
+// boardModule.updateGameBoard([1,2],'O');
+// boardModule.updateGameBoard([2,0],'O');
+//boardModule.updateGameBoard([2,2],'O');
+console.log(boardModule.checkForSpaces());
