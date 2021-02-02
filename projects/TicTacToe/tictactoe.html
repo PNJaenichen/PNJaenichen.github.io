@@ -8,7 +8,7 @@
 </head> 
 <body>
     <div id="player-board">
-        <div class="grid-container">
+        <div id="grid-container">
             <div id="topLeft" class="centering"></div>
             <div id="topCenter" class="centering topBorder"></div>
             <div id="topRight" class="centering"></div>
@@ -20,6 +20,22 @@
             <div id="bottomRight" class="centering"></div>
         </div>
     </div>
+    <br>
+    <div id="player-info">
+        <div id="first-Player" class="inputText">
+            <label for="pOne">Player One:</label>
+            <input type="text" id="pOne" name="pOne"></input>
+        </div>
+        <div id="second-Player" class="inputText">
+            <label for="pTwo">Player Two:</label>
+            <input type="text" id="pTwo" name="pTwo"></input>
+        </div>
+        <div style="display: flex; justify-content: space-evenly;">
+            <button id="startGame">Start</button>
+            <button id="resetBoard">Reset</button>
+        </div>
+    </div>
+
 </body>
 <script src="tictactoe.js"></script>
 </html>

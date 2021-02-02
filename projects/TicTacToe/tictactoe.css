@@ -1,5 +1,12 @@
-.grid-container {
+#player-board {
+    width: 310px;
+}
+#player-info {
+    width: 310px;
+}
+#grid-container {
     display: grid;
+    width: 300px;
     grid-template-columns: 100px 100px 100px;
     grid-template-rows: 100px 100px 100px;
     gap: 0px 0px;
@@ -8,6 +15,11 @@
         "centerLeft centerCenter centerRight"
         "bottomLeft bottomCenter bottomRight";
   }
+.inputText {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 #topLeft { 
     grid-area: topLeft; 
 }
