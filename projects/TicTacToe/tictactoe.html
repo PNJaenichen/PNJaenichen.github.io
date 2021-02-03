@@ -21,6 +21,10 @@
         </div>
     </div>
     <br>
+    <div id='nameBoard'>
+        <div id='xPlayer'></div> 
+        <div id='oPlayer'></div>
+    </div>
     <div id="player-info">
         <div id="first-Player" class="inputText">
             <label for="pOne">Player One:</label>
@@ -30,12 +34,18 @@
             <label for="pTwo">Player Two:</label>
             <input type="text" id="pTwo" name="pTwo"></input>
         </div>
-        <div style="display: flex; justify-content: space-evenly;">
-            <button id="startGame">Start</button>
-            <button id="resetBoard">Reset</button>
-        </div>
     </div>
+    <div style="display: flex; justify-content: space-evenly;">
+        <button id="startGame">Start</button>
+        <button id="resetBoard">Reset</button>
+    </div>
+    <div id="winScreen">
+        <div id='winner'></div>
 
+        <div>
+            <input type='button' id="playAgain" value="Play Again" onclick='boardModule.resetBoard()'></input>
+        </div>
+    </div> 
+    <script src="tictactoe.js"></script>
 </body>
-<script src="tictactoe.js"></script>
 </html>

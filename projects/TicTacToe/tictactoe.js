@@ -1,8 +1,3 @@
-// Limit global code
-// ROT: if you only need ONE of something (gameBoard, displayController),
-// use a module. If you need multiples of something (players!), create
-// them with factories
-
 const boardModule = (function() {
     let gameBoard = [
         ['','',''],
@@ -25,34 +20,62 @@ const boardModule = (function() {
         }
     }
     function resetBoard() {
+        document.getElementById('winScreen').style.display = 'none';
+        document.getElementById('grid-container').removeEventListener('click', gameFlow.makeMove);
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 updateGameBoard([i,j],'');
             }
         }
+        document.getElementById('xPlayer').textContent = '';
+        document.getElementById('oPlayer').textContent = '';
+        document.getElementById('pOne').value = '';
+        document.getElementById('pTwo').value = '';
+        document.getElementById('player-info').style.display = 'block';
+        document.getElementById('startGame').style.display = 'block';
     }
-    function checkForWin() {
-        const diagOne = [gameBoard[0][0], gameBoard[1][1], gameBoard[2][2]]
-        const diagTwo = [gameBoard[0][2], gameBoard[1][1], gameBoard[2][0]]
+    function checkForWin(pOne, pTwo) {
+        const diagOne = [gameBoard[0][0], gameBoard[1][1], gameBoard[2][2]];
+        const diagTwo = [gameBoard[0][2], gameBoard[1][1], gameBoard[2][0]];
         for (let i = 0; i < 3; i++) {
-            if (gameBoard[i].every(x => x === gameBoard[i][0])) {
-                return true;
-            } else if (diagOne.every(x => x === diagOne[0])) {
-                return true;
-            } else if (diagTwo.every(x => x === diagTwo[0])) {
-                return true;
+            if (gameBoard[i].every(x => x === gameBoard[i][0]) && gameBoard[i][0] !== '') {
+                if (gameBoard[i][0] === 'X') {
+                    return `${pOne} is the winner!`;
+                } else {
+                    return `${pTwo} is the winner!`;
+                }
+            } else if (diagOne.every(x => x === diagOne[0]) && diagOne[0] !== '') {
+                if (diagOne[0] === 'X') {
+                    return `${pOne} is the winner!`;
+                } else {
+                    return `${pTwo} is the winner!`;
+                }
+            } else if (diagTwo.every(x => x === diagTwo[0]) && diagTwo[0] !== '') {
+                if (diagTwo[0] === 'X') {
+                    return `${pOne} is the winner!`;
+                } else {
+                    return `${pTwo} is the winner!`;
+                }
             } else {
                 let column = [];
                 for (let j = 0; j < 3; j++) {
-                    column.push(gameBoard[i][j])
+                    column.push(gameBoard[j][i])
                 }
-                if (column.every(x => x === column[0])) {
-                    return true;
+                if (column.every(x => x === column[0]) && column[0] !== '') {
+                    if (column[0] === 'X') {
+                        return `${pOne} is the winner!`;
+                    } else {
+                        return `${pTwo} is the winner!`;
+                    }
                 }
             }
         }
-        return false;
+        if (gameBoard.some(x => x.some(x => x === ''))) {
+            return 'continue'
+        }
+        return 'The game is a Tie';
     }
+    document.getElementById('resetBoard').addEventListener('click', resetBoard);
     return {updateGameBoard, renderGameBoard, resetBoard, checkForWin}
 })();
 
@@ -64,6 +87,9 @@ const Player = (name, side) => {
 
 // TODO create game flow object
 const gameFlow = (function() {
+    var playerOne;
+    var playerTwo;
+    var currentPlayer;
     function makeMove(e) {
         let row;
         let column;
@@ -89,36 +115,32 @@ const gameFlow = (function() {
                 currentPlayer = playerOne;
             }
         }
+        var gameStatus = boardModule.checkForWin(playerOne.getName(), playerTwo.getName()) 
+        if (gameStatus !== 'continue') {
+            var ender = document.getElementById('winScreen')
+            ender.firstElementChild.textContent = gameStatus;
+            ender.style.display = 'flex';
+            playerOne;
+            playerTwo;
+            currentPlayer = playerOne;
+            document.getElementById('grid-container').removeEventListener('click', makeMove)
+        }
     }
+    document.getElementById('startGame').addEventListener('click', function() {
+        playerOne = Player(document.getElementById('pOne').value, 'X');
+        playerTwo = Player(document.getElementById('pTwo').value, 'O');
+        document.getElementById('xPlayer').textContent = `${playerOne.getName()} - X`
+        document.getElementById('oPlayer').textContent = `${playerTwo.getName()} - O`
+        document.getElementById('player-info').style.display = 'none';
+        document.getElementById('startGame').style.display = 'none';
+        currentPlayer = playerOne;
+        document.getElementById('grid-container').addEventListener('click', makeMove);
+    });
     return {makeMove}
 })();
-
-// TODO create function to allow player to mark a spot by clicking on the
-// board location, make sure it doesn't change if it's already taken
-
-document.getElementById('grid-container').addEventListener('click', gameFlow.makeMove)
-
-// Each function should be worked into game, player, or gameboard objects
-
-// TODO Create logic to check for game over, win condition and ties
-
-// TODO Create interface to take and display player name
-
-// const playerTwo = Player('Bearhands', 'O');    
-var playerOne;
-var playerTwo;
-var currentPlayer;
-
-document.getElementById('startGame').addEventListener('click', function() {
-    playerOne = Player(document.getElementById('pOne').value, 'X');
-    playerTwo = Player(document.getElementById('pTwo').value, 'O');
-    currentPlayer = playerOne;
-});
-
-// TODO create display element that congratulates the winning player
 
 // OPTIONAL TODO Create AI for Computer
 // Start with picking legal move and then make it smart
 
-document.getElementById('resetBoard').addEventListener('click', boardModule.resetBoard);
-boardModule.renderGameBoard();
+
+
