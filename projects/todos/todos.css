@@ -1,0 +1,16 @@
+.grow {
+    padding: 5px 5px 5px 5px;
+    border-radius: 10px;
+    height: 49px;
+    width: 22%;
+    margin: 5px 1% 5px 1%;
+    float: left;
+    position: relative;
+    transition: height 0.5s;
+    -webkit-transition: height 0.5s;
+    text-align: center;
+    overflow: hidden;
+}
+.grow:hover {
+    height: 145px;
+}
