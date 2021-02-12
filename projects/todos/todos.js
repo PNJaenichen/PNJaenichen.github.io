@@ -18,3 +18,12 @@ page is brought up */
 */
 
 // use localStorage to save user's projects and todos between sessions
+
+Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
+    item[1].addEventListener('mouseover', function() {
+        item[1].children[1].style.display = "block";
+    });
+    item[1].addEventListener('mouseout', function() {
+        item[1].children[1].style.display = "none";
+    });
+})

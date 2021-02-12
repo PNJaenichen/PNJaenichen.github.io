@@ -1,7 +1,7 @@
 .grow {
     padding: 5px 5px 5px 5px;
   	border-radius: 5px;
-	height: 49px;
+	height: auto;
   	width: 22%;
   	margin: 5px 1% 5px 1%;
   	float: left;
@@ -13,6 +13,20 @@
   	overflow: hidden;
 }
 .grow:hover {
-    height: 145px;
+    height: auto;
 	box-shadow: 0 16px 32px 0 rgba(0,0,0,0.5);
+}
+.options {
+	height: 30px;
+}
+.options p {
+	position: absolute;
+	bottom: 0px;
+	left: 5px;
+	font-size: 50%;
+}
+.options img {
+	float: right;
+	height: 90%;
+	padding: 3px;
 }
