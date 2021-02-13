@@ -9,6 +9,26 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- 02/10/2021 --- </p>
+<ul>
+  <li>Added Blog Post</li>
+</ul>
+
+<p> --- 02/08/2021 --- </p>
+<ul>
+  <li>Added Restaurant Menu Page to project pages</li>
+</ul>
+
+<p> --- 01/30/2021 --- </p>
+<ul>
+  <li>Fixed image for previously added Blog Post</li>
+</ul>
+
+<p> --- 01/28/2021 --- </p>
+<ul>
+  <li>Added Blog Post</li>
+</ul>
+
 <p> --- 01/25/2021 --- </p>
 <ul>
   <li>Updated the Resume/CV page with a better layout</li>
