@@ -1,0 +1,11 @@
+html {
+    background-color: #A8D0EA;
+}
+hr {
+    color: darkblue;
+}
+#logo {
+    height: 305px;
+    width: 305px;
+    border: 1px solid darkblue;
+}
