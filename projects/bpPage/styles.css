@@ -2,10 +2,20 @@ html {
     background-color: #A8D0EA;
 }
 hr {
+    width: 95%;
     color: darkblue;
 }
+#header {
+    display: flex;
+}
 #logo {
-    height: 305px;
-    width: 305px;
+    max-width: 300px;
+    max-height: 300px;
     border: 1px solid darkblue;
+}
+#title {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: auto;
 }
