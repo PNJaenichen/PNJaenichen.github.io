@@ -34,8 +34,11 @@ function makeTodoCard(task) {
     options.classList.add('options');
     created.textContent = 'Created: Date Here';
     complete.src = "\\PNJaenichen.github.io\\assets\\delete.png"
-    edit.src = "\\PNJaenichen.github.io\\assets\\Edit.jpg";
+    edit.src = "\\PNJaenichen.github.io\\assets\\edit.jpg";
     trash.src = "\\PNJaenichen.github.io\\assets\\complete.png"
+    complete.classList.add('button');
+    edit.classList.add('button');
+    trash.classList.add('button');
     options.appendChild(created);
     options.appendChild(complete);
     options.appendChild(edit);
@@ -51,8 +54,6 @@ function makeTodoCard(task) {
 /* TODO Interface should be able to do the following: 
     view all projects
     view all todos in each project (perhaps different colors based on pri)
-    expand a single todo to see/edit its details
-    delete a todo
 */
 
 // use localStorage to save user's projects and todos between sessions
@@ -72,3 +73,16 @@ Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
         item[1].children[1].style.display = "none";
     });
 })
+
+Object.entries(document.getElementsByClassName('button')).forEach(function(item) {
+    item[1].addEventListener('click', function() {
+        const _parent = item[1].parentNode.parentNode.parentNode;
+        const _found = item[1].src.match(/(\w+)(\.png|\.jpg)/)[1];
+        if (_found === 'delete') {
+            var targetTask = document.getElementById(_parent.id);
+            targetTask.remove();
+        } else {
+            console.log(_parent.id, _found);
+        }
+    });
+});
