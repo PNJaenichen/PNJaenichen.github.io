@@ -51,6 +51,45 @@ function makeTodoCard(task) {
     document.body.appendChild(item);
 }
 
+var timerMain;
+var timerRunning = false;
+function startTimer(duration,display=document.querySelector('#time')) {
+    timerRunning = true;
+    var timer = duration, minutes, seconds;
+    timerMain = setInterval(function() {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + ":" + seconds;
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+function restartTimer(){
+    clearInterval(timerMain);
+    var currentTime = document.querySelector("#time").textContent;
+    var time = currentTime.split(':');
+    startTimer((parseInt(time[0]) * 60) + parseInt(time[1]));
+}
+document.querySelector('#reset50').addEventListener('click', function() {
+    clearInterval(timerMain);
+    startTimer(3000);
+});
+document.querySelector('#break10').addEventListener('click', function() {
+    clearInterval(timerMain);
+    startTimer(600);
+});
+document.querySelector('#pauseRestart').addEventListener('click', function() {
+    if (timerRunning) {
+        clearInterval(timerMain);
+        timerRunning = false;
+    } else {
+        restartTimer();
+    }
+})
+
 /* TODO Interface should be able to do the following: 
     view all projects
     view all todos in each project (perhaps different colors based on pri)
