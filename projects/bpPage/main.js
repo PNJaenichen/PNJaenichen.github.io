@@ -11,7 +11,7 @@ const bpBirthday = new Date("2021-03-13");
 var difference = dateDiffInDays(currentDate, bpBirthday);
 var counter = document.getElementById('countdown');
 if (counter) {
-    counter.textContent = `${difference} Days To 47!`;
+    counter.innerHTML = `<span id='days'>${difference}</span> &nbsp Days To 47!`;
 }
 
 var logo = document.getElementById('logo');

@@ -5,8 +5,14 @@ hr {
     width: 95%;
     color: darkblue;
 }
-#header {
+header {
     display: flex;
+    justify-content: center;
+}
+footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 #logo {
     max-width: 300px;
@@ -19,8 +25,14 @@ hr {
     text-align: center;
     width: auto;
 }
-#links {
+#countdown {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+}
+#days {
+    font-size: 200%;
+}
+article p::first-letter {
+    font-size: 150%;
 }
