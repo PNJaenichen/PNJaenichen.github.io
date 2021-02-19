@@ -9,20 +9,19 @@ const currentDate = new Date();
 const bpBirthday = new Date("2021-03-13");
 
 var difference = dateDiffInDays(currentDate, bpBirthday);
-var counter = document.getElementById('countdown');
-if (counter) {
-    counter.innerHTML = `<span id='days'>${difference}</span> &nbsp Days To 47!`;
+var days = document.getElementById('days');
+var message = document.getElementById('message');
+if (days && message) {
+    if (difference <= 0) {
+        days.innerText = '';
+        message.innerHTML = "It's bP's Birthday!";
+    } else if (difference === 1) {
+        days.innerText = '';
+        message.innerHTML = "bP's Birthday is Tomorrow!";
+    } else {
+        days.innerText = difference;
+        message.innerHTML = '&nbspDays To 47!';
+    }
 }
 
-var logo = document.getElementById('logo');
-var logoRatio = Math.floor(window.innerWidth * .3);
-window.addEventListener('resize', function() {
-    clearTimeout(window.resizedFinished);
-    window.resizedFinished = setTimeout(function() {
-        logoRatio = Math.floor(window.innerWidth * .3);
-        console.log(`Resized finished: ${logoRatio}`);
-        logo.style.height = `${logoRatio}px`
-        logo.style.width = `${logoRatio}px`
-    }, 250);
-});
-;
+

@@ -5,23 +5,24 @@
     <title>bP's Birthday Benefit</title>
     <link rel="icon" href="bp_icon.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
 </head> 
 <body>
     <header>
-        <div id='logo'>
-            <img src="" alt="Benefit Logo">
-        </div>
         <div id='title'>
-            <hr>
-            <h1>Give More With a '74!</h1><p>#GiveMoreWithA74</p>
-            <h2>bP's Brithday Benefit</h2>
-            <hr>
+            <h1>Give More With a '74!</h1>
+            <h2>bP's Birthday Benefit</h2>
         </div>
+        <img src="educational-benefit.jpg" alt="Benefit Logo">
     </header>
     <br>
-    <div id='countdown'></div>
+    <div id='countdown'>
+        <p id='days'></p>
+        <p id='message'><p>
+    </div>
     <main>
-        <article>
+        <article class="info">
             <p>
                 Please help bP celebrate her 47th birthday by walking, jogging, 
                 biking or some other form of movement. Commit to a 5k (or 47 
@@ -29,7 +30,7 @@
                 13th! If you are able, you can donate to the fund. 
             </p>
         </article>
-        <article>
+        <article class="info">
             <p>
                 Bethanie Perry is an Assistant Professor of history at Northern 
                 Virginia Community College and is passionate not simply about 
@@ -40,18 +41,19 @@
                 and energy towards her community. 
             </p>
         </article>
-        <article>
+        <article id="fund" class="info">
             <p>
                 The <a href="https://twitter.com/hashtag/oneNOVA?src=hashtag_click">#oneNOVA</a> 
                 Student Emergency Fund provides emergency grants of $500 to support 
                 base needs insecurities like food, shelter, medical expenses and 
                 technology needed for remote learning.
             </p>
+            <a id="NOVA" href="https://giving.nvcc.edu/" target="_blank">Learn More!</a>
         </article>
     </main>
     <footer>
-        <a href="donation.html">NOVA Foundation</a>
-        <a href="">Sign Up</a>
+        <a href="donation.html">Make a Donation!</a>
+        <a href="https://forms.gle/2SM5asWqAYam5mFF7" target="_blank">Sign Up!</a>
     </footer>
     <script src="main.js"></script>
 </body>
