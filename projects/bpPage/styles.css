@@ -98,6 +98,9 @@ h2 {
     color: white;
     text-decoration: none;
 }
+article a {
+    color: white;
+}
 #NOVA:hover, article a:hover {
     color: blue;
 }
