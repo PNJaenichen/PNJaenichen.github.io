@@ -11,6 +11,16 @@ body {
     background-color: white;
     border-radius: 5px;
 }
+header {
+    display: flex;
+    justify-content: space-evenly;
+    color: #765be1;
+}
+header img {
+    max-width: 300px;
+    width: 25%;
+    height: auto;
+}
 main {
     display: flex;
     justify-content: space-evenly;
@@ -24,18 +34,14 @@ article {
     width: 30%;
     box-shadow: 0 4px 8px 0 darkred;
 }
-.info p::first-letter {
-    font-size: 150%;
+article a {
+    color: white;
 }
+
 ul {
     list-style-type: none;
     margin: 5px;
     padding: 5px;
-}
-header {
-    display: flex;
-    justify-content: space-evenly;
-    color: #765be1;
 }
 footer {
     width: 100%;
@@ -55,24 +61,6 @@ footer a {
 footer a:hover {
     box-shadow: 0 4px 8px 0 black; 
 }
-header img {
-    max-width: 300px;
-    width: 25%;
-    height: auto;
-}
-h1 {
-    font-size: 48px;
-}
-h2 {
-    font-size: 32px;
-}
-#title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    width: auto;
-}
 #countdown {
     display: flex;
     justify-content: center;
@@ -83,26 +71,31 @@ h2 {
     margin: 0;
     font-size: 300%;
 }
-#message {
-    font-size: 150%;
-    margin-top: 15px;
-}
 #fund {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
 }
+#logo {
+    width: 100%;
+    max-width: 450px;
+}
+#message {
+    font-size: 150%;
+    margin-top: 15px;
+}
 #NOVA {
     color: white;
     text-decoration: none;
 }
-article a {
-    color: white;
-}
+
 #NOVA:hover, article a:hover {
     color: blue;
 }
 #otherDes {
+    font-size: 150%;
+}
+.info p::first-letter {
     font-size: 150%;
 }
