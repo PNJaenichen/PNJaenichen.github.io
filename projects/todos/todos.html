@@ -14,6 +14,24 @@
         <button id="break10">10 Minute Break</button>
         <button id="pauseRestart">Pause/Restart Timer</button>
     </div>
-    <script src="todos.js"></script>
+    <button id="newTodo">Add To Do ...</button>
+    <div id='inputTodo'>
+        <label for="title">Task:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50" required>
+            Input Task information
+        </textarea>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate" required>
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority">
+            <option value="1">High</option>
+            <option value="2">Medium</option>
+            <option value="3">Low</option>
+        </select>
+        <input id="addButton" type="submit" value="Submit">
+    </div>
 </body>
+<script src="todos.js"></script>
 </html>

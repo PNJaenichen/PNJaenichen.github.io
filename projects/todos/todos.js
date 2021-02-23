@@ -1,17 +1,23 @@
-// 'todos' are ojects that can be dynamically created
-
 class todoItem {
-    constructor(title, description, dueDate, priority) {
+    constructor(title, description, dueDate, priority, id=null) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
+        if (id === null) {
+            this.id = 'task' + idCount.toString().padStart(4,'0');
+            idCount++;
+            localStorage.setItem('idCount', idCount);
+        } else {
+            this.id = id;
+        }
     }
 }
 /* TODO have projects or seperate lists of todos with a default when the 
 page is brought up */
 
 function makeTodoCard(task) {
+    localStorage.setItem(task.id, JSON.stringify(task));
     var item = document.createElement('div');
     var headline = document.createElement('h2');
     var hidden = document.createElement('div');
@@ -23,8 +29,7 @@ function makeTodoCard(task) {
     var edit = document.createElement('img');
     var trash = document.createElement('img');
     item.classList.add('grow');
-    item.id = 'task' + idCount.toString().padStart(4,'0');
-    idCount++;
+    item.id = task.id;
     item.style.backgroundColor = '#2a75a9';
     headline.textContent = task.title;
     hidden.classList.add('contents');
@@ -33,9 +38,9 @@ function makeTodoCard(task) {
     due.textContent = task.dueDate;
     options.classList.add('options');
     created.textContent = 'Created: Date Here';
-    complete.src = "\\PNJaenichen.github.io\\assets\\delete.png"
+    complete.src = "\\PNJaenichen.github.io\\assets\\delete.png";
     edit.src = "\\PNJaenichen.github.io\\assets\\edit.jpg";
-    trash.src = "\\PNJaenichen.github.io\\assets\\complete.png"
+    trash.src = "\\PNJaenichen.github.io\\assets\\complete.png";
     complete.classList.add('button');
     edit.classList.add('button');
     trash.classList.add('button');
@@ -50,7 +55,31 @@ function makeTodoCard(task) {
     item.appendChild(hidden);
     document.body.appendChild(item);
 }
+function todoButtonWorks() {
+    Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
+        item[1].addEventListener('mouseover', function() {
+            item[1].children[1].style.display = "block";
+        });
+        item[1].addEventListener('mouseout', function() {
+            item[1].children[1].style.display = "none";
+        });
+    })
 
+    Object.entries(document.getElementsByClassName('button')).forEach(function(item) {
+        item[1].addEventListener('click', function() {
+            const _parent = item[1].parentNode.parentNode.parentNode;
+            const _found = item[1].src.match(/(\w+)(\.png|\.jpg)/)[1];
+            if (_found === 'delete') {
+                var targetTask = document.getElementById(_parent.id);
+                targetTask.remove();
+            } else {
+                console.log(_parent.id, _found);
+            }
+        });
+    });
+    
+    // Need Functionality to edit a previous task
+}
 var timerMain;
 var timerRunning = false;
 function startTimer(duration,display=document.querySelector('#time')) {
@@ -88,40 +117,39 @@ document.querySelector('#pauseRestart').addEventListener('click', function() {
     } else {
         restartTimer();
     }
-})
+});
+
+document.querySelector('#newTodo').addEventListener('click', function() {
+    document.querySelector('#inputTodo').style.display = 'block';
+});
+
+document.querySelector('#addButton').addEventListener('click', function() {
+    var title = document.querySelector('#title');
+    var description = document.querySelector('#description');
+    var dueDate = document.querySelector('#dueDate');
+    var priority = document.querySelector('#priority');
+    var newTask = new todoItem(title.value, description.value, dueDate.value, priority.value);
+    document.querySelector('#inputTodo').style.display = 'none';
+    makeTodoCard(newTask);
+    todoButtonWorks()
+});
 
 /* TODO Interface should be able to do the following: 
     view all projects
     view all todos in each project (perhaps different colors based on pri)
 */
 
-// use localStorage to save user's projects and todos between sessions
-
-var idCount = 1;
-
-var taskOne = new todoItem('This is the task', 'This contains extra information about the task.', '28 Feb 2021', 1);
-var taskTwo = new todoItem('This is another task', 'This is a second tab for testing purposes.', '28 Feb 2021', 2);
-makeTodoCard(taskOne);
-makeTodoCard(taskTwo);
-
-Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
-    item[1].addEventListener('mouseover', function() {
-        item[1].children[1].style.display = "block";
-    });
-    item[1].addEventListener('mouseout', function() {
-        item[1].children[1].style.display = "none";
-    });
+Object.entries(localStorage).forEach(function(item) {
+    if (item[0] !== 'idCount') {
+        makeTodoCard(JSON.parse(item[1]));
+    }
 })
 
-Object.entries(document.getElementsByClassName('button')).forEach(function(item) {
-    item[1].addEventListener('click', function() {
-        const _parent = item[1].parentNode.parentNode.parentNode;
-        const _found = item[1].src.match(/(\w+)(\.png|\.jpg)/)[1];
-        if (_found === 'delete') {
-            var targetTask = document.getElementById(_parent.id);
-            targetTask.remove();
-        } else {
-            console.log(_parent.id, _found);
-        }
-    });
-});
+if (localStorage.getItem('idCount')) {
+    var idCount = localStorage.getItem('idCount');
+} else {
+    var idCount = 1;
+}
+
+todoButtonWorks()
+
