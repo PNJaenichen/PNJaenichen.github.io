@@ -33,7 +33,6 @@ function makeTodoCard(task) {
     item.style.backgroundColor = '#2a75a9';
     headline.textContent = task.title;
     hidden.classList.add('contents');
-    hidden.style.display = 'none';
     desc.textContent = task.description;
     due.textContent = task.dueDate;
     options.classList.add('options');
@@ -55,14 +54,17 @@ function makeTodoCard(task) {
     item.appendChild(hidden);
     document.body.appendChild(item);
 }
+
 function todoButtonWorks() {
     Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
-        item[1].addEventListener('mouseover', function() {
-            item[1].children[1].style.display = "block";
-        });
-        item[1].addEventListener('mouseout', function() {
-            item[1].children[1].style.display = "none";
-        });
+        if (item[1].children[1].nodeName === 'DIV') {
+            item[1].addEventListener('mouseover', function() {
+                item[1].children[1].style.display = "block";
+            });
+            item[1].addEventListener('mouseout', function() {
+                item[1].children[1].style.display = "none";
+            });
+        }
     })
 
     Object.entries(document.getElementsByClassName('button')).forEach(function(item) {
@@ -72,13 +74,79 @@ function todoButtonWorks() {
             if (_found === 'delete') {
                 var targetTask = document.getElementById(_parent.id);
                 targetTask.remove();
-            } else {
-                console.log(_parent.id, _found);
+                localStorage.removeItem(_parent.id);
             }
         });
     });
     
     // Need Functionality to edit a previous task
+
+    Object.entries(document.getElementsByClassName('button')).forEach(function(item) {
+        item[1].addEventListener('click', function() {
+            const _parent = item[1].parentNode.parentNode.parentNode;
+            const _found = item[1].src.match(/(\w+)(\.png|\.jpg)/)[1];
+            if (_found === 'edit') {
+                console.log('edit');
+                console.log(JSON.parse(localStorage.getItem(_parent.id)));
+                _parent.innerHTML = '';
+                var titleLabel = document.createElement('label');
+                titleLabel.htmlFor = 'title';
+                titleLabel.textContent = 'Task:';
+                var titleBox = document.createElement('input');
+                titleBox.type = 'text';
+                titleBox.id = 'title';
+                titleBox.name = 'title';
+                titleBox.required = 'true';
+                titleBox.style.display = 'block';
+                var descLabel = document.createElement('label');
+                descLabel.htmlFor = 'description';
+                descLabel.textContent = 'Description:';
+                var descBox = document.createElement('textarea');
+                descBox.id = 'description';
+                descBox.name = 'description';
+                descBox.rows = '4';
+                descBox.cols = '50';
+                descBox.required = 'true';
+                var dateLabel = document.createElement('label');
+                dateLabel.htmlFor = 'dueDate';
+                dateLabel.textContent = 'Due Date:';
+                var dateBox = document.createElement('input');
+                dateBox.type = 'date';
+                dateBox.id = 'dueDate';
+                dateBox.name = 'dueDate';
+                dateBox.required = 'true';
+                var priorityLabel = document.createElement('label');
+                priorityLabel.htmlFor = 'priority';
+                priorityLabel.textContent = 'Priority:';
+                var priBox = document.createElement('select');
+                priBox.id = 'priority';
+                priBox.name = 'priority';
+                var priOne = document.createElement('option');
+                priOne.value = '1';
+                priOne.textContent = 'High';
+                var priTwo = document.createElement('option');
+                priTwo.value = '2';
+                priTwo.textContent = 'Medium';
+                var priThree = document.createElement('option');
+                priThree = '3';
+                priThree.textContent = 'Low';
+                priBox.appendChild(priOne);
+                priBox.appendChild(priTwo);
+                //priBox.appendChild(priThree);
+                var taskID = document.getElementById(_parent.id)
+                taskID.appendChild(titleLabel);
+                taskID.appendChild(titleBox);
+                taskID.appendChild(descLabel);
+                taskID.appendChild(descBox);
+                taskID.appendChild(dateLabel);
+                taskID.appendChild(dateBox);
+                taskID.appendChild(priorityLabel);
+                taskID.appendChild(priBox);
+            } else {
+                console.log('not edit');
+            }
+        })
+    })
 }
 var timerMain;
 var timerRunning = false;

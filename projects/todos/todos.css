@@ -33,3 +33,6 @@
 	height: 90%;
 	padding: 3px;
 }
+.contents {
+	display: none;
+}
