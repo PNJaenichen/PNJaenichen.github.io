@@ -36,3 +36,17 @@
 .contents {
 	display: none;
 }
+
+.button {
+	float: right;
+	height: 25px;
+	width: 25px;
+	text-align: center;
+	font-size: 125%;
+	line-height: 27px;
+}
+
+.completeMark {
+	border: 1px solid black;
+	border-radius: 100%;
+}

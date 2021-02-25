@@ -25,9 +25,9 @@ function makeTodoCard(task) {
     var due = document.createElement('p');
     var options = document.createElement('div');
     var created = document.createElement('p');
-    var complete = document.createElement('img');
-    var edit = document.createElement('img');
-    var trash = document.createElement('img');
+    var complete = document.createElement('div');
+    var edit = document.createElement('div');
+    var trash = document.createElement('div');
     item.classList.add('grow');
     item.id = task.id;
     item.style.backgroundColor = '#2a75a9';
@@ -37,12 +37,16 @@ function makeTodoCard(task) {
     due.textContent = task.dueDate;
     options.classList.add('options');
     created.textContent = 'Created: Date Here';
-    complete.src = "\\PNJaenichen.github.io\\assets\\delete.png";
-    edit.src = "\\PNJaenichen.github.io\\assets\\edit.jpg";
-    trash.src = "\\PNJaenichen.github.io\\assets\\complete.png";
+    complete.innerText = "";
     complete.classList.add('button');
-    edit.classList.add('button');
+    complete.classList.add('completeMark');
+    complete.title = 'complete';
+    edit.innerText = "\u270e";
+    edit.classList.add('button')
+    edit.title = 'edit';
+    trash.innerText = "\u2718";
     trash.classList.add('button');
+    trash.title = 'remove';
     options.appendChild(created);
     options.appendChild(complete);
     options.appendChild(edit);
@@ -55,9 +59,12 @@ function makeTodoCard(task) {
     document.body.appendChild(item);
 }
 
+
+
 function todoButtonWorks() {
     Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
-        if (item[1].children[1].nodeName === 'DIV') {
+        console.log(item[1]);
+        if (item[1].firstElementChild.localName === 'h2') {
             item[1].addEventListener('mouseover', function() {
                 item[1].children[1].style.display = "block";
             });
@@ -70,22 +77,12 @@ function todoButtonWorks() {
     Object.entries(document.getElementsByClassName('button')).forEach(function(item) {
         item[1].addEventListener('click', function() {
             const _parent = item[1].parentNode.parentNode.parentNode;
-            const _found = item[1].src.match(/(\w+)(\.png|\.jpg)/)[1];
+            const _found = item[1].title;
             if (_found === 'delete') {
                 var targetTask = document.getElementById(_parent.id);
                 targetTask.remove();
                 localStorage.removeItem(_parent.id);
-            }
-        });
-    });
-    
-    // Need Functionality to edit a previous task
-
-    Object.entries(document.getElementsByClassName('button')).forEach(function(item) {
-        item[1].addEventListener('click', function() {
-            const _parent = item[1].parentNode.parentNode.parentNode;
-            const _found = item[1].src.match(/(\w+)(\.png|\.jpg)/)[1];
-            if (_found === 'edit') {
+            } else if (_found === 'edit') {
                 console.log('edit');
                 console.log(JSON.parse(localStorage.getItem(_parent.id)));
                 _parent.innerHTML = '';
@@ -128,11 +125,11 @@ function todoButtonWorks() {
                 priTwo.value = '2';
                 priTwo.textContent = 'Medium';
                 var priThree = document.createElement('option');
-                priThree = '3';
+                priThree.value = '3';
                 priThree.textContent = 'Low';
                 priBox.appendChild(priOne);
                 priBox.appendChild(priTwo);
-                //priBox.appendChild(priThree);
+                priBox.appendChild(priThree);
                 var taskID = document.getElementById(_parent.id)
                 taskID.appendChild(titleLabel);
                 taskID.appendChild(titleBox);
@@ -142,11 +139,20 @@ function todoButtonWorks() {
                 taskID.appendChild(dateBox);
                 taskID.appendChild(priorityLabel);
                 taskID.appendChild(priBox);
-            } else {
-                console.log('not edit');
+                todoButtonWorks();
+            } else if (_found === 'complete') {
+                if (item[1].innerText === '') {
+                    item[1].innerText = '\u2714';
+                    _parent.style.opacity = '0.5';
+                } else {
+                    item[1].innerText = '';
+                    _parent.style.opacity = '1';
+                }
             }
-        })
-    })
+        });
+    });
+    
+    // Need Functionality to edit a previous task
 }
 var timerMain;
 var timerRunning = false;
