@@ -78,13 +78,13 @@ function todoButtonWorks() {
         item[1].addEventListener('click', function() {
             const _parent = item[1].parentNode.parentNode.parentNode;
             const _found = item[1].title;
-            if (_found === 'delete') {
+            if (_found === 'remove') {
                 var targetTask = document.getElementById(_parent.id);
                 targetTask.remove();
                 localStorage.removeItem(_parent.id);
             } else if (_found === 'edit') {
-                console.log('edit');
-                console.log(JSON.parse(localStorage.getItem(_parent.id)));
+                var currTask = JSON.parse(localStorage.getItem(_parent.id));
+                console.log(currTask);
                 _parent.innerHTML = '';
                 var titleLabel = document.createElement('label');
                 titleLabel.htmlFor = 'title';
@@ -94,7 +94,7 @@ function todoButtonWorks() {
                 titleBox.id = 'title';
                 titleBox.name = 'title';
                 titleBox.required = 'true';
-                titleBox.style.display = 'block';
+                titleBox.value = currTask.title;
                 var descLabel = document.createElement('label');
                 descLabel.htmlFor = 'description';
                 descLabel.textContent = 'Description:';
@@ -104,6 +104,7 @@ function todoButtonWorks() {
                 descBox.rows = '4';
                 descBox.cols = '50';
                 descBox.required = 'true';
+                descBox.value = currTask.description;
                 var dateLabel = document.createElement('label');
                 dateLabel.htmlFor = 'dueDate';
                 dateLabel.textContent = 'Due Date:';
@@ -112,6 +113,7 @@ function todoButtonWorks() {
                 dateBox.id = 'dueDate';
                 dateBox.name = 'dueDate';
                 dateBox.required = 'true';
+                dateBox.value = currTask.dueDate;
                 var priorityLabel = document.createElement('label');
                 priorityLabel.htmlFor = 'priority';
                 priorityLabel.textContent = 'Priority:';
@@ -130,6 +132,22 @@ function todoButtonWorks() {
                 priBox.appendChild(priOne);
                 priBox.appendChild(priTwo);
                 priBox.appendChild(priThree);
+                switch (currTask.priority) {
+                    case '1':
+                        priOne.selected = true;
+                        break;
+                    case '2':
+                        priTwo.selected = true;
+                        break;
+                    default:
+                        priThree.selected = true;
+                        break;
+                }
+                var subButton = document.createElement('button');
+                subButton.id = 'editTask';
+                subButton.type = 'submit';
+                subButton.value = 'submit';
+                subButton.textContent = 'Submit';
                 var taskID = document.getElementById(_parent.id)
                 taskID.appendChild(titleLabel);
                 taskID.appendChild(titleBox);
@@ -139,7 +157,7 @@ function todoButtonWorks() {
                 taskID.appendChild(dateBox);
                 taskID.appendChild(priorityLabel);
                 taskID.appendChild(priBox);
-                todoButtonWorks();
+                taskID.appendChild(subButton);
             } else if (_found === 'complete') {
                 if (item[1].innerText === '') {
                     item[1].innerText = '\u2714';
