@@ -59,20 +59,20 @@ function makeTodoCard(task) {
     document.body.appendChild(item);
 }
 
-
-
 function todoButtonWorks() {
     Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
         console.log(item[1]);
-        if (item[1].firstElementChild.localName === 'h2') {
-            item[1].addEventListener('mouseover', function() {
-                item[1].children[1].style.display = "block";
-            });
-            item[1].addEventListener('mouseout', function() {
-                item[1].children[1].style.display = "none";
-            });
-        }
-    })
+        item[1].addEventListener('mouseover', function taskExtend() {
+            if(item[1].children[1]) {
+                item[1].children[1].style.display = 'block';
+            }
+        });
+        item[1].addEventListener('mouseout', function taskShrink() {
+            if(item[1].children[1]) {
+                item[1].children[1].style.display = 'none';
+            }
+        });
+    });
 
     Object.entries(document.getElementsByClassName('button')).forEach(function(item) {
         item[1].addEventListener('click', function() {
@@ -84,41 +84,40 @@ function todoButtonWorks() {
                 localStorage.removeItem(_parent.id);
             } else if (_found === 'edit') {
                 var currTask = JSON.parse(localStorage.getItem(_parent.id));
-                console.log(currTask);
                 _parent.innerHTML = '';
                 var titleLabel = document.createElement('label');
-                titleLabel.htmlFor = 'title';
+                titleLabel.htmlFor = 'newTitle';
                 titleLabel.textContent = 'Task:';
                 var titleBox = document.createElement('input');
                 titleBox.type = 'text';
-                titleBox.id = 'title';
+                titleBox.id = 'newTitle';
                 titleBox.name = 'title';
                 titleBox.required = 'true';
                 titleBox.value = currTask.title;
                 var descLabel = document.createElement('label');
-                descLabel.htmlFor = 'description';
+                descLabel.htmlFor = 'newDescription';
                 descLabel.textContent = 'Description:';
                 var descBox = document.createElement('textarea');
-                descBox.id = 'description';
+                descBox.id = 'newDescription';
                 descBox.name = 'description';
                 descBox.rows = '4';
                 descBox.cols = '50';
                 descBox.required = 'true';
                 descBox.value = currTask.description;
                 var dateLabel = document.createElement('label');
-                dateLabel.htmlFor = 'dueDate';
+                dateLabel.htmlFor = 'newDate';
                 dateLabel.textContent = 'Due Date:';
                 var dateBox = document.createElement('input');
                 dateBox.type = 'date';
-                dateBox.id = 'dueDate';
+                dateBox.id = 'newDate';
                 dateBox.name = 'dueDate';
                 dateBox.required = 'true';
                 dateBox.value = currTask.dueDate;
                 var priorityLabel = document.createElement('label');
-                priorityLabel.htmlFor = 'priority';
+                priorityLabel.htmlFor = 'newPriority';
                 priorityLabel.textContent = 'Priority:';
                 var priBox = document.createElement('select');
-                priBox.id = 'priority';
+                priBox.id = 'newPriority';
                 priBox.name = 'priority';
                 var priOne = document.createElement('option');
                 priOne.value = '1';
@@ -149,15 +148,28 @@ function todoButtonWorks() {
                 subButton.value = 'submit';
                 subButton.textContent = 'Submit';
                 var taskID = document.getElementById(_parent.id)
-                taskID.appendChild(titleLabel);
-                taskID.appendChild(titleBox);
-                taskID.appendChild(descLabel);
-                taskID.appendChild(descBox);
-                taskID.appendChild(dateLabel);
-                taskID.appendChild(dateBox);
-                taskID.appendChild(priorityLabel);
-                taskID.appendChild(priBox);
-                taskID.appendChild(subButton);
+                var test = document.createElement('div');
+                test.appendChild(titleLabel);
+                test.appendChild(titleBox);
+                test.appendChild(descLabel);
+                test.appendChild(descBox);
+                test.appendChild(dateLabel);
+                test.appendChild(dateBox);
+                test.appendChild(priorityLabel);
+                test.appendChild(priBox);
+                test.appendChild(subButton);
+                taskID.appendChild(test);
+                document.getElementById('editTask').addEventListener('click', function() {
+                    var title = document.querySelector('#newTitle');
+                    var description = document.querySelector('#newDescription');
+                    var dueDate = document.querySelector('#newDate');
+                    var priority = document.querySelector('#newPriority');
+                    var newTask = new todoItem(title.value, description.value, dueDate.value, priority.value, currTask.id);
+                    document.getElementById(currTask.id).remove();
+                    makeTodoCard(newTask);
+                    todoButtonWorks()
+                })
+
             } else if (_found === 'complete') {
                 if (item[1].innerText === '') {
                     item[1].innerText = '\u2714';
