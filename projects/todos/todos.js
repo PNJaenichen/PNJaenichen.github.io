@@ -4,6 +4,8 @@ class todoItem {
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
+        const _today = new Date();
+        this.createdDate = `${_today.getFullYear()}-${String(_today.getMonth()).padStart(2, '0')}-${String(_today.getDate()).padStart(2,'0')}`
         if (id === null) {
             this.id = 'task' + idCount.toString().padStart(4,'0');
             idCount++;
@@ -36,7 +38,7 @@ function makeTodoCard(task) {
     desc.textContent = task.description;
     due.textContent = task.dueDate;
     options.classList.add('options');
-    created.textContent = 'Created: Date Here';
+    created.textContent = `Created: ${task.createdDate}`;
     complete.innerText = "";
     complete.classList.add('button');
     complete.classList.add('completeMark');
