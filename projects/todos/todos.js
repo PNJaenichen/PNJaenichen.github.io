@@ -1,6 +1,7 @@
 class todoItem {
-    constructor(title, description, dueDate, priority, id=null) {
+    constructor(title, project, description, dueDate, priority, id=null) {
         this.title = title;
+        this.project = project;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
@@ -94,8 +95,16 @@ function todoButtonWorks() {
                 titleBox.type = 'text';
                 titleBox.id = 'newTitle';
                 titleBox.name = 'title';
-                titleBox.required = 'true';
+                titleBox.required = true;
                 titleBox.value = currTask.title;
+                var projectLabel = document.createElement('label');
+                projectLabel.htmlFor = 'newProject';
+                projectLabel.textContent = 'Project:';
+                var projectBox = document.createElement('input');
+                projectBox.type = 'text';
+                projectBox.id = 'newProject';
+                projectBox.name = 'project';
+                projectBox.value = currTask.project;
                 var descLabel = document.createElement('label');
                 descLabel.htmlFor = 'newDescription';
                 descLabel.textContent = 'Description:';
@@ -104,7 +113,7 @@ function todoButtonWorks() {
                 descBox.name = 'description';
                 descBox.rows = '4';
                 descBox.cols = '50';
-                descBox.required = 'true';
+                descBox.required = true;
                 descBox.value = currTask.description;
                 var dateLabel = document.createElement('label');
                 dateLabel.htmlFor = 'newDate';
@@ -113,7 +122,7 @@ function todoButtonWorks() {
                 dateBox.type = 'date';
                 dateBox.id = 'newDate';
                 dateBox.name = 'dueDate';
-                dateBox.required = 'true';
+                dateBox.required = true;
                 dateBox.value = currTask.dueDate;
                 var priorityLabel = document.createElement('label');
                 priorityLabel.htmlFor = 'newPriority';
@@ -150,23 +159,26 @@ function todoButtonWorks() {
                 subButton.value = 'submit';
                 subButton.textContent = 'Submit';
                 var taskID = document.getElementById(_parent.id)
-                var test = document.createElement('div');
-                test.appendChild(titleLabel);
-                test.appendChild(titleBox);
-                test.appendChild(descLabel);
-                test.appendChild(descBox);
-                test.appendChild(dateLabel);
-                test.appendChild(dateBox);
-                test.appendChild(priorityLabel);
-                test.appendChild(priBox);
-                test.appendChild(subButton);
-                taskID.appendChild(test);
+                var editForm = document.createElement('div');
+                editForm.appendChild(titleLabel);
+                editForm.appendChild(titleBox);
+                editForm.appendChild(projectLabel);
+                editForm.appendChild(projectBox);
+                editForm.appendChild(descLabel);
+                editForm.appendChild(descBox);
+                editForm.appendChild(dateLabel);
+                editForm.appendChild(dateBox);
+                editForm.appendChild(priorityLabel);
+                editForm.appendChild(priBox);
+                editForm.appendChild(subButton);
+                taskID.appendChild(editForm);
                 document.getElementById('editTask').addEventListener('click', function() {
                     var title = document.querySelector('#newTitle');
+                    var project = document.querySelector('#newProject');
                     var description = document.querySelector('#newDescription');
                     var dueDate = document.querySelector('#newDate');
                     var priority = document.querySelector('#newPriority');
-                    var newTask = new todoItem(title.value, description.value, dueDate.value, priority.value, currTask.id);
+                    var newTask = new todoItem(title.value, project.value, description.value, dueDate.value, priority.value, currTask.id);
                     document.getElementById(currTask.id).remove();
                     makeTodoCard(newTask);
                     todoButtonWorks()
@@ -183,8 +195,6 @@ function todoButtonWorks() {
             }
         });
     });
-    
-    // Need Functionality to edit a previous task
 }
 var timerMain;
 var timerRunning = false;
@@ -231,10 +241,11 @@ document.querySelector('#newTodo').addEventListener('click', function() {
 
 document.querySelector('#addButton').addEventListener('click', function() {
     var title = document.querySelector('#title');
+    var project = document.querySelector('#project');
     var description = document.querySelector('#description');
     var dueDate = document.querySelector('#dueDate');
     var priority = document.querySelector('#priority');
-    var newTask = new todoItem(title.value, description.value, dueDate.value, priority.value);
+    var newTask = new todoItem(title.value, project.value, description.value, dueDate.value, priority.value);
     document.querySelector('#inputTodo').style.display = 'none';
     makeTodoCard(newTask);
     todoButtonWorks()
