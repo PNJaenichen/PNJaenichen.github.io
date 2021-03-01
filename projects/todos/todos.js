@@ -16,8 +16,6 @@ class todoItem {
         }
     }
 }
-/* TODO have projects or seperate lists of todos with a default when the 
-page is brought up */
 
 function makeTodoCard(task) {
     localStorage.setItem(task.id, JSON.stringify(task));
@@ -59,7 +57,19 @@ function makeTodoCard(task) {
     hidden.appendChild(options);
     item.appendChild(headline);
     item.appendChild(hidden);
-    document.body.appendChild(item);
+    var projectDiv = document.getElementById('projects');
+    if (document.getElementById(task.project)) {
+        document.getElementById(task.project).appendChild(item);   
+    } else {
+        var newProj = document.createElement('div');
+        var projTitle = document.createElement('h3');
+        newProj.id = task.project;
+        projTitle.textContent = task.project;
+        newProj.appendChild(projTitle);
+        newProj.classList.add('project');
+        newProj.appendChild(item);
+        projectDiv.appendChild(newProj);
+    }
 }
 
 function todoButtonWorks() {
@@ -252,7 +262,6 @@ document.querySelector('#addButton').addEventListener('click', function() {
 });
 
 /* TODO Interface should be able to do the following: 
-    view all projects
     view all todos in each project (perhaps different colors based on pri)
 */
 

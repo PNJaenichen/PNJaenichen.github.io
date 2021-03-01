@@ -19,7 +19,7 @@
         <label for="title">Task:</label>
         <input type="text" id="title" name="title" required>
         <label for="project">Project:</label>
-        <input type="text" id="project" name="project" required>
+        <input type="text" id="project" name="project" value="Default" required>
         <label for="description">Description:</label>
         <textarea id="description" name="description" rows="4" cols="50" required>Input Task information</textarea>
         <label for="dueDate">Due Date:</label>
@@ -32,7 +32,8 @@
         </select>
         <input id="addButton" type="submit" value="Submit">
     </div>
-    <div class="button completeMark">&#10004;</div>
+    <div id="graphKey"></div>
+    <div id="projects"></div>
 </body>
 <script src="todos.js"></script>
 </html>
