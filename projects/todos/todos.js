@@ -208,7 +208,7 @@ function todoButtonWorks() {
 }
 var timerMain;
 var timerRunning = false;
-function startTimer(duration,display=document.querySelector('#time')) {
+function startTimer(duration,display=document.querySelector('#timerFace')) {
     timerRunning = true;
     var timer = duration, minutes, seconds;
     timerMain = setInterval(function() {
@@ -224,7 +224,7 @@ function startTimer(duration,display=document.querySelector('#time')) {
 }
 function restartTimer(){
     clearInterval(timerMain);
-    var currentTime = document.querySelector("#time").textContent;
+    var currentTime = document.querySelector("#timerFace").textContent;
     var time = currentTime.split(':');
     startTimer((parseInt(time[0]) * 60) + parseInt(time[1]));
 }

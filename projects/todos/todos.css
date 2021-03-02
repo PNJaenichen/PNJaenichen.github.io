@@ -1,5 +1,97 @@
+:root {
+	--tomato: #FF6347;
+	--leaves: #A8b848;
+}
+@font-face {
+	font-family: 'LCD';
+	src: url('/PNJaenichen.github.io/assets/ticking-timebomb-bb.regular.ttf');
+}
 #inputTodo {
 	display: none;
+}
+.container {
+	display: flex;
+	justify-content: center;
+	width: 250px;
+	padding: 10px;
+}
+#tomatoFill {
+	width: 180px;
+	height: 180px;
+	top: 100px;
+	border-radius: 50%;
+	color: var(--tomato);
+	background-color: currentColor;
+	z-index: 1;
+}
+#tomatoFill::before {
+	content: '';
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	background-color: var(--tomato);
+	position: absolute;
+	left: 100px;
+}
+#tomatoFill::after {
+	content: '';
+	width: 220px;
+	height: 90px;
+	border-radius: 100% 0% 48% 48% / 0% 0% 100% 100%; 
+	background-color: var(--tomato);
+	position: absolute;
+	top: 168px;
+	left: 57px;
+}
+#tomatoTop {
+	height: 50px;
+	width: 50px;
+	background-color: var(--leaves);
+	position: absolute;
+	border-radius: 250px 0;
+	top: 63px;
+	left: 115px;
+	z-index: 1;
+	transform: rotate(20deg);
+}
+#tomatoTop::before {
+	content: '';
+	height: 50px;
+	width: 50px;
+	background-color: var(--leaves);
+	position: absolute;
+	border-radius: 0 250px;
+	left: 53px;
+	top: -13px;
+	z-index: 1;
+	transform: rotate(-25deg);
+}
+#tomatoTop::after {
+	content: '';
+	height: 50px;
+	width: 50px;
+	background-color: var(--leaves);
+	position: absolute;
+	border-radius: 250px 0;
+	left: 35px;
+	top: 7px;
+	z-index: 1;
+	transform: rotate(-70deg);
+}
+#timerFace {
+	height: 75px;
+	width: 175px;
+	background-color: black;
+	position: absolute;
+	border-radius: 5px;
+	z-index: 2;
+	top: 135px;
+	left: 79px;
+	text-align: center;
+	font-family: 'LCD', 'Courier New';
+	color: green;
+	font-size: 84px;
+	line-height: 87px;
 }
 .grow {
     padding: 5px 5px 5px 5px;
