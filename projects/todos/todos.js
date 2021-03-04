@@ -6,7 +6,7 @@ class todoItem {
         this.dueDate = dueDate;
         this.priority = priority;
         const _today = new Date();
-        this.createdDate = `${_today.getFullYear()}-${String(_today.getMonth()).padStart(2, '0')}-${String(_today.getDate()).padStart(2,'0')}`
+        this.createdDate = `${_today.getFullYear()}-${String(_today.getMonth() + 1).padStart(2, '0')}-${String(_today.getDate()).padStart(2,'0')}`
         if (id === null) {
             this.id = 'task' + idCount.toString().padStart(4,'0');
             idCount++;
@@ -33,6 +33,18 @@ function makeTodoCard(task) {
     item.classList.add('grow');
     item.id = task.id;
     item.style.backgroundColor = '#2a75a9';
+    const _today = new Date();
+    const _due = new Date(task.dueDate);
+    const _daysDue = Math.floor((_due - _today) / 86400000) + 1;
+    if (_daysDue > 3) {
+        item.style.borderColor = 'black';
+    } else if (_daysDue >= 1) {
+        item.style.borderColor = 'green';
+    } else if (_daysDue === 0) {
+        item.style.borderColor = 'yellow';
+    } else {
+        item.style.borderColor = 'red';
+    }
     headline.textContent = task.title;
     priority.classList.add('priority');
     switch (task.priority) {
@@ -88,7 +100,6 @@ function makeTodoCard(task) {
 
 function todoButtonWorks() {
     Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
-        console.log(item[1]);
         item[1].addEventListener('mouseover', function taskExtend() {
             if(item[1].children[2]) {
                 item[1].children[2].style.display = 'block';

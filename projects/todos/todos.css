@@ -125,9 +125,6 @@
 	top: 45px;
 	left: 149px;
 }
-.project {
-	position: relative;
-}
 .priority {
 	background-color: green;
 	height: 15px;
@@ -136,6 +133,21 @@
 	position: absolute;
 	top: 5px;
 	z-index: 1;
+}
+.keyPri {
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+}
+.keyDue {
+	height: 15px;
+	width: 15px;
+	border-radius: 2px;
+	border-style: solid;
+	border-width: 2px;
+}
+#graphKey {
+	display: flex;
 }
 .grow {
     padding: 5px 5px 5px 5px;
@@ -150,6 +162,8 @@
   	-webkit-transition: height 0.5s;
   	text-align: center;
   	overflow: hidden;
+	border-width: 2px;
+	border-style: solid;
 }
 .grow:hover {
     height: auto;
@@ -186,3 +200,14 @@
 	border: 1px solid black;
 	border-radius: 100%;
 }
+
+#projects {
+	display: inline;
+	width: 100%;
+}
+
+.project {
+	width: 100%;
+	float: left;
+}
+
