@@ -21,6 +21,7 @@ function makeTodoCard(task) {
     localStorage.setItem(task.id, JSON.stringify(task));
     var item = document.createElement('div');
     var headline = document.createElement('h2');
+    var priority = document.createElement('div');
     var hidden = document.createElement('div');
     var desc = document.createElement('p');
     var due = document.createElement('p');
@@ -33,6 +34,18 @@ function makeTodoCard(task) {
     item.id = task.id;
     item.style.backgroundColor = '#2a75a9';
     headline.textContent = task.title;
+    priority.classList.add('priority');
+    switch (task.priority) {
+        case '3':
+            priority.style.backgroundColor = 'green';
+            break;
+        case '2':
+            priority.style.backgroundColor = 'yellow';
+            break;
+        default:
+            priority.style.backgroundColor = 'red';
+            break;
+    }
     hidden.classList.add('contents');
     desc.textContent = task.description;
     due.textContent = task.dueDate;
@@ -56,6 +69,7 @@ function makeTodoCard(task) {
     hidden.appendChild(due);
     hidden.appendChild(options);
     item.appendChild(headline);
+    item.appendChild(priority);
     item.appendChild(hidden);
     var projectDiv = document.getElementById('projects');
     if (document.getElementById(task.project)) {
@@ -76,13 +90,13 @@ function todoButtonWorks() {
     Object.entries(document.getElementsByClassName('grow')).forEach(function(item) {
         console.log(item[1]);
         item[1].addEventListener('mouseover', function taskExtend() {
-            if(item[1].children[1]) {
-                item[1].children[1].style.display = 'block';
+            if(item[1].children[2]) {
+                item[1].children[2].style.display = 'block';
             }
         });
         item[1].addEventListener('mouseout', function taskShrink() {
-            if(item[1].children[1]) {
-                item[1].children[1].style.display = 'none';
+            if(item[1].children[2]) {
+                item[1].children[2].style.display = 'none';
             }
         });
     });
@@ -260,10 +274,6 @@ document.querySelector('#addButton').addEventListener('click', function() {
     makeTodoCard(newTask);
     todoButtonWorks()
 });
-
-/* TODO Interface should be able to do the following: 
-    view all todos in each project (perhaps different colors based on pri)
-*/
 
 Object.entries(localStorage).forEach(function(item) {
     if (item[0] !== 'idCount') {

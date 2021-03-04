@@ -17,14 +17,21 @@
 	padding: 10px;
 	margin: 10px;
 	border: 1px solid black;
+	position: relative;
+}
+#pomodoro h3 {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	top: -18px;
 }
 #tomatoFill {
 	width: 180px;
 	height: 180px;
 	border-radius: 50%;
 	position: absolute;
-	top: 82px;
-	left: 34px;
+	top: 25px;
+	left: 13px;
 	background-color: var(--tomato);
 	z-index: 1;
 }
@@ -53,8 +60,8 @@
 	background-color: var(--leaves);
 	position: absolute;
 	border-radius: 250px 0;
-	top: 70px;
-	left: 104px;
+	top: 15px;
+	left: 75px;
 	z-index: 2;
 	transform: rotate(20deg);
 }
@@ -89,8 +96,8 @@
 	position: absolute;
 	border-radius: 5px;
 	z-index: 2;
-	top: 135px;
-	left: 63px;
+	top: 80px;
+	left: 40px;
 	text-align: center;
 	font-family: 'LCD', 'Courier New';
 	color: green;
@@ -107,16 +114,28 @@
 	position: absolute;
 }
 #pauseRestart {
-	top: 222px;
-	left: 129px;
+	top: 165px;
+	left: 105px;
 }
 #reset50 {
-	top: 102px;
-	left: 84px;
+	top: 45px;
+	left: 59px;
 }
 #break10 {
-	top: 102px;
-	left: 174px;
+	top: 45px;
+	left: 149px;
+}
+.project {
+	position: relative;
+}
+.priority {
+	background-color: green;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	position: absolute;
+	top: 5px;
+	z-index: 1;
 }
 .grow {
     padding: 5px 5px 5px 5px;
