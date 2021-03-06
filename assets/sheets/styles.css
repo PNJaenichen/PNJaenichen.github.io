@@ -1,0 +1,101 @@
+:root {
+    --papaya: #FAB41E;
+    --yaleBlue: #17468B;
+    --avsBurgandy: #6F263D;
+    --avsBlue: #236192;
+    --avsSilver: #A2AAAD;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+    padding: 10px;
+}
+html {
+    font-size: 16px;
+}
+h1 {
+    font-family: "Roboto Slab", serif;
+    font-weight: 700;
+    font-size: 26px;
+}
+h2, h3, h4, h5, h6 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+}
+p {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.categories {
+    display: flex;
+    border: 2px solid var(--avsSilver);
+    width: 100%;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+.categories h2 {
+    width: 100%;
+}
+.color {
+    margin: 10px;
+    width: 31%;
+    text-align: center;
+}
+.color p {
+    font-size: 1rem;
+    margin: 0;
+}
+#papayaOrange {
+    background-color: var(--papaya);
+  }
+#yaleBlue {
+    background-color: var(--yaleBlue);
+    color: white;
+}
+#AvsBurgandy {
+    background-color: var(--avsBurgandy);
+    color: white;
+}
+#AvsBlue {
+    background-color: var(--avsBlue);
+    color: white;
+}
+#AvsSilver {
+    background-color: var(--avsSilver);
+}
+.font p {
+    margin: 0;
+}
+.font p:first-child {
+    text-decoration: underline;
+    font-size: 1.1rem;
+}
+.font p:nth-child(3) {
+    font-weight: bold;
+}
+.font p:last-child {
+    font-style: italic;
+}
+#RobotoSlab p {
+    font-family: "Roboto Slab", serif;
+}
+#Roboto p {
+    font-family: "Roboto", sans-serif;
+}
+.style {
+    width: 100%;
+}
+.style * {
+    margin: 0;
+    padding: 0;
+}
+.style ul {
+    margin-top: 0px;
+    margin-left: 35px;
+}
+
+
+
+  
