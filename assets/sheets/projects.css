@@ -9,10 +9,10 @@ video {
   border: 0; 
   font-size: 100%; 
   font: inherit; 
-  vertical-align: 
-  baseline; 
+  vertical-align: baseline; 
   margin: 0; 
-  padding: 0; }
+  padding: 0; 
+}
 
 html { 
   font-size: 62.5%; 
@@ -68,14 +68,17 @@ h2 {
 .tab {
   padding: 20px; 
   text-align: left;
+  width: 99%;
 }
 
 h3 {
-  font-size: 20px; font-weight: bold;
+  font-size: 20px; 
+  font-weight: bold;
 }
 
 p {
-  font-size: 15px; margin-top: 10px; 
+  font-size: 15px; 
+  margin-top: 10px; 
 }
 
 @media screen and (min-width: 768px) {
@@ -85,50 +88,54 @@ p {
 }
 
 .thumbnail {
-    position: relative;
-    zoom: normal;
-    transform: none;
-    transform-origin: 0 0;
-    -ms-zoom: 0.25;
-    -moz-transform: scale(0.25);
-    -moz-transform-origin: 0 0;
-    -o-transform: scale(0.25);
-    -o-transform-origin: 0 0;
-    -webkit-transform: scale(0.25);
-    -webkit-transform-origin: 0 0;
+  position: relative;
+  zoom: normal;
+  transform: none;
+  transform-origin: 0 0;
+  -ms-zoom: 0.25;
+  -moz-transform: scale(0.25);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(0.25);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.25);
+  -webkit-transform-origin: 0 0;
 }
+
 .thumbnail:after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
+
 .thumbnail iframe {
-    width: 1440px;
-    height: 900px;
+  width: 1440px;
+  height: 900px;
 }
+
 .thumbnail-container {
-    width: calc(1440px * 0.25);
-    height: calc(900px * 0.25);
-    display: inline-block;
-    overflow: hidden;
-    position: relative;
+  width: calc(1440px * 0.25);
+  height: calc(900px * 0.25);
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
 }
+
 .project {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 99%;
 }
 
 .left-column {
     float: left;
-    width: 39%;
+    width: 50%;
 }
 .right-column {
     float: right;
-    width: 59%;
+    width: 49%;
 
 }
 .tab-wrap {
@@ -238,9 +245,11 @@ p {
     box-sizing: border-box;
     padding: 15px;
   }
+
   @media (min-width:768px) {
-  
-  .tab + label { width: auto; }
+    .tab + label { 
+      width: auto; 
+    }
   }
   
   .tab + label:hover {
