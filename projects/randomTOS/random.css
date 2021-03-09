@@ -1,0 +1,16 @@
+#dropMenu {
+    display: flex;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 110px;
+    height: 70px;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    overflow: clip;
+    transition: height 8s 1s;
+}
+
+#dropMenu:hover {
+    height: auto;
+}
