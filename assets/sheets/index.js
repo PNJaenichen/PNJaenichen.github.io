@@ -9,7 +9,7 @@ function dayDifference(input1, input2) {
     var diffTime = input1.getTime() - input2.getTime();
     return Math.floor(diffTime / (1000 * 3600 * 24));
 }
-var dates = [new Date(), new Date(2021,0,4), new Date(2021,0,24)];
+var dates = [new Date(), new Date(2021,0,4), new Date(2021,2,10)];
 document.getElementById('today').innerHTML = formatDate(dates[0]);
 document.getElementById('created').innerHTML = formatDate(dates[1]);
 document.getElementById('dayDiff1').innerHTML = dayDifference(dates[0],dates[1]);
