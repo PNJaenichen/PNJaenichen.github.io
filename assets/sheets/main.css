@@ -1,43 +1,31 @@
-html, body {
-    height: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+:root {
+    --papaya: #FAB41E;
+    --yaleBlue: #17468B;
+    --avsBurgandy: #6F263D;
+    --avsBlue: #236192;
+    --avsSilver: #A2AAAD;
 }
-body {
-    overflow: auto;
+*, *::before, *::after {
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
     padding: 10px;
-
 }
-.grid {
-    display: grid;
-    grid-template: repeat(12, 1fr) / repeat(16, 1fr);
+html {
+    font-size: 16px;
+    background-color: var(--avsSilver);
 }
-header {
-    display: grid;
-    grid-area: 1 / 1 / 5 / 16;
+h1 {
+    font-family: "Roboto Slab", serif;
+    font-weight: 700;
+    font-size: 26px;
 }
-.logo {
-    grid-area: 1 / 1 / 3 / 2;
-    object-fit: cover;
-    width: 100%;
-    max-height: 100%;
+h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    font-size: 18px;
 }
-nav {
-    grid-area: 1 / 4 / 12 / 16;
-    display: flex;
-    justify-content: space-evenly;
-    width: 70%;
-}
-main {
-    grid-area: 5 / 1 / 12 / 16;
-}
-footer {
-    grid-area: 11 / 1 / 12 / 16;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    height: 75px;
-}
-
-footer img {
-    width: 50px;
-    height: 50px;
+p {
+    font-weight: 400;
+    font-size: 14px;
 }
