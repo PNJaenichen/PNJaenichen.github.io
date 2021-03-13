@@ -3,20 +3,19 @@ html, body {
 }
 body {
     overflow: auto;
-    padding: 10px;
-
 }
 .grid {
     display: grid;
-    grid-template: repeat(12, 1fr) / repeat(16, 1fr);
+    grid-template: repeat(16, 1fr) / repeat(16, 1fr);
 }
 .hero-image {
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../pinatubo_phrog.jpg');
-    height: 50%;
+    height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    border-radius: 5px;
 }
 .hero-text {
     text-align: center;
@@ -27,7 +26,6 @@ body {
     color: white;
 }
 header {
-    display: grid;
     grid-area: 1 / 1 / 5 / 16;
 }
 .logo {
@@ -37,16 +35,15 @@ header {
 
 }
 nav {
-    grid-area: 1 / 4 / 12 / 16;
+    grid-area: 5 / 1 / 6 / 16;
     display: flex;
     justify-content: space-evenly;
-    width: 70%;
 }
 main {
-    grid-area: 5 / 1 / 12 / 16;
+    grid-area: 6 / 1 / 11 / 16;
 }
 footer {
-    grid-area: 11 / 1 / 12 / 16;
+    grid-area: 15 / 1 / 16 / 16;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -56,4 +53,15 @@ footer {
 footer img {
     width: 50px;
     height: 50px;
+    mix-blend-mode: multiply;
+}
+p, ol, ul, li {
+    padding: 0;
+}
+ol, ul {
+    margin-left: 50px;
+}
+span {
+    padding: 0;
+    margin: 0;
 }
