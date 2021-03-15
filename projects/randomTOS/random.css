@@ -20,7 +20,9 @@
     display: inline-flex;
     width: 99%;
     height: 500px;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
 }
 
 .mySlides {
@@ -47,4 +49,19 @@
     border: none;
     background-color: whitesmoke;
     opacity: 0.6;
+}
+
+.dotControl {
+    display: flex;
+    margin: 5px;
+    width: 75px;
+    justify-content: space-evenly;
+}
+
+.slideDot {
+    width: 10px;
+    height: 10px;
+    border: 3px solid darkslategray;
+    border-radius: 50%;
+    font-size: 0px;
 }
