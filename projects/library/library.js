@@ -21,6 +21,7 @@ let addContainer = document.getElementById('container');
 
 function makeBookForm() {
     makeNewBookButton()
+    let bookForm = document.createElement('form');
     let titleLabel = document.createElement('label');
     let authorLabel = document.createElement('label');
     let pageLabel = document.createElement('label');
@@ -29,7 +30,7 @@ function makeBookForm() {
     authorLabel.id = 'author-label';
     pageLabel.id = 'page-label';
     readLabel.id = 'read-label';
-    titleLabel.innerHTML = 'Title:';
+    titleLabel.innerHTML = '*Title:';
     authorLabel.innerHTML = 'Author:';
     pageLabel.innerHTML = 'Pages:';
     readLabel.innerHTML = 'Read?';
@@ -61,15 +62,16 @@ function makeBookForm() {
     submitButton.id = 'submitBook';
     submitButton.type = 'submit';
     submitButton.value = 'Submit';
-    readLabel.appendChild(readIn);
-    addContainer.appendChild(titleLabel);
-    addContainer.appendChild(titleIn);
-    addContainer.appendChild(authorLabel);
-    addContainer.appendChild(authorIn);
-    addContainer.appendChild(pageLabel);
-    addContainer.appendChild(pageIn);
-    addContainer.appendChild(readLabel);
-    addContainer.appendChild(submitButton);
+    bookForm.appendChild(titleLabel);
+    bookForm.appendChild(titleIn);
+    bookForm.appendChild(authorLabel);
+    bookForm.appendChild(authorIn);
+    bookForm.appendChild(pageLabel);
+    bookForm.appendChild(pageIn);
+    bookForm.appendChild(readLabel);
+    bookForm.appendChild(readIn);
+    bookForm.appendChild(submitButton);
+    addContainer.appendChild(bookForm);
     submission();
 }
 
@@ -80,9 +82,11 @@ function submission() {
         let author = document.getElementById('author').value;
         let pages = document.getElementById('pages').value;
         let read = document.getElementById('read').checked;
-        addBookToLibrary(title, author, parseInt(pages), read);
-        makeNewBookButton();
-        printLibrary();
+        if (title !== '') {
+            addBookToLibrary(title, author, parseInt(pages), read);
+            makeNewBookButton();
+            printLibrary();
+        }
     };
 }
 
@@ -96,7 +100,7 @@ function makeNewBookButton() {
     newBook.addEventListener('click', makeBookForm);
 }
 
-// addBookToLibrary('Rhythm of War', 'Brandon Sanderson', 1232, false);
+addBookToLibrary('Rhythm of War', 'Brandon Sanderson', 1232, false);
 // addBookToLibrary("A Wise Man's Fear",'Patrick Rothfuss',994,true);
 // addBookToLibrary("Chesty", "Jon T. Hoffman", 676, false);
 
