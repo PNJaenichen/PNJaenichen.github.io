@@ -1,47 +1,47 @@
-function getGridSize() {
-    let userSize = NaN;
-    do {
-        userSize = prompt("Enter Grid size 1-100", 16);
-    } while (!parseInt(userSize) || parseInt(userSize) < 0 || parseInt(userSize) > 100);
-    buildGrid(userSize);
-}
+/* eslint-disable linebreak-style */
+const container = document.querySelector('#container');
+const reset = document.querySelector('#reset');
 
 function buildGrid(size) {
-    let gridSize = size;
-    let relSize = `${(1 / gridSize) * 100}%`;
-
-    for (let i = 0; i < gridSize; i++) {
-        let new_row = document.createElement('div');
-        new_row.style.height = relSize;
-        new_row.className = 'row';
-        for (let j = 0; j < gridSize; j++) {
-            let new_pix = document.createElement('div');
-            new_pix.id = `${i}_${j}`;
-            new_pix.className = 'pixel';
-            new_pix.style.width = relSize;
-            new_pix.style.height = "100%";
-            new_row.appendChild(new_pix);
-        }
-        container.appendChild(new_row);
+  const gridSize = size;
+  const relSize = `${(1 / gridSize) * 100}%`;
+  for (let i = 0; i < gridSize; i += 1) {
+    const newRow = document.createElement('div');
+    newRow.style.height = relSize;
+    newRow.className = 'row';
+    for (let j = 0; j < gridSize; j += 1) {
+      const newPix = document.createElement('div');
+      newPix.id = `${i}_${j}`;
+      newPix.className = 'pixel';
+      newPix.style.width = relSize;
+      newPix.style.height = '100%';
+      newRow.appendChild(newPix);
     }
+    container.appendChild(newRow);
+  }
+}
+
+function getGridSize() {
+  let userSize = NaN;
+  do {
+    userSize = prompt('Enter Grid size 1-100', 16);
+  } while (!parseInt(userSize, 10) || parseInt(userSize, 10) < 0 || parseInt(userSize, 10) > 100);
+  buildGrid(userSize);
 }
 
 function resetColor() {
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-    getGridSize();
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+  getGridSize();
 }
-
-const container = document.querySelector('#container');
-const reset = document.querySelector('#reset')
 
 getGridSize();
 
-container.addEventListener("mouseover", function(e) {
-    if (e.target.className == 'pixel') {
-        e.target.style.background = 'black';
-    }
+container.addEventListener('mouseover', (e) => {
+  if (e.target.className === 'pixel') {
+    e.target.style.background = 'black';
+  }
 });
 
-reset.addEventListener("click", resetColor);
+reset.addEventListener('click', resetColor);
