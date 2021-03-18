@@ -22,13 +22,14 @@
     height: 500px;
     align-items: center;
     flex-direction: column;
-
+    margin: 10px 0 30px 0;
 }
 
 .mySlides {
     width: 99%;
     max-height: 500px;
     display: none;
+    align-self: center;
 }
 
 .mySlides:first-of-type {
@@ -64,4 +65,10 @@
     border: 3px solid darkslategray;
     border-radius: 50%;
     font-size: 0px;
+}
+
+#formValidate form {
+    display: flex;
+    flex-direction: column;
+
 }
