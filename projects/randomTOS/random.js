@@ -35,3 +35,16 @@ function carousel() {
 
 showDivs(slideIndex);
 carousel();
+
+function validate() {
+  console.log('test');
+  const userEmail = document.validateForm.email;
+  const userCountry = document.validateForm.country;
+  const userZip = document.validateForm.zipCode;
+  const passOne = document.validateForm.passwordOne;
+  const passTwo = document.validateForm.passwordTwo;
+
+  if (userEmail.value === '') {
+    console.log(userEmail.valdiityState);
+  }
+}

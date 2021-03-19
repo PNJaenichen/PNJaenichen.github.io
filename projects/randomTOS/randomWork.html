@@ -32,18 +32,19 @@
                 <div class="slideDot" onclick="showImage(4)"></div>
             </div>
         </div>
-        <div id="formValidate">
-            <form>
+        <div>
+            <form name="validateForm" novalidate>
                 <label id="email-label" for="email">Email:</label>
-                <input id="email" type="email" required placeholder="Enter Email">
+                <input id="email" type="email" required placeholder="Enter Email">  
                 <label id="country-label" for="country">Country:</label>
                 <input id="country" type="text">
-                <label id="number-label" for="number" class="label">Zip Code:</label>
-                <input id="number" type="number" min=0 max=99999 placeholder="Enter Zip Code">
-                <label id="gender-label" for="dropdown" class="label">Password:</label>
+                <label id="zipCode-label" for="zipCode" class="label">Zip Code:</label>
+                <input id="zipCode" type="number" min=0 max=99999 pattern="[0-9\-]{5,9}gm" placeholder="Enter Zip Code">
+                <label id="password-label" for="passwordOne" class="label">Password:</label>
                 <input id="passwordOne" type="password">
-                <label id="gender-label" for="dropdown" class="label">Password:</label>
-                <input id="passwordOne" type="password">
+                <label id="confirm-pass-label" for="passwordTwo" class="label">Confirm Password:</label>
+                <input id="passwordTwo" type="password">
+                <button type='submit' onclick='validate()'>Validate</button>
             </form>
         </div>
         <script src="random.js"></script>
