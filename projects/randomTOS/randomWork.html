@@ -33,18 +33,18 @@
             </div>
         </div>
         <div>
-            <form name="validateForm" novalidate>
+            <form name="validateForm">
                 <label id="email-label" for="email">Email:</label>
                 <input id="email" type="email" required placeholder="Enter Email">  
                 <label id="country-label" for="country">Country:</label>
-                <input id="country" type="text">
+                <input id="country" type="text" pattern="[a-zA-Z]{3,}" required placeholder="Enter Country">
                 <label id="zipCode-label" for="zipCode" class="label">Zip Code:</label>
-                <input id="zipCode" type="number" min=0 max=99999 pattern="[0-9\-]{5,9}gm" placeholder="Enter Zip Code">
+                <input id="zipCode" type="text" pattern="[0-9]{5}" placeholder="Enter Zip Code" required>
                 <label id="password-label" for="passwordOne" class="label">Password:</label>
-                <input id="passwordOne" type="password">
+                <input id="passwordOne" type="password" oninput='checkPass()' required>
                 <label id="confirm-pass-label" for="passwordTwo" class="label">Confirm Password:</label>
                 <input id="passwordTwo" type="password">
-                <button type='submit' onclick='validate()'>Validate</button>
+                <button type='submit'>Validate</button>
             </form>
         </div>
         <script src="random.js"></script>
