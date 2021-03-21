@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 const container = document.querySelector('#container');
-const reset = document.querySelector('#reset');
+const sizeOfGrid = document.querySelector('#gridsize');
 
 function buildGrid(size) {
   const gridSize = size;
@@ -22,13 +22,13 @@ function buildGrid(size) {
 }
 
 function getGridSize() {
-  let userSize = NaN;
-  do {
-    userSize = prompt('Enter Grid size 1-100', 16);
-  } while (!parseInt(userSize, 10) || parseInt(userSize, 10) < 0 || parseInt(userSize, 10) > 100);
-  buildGrid(userSize);
+  const userSize = parseInt(sizeOfGrid.value, 10);
+  if (userSize && userSize > 0 && userSize <= 100) {
+    buildGrid(userSize);
+  }
 }
 
+// eslint-disable-next-line no-unused-vars
 function resetColor() {
   while (container.firstChild) {
     container.removeChild(container.firstChild);
@@ -36,12 +36,8 @@ function resetColor() {
   getGridSize();
 }
 
-getGridSize();
-
 container.addEventListener('mouseover', (e) => {
   if (e.target.className === 'pixel') {
     e.target.style.background = 'black';
   }
 });
-
-reset.addEventListener('click', resetColor);
