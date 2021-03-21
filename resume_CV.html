@@ -1,161 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <title>Resume/CV</title>
-    <link rel="icon" href="media/kiwi_fav.png" sizes="16x16" type="image/png">
-    <link rel="stylesheet" type="text/css" href="assets/sheets/normalize.css">
-    <link rel="stylesheet" type="text/css" href="assets/sheets/main.css">
-    <style>
-        html, body {
-            color: black;
-            margin-bottom: 2em;
-            min-height: 100%;
-            text-align: justify;
-            padding: 1px;
-        }
-        footer {
-            bottom: 0;
-            height: 2em;
-            left: 0;
-            position: static;
-            font-size: small;
-            width: 100%;
-        }
-        .leftColumn {
-            background-color: blue;
-            position: relative;
-            top: 0;
-            width: 24%;
-            float: left;
-            color: white;
-            padding: 1px;
-        }
-        .seperator {
-            background-color: darkblue;
-        }
-        .rightColumn {
-            height: 100%;
-            width: 73%;
-            float: right;
-            padding: 1%;
-        }
-        .dateColumn {
-            width: 20%;
-            float: left;
-        }
-        .experienceColumn {
-            width: 80%;
-            float: right;
-        }
-        progress {
-            appearance: none;
-            border: none;
-        }
-    </style>
+    <link rel='icon' href='media/kiwi_fav.png' sizes='16x16' type='image/png'>
+    <link rel='stylesheet' type='text/css' href='assets/sheets/normalize.css'>
+    <link rel='stylesheet' type='text/css' href='assets/sheets/main.css'>
+    <link rel='stylesheet' type='text/css' href='assets/sheets/resume.css'>
 </head>
-<body>
-    <div class="leftColumn">
-        Nate Jaenichen
-        <div class="seperator">
-            <strong>Personal Info</strong>
+<body class='grid'>
+    <div class='leftColumn'>
+        <h1>Nate Jaenichen</h1>
+        <div class='seperator'>
+            <h2>Personal Info</h2>
         </div>
-        <p><strong>Address</strong></p>
-        Insert Address Here
-        <p><strong>Phone</strong></p>
-        Insert Phone Here
-        <p><strong>E-mail</strong></p>
-        pnjaenichen@gmail.com
-        <p><strong>LinkedIn</strong></p>
-        linkedin.com/in/pauljaenichen
-        <div class="seperator">
+        <h3>Address</h3>
+        <p>Insert Address Here</p>
+        <h3>Phone</h3>
+        <p>Insert Phone Here</p>
+        <h3>E-mail</h3>
+        <p>pnjaenichen@gmail.com</p>
+        <h3>LinkedIn</h3>
+        <p>linkedin.com/in/pauljaenichen</p>
+        <div class='seperator'>
             <!--Basic, Novice, Good, Very Good, Excellent-->
-            <strong>Skills</strong>
+            <h2>Skills</h2>
         </div>
-        <p>Bo Staff Skills</p>
-        <progress max="100" value="10"></progress>
-        <p style="text-align: right;">Basic</p>
-        <p>Computer Hack Skills</p>
-        <progress max="100" value="50"></progress>
-        <p style="text-align: right;">Good</p>
-        <p>Numchuck Skills</p>
-        <progress max="100" value="0"></progress>
-        <p style="text-align: right;">Basic</p>
-        <div class="seperator">
-            <strong>Programming</strong>
-        </div>
-        <p>Python</p>
-        <progress max="100" value="70"></progress>
-        <p style="text-align: right;">Very Good</p>
-        <p>Javascript</p>
-        <progress max="100" value="30"></progress>
-        <p style="text-align: right;">Novice</p>
-        <p>CSS</p>
-        <progress max="100" value="30"></progress>
-        <p style="text-align: right;">Novice</p>
-        <p>HTML</p>
-        <progress max="100" value="30"></progress>
-        <p style="text-align: right;">Novice</p>
         <p></p>
-        <div class="seperator">
-            <!--Basic, Novice, Intermediate, Advanced, Expert-->
-            <strong>Languages</strong>
+        <div class='seperator'>
+            <h2>Programming</h2>
         </div>
-        <p>English</p>
-        <progress max="100" value="80"></progress>
-        <p style="text-align: right;">Native</p>
-        <p>German</p>
-        <progress max="100" value="25"></progress>
-        <p style="text-align: right;">Basic</p>
+        <label for='python'>Python</label>
+        <progress id='python' max='100' value='70'></progress>
+        <p class='levelText'>Very Good</p>
+        <label for='javascript'>Javascript</label>
+        <progress id='javascript' max='100' value='30'></progress>
+        <p class='levelText'>Novice</p>
+        <label for='css'>CSS</label>
+        <progress id='css' max='100' value='30'></progress>
+        <p class='levelText'>Novice</p>
+        <label for='html'>HTML</label>
+        <progress id='html' max='100' value='30'></progress>
+        <p class='levelText'>Novice</p>
+        <div class='seperator'>
+            <!--Basic, Novice, Intermediate, Advanced, Expert-->
+            <h2>Languages</h2>
+        </div>
+        <label for='english'>English</label>
+        <progress id='english' max='100' value='80'></progress>
+        <p class='levelText'>Native</p>
+        <label for='german'>German</label>
+        <progress id='german' max='100' value='25'></progress>
+        <p class='levelText'>Basic</p>
     </div>
     <div class='rightColumn'>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab 
             quidem fuga, maiores, sequi praesentium omnis vitae laborum, 
             accusantium amet sint vel perspiciatis nisi dolore laboriosam 
             quas sunt magnam enim at?</p>
-        <hr>
-            Experience
-        <hr>
-        <div class="dateColumn">
-            2005-05 to Present
+        <h2>Experience</h2>
+        <div class='expEntry'>
+            <div class="dateColumn">
+                2005-05 to Present
+            </div>
+            <div class="experienceColumn">
+                US Marine
+            </div>
         </div>
-        <div class="experienceColumn">
-            US Marine
+        <h2>Education</h2>
+        <div class='expEntry'>
+            <div class="dateColumn">
+                2017-08 to 2019-05
+            </div>
+            <div class="experienceColumn">
+                Master of Data Analytics, University of Maryland University College
+            </div>
         </div>
-        <br>
-        <hr>
-            Education
-        <hr>
-        <div class="dateColumn">
-            2017-08 to 2019-05
+        <div class='expEntry'>
+            <div class="dateColumn">
+                2001-06 to 2005-05
+            </div>
+            <div class="experienceColumn">
+                Bachelor of History, United States Naval Academy
+            </div>
         </div>
-        <div class="experienceColumn">
-            Master of Data Analytics, University of Maryland University College
+        <h2>Certifications</h2>
+        <div class='expEntry'>
+            <div class="dateColumn">
+            </div>
+            <div class="experienceColumn">
+                None
+            </div>
         </div>
-        <div class="dateColumn">
-            2001-06 to 2005-05
-        </div>
-        <div class="experienceColumn">
-            Bachelor of History, United States Naval Academy
-        </div>
-        <br><br>
-        <hr>
-            Certifications
-        <hr>
-        <div class="dateColumn">
-            
-        </div>
-        <div class="experienceColumn">
-            None
-        </div>
-        <br>
-        <br>
-        <hr>
-            Interests
-        <hr>
-        <div class="experienceColumn">
+        <h2>Interests</h2>
             <p>Avid board gamer with a podcast (<a href='https://www.firstturncast.com'>First Turn</a>).</p>
-        </div>
     </div>
 </body>
 <footer>
