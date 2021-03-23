@@ -45,3 +45,18 @@ function checkPass() {
     passTwo.setCustomValidity('');
   }
 }
+
+const password = document.querySelector('#passwordOne');
+password.addEventListener('input', checkPass);
+
+const getScore = document.querySelector('#gameScore');
+
+getScore.addEventListener('click', () => {
+  const gameValue = document.querySelector('#gameList');
+  fetch(`https://statsapi.web.nhl.com/api/v1/game/${gameValue.value}/feed/live`)
+    .then((response) => response.json())
+    .then((data) => {
+      const gameP = document.querySelector('#gameInfo');
+      gameP.innerHTML = `${data.gameData.teams.away.abbreviation} ${data.liveData.linescore.teams.away.goals} @ ${data.liveData.linescore.teams.home.goals} ${data.gameData.teams.home.abbreviation} on ${data.gameData.datetime.dateTime.slice(0, 10)}`;
+    });
+});

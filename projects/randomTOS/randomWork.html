@@ -41,11 +41,22 @@
                 <label id="zipCode-label" for="zipCode" class="label">Zip Code:</label>
                 <input id="zipCode" type="text" pattern="[0-9]{5}" placeholder="Enter Zip Code" required>
                 <label id="password-label" for="passwordOne" class="label">Password:</label>
-                <input id="passwordOne" type="password" oninput='checkPass()' required>
+                <input id="passwordOne" type="password" required>
                 <label id="confirm-pass-label" for="passwordTwo" class="label">Confirm Password:</label>
                 <input id="passwordTwo" type="password">
                 <button type='submit'>Validate</button>
             </form>
+        </div>
+        <div id="hockey">
+            <label id='gameDrop' for='gameList'>Choose a Game:</label>
+            <select id='gameList'>
+                <option value='2019020666'>COL at NYR</option>
+                <option value='2019020667'>OTT at WSH</option>
+                <option value='2019020668'>PHI at CAR</option>
+                <option value='2019020669'>MTL at DET</option>
+            </select>
+            <button id='gameScore' type='submit'>Score</button>
+            <p id='gameInfo'></p>
         </div>
         <script src="random.js"></script>
     </body>
