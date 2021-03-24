@@ -51,12 +51,14 @@ password.addEventListener('input', checkPass);
 
 const getScore = document.querySelector('#gameScore');
 
-getScore.addEventListener('click', () => {
+getScore.addEventListener('click', async () => {
   const gameValue = document.querySelector('#gameList');
-  fetch(`https://statsapi.web.nhl.com/api/v1/game/${gameValue.value}/feed/live`)
-    .then((response) => response.json())
-    .then((data) => {
-      const gameP = document.querySelector('#gameInfo');
-      gameP.innerHTML = `${data.gameData.teams.away.abbreviation} ${data.liveData.linescore.teams.away.goals} @ ${data.liveData.linescore.teams.home.goals} ${data.gameData.teams.home.abbreviation} on ${data.gameData.datetime.dateTime.slice(0, 10)}`;
-    });
+  const gameP = document.querySelector('#gameInfo');
+  try {
+    const response = await fetch(`https://statsapi.web.nhl.com/api/v1/game/${gameValue.value}/feed/live`);
+    const gameJSON = await response.json();
+    gameP.innerHTML = `${gameJSON.gameData.teams.away.abbreviation} ${gameJSON.liveData.linescore.teams.away.goals} @ ${gameJSON.liveData.linescore.teams.home.goals} ${gameJSON.gameData.teams.home.abbreviation} on ${gameJSON.gameData.datetime.dateTime.slice(0, 10)}`;
+  } catch (error) {
+    gameP.innerHTML = 'Error pulling game information';
+  }
 });
