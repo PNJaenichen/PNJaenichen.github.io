@@ -1,0 +1,52 @@
+#weather {
+  display: grid;
+  border: 1px solid black;
+  grid-template: repeat(16, 30px) / repeat(16, 30px);
+  width: 480px;
+  padding: 0;
+  justify-content: center;
+}
+
+#weather h2 {
+  display: flex;
+  grid-area: 1 / 1 / 2 / 17;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid red;
+  margin: 0;
+}
+
+#wxType {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border: 1px solid blue;
+  grid-area: 2 / 1 / 9 / 9;
+}
+
+#wxType img {
+  width: 70%;
+  height: auto;
+}
+
+#temps {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+#windBlock {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border: 1px solid green;
+  grid-area: 2 / 9 / 9 / 17;
+}
+
+#compass {
+  align-self: center;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  border: 2px solid black;
+}

@@ -10,9 +10,23 @@
         <header>
         </header>
         <main>
-                <label id="zipCode-label" for="zipCode" class="label">Zip Code:</label>
-                <input id="zipCode" type="text" pattern="[0-9]{5}" placeholder="Enter Zip Code">
-                <button id="userLoc" type='submit'>Get Weather</button>
+            <label id='zipCode-label' for='zipCode' class='label'>Zip Code:</label>
+            <input id='zipCode' type='text' pattern='[0-9]{5}' placeholder='Enter Zip Code'>
+            <button id='userLoc' type='submit'>Get Weather</button>
+            <div id='weather'>
+                <h2>Location</h2>
+                <div id='wxType'>
+                    <img src='http://openweathermap.org/img/wn/04d@2x.png'>
+                    <div id='temps'>
+                        <p>70</p>
+                        <p>50</p>
+                    </div>
+                </div>
+                <div id='windBlock'>
+                    <div id='compass'></div>
+                </div>
+
+            </div>
         </main>
         <footer>
         </footer>

@@ -1,51 +1,10 @@
 /* eslint-disable linebreak-style */
-const testWx = {
-  coord: {
-    lon: -77.7417,
-    lat: 38.7153,
-  },
-  weather: [{
-    id: 804,
-    main: 'Clouds',
-    description: 'overcast clouds',
-    icon: '04d',
-  }],
-  base: 'stations',
-  main: {
-    temp: 287.15,
-    feels_like: 285.98,
-    temp_min: 286.48,
-    temp_max: 288.15,
-    pressure: 1015,
-    humidity: 88,
-  },
-  visibility: 10000,
-  wind: {
-    speed: 2.57,
-    deg: 360,
-  },
-  clouds: {
-    all: 90,
-  },
-  dt: 1616619963,
-  sys: {
-    type: 1,
-    id: 4448,
-    country: 'US',
-    sunrise: 1616584064,
-    sunset: 1616628385,
-  },
-  timezone: -14400,
-  id: 0,
-  name: 'Warrenton',
-  cod: 200,
-};
-
-const apiID = '';
+const apiID = '87d966865c787694603f7cd3ddefdc23';
 const submit = document.querySelector('#userLoc');
 const zipper = document.querySelector('#zipCode');
 
-function logTemp(temp, unit = 'k', newUnit = 'f') {
+function logTemp(input, unit = 'k', newUnit = 'f') {
+  const { temp } = input.main;
   switch (unit) {
     case 'k':
       if (newUnit === 'f') {
@@ -74,12 +33,34 @@ function logTemp(temp, unit = 'k', newUnit = 'f') {
   }
 }
 
+function getWx(input) {
+  const wxImg = input.weather[0].icon;
+  const ping = `http://openweathermap.org/img/wn/${wxImg}@2x.png`;
+  return [input.weather[0].description, ping];
+}
+
+function getWind(input) {
+  const { wind } = input;
+  if (wind.hasOwnProperty('gust')) {
+    return `${wind.deg} @ ${Math.ceil(wind.speed)}G${Math.ceil(wind.gust)}`;
+  }
+  return `${wind.deg} @ ${Math.ceil(wind.speed)}`;
+}
+
+function getTimePull(input) {
+  const { dt } = input;
+  return new Date(dt * 1000);
+}
+
 async function getWeather(location = 20187) {
   try {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${location},us&APPID=${apiID}`);
     const wxData = await response.json();
     console.log(wxData);
-    console.log(logTemp(wxData.main.temp).toFixed(1));
+    console.log(logTemp(wxData).toFixed(1));
+    console.log(getWx(wxData));
+    console.log(getWind(wxData));
+    console.log(getTimePull(wxData));
     return wxData;
   } catch (error) {
     return 'code not found';
