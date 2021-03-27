@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-const apiID = '87d966865c787694603f7cd3ddefdc23';
+const apiID = '';
 const submit = document.querySelector('#userLoc');
 const zipper = document.querySelector('#zipCode');
 
