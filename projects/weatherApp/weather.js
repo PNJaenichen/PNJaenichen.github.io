@@ -3,33 +3,32 @@ const apiID = '87d966865c787694603f7cd3ddefdc23';
 const submit = document.querySelector('#userLoc');
 const zipper = document.querySelector('#zipCode');
 
-function logTemp(input, unit = 'k', newUnit = 'f') {
-  const { temp } = input.main;
+function logTemp(temp, unit = 'k', newUnit = 'f') {
   switch (unit) {
     case 'k':
       if (newUnit === 'f') {
-        return (temp * (9 / 5)) - 459.67;
+        return ((temp * (9 / 5)) - 459.67).toFixed(1);
       }
       if (newUnit === 'c') {
-        return temp - 273.15;
+        return (temp - 273.15).toFixed(1);
       }
-      return temp;
+      return (temp).toFixed(1);
     case 'f':
       if (newUnit === 'k') {
-        return (temp + 459.67) * (5 / 9);
+        return ((temp + 459.67) * (5 / 9)).toFixed(1);
       }
       if (newUnit === 'c') {
-        return (temp - 32) * (5 / 9);
+        return ((temp - 32) * (5 / 9)).toFixed(1);
       }
-      return temp;
+      return (temp).toFixed(1);
     default:
       if (newUnit === 'k') {
-        return temp + 273.15;
+        return (temp + 273.15).toFixed(1);
       }
       if (newUnit === 'f') {
-        return (temp * (9 / 5)) + 32;
+        return ((temp * (9 / 5)) + 32).toFixed(1);
       }
-      return temp;
+      return (temp).toFixed(1);
   }
 }
 
@@ -41,27 +40,47 @@ function getWx(input) {
 
 function getWind(input) {
   const { wind } = input;
-  if (wind.hasOwnProperty('gust')) {
-    return `${wind.deg} @ ${Math.ceil(wind.speed)}G${Math.ceil(wind.gust)}`;
+  if (Object.prototype.hasOwnProperty.call(wind, 'gust')) {
+    return [wind.deg, Math.ceil(wind.speed), Math.ceil(wind.gust)];
   }
-  return `${wind.deg} @ ${Math.ceil(wind.speed)}`;
+  return [wind.deg, Math.ceil(wind.speed)];
 }
 
-function getTimePull(input) {
-  const { dt } = input;
-  return new Date(dt * 1000);
+function convertTime(unixTime) {
+  const actualTime = new Date(unixTime * 1000);
+  return [actualTime.toString().slice(4, 15), actualTime.toString().slice(16, 21),
+    actualTime.toString().slice(34)];
+}
+
+function convertVis(input, units = 'imperial') {
+  const { visibility } = input;
+  if (units === 'imperial') {
+    return `${((visibility / 1000) * 0.621371).toFixed(1)} mi`;
+  }
+  return `${(visibility / 1000).toFixed(1)} km`;
 }
 
 async function getWeather(location = 20187) {
   try {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${location},us&APPID=${apiID}`);
     const wxData = await response.json();
-    console.log(wxData);
-    console.log(logTemp(wxData).toFixed(1));
-    console.log(getWx(wxData));
-    console.log(getWind(wxData));
-    console.log(getTimePull(wxData));
-    return wxData;
+    document.getElementById('location').innerHTML = wxData.name;
+    document.getElementById('loTemp').innerHTML = logTemp(wxData.main.temp_min);
+    document.getElementById('hiTemp').innerHTML = logTemp(wxData.main.temp_max);
+    document.getElementById('currTemp').innerHTML = logTemp(wxData.main.temp);
+    // eslint-disable-next-line prefer-destructuring
+    document.getElementById('wxIcon').src = getWx(wxData)[1];
+    // eslint-disable-next-line prefer-destructuring
+    document.getElementById('wxName').innerHTML = getWx(wxData)[0];
+    document.getElementById('compass').innerHTML = getWind(wxData);
+    document.getElementById('timePull').innerHTML = `Observation Time: ${convertTime(wxData.dt)[1]}`;
+    document.getElementById('rise').innerHTML = `Sunrise: ${convertTime(wxData.sys.sunrise)[1]}`;
+    document.getElementById('set').innerHTML = `Sunset ${convertTime(wxData.sys.sunset)[1]}`;
+    document.getElementById('cloudCover').innerHTML = `Cloud Cover: ${wxData.clouds.all}%`;
+    document.getElementById('visibility').innerHTML = `Visibility: ${convertVis(wxData)}`;
+    document.getElementById('humidity').innerHTML = `humidity: ${wxData.main.humidity}%`;
+    document.getElementById('weather').style.visibility = 'visible';
+    return 'success';
   } catch (error) {
     return 'code not found';
   }
@@ -81,11 +100,6 @@ submit.addEventListener('click', () => {
     getWeather(zipper.value);
   }
 });
-// Write the functions that process the JSON data you’re getting from
-// the API and return an object with only the data you require for your
-// app.
-
-// Display the information on your webpage!
 
 // Add any styling you like!
 

@@ -14,18 +14,29 @@
             <input id='zipCode' type='text' pattern='[0-9]{5}' placeholder='Enter Zip Code'>
             <button id='userLoc' type='submit'>Get Weather</button>
             <div id='weather'>
-                <h2>Location</h2>
+                <h2 id='location'></h2>
                 <div id='wxType'>
-                    <img src='http://openweathermap.org/img/wn/04d@2x.png'>
+                    <img id='wxIcon' src=''>
                     <div id='temps'>
-                        <p>70</p>
-                        <p>50</p>
+                        <p id='hiTemp'></p>
+                        <p id='currTemp'></p>
+                        <p id='loTemp'></p>
                     </div>
+                    <p id='wxName'></p>
                 </div>
                 <div id='windBlock'>
                     <div id='compass'></div>
                 </div>
-
+                <div id='times'>
+                    <p id='timePull'>Observation Time: </p>
+                    <p id='rise'>Sunrise: </p>
+                    <p id='set'>Sunset: </p>
+                </div>
+                <div id='other'>
+                    <p id='cloudCover'>Cloud Cover: </p>
+                    <p id='visibility'>Visibility: </p>
+                    <p id='humidity'>Humidity: </p>
+                </div>
             </div>
         </main>
         <footer>
