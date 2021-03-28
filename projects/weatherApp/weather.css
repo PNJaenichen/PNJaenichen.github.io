@@ -1,6 +1,5 @@
 #weather {
   display: grid;
-  border: 1px solid black;
   grid-template: repeat(16, 30px) / repeat(16, 30px);
   width: 480px;
   padding: 0;
@@ -13,7 +12,6 @@
   grid-area: 1 / 1 / 2 / 17;
   justify-content: center;
   text-align: center;
-  border: 1px solid red;
   margin: 0;
 }
 
@@ -21,35 +19,52 @@
   display: flex;
   justify-content: center;
   align-content: center;
-  border: 1px solid blue;
   grid-area: 2 / 1 / 9 / 9;
+  background-color: lightblue;
+  border-radius: 15px;
 }
 
-#wxType img {
-  width: 70%;
-  height: auto;
+#wxName {
+  display: grid;
+  text-align: center;
+  grid-area: 7 / 1 / 9 / 9;
 }
 
-#temps {
-  display: flex;
-  flex-direction: column;
-  align-content: space-between;
+#currTemp {
+  grid-area: 1 / 6 / 9 / 8;
+  padding-top: 20px;
+  font-size: xx-large;
 }
 
 #windBlock {
   display: flex;
   justify-content: center;
   align-content: center;
-  border: 1px solid green;
   grid-area: 2 / 9 / 9 / 17;
 }
 
 #compass {
   align-self: center;
-  width: 70%;
-  height: 70%;
+  width: 146px;
+  height: 146px;
   border-radius: 50%;
   border: 2px solid black;
+}
+
+#windInfo {
+  display: grid;
+  text-align: center;
+  grid-area: 7 / 9 / 9 / 17;
+  padding-top: 20px;
+}
+
+.v1 {
+  position: absolute;
+  top: 93px;
+  border-left: 6px solid black;
+  height: 75px;
+  transform-origin: bottom center;
+  transform: rotate(45deg);
 }
 
 #times {

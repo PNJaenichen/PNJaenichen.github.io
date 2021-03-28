@@ -65,14 +65,18 @@ async function getWeather(location = 20187) {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${location},us&APPID=${apiID}`);
     const wxData = await response.json();
     document.getElementById('location').innerHTML = wxData.name;
-    document.getElementById('loTemp').innerHTML = logTemp(wxData.main.temp_min);
-    document.getElementById('hiTemp').innerHTML = logTemp(wxData.main.temp_max);
-    document.getElementById('currTemp').innerHTML = logTemp(wxData.main.temp);
+    document.getElementById('currTemp').innerHTML = `${logTemp(wxData.main.temp)}&deg`;
     // eslint-disable-next-line prefer-destructuring
     document.getElementById('wxIcon').src = getWx(wxData)[1];
     // eslint-disable-next-line prefer-destructuring
     document.getElementById('wxName').innerHTML = getWx(wxData)[0];
-    document.getElementById('compass').innerHTML = getWind(wxData);
+    document.querySelector('.v1').style.transform = `scaleY(${(getWind(wxData)[1] / 10).toFixed(1)}) rotate(${getWind(wxData)[0]}deg)`;
+    const winds = getWind(wxData);
+    if (winds.length === 3) {
+      document.getElementById('windInfo').innerHTML = `${winds[0]}&deg at ${(winds[1] * 1.94384).toFixed()}kts gusting to ${(winds[2] * 1.94384).toFixed()}kts`;
+    } else {
+      document.getElementById('windInfo').innerHTML = `${winds[0]}&deg at ${(winds[1] * 1.94384).toFixed()}kts`;
+    }
     document.getElementById('timePull').innerHTML = `Observation Time: ${convertTime(wxData.dt)[1]}`;
     document.getElementById('rise').innerHTML = `Sunrise: ${convertTime(wxData.sys.sunrise)[1]}`;
     document.getElementById('set').innerHTML = `Sunset ${convertTime(wxData.sys.sunset)[1]}`;
