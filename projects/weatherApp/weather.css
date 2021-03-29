@@ -67,10 +67,51 @@
   transform: rotate(45deg);
 }
 
-#times {
+.riseSet {
+  display: flex;
+  height: 50px;
+  align-content: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.sunTimes {
+  height: 40px;
+  width: 40px;
+  padding-right: 8px;
+}
+
+#rise, #set {
+  margin: 0;
+  padding: 10px;
+}
+
+#sunTimes {
   grid-area: 9 / 1 / 12 / 9;
 }
 
 #other {
-  grid-area: 9 / 9 / 12 / 17
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  grid-area: 9 / 9 / 12 / 17;
+  padding-top: 10px;
+}
+
+#other p {
+  margin: 0;
+}
+
+#times {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 15px;
+  grid-area: 13 / 1 / 15 / 17;
+}
+
+#times p {
+  margin: 0;
 }

@@ -46,10 +46,21 @@ function getWind(input) {
   return [wind.deg, Math.ceil(wind.speed)];
 }
 
-function convertTime(unixTime) {
-  const actualTime = new Date(unixTime * 1000);
+function convertTime(time) {
+  let actualTime;
+  if (typeof time === 'number') {
+    actualTime = new Date(time * 1000);
+  } else {
+    actualTime = time;
+  }
   return [actualTime.toString().slice(4, 15), actualTime.toString().slice(16, 21),
     actualTime.toString().slice(34)];
+}
+
+function getCurrentTime() {
+  const currTime = new Date().getTime();
+  const actualTime = new Date(currTime);
+  return convertTime(actualTime);
 }
 
 function convertVis(input, units = 'imperial') {
@@ -70,19 +81,23 @@ async function getWeather(location = 20187) {
     document.getElementById('wxIcon').src = getWx(wxData)[1];
     // eslint-disable-next-line prefer-destructuring
     document.getElementById('wxName').innerHTML = getWx(wxData)[0];
-    document.querySelector('.v1').style.transform = `scaleY(${(getWind(wxData)[1] / 10).toFixed(1)}) rotate(${getWind(wxData)[0]}deg)`;
+    document.querySelector('.v1').style.transform = `scaleY(${(getWind(wxData)[1] / 40).toFixed(1)}) rotate(${getWind(wxData)[0]}deg)`;
     const winds = getWind(wxData);
     if (winds.length === 3) {
       document.getElementById('windInfo').innerHTML = `${winds[0]}&deg at ${(winds[1] * 1.94384).toFixed()}kts gusting to ${(winds[2] * 1.94384).toFixed()}kts`;
     } else {
       document.getElementById('windInfo').innerHTML = `${winds[0]}&deg at ${(winds[1] * 1.94384).toFixed()}kts`;
     }
-    document.getElementById('timePull').innerHTML = `Observation Time: ${convertTime(wxData.dt)[1]}`;
-    document.getElementById('rise').innerHTML = `Sunrise: ${convertTime(wxData.sys.sunrise)[1]}`;
-    document.getElementById('set').innerHTML = `Sunset ${convertTime(wxData.sys.sunset)[1]}`;
+    document.getElementById('timePull').innerHTML = `Observation at ${convertTime(wxData.dt)[1]}. Current time is ${getCurrentTime()[1]}.`;
+    const sunrise = convertTime(wxData.sys.sunrise)[1];
+    const sunset = convertTime(wxData.sys.sunset)[1];
+    const timeZone = getCurrentTime()[2];
+    document.getElementById('timeZone').innerHTML = timeZone;
+    document.getElementById('rise').innerHTML = sunrise;
+    document.getElementById('set').innerHTML = sunset;
     document.getElementById('cloudCover').innerHTML = `Cloud Cover: ${wxData.clouds.all}%`;
     document.getElementById('visibility').innerHTML = `Visibility: ${convertVis(wxData)}`;
-    document.getElementById('humidity').innerHTML = `humidity: ${wxData.main.humidity}%`;
+    document.getElementById('humidity').innerHTML = `Humidity: ${wxData.main.humidity}%`;
     document.getElementById('weather').style.visibility = 'visible';
     return 'success';
   } catch (error) {
@@ -104,10 +119,3 @@ submit.addEventListener('click', () => {
     getWeather(zipper.value);
   }
 });
-
-// Add any styling you like!
-
-// Optional: add a ‘loading’ component that displays from the time the
-// form is submitted until the information comes back from the API.
-
-// Push that baby to github and share your solution below!
