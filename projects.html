@@ -351,10 +351,15 @@
                                 <div class="right-column">
                                     <a href='projects/todos/todos.html'><strong>Restaurant</strong></a>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint maxime atque corporis quam hic eum perferendis. Nostrum quasi dolores id nihil tenetur ea? Accusantium, hic? At tempore itaque ducimus facere. <a href="https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/todo-list">Instructions</a>.  
+                                        The intent was to provide the user with the ability to create dynamic todo 
+                                        list items. These items needed due dates, be editable, and stay within a 
+                                        designated category. It also used Local Storage. <a href="https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/todo-list">Instructions</a>.  
                                     </p>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam earum ex molestias laudantium, dolorum deserunt tempore ipsum eius voluptatibus labore beatae similique, nulla reprehenderit sit repudiandae temporibus atque quia quo.
+                                        The hardest part of this project was making sure that only one object would 
+                                        expand while it was being hovered over and items would still expand when editing
+                                        another. I took this a step forward and added the Pomodoro Tomato clock. It is 
+                                        built with HTML/CSS and the timer itself is Javascript. 
                                     </p>
                                 </div> 
                             </div>
@@ -373,10 +378,24 @@
                                 <div class="right-column">
                                     <a href='projects/weatherApp/weather.html'><strong>Weather App</strong></a>
                                     <p>
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum possimus eaque voluptates aut, quod quia dignissimos atque. Saepe, ullam omnis, repellendus dolore ab obcaecati nesciunt odit quaerat delectus accusantium asperiores. <a href="https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/weather-app">Instructions</a>.  
+                                        Their were two learning objectives behind this project. The first was accessing an 
+                                        API. I had done this previously using the NHL API, however that was with Python. I 
+                                        did it again during the course of the syllabus but using Javascript as well. The 
+                                        second objective was the use of async/await to ensure that the API request is complete 
+                                        prior to building the site. <a href="https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/weather-app">Instructions</a>.  
                                     </p>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam aspernatur debitis doloribus ducimus totam amet eaque consequatur provident illo earum, ipsam veniam omnis, necessitatibus explicabo nesciunt? Odio atque molestias dignissimos!
+                                        My struggle here was figuring out where to put the code to work with the return from the 
+                                        API. I could not find a way to work with it out as a return, but got results when I worked
+                                        with it from within the async/await function. I am still not sure if this is the way it 
+                                        works OR that I simply did not find the right answer to make that happy. That would be 
+                                        what I would work on for refactoring, as right now that function both makes the request 
+                                        to the API and adjust the DOM, while I at least have other function performing the actual 
+                                        work with the API return.
+                                    </p>
+                                    <p></p>
+                                        NOTE: The API key is not in the code and the website will not work. The screenshot to the
+                                        left displays its current look.
                                     </p>
                                 </div> 
                             </div>
@@ -386,7 +405,7 @@
             </div>
         </div>
         <input type="radio" id="persProjects" name="syllabus" checked>
-        <label class="tabButton" for="persProjects">FreeCodeCamp Projects</label>
+        <label class="tabButton" for="persProjects">Other Projects</label>
         <div class="tab">
             <div class="content">
                 <div class="tabsy">
@@ -403,10 +422,18 @@
                                 <div class="right-column">
                                     <a href='projects/bpPage/benefit.html'><strong>bP's Benefit Page</strong></a>
                                     <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus tempore iusto molestias est temporibus sunt perspiciatis ad, quo voluptate nisi minima optio sequi repudiandae odit iste dolorem quae perferendis repellat!  
+                                        This was my first 'real' project. My wife wanted to raise money for charity and 
+                                        did a virtual 5k along with it. I sat down with her and created a wire diagram 
+                                        of what she envisioned for the website. I had a friend help create a graphic that 
+                                        I could build from: <a href='assets/benefit_design.png' target='_blank'>Page Design</a>.
                                     </p>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus vero et magnam, voluptate illo dignissimos minus modi fugit sequi amet autem dolor debitis voluptatem corrupti. Mollitia temporibus sapiente dolor! Exercitationem?
+                                        I really enjoyed this. Trying to recreate something that was designed for a specific 
+                                        purpose. The site overall was relatively simple with a countdown to her birthday. The 
+                                        one thing I would refactor is the countdown. There was a rounding error depending on 
+                                        what half of the day you visited the page. In the morning the countdown would be correct
+                                        however in the afternoon it rounded the difference down and would be a day early as a 
+                                        result. Most important though was my wife loved it and she raised just over $900!
                                     </p>
                                 </div>
                             </div>
