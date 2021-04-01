@@ -29,11 +29,12 @@ header {
     grid-area: 1 / 1 / 5 / 16;
 }
 .logo {
-    grid-area: 1 / 1 / 3 / 2;
-    object-fit: cover;
-    width: 100%;
-
+    height: 225px;
+    width: 225px;
+    float: left;  
+    border-radius: 5px;  
 }
+
 nav {
     grid-area: 5 / 1 / 6 / 16;
     display: flex;
