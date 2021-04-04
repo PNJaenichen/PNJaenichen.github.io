@@ -9,105 +9,42 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
-<p> --- 02/10/2021 --- </p>
+<p> --- 04/03/2021 --- </p>
 <ul>
-  <li>Added Blog Post</li>
+  <li>Refactor and update README file</li>
 </ul>
 
-<p> --- 02/08/2021 --- </p>
+<p> --- 04/02/2021 --- </p>
 <ul>
-  <li>Added Restaurant Menu Page to project pages</li>
+  <li>Completed ReactJS.org Tutorial</li>
 </ul>
 
-<p> --- 01/30/2021 --- </p>
+<p> --- 04/01/2021 --- </p>
 <ul>
-  <li>Fixed image for previously added Blog Post</li>
+  <li>Started ReactJS.org Tutorial</li>
 </ul>
 
-<p> --- 01/28/2021 --- </p>
+<p> --- 03/01/2021 to 03/31/2021 --- </p>
 <ul>
-  <li>Added Blog Post</li>
+  <li>Finished switch for Projects page from CSS to JS</li>
+  <li>Finished Todos project</li>
+  <li>Finished Weather project from The Odin Project</li>
+  <li>Created a random projects page to practice different HTML/CSS/JS</li>
+  <li>Started Refactoring File Layouts</li>
+  <li>Created Design System and started transition to it<li>
 </ul>
 
-<p> --- 01/25/2021 --- </p>
+<p> --- 02/01/2021 to 2/28/2021 --- </p>
 <ul>
-  <li>Updated the Resume/CV page with a better layout</li>
+  <li>Started transition of project page tabs from CSS to JS</li>
+  <li>Created and finished bP's benefit page</li>
+  <li>Created the Todos Project from The Odin Project</li>
 </ul>
 
-<p> --- 01/24/2021 --- </p>
-<ul>
-  <li>Updated the projects page with a better layout</li>
-  <li>Added descriptions and links to project pages</li>
-</ul>
-
-<p> --- 01/20/2021 --- </p>
-<ul>
-  <li>Cheated a bit for this one ... added a blog post</li>
-</ul>
-
-<p> --- 01/19/2021 --- </p>
-<ul>
-  <li>Updated projects folder with better organization</li>
-  <li>Updated the "Last Updated" date in the index.js file</li>
-</ul>
-
-<p> --- 01/16/2021 --- </p>
+<p> --- 01/01/2021 to 01/30/2021 --- </p>
 <ul>
   <li>Normalized CSS across the project with normalize.css from github.com/necolas/normalize.css</li>
-  <li>Added the main.css to all of the major pages in the project</li>
   <li>Moved style portions from HTML files to their own CSS files for the blog and projects pages</li>
-</ul>
-
-<p> --- 01/15/2021 --- </p>
-<ul>
-  <li>Added the 'Rock, Paper, Scissors' project from The Odin Project lessons to the project folder</li>
-  <li>Added the 'Etch-a-Sketch' project from The Odin Project lessons to the project folder</li>
-</ul>
-
-<p> --- 01/12/2021 --- </p>
-<ul>
-  <li>Created a 'sheets' folder inside the 'assets' folder</li>
-  <li>Moved the index.js folder into the 'sheets' folder</li>
-  <li>Created a main.css file inside 'sheets' folder</li>
-  <li>Moved the code from the style tag on index.html to the main.css file</li>
-</ul>
-
-<p> --- 01/10/2021 --- </p>
-<ul>
-  <li>Added javascript file and link to index, comes from CS50 project</li>
-</ul>
-
-<p> --- 01/09/2021 --- </p>
-<ul>
-  <li>Renamed 'media' folder to 'assets'</li>
-  <li>Added past projects to a 'projects' folder</li>
-  <li>Added iFrame 'thumbnails' to the projects page</li>
-</ul>
-
-<p> --- 01/07/2021 --- </p>
-<ul>
-  <li>Added a top "menu" with links to a blog, projects, and Resume/CV page</li>
-  <li>Borrowed code from w3schools to create a more robust shell of the blog page</li>
-  <li>Created blank template pages to add to those links</li>
-  <li>Attempted to move the footer to the very bottom of the window vice bottom of the content</li>
-</ul>
-
-<p> --- 01/06/2021 --- </p>
-<ul>
-  <li>Added footer with links to Email, Github, Twitter, and Linkedin</li>
-  <li>Fixed size of Pixel Portrait</li>
-</ul>
-
-<p> --- 01/05/2021 --- </p>
-<ul>
-  <li>Made index.html actual HTML</li>
-  <li>Added Pixel Portrait Image</li>
-  <li>Added Kiwi Favicon Image</li>
-</ul>
-
-<p> --- 01/04/2021 --- </p>
-<ul>
+  <li>Refactored file layout</li>
   <li>Repo Created</li>
-  <li>This README was started</li>
-  <li>Added index.html with "Hello World" place holder</li>
 </ul>
