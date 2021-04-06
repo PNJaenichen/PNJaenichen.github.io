@@ -3,8 +3,9 @@
     <head>
         <title>Tribute to LtGen Lewis "Chesty" Puller</title>
         <link rel="stylesheet" type="text/css" href="../assets/sheets/main.css">
+        <link rel='stylesheet' type='text/css' href='../assets/sheets/normalize.css'>
         <style>
-            body {
+            main {
                 background-color: linen;
             }
             .container {
@@ -16,12 +17,15 @@
                     "content1 content2"
                     "footer footer";
             }
-            #img-div {
+            figure {
                 grid-area: content1;
                 align-content: center;
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
+            }
+            span, strong, a {
+                padding: 0;
             }
             img {
                 max-width: 100%;
@@ -31,8 +35,17 @@
                 grid-area: header;
                 text-align: center;
             }
+            .bold {
+                font-weight: bold;
+            }
             #tribute-info {
                 grid-area: content2;
+            }
+            #tribute-info p {
+                padding: 0;
+            }
+            #more-info {
+                grid-area: footer;
             }
             #link-bar {
                 bottom: 0; 
@@ -41,23 +54,43 @@
         </style>
     </head>
 
-    <body id="main" class="container">
+    <main class="container">
         <h1 id="title">LtGen Lewis "Chesty" Puller, USMC</h1>
-        <div id="img-div" style="grid-area: content1">
-            <figure>
-                <img id="image" src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Chesty-puller.jpg" alt="Photograph of Chesty Puller during the Korean War">  
-                <figcaption id="img-caption">A photograph of then Colonel "Chesty" Puller during the Korean War.</figcaption>
-            </figure>
+        <figure>
+            <img id="image" src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Chesty-puller.jpg" alt="Photograph of Chesty Puller during the Korean War">  
+            <figcaption id="img-caption">A photograph of then Colonel "Chesty" Puller during the Korean War.</figcaption>
+        </figure>
+        <div id="tribute-info">
+            <p>
+                <span class='bold'>Lewis Burwell "Chesty" Puller</span> (June 26, 
+                1898 – October 11, 1971) served as a United States Marine Corps 
+                officer. Beginning his career fighting guerillas in Haiti and 
+                Nicaragua as part of the Banana Wars, he later served with 
+                distinction in World War II and the Korean War as a senior officer. 
+                By the time of his retirement in 1955, he had reached the rank 
+                of lieutenant general.
+            </p>
+            <p>
+                Puller is the most decorated Marine in American history. He is 
+                one of two United States servicemen to be awarded five Navy 
+                Crosses and one Army Distinguished Service Cross. Puller's six 
+                crosses are next in number to the seven times Eddie Rickenbacker 
+                received the nation's second-highest military award for valor.
+            </p>
+            <p>
+                Puller retired from the Marine Corps in 1955, after 37 years of 
+                service. He lived in Virginia and died in 1971, at age 73. 
+            </p>
+            <ul id="tribute-info">
+                <li><span class='bold'>1930</span> - Awarded first Navy Cross for actions in Nicaragua.</li>
+                <li><span class='bold'>1932</span> - Awarded second Navy Cross for actions in Nicaragua during a second tour.</li>
+                <li><span class='bold'>1942</span> - Awarded third Navy Cross for actions during the Battle of Guadalcanal.</li>
+                <li><span class='bold'>1944</span> - Awarded fourth Navy Cross for actions at Cape Gloucester, New Britain.</li>
+                <li><span class='bold'>1950</span> - Awarded fifth and final Navy Cross for actions during the Korean War. He was also awarded the Distinguished Service Cross for these same actions.</li>
+            </ul>
         </div>
-        <ul id="tribute-info" style="grid-area: content2">
-            <li><strong>1930</strong> - Awarded first Navy Cross for actions in Nicaragua.</li>
-            <li><strong>1932</strong> - Awarded second Navy Cross for actions in Nicaragua during a second tour.</li>
-            <li><strong>1942</strong> - Awarded third Navy Cross for actions during the Battle of Guadalcanal.</li>
-            <li><strong>1944</strong> - Awarded fourth Navy Cross for actions at Cape Gloucester, New Britain.</li>
-            <li><strong>1950</strong> - Awarded fifth and final Navy Cross for actions during the Korean War.</li>
-        </ul>
-        <p style="grid-area: footer">For more information check out the <a id="tribute-link" href="https://en.wikipedia.org/wiki/Chesty_Puller" target="_blank">Lewis Puller wikipedia page</a> (will open a new tab in your browser).</p>
-    </body>
+        <p id='more-info'>For more information check out the <a id="tribute-link" href="https://en.wikipedia.org/wiki/Chesty_Puller" target="_blank" title='Opens new tab'>Lewis Puller</a> Wikipedia page.</p>
+    </main>
     <footer>
         <a href="../projects.html">Return to Projects Page</a>
     </footer>
