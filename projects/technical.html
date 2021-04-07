@@ -3,7 +3,7 @@
 <head>
     <title>Technical Sample Page</title>
     <style>
-        #navbar {
+        nav {
             position: fixed;
             min-width: 290px;
             top: 0px;
@@ -12,21 +12,11 @@
             height: 100%;
             background-color: white;
         }
-        #link-bar {
-            bottom: 0; 
-            width: 100%; 
-        }
-        #main-doc {
+        main {
             position: absolute;
             margin-left: 310px;
             padding: 20px;
             margin-bottom: 110px;
-        }
-        #Headers h3,h6 {
-            margin: 0px;
-        }
-        #Headers h1 {
-            margin-bottom: 0px;
         }
         code {
             background-color: lightgray;   
@@ -35,7 +25,7 @@
             display: block;
         }
         @media only screen and (max-width: 815px) {
-            #navbar {
+            nav {
                 top: 0;
                 padding: 0;
                 margin: 0;
@@ -43,7 +33,7 @@
                 max-height: 125px;
                 z-index: 1;
             }
-            #main-doc {
+            main {
                 position: relative;
                 margin-left: 0px;
                 margin-top: 140px;
@@ -52,22 +42,17 @@
     </style>
 </head>
 <body>
-    <nav id="navbar">
-        <header>
-            <h1>Basic Elements of HTML</h1>
-            <a href="#Headers" class="nav-link">Headers</a>
-            <a href="#Paragraphs" class="nav-link">Paragraphs</a>
-            <a href="#Hyperlinks" class="nav-link">Hyperlinks</a>
-            <a href="#Lists" class="nav-link">Lists</a>
-            <a href="#Images" class="nav-link">Images</a>
-        </header>
+    <nav>
+        <h1>Basic Elements of HTML</h1>
+        <a href="#Headers">Headers</a>
+        <a href="#Paragraphs">Paragraphs</a>
+        <a href="#Hyperlinks">Hyperlinks</a>
+        <a href="#Lists">Lists</a>
+        <a href="#Images">Images</a>
     </nav>
-<main id="main-doc">
-    <div>
-        <section id="Headers" class="main-section">
-            <header>
-                <h2>Headers</h2>
-            </header>
+    <main>
+        <section id="Headers">
+            <h2>Headers</h2>
             <p>The <code>&lt;header&gt;</code> element represents a container for inductory content or a set of navigational links.  A header element typically contains:</p>
             <ul>
                 <li>One or more heading elements; h1 to h6</li>
@@ -76,17 +61,13 @@
             </ul>
             <p>You can have as many header elements as you want.</p>
         </section>
-        <section id="Paragraphs" class="main-section">
-            <header>
-                <h2>Paragraphs</h2>
-            </header>
+        <section id="Paragraphs">
+            <h2>Paragraphs</h2>
             <p>The <code>&lt;p&gt;</code> tag defines a paragraph</p>
             <p>Browsers automatically add some space (margin) before and after each paragraph element.  The margins can be modified with CSS (with the margin properties.</p>
         </section>
-        <section id="Hyperlinks" class="main-section">
-            <header>
-                <h2>Hyperlinks</h2>
-            </header>
+        <section id="Hyperlinks">
+            <h2>Hyperlinks</h2>
             <p>The <code>&lt;a&gt;</code> tag defines a hyperlink, which is used to link from one page to another.  By default links will appears as follows in browsers:</p>
             <ul>
                 <li>An unvisited link is underlined and blue</li>
@@ -95,10 +76,8 @@
             </ul>
             <p>The most important attribute of the <code>&lt;a&gt;</code> element is the href attribute, which indicates the link's destination.</p>
         </section>
-        <section id="Lists" class="main-section">
-            <header>
-                <h2>Lists</h2>
-            </header>
+        <section id="Lists">
+            <h2>Lists</h2>
             <p>There are two types of lists.  Unordered lists use the <code>&lt;ul&gt;</code> element tag.  Ordered lists use the <code>&lt;ol&gt;</code> element tag.</p>
             <pre><code>
             &lt;ol&gt;
@@ -123,20 +102,12 @@
                 <li>Carrots</li>
                 <li>Milk</li>
             </ul>
-            <code></code>
-            <p></p>
         </section>
-        <section id="Images" class="main-section">
-            <header>
-                <h2>Images</h2>
-            </header>
+        <section id="Images">
+            <h2>Images</h2>
             <p>The <code>&lt;img&gt;</code> tag defines an image in an HTML page.  It requires two attributes <code>src</code> and <code>alt</code>.</p>
             <p>In HTML the <code>&lt;img&gt;</code> tag has no end tag.</p>
         </section>
-    </div>
-</main>
+    </main>
 </body>
-<footer>
-    <a href="../projects.html">Return to Projects Page</a>
-</footer>
 </html>
