@@ -10,10 +10,11 @@
                 text-align: center;
                 display: block;
             }
-            #form-outer {
+            form {
                 background-color: linen;
                 margin: 5px;
                 border-radius: 25px;
+                padding: 5px;
             }
             p {
                 padding: 25px;
@@ -26,6 +27,9 @@
             }
             fieldset {
                 border: 0;
+            }
+            fieldset label {
+                margin-top: 12px;
             }
             ul {
                 list-style: none;
@@ -42,32 +46,26 @@
                 width: 125px;
             }
             #submit {
-                margin-left: auto;
-                margin-right: auto;
+                margin: 5px auto 5px auto;
                 display: block;
-                padding: 0px;
+                padding: 0px 10px 0px 10px;
                 background-color: #59ace0;
                 border-radius: 4px;
                 color: white;
                 font-size: 1em;
                 height: 40px;
-                width: 96px;
                 border: 0px solid;
-            }
-            #button-box {
-                padding: 25px;   
-            }
-            #link-bar {
-                bottom: 0; 
-                width: 100%; 
             }
         </style>
     </head>
     <body>
-        <h1 id="title">Fill this form out now!</h1>
-        <div id="form-outer">
-        <p id="description">So this is a random form that was created in order to satisfy the teaching requirements. You should fill it out. If nothing else it is just giving your information to a random stranger!</p>
-        <form id="survey-form" action="/url-where-you-want-to-submit-form-data">
+        <h1>Board Game Survey</h1>
+        <form id="survey-form" action="">
+            <p id="description">
+                So this is a random form that was created in order to satisfy 
+                the teaching requirements. You should fill it out. If nothing 
+                else it is just giving your information to a random stranger!
+            </p>
             <label id="name-label" for="name" class="label">Name:</label>
             <input id="name" type="text" placeholder="Enter Name" required><br>
             <label id="email-label" for="email" class="label">Email:</label>
@@ -81,31 +79,28 @@
                 <option value="female">Female</option>
                 <option value="non-binary">Non-Binary</option>
             </select><br>
-        <fieldset>    
-            <label style="margin-top: 12px" class="label">Do you play board games?</label>
-            <ul>
-                <li><input id="yes" type="radio" name="yes-no" value=1>
-                <label for="yes">Yes</label></li>
-                <li><input id="no" type="radio" name="yes-no" value=2>
-                <label for="no">No</label></li>
-            </ul>
-        </fieldset>
-        <fieldset>
-            <label style="margin-top: 12px" class="label">If yes, what are your favorite mechanics?</label>
-            <ul>
-                <li><label><input id="rnw" type="checkbox" name="game-mechanic" value=1>Roll and Write</label></li>
-                <li><label><input id="workplace" type="checkbox" name="game-mechanic" value=2>Worker Placement</label></li>
-                <li><label><input id="engine" type="checkbox" name="game-mechanic" value=3>Engine Building</label></li>
-                <li><label><input id="deckbuild" type="checkbox" name="game-mechanic" value=4>Deck Building</label></li>
-            </ul>
-        </fieldset>    
-        <label class="label">Please list your favorite games:</label>
-        <textarea id="gamelist" rows=4 cols="50"></textarea>
-        <div id="button-box">
-        <button id="submit" type="submit">Submit</button>
-            </div>
+            <fieldset>    
+                <label class="label">Do you play board games?</label>
+                <ul>
+                    <li><input id="yes" type="radio" name="yes-no" value=1>
+                    <label for="yes">Yes</label></li>
+                    <li><input id="no" type="radio" name="yes-no" value=2>
+                    <label for="no">No</label></li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <label class="label">If yes, what are your favorite mechanics?</label>
+                <ul>
+                    <li><label><input id="rnw" type="checkbox" name="game-mechanic" value=1>Roll and Write</label></li>
+                    <li><label><input id="workplace" type="checkbox" name="game-mechanic" value=2>Worker Placement</label></li>
+                    <li><label><input id="engine" type="checkbox" name="game-mechanic" value=3>Engine Building</label></li>
+                    <li><label><input id="deckbuild" type="checkbox" name="game-mechanic" value=4>Deck Building</label></li>
+                </ul>
+            </fieldset>    
+            <label class="label">Please list your favorite games:</label>
+            <textarea id="gamelist" rows=4 cols="50"></textarea>
+            <input id="submit" type="submit">
         </form>
-        </div>
     </body>
     <footer>
         <a href="../projects.html">Return to Projects Page</a>
