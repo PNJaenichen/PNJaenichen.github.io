@@ -1,6 +1,8 @@
 function Overview(props) {
   return (
-    <div>{props.msg}</div>
+    <div>
+      {props.task}
+    </div>
   )
 }
 

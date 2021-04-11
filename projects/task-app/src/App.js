@@ -26,11 +26,12 @@ class App extends Component {
     });
   }
   render() {
+    let taskElements = this.state.tasks.map(tasker => (<p>{tasker}</p>))
     return (
       <div>
         <input id='inputText' type='text' onChange={this.newTasker} value={this.state.task}></input>
         <button onClick={this.addTasker}>Add Task</button>
-        <Overview msg={this.state.tasks}/>
+        <Overview task={taskElements}/>
       </div>
     );
   }
