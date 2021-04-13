@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uniqid from 'uniqid'
 import Overview from './components/Overview';
 
 class App extends Component {
@@ -18,15 +19,13 @@ class App extends Component {
   }
   addTasker(e) {
     e.preventDefault();
-    this.setState(() => {
-      return {tasks: [...this.state.tasks, this.state.task]}
+    this.setState((prevState) => {
+      return {tasks: [...prevState.tasks, this.state.task]}
     });
-    this.setState(() => {
-      return {task: ''};
-    });
+    this.setState({task: ''});
   }
   render() {
-    let taskElements = this.state.tasks.map(tasker => (<p>{tasker}</p>))
+    let taskElements = this.state.tasks.map(tasker => (<p key={uniqid()}>{tasker}</p>))
     return (
       <div>
         <input id='inputText' type='text' onChange={this.newTasker} value={this.state.task}></input>
