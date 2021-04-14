@@ -1,25 +1,18 @@
 import React, { Component } from 'react'
-import logo from './logo.svg';
-import './App.css';
+
+
+// A section to add general information like name, email, phone number
+// A section to add educational info (school, study, dates)
+// A section to add practical exp (company, title, tasks, dates)
+// A submit button for each section or whole form
+// Display values in HTML
+// Button to edit and resubmit
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <p>This is simply some holder text.</p>
       </div>
     )
   };
