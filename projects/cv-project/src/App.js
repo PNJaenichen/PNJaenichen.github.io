@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import General from './components/general'
 
 // A section to add general information like name, email, phone number
 // A section to add educational info (school, study, dates)
@@ -9,10 +9,15 @@ import React, { Component } from 'react'
 // Button to edit and resubmit
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {}
+  }
+
   render() {
     return (
       <div>
-        <p>This is simply some holder text.</p>
+        <General />
       </div>
     )
   };
