@@ -17,7 +17,11 @@ class App extends Component {
   render() {
     return (
       <div>
+        <h1>My CV</h1>
+        <h2>Contact Information</h2>
         <General />
+        <h2>Education</h2>
+        <h2>Experience</h2>
       </div>
     )
   };
