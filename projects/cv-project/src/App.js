@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import General from './components/general'
-
-// A section to add general information like name, email, phone number
-// A section to add educational info (school, study, dates)
-// A section to add practical exp (company, title, tasks, dates)
-// A submit button for each section or whole form
-// Display values in HTML
-// Button to edit and resubmit
+import Education from './components/education'
+import Experience from './components/experience'
 
 class App extends Component {
   constructor() {
@@ -21,7 +16,9 @@ class App extends Component {
         <h2>Contact Information</h2>
         <General />
         <h2>Education</h2>
+        <Education />
         <h2>Experience</h2>
+        <Experience />
       </div>
     )
   };
