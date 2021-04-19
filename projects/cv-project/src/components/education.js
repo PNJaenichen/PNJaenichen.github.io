@@ -25,28 +25,50 @@ class Education extends Component {
       }
       return {education: [...prevState.education, newEd]}
     })
+
   }
 
   getInformation() {
     return (
       <div>
         <label for='schoolName'>School:</label>
-        <input type='text' id='schoolName' name='schoolName'></input>
+        <input type='text' id='schoolName' name='schoolName' />
         <label for='study'>Study:</label>
-        <input type='text' id='study' name='study'></input>
+        <input type='text' id='study' name='study' />
         <label for='startDate'>Start:</label>
-        <input type='text' id='startDate' name='startDate'></input>
+        <input type='text' id='startDate' name='startDate' />
         <label for='endDate'>End:</label>
-        <input type='text' id='endDate' name='endDate'></input>
-        <input type='submit' onClick={this.addEducation}>Submit</input>
+        <input type='text' id='endDate' name='endDate' />
+        <input type='submit' onClick={this.addEducation} value='Submit' />
       </div>
     )
   }
 
   render() {
+    const educationList = this.state.education.map(entry => {
+      return (
+          <tr>
+            <td>{entry.school}</td>
+            <td>{entry.study}</td>
+            <td>{entry.start}-{entry.end}</td>
+          </tr>
+      )
+    })
     return (
       <div>
-        {this.getInformation()}  
+        {this.getInformation()}
+        {document.getElementById('schoolName').value = ''}
+        {document.getElementById('study').value = ''}
+        {document.getElementById('startDate').value = ''}
+        {document.getElementById('endDate').value = ''}
+        <table>
+          <tr>
+            <th>School</th>
+            <th>Study</th>
+            <th>Years</th>
+          </tr>
+          {educationList}
+        </table>
       </div>
     )
   }
