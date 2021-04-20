@@ -20,8 +20,8 @@ class Education extends Component {
       const newEd = {
         school: document.getElementById('schoolName').value,
         study: document.getElementById('study').value,
-        start: document.getElementById('startDate').value,
-        end: document.getElementById('endDate').value
+        start: document.getElementById('schoolStart').value,
+        end: document.getElementById('schoolEnd').value
       }
       return {education: [...prevState.education, newEd]}
     })
@@ -35,10 +35,10 @@ class Education extends Component {
         <input type='text' id='schoolName' name='schoolName' />
         <label for='study'>Study:</label>
         <input type='text' id='study' name='study' />
-        <label for='startDate'>Start:</label>
-        <input type='text' id='startDate' name='startDate' />
-        <label for='endDate'>End:</label>
-        <input type='text' id='endDate' name='endDate' />
+        <label for='schoolStart'>Start:</label>
+        <input type='text' id='schoolStart' name='schoolStart' />
+        <label for='schoolEnd'>End:</label>
+        <input type='text' id='schoolEnd' name='schoolEnd' />
         <input type='submit' onClick={this.addEducation} value='Submit' />
       </div>
     )
@@ -57,10 +57,6 @@ class Education extends Component {
     return (
       <div>
         {this.getInformation()}
-        {document.getElementById('schoolName').value = ''}
-        {document.getElementById('study').value = ''}
-        {document.getElementById('startDate').value = ''}
-        {document.getElementById('endDate').value = ''}
         <table>
           <tr>
             <th>School</th>
