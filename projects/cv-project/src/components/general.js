@@ -11,21 +11,27 @@ class General extends Component {
     this.state = {
       name: '',
       email: '',
-      phone: '',
+      phoneNum: '',
       edit: true
     }
     this.doSomething = this.doSomething.bind(this)
     this.buildGeneral = this.buildGeneral.bind(this)
     this.inputGeneral = this.inputGeneral.bind(this)
     this.editGeneral = this.editGeneral.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({[name]: value})
   }
 
   doSomething() {
     this.setState(() => {
       return {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phoneNum').value,
+        name: this.state.name,
+        email: this.state.email,
+        phoneNum: this.state.phoneNum,
         edit: false
       }
     });
@@ -39,23 +45,41 @@ class General extends Component {
     return (
       <div>
         <label htmlFor='name'>Name:</label>
-        <input type='text' id='name' name='name' defaultValue={this.state.name}></input>
+        <input 
+          type='text' 
+          id='name' 
+          name='name' 
+          value={this.state.name}
+          onChange={this.handleChange}
+        />
         <label htmlFor='email'>Email:</label>
-        <input type='email' id='email' name='email' defaultValue={this.state.email}></input>
+        <input 
+          type='email' 
+          id='email' 
+          name='email' 
+          value={this.state.email}
+          onChange={this.handleChange} 
+        />
         <label htmlFor='phoneNum'>Phone Number:</label>
-        <input type='text' id='phoneNum' name='phoneNum' defaultValue={this.state.phone}></input>
+        <input 
+          type='text' 
+          id='phoneNum' 
+          name='phoneNum' 
+          value={this.state.phoneNum}
+          onChange={this.handleChange}
+        />
         <input type='submit' value='Press to Test' onClick={this.doSomething}></input>
       </div>
     )
   }
 
   buildGeneral() {
-    if (this.state.name !== '' || this.state.email !== '' || this.state.phone !== '') {
+    if (this.state.name !== '' || this.state.email !== '' || this.state.phoneNum !== '') {
       return (
         <div>
           <p>Name: {this.state.name}</p>
           <p>Email: {this.state.email}</p>
-          <p>Phone: {this.state.phone}</p>
+          <p>Phone: {this.state.phoneNum}</p>
           <button className='edit' onClick={this.editGeneral}>Edit</button>
         </div>
       )

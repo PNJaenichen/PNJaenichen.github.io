@@ -13,32 +13,67 @@ class Education extends Component {
     }
     this.getInformation = this.getInformation.bind(this)
     this.addEducation = this.addEducation.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   addEducation() {
     this.setState(prevState => {
       const newEd = {
-        school: document.getElementById('schoolName').value,
-        study: document.getElementById('study').value,
-        start: document.getElementById('schoolStart').value,
-        end: document.getElementById('schoolEnd').value
+        schoolName: this.state.schoolName,
+        study: this.state.study,
+        schoolStart: this.state.schoolStart,
+        schoolEnd: this.state.schoolEnd
       }
-      return {education: [...prevState.education, newEd]}
+      return {
+        schoolName: '', 
+        study: '', 
+        schoolStart: '', 
+        schoolEnd: '', 
+        education: [...prevState.education, newEd]
+      }
     })
+  }
 
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({[name]: value})
   }
 
   getInformation() {
     return (
       <div>
         <label for='schoolName'>School:</label>
-        <input type='text' id='schoolName' name='schoolName' />
+        <input 
+          type='text' 
+          id='schoolName' 
+          name='schoolName' 
+          value={this.state.schoolName} 
+          onChange={this.handleChange} 
+        />
         <label for='study'>Study:</label>
-        <input type='text' id='study' name='study' />
+        <input 
+          type='text' 
+          id='study' 
+          name='study' 
+          value={this.state.study} 
+          onChange={this.handleChange} 
+        />
         <label for='schoolStart'>Start:</label>
-        <input type='text' id='schoolStart' name='schoolStart' />
+        <input 
+          type='text' 
+          id='schoolStart' 
+          name='schoolStart' 
+          value={this.state.schoolStart} 
+          onChange={this.handleChange} 
+        />
         <label for='schoolEnd'>End:</label>
-        <input type='text' id='schoolEnd' name='schoolEnd' />
+        <input 
+          type='text' 
+          id='schoolEnd' 
+          name='schoolEnd' 
+          value={this.state.schoolEnd} 
+          onChange={this.handleChange} 
+        />
         <input type='submit' onClick={this.addEducation} value='Submit' />
       </div>
     )
@@ -48,9 +83,9 @@ class Education extends Component {
     const educationList = this.state.education.map(entry => {
       return (
           <tr>
-            <td>{entry.school}</td>
+            <td>{entry.schoolName}</td>
             <td>{entry.study}</td>
-            <td>{entry.start}-{entry.end}</td>
+            <td>{entry.schoolStart}-{entry.schoolEnd}</td>
           </tr>
       )
     })
