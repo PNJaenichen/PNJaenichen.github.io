@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uniqid from 'uniqid'
 
 // A section to add educational info (school, study, dates)
 // A submit button for each section or whole form
@@ -9,11 +10,16 @@ class Education extends Component {
   constructor() {
     super()
     this.state = {
+      schoolName: '', 
+      study: '', 
+      schoolStart: '', 
+      schoolEnd: '',
       education: [] 
     }
     this.getInformation = this.getInformation.bind(this)
     this.addEducation = this.addEducation.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.editEducation = this.editEducation(this)
   }
 
   addEducation() {
@@ -42,7 +48,7 @@ class Education extends Component {
   getInformation() {
     return (
       <div>
-        <label for='schoolName'>School:</label>
+        <label htmlFor='schoolName'>School:</label>
         <input 
           type='text' 
           id='schoolName' 
@@ -50,7 +56,7 @@ class Education extends Component {
           value={this.state.schoolName} 
           onChange={this.handleChange} 
         />
-        <label for='study'>Study:</label>
+        <label htmlFor='study'>Study:</label>
         <input 
           type='text' 
           id='study' 
@@ -58,7 +64,7 @@ class Education extends Component {
           value={this.state.study} 
           onChange={this.handleChange} 
         />
-        <label for='schoolStart'>Start:</label>
+        <label htmlFor='schoolStart'>Start:</label>
         <input 
           type='text' 
           id='schoolStart' 
@@ -66,7 +72,7 @@ class Education extends Component {
           value={this.state.schoolStart} 
           onChange={this.handleChange} 
         />
-        <label for='schoolEnd'>End:</label>
+        <label htmlFor='schoolEnd'>End:</label>
         <input 
           type='text' 
           id='schoolEnd' 
@@ -79,13 +85,18 @@ class Education extends Component {
     )
   }
 
+  editEducation(event) {
+    console.log(event.target)
+  }
+
   render() {
     const educationList = this.state.education.map(entry => {
       return (
-          <tr>
+          <tr key={uniqid()}>
             <td>{entry.schoolName}</td>
             <td>{entry.study}</td>
             <td>{entry.schoolStart}-{entry.schoolEnd}</td>
+            <td><input type='submit' onClick={this.editEducation} value='Edit' /></td>
           </tr>
       )
     })
@@ -93,12 +104,16 @@ class Education extends Component {
       <div>
         {this.getInformation()}
         <table>
-          <tr>
-            <th>School</th>
-            <th>Study</th>
-            <th>Years</th>
-          </tr>
-          {educationList}
+          <thead>
+            <tr>
+              <th>School</th>
+              <th>Study</th>
+              <th>Years</th>
+            </tr>
+          </thead>
+          <tbody>
+            {educationList}
+          </tbody>
         </table>
       </div>
     )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uniqid from 'uniqid'
 
 // A section to add practical exp (company, title, tasks, dates)
 // A submit button for each section or whole form
@@ -9,11 +10,16 @@ class Experience extends Component {
   constructor() {
     super()
     this.state = {
+      employerName: '',
+      jobTitle: '',
+      jobStart: '',
+      jobEnd: '',
       experience: [] 
     }
     this.getInformation = this.getInformation.bind(this)
     this.addExperience = this.addExperience.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.editExperience = this.editExperience.bind(this)
   }
 
   handleChange(event) {
@@ -36,13 +42,12 @@ class Experience extends Component {
         jobEnd: '',
         experience: [...prevState.experience, newJob]}
     })
-
   }
 
   getInformation() {
     return (
       <div>
-        <label for='employerName'>Employer Name:</label>
+        <label htmlFor='employerName'>Employer Name:</label>
         <input 
           type='text' 
           id='employerName' 
@@ -50,7 +55,7 @@ class Experience extends Component {
           value={this.state.employerName}
           onChange={this.handleChange} 
         />
-        <label for='jobTitle'>Job Title:</label>
+        <label htmlFor='jobTitle'>Job Title:</label>
         <input 
           type='text' 
           id='jobTitle' 
@@ -58,7 +63,7 @@ class Experience extends Component {
           value={this.state.jobTitle}
           onChange={this.handleChange}
         />
-        <label for='jobStart'>Start:</label>
+        <label htmlFor='jobStart'>Start:</label>
         <input 
           type='text' 
           id='jobStart' 
@@ -66,7 +71,7 @@ class Experience extends Component {
           value={this.state.jobStart}
           onChange={this.handleChange}
         />
-        <label for='jobEnd'>End:</label>
+        <label htmlFor='jobEnd'>End:</label>
         <input 
           type='text' 
           id='jobEnd' 
@@ -79,13 +84,18 @@ class Experience extends Component {
     )
   }
 
+  editExperience(event) {
+    console.log(event.target)
+  }
+  
   render() {
     const jobList = this.state.experience.map(entry => {
       return (
-          <tr>
+          <tr key={uniqid()}>
             <td>{entry.employerName}</td>
             <td>{entry.jobTitle}</td>
             <td>{entry.jobStart}-{entry.jobEnd}</td>
+            <td><input type='submit' onClick={this.editExperience} value='edit'/></td>
           </tr>
       )
     })
@@ -93,12 +103,16 @@ class Experience extends Component {
       <div>
         {this.getInformation()}
         <table>
-          <tr>
-            <th>Employer</th>
-            <th>Job Title</th>
-            <th>Years</th>
-          </tr>
-          {jobList}
+          <thead>
+            <tr>
+              <th>Employer</th>
+              <th>Job Title</th>
+              <th>Years</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jobList}
+          </tbody>
         </table>
       </div>
     )
