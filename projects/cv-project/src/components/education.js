@@ -19,7 +19,7 @@ class Education extends Component {
     this.getInformation = this.getInformation.bind(this)
     this.addEducation = this.addEducation.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.editEducation = this.editEducation(this)
+    this.editEducation = this.editEducation.bind(this)
   }
 
   addEducation() {
@@ -86,7 +86,7 @@ class Education extends Component {
   }
 
   editEducation(event) {
-    console.log(event.target)
+    console.log(event.target.parentNode.parentNode)
   }
 
   render() {
@@ -96,7 +96,7 @@ class Education extends Component {
             <td>{entry.schoolName}</td>
             <td>{entry.study}</td>
             <td>{entry.schoolStart}-{entry.schoolEnd}</td>
-            <td><input type='submit' onClick={this.editEducation} value='Edit' /></td>
+            <td><button onClick={this.editEducation}>Edit</button></td>
           </tr>
       )
     })
