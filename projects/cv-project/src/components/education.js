@@ -15,6 +15,7 @@ class Education extends Component {
       study: '', 
       schoolStart: '', 
       schoolEnd: '',
+      editEducation: [false, null],
       education: [] 
     }
     this.getInformation = this.getInformation.bind(this)
@@ -24,23 +25,42 @@ class Education extends Component {
   }
 
   addEducation() {
-    this.setState(prevState => {
-      const newEd = {
-        educationId: this.state.educationId,
-        schoolName: this.state.schoolName,
-        study: this.state.study,
-        schoolStart: this.state.schoolStart,
-        schoolEnd: this.state.schoolEnd
-      }
-      return {
-        educationId: prevState.educationId + 1,
-        schoolName: '', 
-        study: '', 
-        schoolStart: '', 
-        schoolEnd: '', 
-        education: [...prevState.education, newEd]
-      }
-    })
+    if (this.state.editEducation[0]) {
+      this.setState(prevState => {
+        const newEd = {
+          schoolName: this.state.schoolName,
+          study: this.state.study,
+          schoolStart: this.state.schoolStart,
+          schoolEnd: this.state.schoolEnd
+        }
+        prevState.education[this.state.editEducation[1]] = newEd;
+        return {
+          schoolName: '', 
+          study: '', 
+          schoolStart: '', 
+          schoolEnd: '', 
+          education: [...prevState.education]
+        }
+      })
+    } else {
+      this.setState(prevState => {
+        const newEd = {
+          educationId: this.state.educationId,
+          schoolName: this.state.schoolName,
+          study: this.state.study,
+          schoolStart: this.state.schoolStart,
+          schoolEnd: this.state.schoolEnd
+        }
+        return {
+          educationId: prevState.educationId + 1,
+          schoolName: '', 
+          study: '', 
+          schoolStart: '', 
+          schoolEnd: '', 
+          education: [...prevState.education, newEd]
+        }
+      })
+    }
   }
 
   handleChange(event) {
@@ -89,7 +109,14 @@ class Education extends Component {
   }
 
   editEducation(event) {
-    console.log(event.target.value)
+    const editEd = {
+      schoolName: this.state.education[event.target.value].schoolName,
+      study: this.state.education[event.target.value].study,
+      schoolStart: this.state.education[event.target.value].schoolStart,
+      schoolEnd: this.state.education[event.target.value].schoolEnd,
+      editEducation: [true, event.target.value]
+    }
+    this.setState(editEd)
   }
 
   render() {
