@@ -28,6 +28,7 @@ class Education extends Component {
     if (this.state.editEducation[0]) {
       this.setState(prevState => {
         const newEd = {
+          educationId: this.state.editEducation[1],
           schoolName: this.state.schoolName,
           study: this.state.study,
           schoolStart: this.state.schoolStart,
@@ -39,13 +40,14 @@ class Education extends Component {
           study: '', 
           schoolStart: '', 
           schoolEnd: '', 
-          education: [...prevState.education]
+          education: [...prevState.education],
+          editEducation: [false, null]
         }
       })
     } else {
       this.setState(prevState => {
         const newEd = {
-          educationId: this.state.educationId,
+          educationId: this.state.educationId.toString(),
           schoolName: this.state.schoolName,
           study: this.state.study,
           schoolStart: this.state.schoolStart,
@@ -121,14 +123,17 @@ class Education extends Component {
 
   render() {
     const educationList = this.state.education.map(entry => {
-      return (
-          <tr key={uniqid()}>
-            <td>{entry.schoolName}</td>
-            <td>{entry.study}</td>
-            <td>{entry.schoolStart}-{entry.schoolEnd}</td>
-            <td><button value={entry.educationId} onClick={this.editEducation}>Edit</button></td>
-          </tr>
-      )
+      if (!this.state.editEducation[0] || (this.state.editEducation[0] && entry.educationId !== this.state.editEducation[1])) {
+        return (
+            <tr key={uniqid()}>
+              <td>{entry.schoolName}</td>
+              <td>{entry.study}</td>
+              <td>{entry.schoolStart}-{entry.schoolEnd}</td>
+              <td><button value={entry.educationId} onClick={this.editEducation}>Edit</button></td>
+            </tr>
+        )
+      }
+      return null
     })
     return (
       <div>
