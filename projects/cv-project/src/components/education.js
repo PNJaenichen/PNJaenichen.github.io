@@ -10,6 +10,7 @@ class Education extends Component {
   constructor() {
     super()
     this.state = {
+      educationId: 0,
       schoolName: '', 
       study: '', 
       schoolStart: '', 
@@ -25,12 +26,14 @@ class Education extends Component {
   addEducation() {
     this.setState(prevState => {
       const newEd = {
+        educationId: this.state.educationId,
         schoolName: this.state.schoolName,
         study: this.state.study,
         schoolStart: this.state.schoolStart,
         schoolEnd: this.state.schoolEnd
       }
       return {
+        educationId: prevState.educationId + 1,
         schoolName: '', 
         study: '', 
         schoolStart: '', 
@@ -86,7 +89,7 @@ class Education extends Component {
   }
 
   editEducation(event) {
-    console.log(event.target.parentNode.parentNode)
+    console.log(event.target.value)
   }
 
   render() {
@@ -96,7 +99,7 @@ class Education extends Component {
             <td>{entry.schoolName}</td>
             <td>{entry.study}</td>
             <td>{entry.schoolStart}-{entry.schoolEnd}</td>
-            <td><button onClick={this.editEducation}>Edit</button></td>
+            <td><button value={entry.educationId} onClick={this.editEducation}>Edit</button></td>
           </tr>
       )
     })
