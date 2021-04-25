@@ -18,10 +18,15 @@ class Education extends Component {
       editEducation: [false, null],
       education: [] 
     }
-    this.getInformation = this.getInformation.bind(this)
-    this.addEducation = this.addEducation.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.addEducation = this.addEducation.bind(this)
+    this.getInformation = this.getInformation.bind(this)
     this.editEducation = this.editEducation.bind(this)
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({[name]: value})
   }
 
   addEducation() {
@@ -40,8 +45,8 @@ class Education extends Component {
           study: '', 
           schoolStart: '', 
           schoolEnd: '', 
-          education: [...prevState.education],
-          editEducation: [false, null]
+          editEducation: [false, null],
+          education: [...prevState.education]
         }
       })
     } else {
@@ -63,11 +68,6 @@ class Education extends Component {
         }
       })
     }
-  }
-
-  handleChange(event) {
-    const { name, value } = event.target;
-    this.setState({[name]: value})
   }
 
   getInformation() {

@@ -10,38 +10,64 @@ class Experience extends Component {
   constructor() {
     super()
     this.state = {
+      jobId: 0,
       employerName: '',
       jobTitle: '',
       jobStart: '',
       jobEnd: '',
+      editJob: [false, null],
       experience: [] 
     }
-    this.getInformation = this.getInformation.bind(this)
-    this.addExperience = this.addExperience.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.addExperience = this.addExperience.bind(this)
+    this.getInformation = this.getInformation.bind(this)
     this.editExperience = this.editExperience.bind(this)
   }
-
+ 
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({[name]: value})
   }
 
   addExperience() {
-    this.setState(prevState => {
-      const newJob = {
-        employerName: this.state.employerName,
-        jobTitle: this.state.jobTitle,
-        jobStart: this.state.jobStart,
-        jobEnd: this.state.jobEnd
-      }
-      return {
-        employerName: '',
-        jobTitle: '',
-        jobStart: '',
-        jobEnd: '',
-        experience: [...prevState.experience, newJob]}
-    })
+    if (this.state.editJob[0]) {
+      this.setState(prevState => {
+        const newJob = {
+          jobId: this.state.editJob[1],
+          employerName: this.state.employerName,
+          jobTitle: this.state.jobTitle,
+          jobStart: this.state.jobStart,
+          jobEnd: this.state.jobEnd
+        }
+        prevState.experience[this.state.editJob[1]] = newJob;
+        return {
+          employerName: '',
+          jobTitle: '',
+          jobStart: '',
+          jobEnd: '',
+          editJob: [false, null],
+          experience: [...prevState.experience]
+        }
+      })
+    } else {
+      this.setState(prevState => {
+        const newJob = {
+          jobId: this.state.jobId.toString(),
+          employerName: this.state.employerName,
+          jobTitle: this.state.jobTitle,
+          jobStart: this.state.jobStart,
+          jobEnd: this.state.jobEnd
+        }
+        return {
+          jobId: prevState.jobId + 1,
+          employerName: '',
+          jobTitle: '',
+          jobStart: '',
+          jobEnd: '',
+          experience: [...prevState.experience, newJob]
+        }
+      })
+    }
   }
 
   getInformation() {
@@ -85,19 +111,29 @@ class Experience extends Component {
   }
 
   editExperience(event) {
-    console.log(event.target)
+    const editJob = {
+      employerName: this.state.experience[event.target.value].employerName,
+      jobTitle: this.state.experience[event.target.value].jobTitle,
+      jobStart: this.state.experience[event.target.value].jobStart,
+      jobEnd: this.state.experience[event.target.value].jobEnd,
+      editJob: [true, event.target.value]
+    }
+    this.setState(editJob)
   }
   
   render() {
     const jobList = this.state.experience.map(entry => {
-      return (
-          <tr key={uniqid()}>
-            <td>{entry.employerName}</td>
-            <td>{entry.jobTitle}</td>
-            <td>{entry.jobStart}-{entry.jobEnd}</td>
-            <td><input type='submit' onClick={this.editExperience} value='edit'/></td>
-          </tr>
-      )
+      if (!this.state.editJob[0] || (this.state.editJob[0] && entry.jobId !== this.state.editJob[1])) {
+        return (
+            <tr key={uniqid()}>
+              <td>{entry.employerName}</td>
+              <td>{entry.jobTitle}</td>
+              <td>{entry.jobStart}-{entry.jobEnd}</td>
+              <td><button value={entry.jobId} onClick={this.editExperience}>Edit</button></td>
+            </tr>
+        )
+      }
+      return null
     })
     return (
       <div>

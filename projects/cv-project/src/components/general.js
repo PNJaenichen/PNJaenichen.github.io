@@ -68,7 +68,7 @@ class General extends Component {
           value={this.state.phoneNum}
           onChange={this.handleChange}
         />
-        <input type='submit' value='Press to Test' onClick={this.doSomething}></input>
+        <input type='submit' value='Submit' onClick={this.doSomething}></input>
       </div>
     )
   }
