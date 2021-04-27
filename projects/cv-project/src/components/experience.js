@@ -16,10 +16,12 @@ class Experience extends Component {
       jobStart: '',
       jobEnd: '',
       editJob: [false, null],
-      experience: [] 
+      experience: [],
+      complete: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.addExperience = this.addExperience.bind(this)
+    this.informationComplete = this.informationComplete.bind(this)
     this.getInformation = this.getInformation.bind(this)
     this.editExperience = this.editExperience.bind(this)
     this.removeExperience = this.removeExperience.bind(this)
@@ -70,7 +72,11 @@ class Experience extends Component {
       })
     }
   }
-
+  
+  informationComplete() {
+    this.setState({complete: true})
+  }
+  
   getInformation() {
     return (
       <div>
@@ -106,7 +112,8 @@ class Experience extends Component {
           value={this.state.jobEnd}
           onChange={this.handleChange}
         />
-        <input type='submit' onClick={this.addExperience} value='Submit' />
+        <button onClick={this.addExperience}>Submit</button>
+        <button onClick={this.informationComplete}>Complete</button> 
       </div>
     )
   }
@@ -117,7 +124,8 @@ class Experience extends Component {
       jobTitle: this.state.experience[event.target.value].jobTitle,
       jobStart: this.state.experience[event.target.value].jobStart,
       jobEnd: this.state.experience[event.target.value].jobEnd,
-      editJob: [true, event.target.value]
+      editJob: [true, event.target.value],
+      complete: false
     }
     this.setState(editJob)
   }
@@ -155,7 +163,7 @@ class Experience extends Component {
     })
     return (
       <div>
-        {this.getInformation()}
+        {this.state.complete ? null : this.getInformation()}
         <table>
           <thead>
             <tr>

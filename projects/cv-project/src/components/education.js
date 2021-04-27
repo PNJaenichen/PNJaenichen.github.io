@@ -16,10 +16,12 @@ class Education extends Component {
       schoolStart: '', 
       schoolEnd: '',
       editEducation: [false, null],
+      complete: false,
       education: [] 
     }
     this.handleChange = this.handleChange.bind(this)
     this.addEducation = this.addEducation.bind(this)
+    this.informationComplete = this.informationComplete.bind(this)
     this.getInformation = this.getInformation.bind(this)
     this.editEducation = this.editEducation.bind(this)
     this.removeEducation = this.removeEducation.bind(this)
@@ -71,6 +73,10 @@ class Education extends Component {
     }
   }
 
+  informationComplete() {
+    this.setState({complete: true})
+  }
+
   getInformation() {
     return (
       <div>
@@ -106,7 +112,8 @@ class Education extends Component {
           value={this.state.schoolEnd} 
           onChange={this.handleChange} 
         />
-        <input type='submit' onClick={this.addEducation} value='Submit' />
+        <button onClick={this.addEducation}>Submit</button>
+        <button onClick={this.informationComplete}>Complete</button> 
       </div>
     )
   }
@@ -117,7 +124,8 @@ class Education extends Component {
       study: this.state.education[event.target.value].study,
       schoolStart: this.state.education[event.target.value].schoolStart,
       schoolEnd: this.state.education[event.target.value].schoolEnd,
-      editEducation: [true, event.target.value]
+      editEducation: [true, event.target.value],
+      complete: false
     }
     this.setState(editEd)
   }
@@ -155,7 +163,7 @@ class Education extends Component {
     })
     return (
       <div>
-        {this.getInformation()}
+        {this.state.complete ? null : this.getInformation()}
         <table>
           <thead>
             <tr>
