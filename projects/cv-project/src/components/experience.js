@@ -22,6 +22,7 @@ class Experience extends Component {
     this.addExperience = this.addExperience.bind(this)
     this.getInformation = this.getInformation.bind(this)
     this.editExperience = this.editExperience.bind(this)
+    this.removeExperience = this.removeExperience.bind(this)
   }
  
   handleChange(event) {
@@ -121,15 +122,32 @@ class Experience extends Component {
     this.setState(editJob)
   }
   
+  removeExperience(event) {
+    const newJobList = this.state.experience.filter(entry => entry.jobId !== event.target.value)
+    for (let i = 0; i < newJobList.length; i++) {
+      if (newJobList[i]['jobId'] !== i.toString()) {
+        newJobList[i]['jobId'] = i.toString();
+      }
+    }
+    console.log(newJobList);
+    this.setState(prevState => {
+      return {
+        jobId: prevState.jobId - 1, 
+        experience: newJobList
+      }
+    })
+  }
+
   render() {
     const jobList = this.state.experience.map(entry => {
-      if (!this.state.editJob[0] || (this.state.editJob[0] && entry.jobId !== this.state.editJob[1])) {
+      if ((!this.state.editJob[0] && entry !== null) || (this.state.editJob[0] && entry.jobId !== this.state.editJob[1])) {
         return (
             <tr key={uniqid()}>
               <td>{entry.employerName}</td>
               <td>{entry.jobTitle}</td>
               <td>{entry.jobStart}-{entry.jobEnd}</td>
               <td><button value={entry.jobId} onClick={this.editExperience}>Edit</button></td>
+              <td><button value={entry.jobId} onClick={this.removeExperience}>Remove</button></td>
             </tr>
         )
       }

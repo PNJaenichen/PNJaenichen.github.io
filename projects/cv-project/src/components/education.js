@@ -22,6 +22,7 @@ class Education extends Component {
     this.addEducation = this.addEducation.bind(this)
     this.getInformation = this.getInformation.bind(this)
     this.editEducation = this.editEducation.bind(this)
+    this.removeEducation = this.removeEducation.bind(this)
   }
 
   handleChange(event) {
@@ -121,6 +122,22 @@ class Education extends Component {
     this.setState(editEd)
   }
 
+  removeEducation(event) {
+    const newSchoolList = this.state.education.filter(entry => entry.educationId !== event.target.value)
+    for (let i = 0; i < newSchoolList.length; i++) {
+      if (newSchoolList[i]['educationId'] !== i.toString()) {
+        newSchoolList[i]['educationId'] = i.toString();
+      }
+    }
+    console.log(newSchoolList);
+    this.setState(prevState => {
+      return {
+        educationId: prevState.educationId - 1, 
+        education: newSchoolList
+      }
+    })
+  }
+
   render() {
     const educationList = this.state.education.map(entry => {
       if (!this.state.editEducation[0] || (this.state.editEducation[0] && entry.educationId !== this.state.editEducation[1])) {
@@ -130,6 +147,7 @@ class Education extends Component {
               <td>{entry.study}</td>
               <td>{entry.schoolStart}-{entry.schoolEnd}</td>
               <td><button value={entry.educationId} onClick={this.editEducation}>Edit</button></td>
+              <td><button value={entry.educationId} onClick={this.removeEducation}>Remove</button></td>
             </tr>
         )
       }
