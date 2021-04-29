@@ -13,10 +13,11 @@ class General extends Component {
       name: '',
       email: '',
       phoneNum: '',
+      info: [],
       edit: true,
       complete: false
     }
-    this.doSomething = this.doSomething.bind(this)
+    this.submitInformation = this.submitInformation.bind(this)
     this.buildGeneral = this.buildGeneral.bind(this)
     this.completeGeneral = this.completeGeneral.bind(this)
     this.inputGeneral = this.inputGeneral.bind(this)
@@ -29,12 +30,10 @@ class General extends Component {
     this.setState({[name]: value})
   }
 
-  doSomething() {
+  submitInformation() {
     this.setState(() => {
       return {
-        name: this.state.name,
-        email: this.state.email,
-        phoneNum: this.state.phoneNum,
+        info: [this.state.name, this.state.email, this.state.phoneNum],
         edit: false
       }
     });
@@ -75,19 +74,19 @@ class General extends Component {
           value={this.state.phoneNum}
           onChange={this.handleChange}
         />
-        <input type='submit' value='Submit' onClick={this.doSomething}></input>
+        <button onClick={this.submitInformation}>Submit</button>
       </div>
     )
   }
 
   buildGeneral() {
     if (this.state.name !== '' || this.state.email !== '' || this.state.phoneNum !== '') {
-      if (!this.state.complete) {
+      if (!this.state.complete && this.state.info.length !== 0) {
         return (
           <tr key={uniqid()}>
-            <td>{this.state.name}</td>
-            <td>{this.state.email}</td>
-            <td>{this.state.phoneNum}</td>
+            <td>{this.state.info[0]}</td>
+            <td>{this.state.info[1]}</td>
+            <td>{this.state.info[2]}</td>
             <td><button onClick={this.editGeneral}>Edit</button></td>
             <td><button onClick={this.completeGeneral}>Complete</button></td>
           </tr>
@@ -95,9 +94,9 @@ class General extends Component {
       } else {
         return (
           <tr key={uniqid()}>
-            <td>{this.state.name}</td>
-            <td>{this.state.email}</td>
-            <td>{this.state.phoneNum}</td>
+            <td>{this.state.info[0]}</td>
+            <td>{this.state.info[1]}</td>
+            <td>{this.state.info[2]}</td>
           </tr>
         )
       }
