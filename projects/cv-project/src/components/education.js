@@ -149,7 +149,8 @@ class Education extends Component {
   render() {
     const educationList = this.state.education.map(entry => {
       if (!this.state.editEducation[0] || (this.state.editEducation[0] && entry.educationId !== this.state.editEducation[1])) {
-        return (
+        if (!this.state.complete) {
+          return (
             <tr key={uniqid()}>
               <td>{entry.schoolName}</td>
               <td>{entry.study}</td>
@@ -157,7 +158,16 @@ class Education extends Component {
               <td><button value={entry.educationId} onClick={this.editEducation}>Edit</button></td>
               <td><button value={entry.educationId} onClick={this.removeEducation}>Remove</button></td>
             </tr>
-        )
+          )
+        } else {
+          return (
+            <tr key={uniqid()}>
+              <td>{entry.schoolName}</td>
+              <td>{entry.study}</td>
+              <td>{entry.schoolStart}-{entry.schoolEnd}</td>
+            </tr>
+          )
+        }
       }
       return null
     })

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uniqid from 'uniqid'
 
 // A section to add general information like name, email, phone number
 // A submit button for each section or whole form
@@ -12,10 +13,12 @@ class General extends Component {
       name: '',
       email: '',
       phoneNum: '',
-      edit: true
+      edit: true,
+      complete: false
     }
     this.doSomething = this.doSomething.bind(this)
     this.buildGeneral = this.buildGeneral.bind(this)
+    this.completeGeneral = this.completeGeneral.bind(this)
     this.inputGeneral = this.inputGeneral.bind(this)
     this.editGeneral = this.editGeneral.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -35,6 +38,10 @@ class General extends Component {
         edit: false
       }
     });
+  }
+
+  completeGeneral() {
+    this.setState({complete: true})
   }
 
   editGeneral() {
@@ -75,20 +82,44 @@ class General extends Component {
 
   buildGeneral() {
     if (this.state.name !== '' || this.state.email !== '' || this.state.phoneNum !== '') {
-      return (
-        <div>
-          <p>Name: {this.state.name}</p>
-          <p>Email: {this.state.email}</p>
-          <p>Phone: {this.state.phoneNum}</p>
-          <button className='edit' onClick={this.editGeneral}>Edit</button>
-        </div>
-      )
+      if (!this.state.complete) {
+        return (
+          <tr key={uniqid()}>
+            <td>{this.state.name}</td>
+            <td>{this.state.email}</td>
+            <td>{this.state.phoneNum}</td>
+            <td><button onClick={this.editGeneral}>Edit</button></td>
+            <td><button onClick={this.completeGeneral}>Complete</button></td>
+          </tr>
+        )
+      } else {
+        return (
+          <tr key={uniqid()}>
+            <td>{this.state.name}</td>
+            <td>{this.state.email}</td>
+            <td>{this.state.phoneNum}</td>
+          </tr>
+        )
+      }
     }
   }
 
   render() {
     return (
-      <div>{this.state.edit ? this.inputGeneral() : this.buildGeneral()}
+      <div>
+        {!this.state.edit ? null : this.inputGeneral()}
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.buildGeneral()}
+          </tbody>
+        </table>
       </div>
     )
   }

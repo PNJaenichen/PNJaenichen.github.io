@@ -149,7 +149,8 @@ class Experience extends Component {
   render() {
     const jobList = this.state.experience.map(entry => {
       if ((!this.state.editJob[0] && entry !== null) || (this.state.editJob[0] && entry.jobId !== this.state.editJob[1])) {
-        return (
+        if (!this.state.complete) {
+          return (
             <tr key={uniqid()}>
               <td>{entry.employerName}</td>
               <td>{entry.jobTitle}</td>
@@ -157,7 +158,16 @@ class Experience extends Component {
               <td><button value={entry.jobId} onClick={this.editExperience}>Edit</button></td>
               <td><button value={entry.jobId} onClick={this.removeExperience}>Remove</button></td>
             </tr>
-        )
+          )
+        } else {
+          return (
+            <tr key={uniqid()}>
+              <td>{entry.employerName}</td>
+              <td>{entry.jobTitle}</td>
+              <td>{entry.jobStart}-{entry.jobEnd}</td>
+            </tr>
+          )
+        }
       }
       return null
     })
