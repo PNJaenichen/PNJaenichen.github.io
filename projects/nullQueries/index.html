@@ -11,13 +11,43 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            padding: 0;
+          }
+          html, body {
+            margin: 0;
+            padding: 0;
+          }
+          header {
+            display: block;
+          }
+          nav {
+            text-align: center;
+            width: 100%;
+            height: 50px;
+            background: white;
+            position: fixed;
+          }
+          nav a {
+            color: darkslategray;
+            text-decoration: none;
+          }
+          #fakeImg {
+            height: 90vh;
+            border: 50px white solid;
           }
         </style>
     </head>
     <body>
         <header>
+          <nav>
+            <a href="#services">SERVICES</a>
+            <a href="#aboutme">ABOUT ME</a>
+            <a href="#portfolio">PORTFOLIO</a>
+            <a href="#contact">CONTACT</a>
+          </nav>
         </header>
         <main>
+          <div id='fakeImg'></div>
         </main>
         <footer>
         </footer>
