@@ -7,10 +7,6 @@
         <link rel="stylesheet" type="text/css" href="assets/sheets/normalize.css">
         <style>
           html {
-            background-image: url('SiteMap.png');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
             padding: 0;
           }
           html, body {
@@ -31,8 +27,12 @@
             color: darkslategray;
             text-decoration: none;
           }
-          #fakeImg {
-            height: 90vh;
+          #heroImg {
+            background-image: url('./LakePukaki.png');
+            height: 100vh;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
             border: 50px white solid;
           }
         </style>
@@ -47,7 +47,10 @@
           </nav>
         </header>
         <main>
-          <div id='fakeImg'></div>
+          <div id='heroImg'>
+            <img src='./nullQ.png'>
+            <h1>nullQueries</h1>
+          </div>
         </main>
         <footer>
         </footer>
