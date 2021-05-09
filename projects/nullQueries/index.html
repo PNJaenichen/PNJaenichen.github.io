@@ -22,10 +22,21 @@
             height: 50px;
             background: white;
             position: fixed;
+            top: -50px;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: top 0.3s;
           }
           nav a {
             color: darkslategray;
             text-decoration: none;
+            padding: 15px;
+          }
+          nav a:hover {
+            background-color: #ddd;
+            color: black;
           }
           #heroImg {
             background-image: url('./LakePukaki.png');
@@ -34,12 +45,20 @@
             background-repeat: no-repeat;
             background-size: cover;
             border: 50px white solid;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+          #heroImg img {
+            height: 250px;
+            width: 250px;
           }
         </style>
     </head>
     <body>
         <header>
-          <nav>
+          <nav id='navbar'>
             <a href="#services">SERVICES</a>
             <a href="#aboutme">ABOUT ME</a>
             <a href="#portfolio">PORTFOLIO</a>
@@ -49,10 +68,20 @@
         <main>
           <div id='heroImg'>
             <img src='./nullQ.png'>
-            <h1>nullQueries</h1>
+            <h1>nullQueries | Data Made Visual</h1>
           </div>
         </main>
         <footer>
         </footer>
     </body>
+    <script>
+      window.onscroll = function() {scrollFunction()};
+      function scrollFunction() {
+        if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
+          document.getElementById('navbar').style.top = '0';
+        } else {
+          document.getElementById('navbar').style.top = '-50px';
+        }
+      }
+    </script>
 </html>
