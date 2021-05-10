@@ -54,6 +54,38 @@
             height: 250px;
             width: 250px;
           }
+          p {
+            margin: 0 0 10px;
+            
+          }
+          blockquote {
+            text-align: center;
+            border-left: none;
+            margin: 0;
+            padding: .5em 10px;
+            quotes: "\201C""\201D""\2018""\2019";
+            font-size: 15px;
+          }
+          blockquote::before {
+            content: open-quote;
+            margin-right: .25em;
+            vertical-align: -.2em;
+          }
+          blockquote::after {
+            content: close-quote;
+            margin-left: .25em;
+            vertical-align: -.6em;
+          }
+          blockquote::after,
+          blockquote::before {
+            color: darkslategray;
+            font-size: 4em;
+            line-height: .1em;
+          }
+          blockquote p {
+            display: inline;
+            font-size: 30px;
+          }
         </style>
     </head>
     <body>
@@ -70,6 +102,9 @@
             <img src='./nullQ.png'>
             <h1>nullQueries | Data Made Visual</h1>
           </div>
+          <blockquote>
+            <p>Building knowledge one data point at a time</p>
+          </blockquote>
         </main>
         <footer>
         </footer>
