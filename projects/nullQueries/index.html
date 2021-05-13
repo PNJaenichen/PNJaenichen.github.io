@@ -89,6 +89,28 @@
           #aboutMe {
             background-color: lightblue;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0 20px 4%;
+          }
+          #contactMe {
+            background-color: skyblue;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 20px 0;
+          }
+          #contactMe h2 {
+            text-align: center;
+          }
+          #contactMe .row .col-sm-12 {
+            display: flex;
+            flex-direction: column;
+          }
+          button {
+            width: 25%;
+            margin: auto;
           }
         </style>
     </head>
@@ -168,12 +190,12 @@
         </div>
         <div class='container' id='aboutMe'>
           <div class='row'>
-            <div class='col-sm-2'>
+            <div class='col-sm-offset-1 col-sm-2'>
               <p style='border-bottom: 1px solid black'>ABOUT ME</p> 
             </div>
           </div>
           <div class='row'>
-            <p class='col-sm-7'>
+            <p class='col-sm-offset-1 col-sm-6'>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. 
               Rerum animi quis deleniti culpa optio tempora? Quaerat iure 
               est, rerum labore, quos aperiam, maiores atque veniam qui 
@@ -181,6 +203,14 @@
             </p>
             <div class='col-sm-3' id='aboutPicture'>
               <img src='https://upload.wikimedia.org/wikipedia/en/1/13/Stick_figure.png'>
+            </div>
+          </div>
+        </div>
+        <div class='container' id='contactMe'>
+          <div class='row'>
+            <div class='col-sm-12'>
+              <h2 style='padding-bottom: 10px; border-bottom: 1px solid white;'>Want to know more? Have questions?</h2>
+              <button>Get in Touch</button>
             </div>
           </div>
         </div>
