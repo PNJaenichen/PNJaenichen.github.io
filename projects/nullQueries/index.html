@@ -86,7 +86,7 @@
             display: inline;
             font-size: 30px;
           }
-          #aboutMe {
+          #aboutMe, #portfolio {
             background-color: lightblue;
             width: 100%;
             display: flex;
@@ -111,6 +111,13 @@
           button {
             width: 25%;
             margin: auto;
+          }
+          .portThumb {
+            height: 150px;
+            width: auto;
+          }
+          .no-padding {
+            padding: 0;
           }
         </style>
     </head>
@@ -211,6 +218,32 @@
             <div class='col-sm-12'>
               <h2 style='padding-bottom: 10px; border-bottom: 1px solid white;'>Want to know more? Have questions?</h2>
               <button>Get in Touch</button>
+            </div>
+          </div>
+        </div>
+        <div class='container' id='portfolio'>
+          <div class='row'>
+            <div class='col-sm-offset-1 col-sm-2'>
+              <p style='border-bottom: 1px solid black'>PORTFOLIO</p> 
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-sm-offset-1 col-sm-3 no-padding'>
+              <a><img class='portThumb' src='./Web-Analytics-Dashboard-datapine.png'></a>
+            </div>
+            <div class='col-sm-3 no-padding'></div>
+            <div class='col-sm-3 no-padding'>
+              <a><img class='portThumb' src='./top-7-data-analytics-tools-2019.jpg'></a>
+            </div>
+            <div class='col-sm-1'></div>
+          </div>
+          <div class='row'>
+            <div class='col-sm-offset-4 col-sm-3 no-padding'>
+              <a><img class='portThumb' src='./dataanalysisistockrobuart.jpg'></a>
+            </div>
+            <div class='col-sm-3 no padding'></div>
+            <div class='col-sm-3 no padding'>
+              <a><img class='portThumb' src='./12-Websites-You-Should-Check-Out-to-Learn-Web-Development-Fast.png'></a>
             </div>
           </div>
         </div>
