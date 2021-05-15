@@ -114,10 +114,30 @@
           }
           .portThumb {
             height: 150px;
-            width: auto;
+            width: 100%;
           }
           .no-padding {
             padding: 0;
+          }
+          .no-margin {
+            margin: 0;
+          }
+          .center-text {
+            text-align: center;
+          }
+          .thumb-info {
+            height: 75px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            background-color: rgba(173,216,230,0.8);
+          }
+          .thumb-info h3 {
+            margin-top: 3px;
+            font-size: 1.3em;
+          }
+          .thumb-info p {
+            font-size: 0.85em;
           }
         </style>
     </head>
@@ -223,27 +243,44 @@
         </div>
         <div class='container' id='portfolio'>
           <div class='row'>
-            <div class='col-sm-offset-1 col-sm-2'>
+            <div class='col-xs-offset-1 col-xs-2'>
               <p style='border-bottom: 1px solid black'>PORTFOLIO</p> 
             </div>
           </div>
-          <div class='row'>
-            <div class='col-sm-offset-1 col-sm-3 no-padding'>
+          <div class='row g-0'>
+            <div class='col-xs-offset-2 col-xs-2 no-padding'>
               <a><img class='portThumb' src='./Web-Analytics-Dashboard-datapine.png'></a>
+              <div class='thumb-info'>
+                <h3 class='center-text no-padding no-margin'>Dashboard</h3>
+                <p class='center-text'>Performance of important KPI's</p>
+              </div>
             </div>
-            <div class='col-sm-3 no-padding'></div>
-            <div class='col-sm-3 no-padding'>
+            <div class='col-xs-2 no-padding'></div>
+            <div class='col-xs-2 no-padding'>
               <a><img class='portThumb' src='./top-7-data-analytics-tools-2019.jpg'></a>
+              <div class='thumb-info'>
+                <h3 class='center-text no-padding no-margin'>Data Analytics</h3>
+                <p class='center-text'>Statistics, prediction models and machine learning</p>
+              </div>
             </div>
-            <div class='col-sm-1'></div>
+            <div class='col-xs-1'></div>
           </div>
-          <div class='row'>
-            <div class='col-sm-offset-4 col-sm-3 no-padding'>
+          <div class='row g-0'>
+            <div class='col-xs-offset-2 col-xs-2 no-padding'></div>
+            <div class='col-xs-2 no-padding'>
               <a><img class='portThumb' src='./dataanalysisistockrobuart.jpg'></a>
+              <div class='thumb-info'>
+                <h3 class='center-text no-padding no-margin'>Data Analysis</h3>
+                <p class='center-text'>Webshop sales funnel</p>
+              </div>
             </div>
-            <div class='col-sm-3 no padding'></div>
-            <div class='col-sm-3 no padding'>
+            <div class='col-xs-2 no-padding'></div>
+            <div class='col-xs-2 no-padding'>
               <a><img class='portThumb' src='./12-Websites-You-Should-Check-Out-to-Learn-Web-Development-Fast.png'></a>
+              <div class='thumb-info'>
+                <h3 class='center-text no-padding no-margin'>Web Development</h3>
+                <p class='center-text'>Front End Web Work</p>
+              </div>
             </div>
           </div>
         </div>
