@@ -24,8 +24,6 @@ h1 {
   text-align: center;
   font-size: 36pt;
   color: var(--null_Blue);
-  position: absolute;
-  top: 50%;
 }
 
 h3, h4, h5, h6, p {
@@ -39,9 +37,11 @@ h3, h4, h5, h6 {
 
 nav {
   height: 50px;
+  width: 100%;
   background-color: var(--null_Black);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 70px;
   align-items: center;
 }
 
@@ -51,6 +51,12 @@ nav a {
   font-weight: 400;
   padding: 0px;
   margin: 0px;
+}
+
+nav img {
+  position: absolute;
+  left: 0px;
+  height: 50px;
 }
 
 p, a {
