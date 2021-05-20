@@ -1,0 +1,83 @@
+:root {
+  --null_Black: #141414;
+  --null_Blue: #01D7E2;
+  --null_Purple: #D500FB;
+}
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+html {
+  background-color: var(--null_Black);
+}
+
+h1, h2 {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 36pt;
+  color: var(--null_Blue);
+  position: absolute;
+  top: 50%;
+}
+
+h3, h4, h5, h6, p {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+}
+
+h3, h4, h5, h6 {
+  font-size: 32pt;
+}
+
+nav {
+  height: 50px;
+  background-color: var(--null_Black);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+nav a {
+  color: var(--null_Blue);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+  padding: 0px;
+  margin: 0px;
+}
+
+p, a {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+  font-size: 20pt;
+}
+
+#heroBanner {
+  background-image: url('Banner.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 600px;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.bordered {
+  border: var(--null_Blue) 2px solid;
+  margin: 0;
+  padding: 0 5px 0 5px;
+  border-radius: 5px;
+}
