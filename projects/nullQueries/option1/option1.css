@@ -10,6 +10,10 @@ html, body {
   width: 100%;
 }
 
+body {
+  position: relative;
+}
+
 html {
   background-color: var(--null_Black);
 }
@@ -24,6 +28,9 @@ h1 {
   text-align: center;
   font-size: 36pt;
   color: var(--null_Blue);
+  position: absolute;
+  top: 75%;
+  z-index: 1;
 }
 
 h3, h4, h5, h6, p {
@@ -31,8 +38,13 @@ h3, h4, h5, h6, p {
   font-weight: 400;
 }
 
-h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
+  color: var(--null_Blue);
   font-size: 32pt;
+  width: fit-content;
+  display: inline-block;
+  border-bottom: var(--null_Purple) solid 2px;
+  margin: 0 auto;
 }
 
 nav {
@@ -43,6 +55,7 @@ nav {
   justify-content: center;
   gap: 70px;
   align-items: center;
+  border-bottom: var(--null_Purple) solid 2px;
 }
 
 nav a {
@@ -65,12 +78,18 @@ p, a {
   font-size: 20pt;
 }
 
+p {
+  color: white;
+}
+
 #heroBanner {
-  background-image: url('Banner.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 600px;
+  position: relative;
+  background-color: var(--null_Black)
+}
+
+#heroBanner img {
+  width: 100%;
+  height: auto;
 }
 
 .no-padding {
@@ -86,4 +105,24 @@ p, a {
   margin: 0;
   padding: 0 5px 0 5px;
   border-radius: 5px;
+}
+
+main {
+  position: relative;
+  background-color: var(--null_Black);
+  border-bottom: var(--null_Purple) 2px solid;
+}
+
+main img {
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+}
+
+section {
+  z-index: 1;
+}
+
+footer {
+  background-color: var(--null_Black);
 }
