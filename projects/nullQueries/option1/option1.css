@@ -41,7 +41,6 @@ h3, h4, h5, h6, p {
 h2, h3, h4, h5, h6 {
   color: var(--null_Blue);
   font-size: 32pt;
-  width: fit-content;
   display: inline-block;
   border-bottom: var(--null_Purple) solid 2px;
   margin: 0 auto;
@@ -113,7 +112,10 @@ main {
   border-bottom: var(--null_Purple) 2px solid;
 }
 
-main img {
+#bodyImg {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
   opacity: 0.2;
