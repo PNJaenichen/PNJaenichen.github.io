@@ -41,6 +41,9 @@ h3, h4, h5, h6, p {
 h2, h3, h4, h5, h6 {
   color: var(--null_Blue);
   font-size: 32pt;
+}
+
+h2 {
   display: inline-block;
   border-bottom: var(--null_Purple) solid 2px;
   margin: 0 auto;
@@ -137,4 +140,37 @@ footer {
   width: 100%;
   text-align: center;
   background-color: var(--null_Black);
+}
+
+.videos {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* Ratio is H = W * .56215 */
+iframe {
+  margin: 5px;
+  width: 400px;
+  height: 224px;
+  border: var(--null_Blue) 2px solid;
+}
+
+.servOpt {
+  display: flex;
+  align-items: end;
+  
+}
+
+.servOpt img {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.info {
+  text-align: left;
+}
+
+.info p {
+  width: 100%;
 }
