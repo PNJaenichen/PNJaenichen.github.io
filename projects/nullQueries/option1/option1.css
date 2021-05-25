@@ -11,6 +11,10 @@ html, body {
 }
 
 body {
+  background-image: url('BOBnmUH.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   position: relative;
 }
 
@@ -111,17 +115,8 @@ p {
 
 main {
   position: relative;
-  background-color: var(--null_Black);
+  background-color: transparent;
   border-bottom: var(--null_Purple) 2px solid;
-}
-
-#bodyImg {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.2;
 }
 
 section {
@@ -153,6 +148,7 @@ iframe {
   width: 400px;
   height: 224px;
   border: var(--null_Blue) 2px solid;
+  z-index: 2;
 }
 
 .servOpt {
