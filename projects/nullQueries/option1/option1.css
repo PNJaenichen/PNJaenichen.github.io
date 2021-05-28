@@ -2,6 +2,7 @@
   --null_Black: #141414;
   --null_Blue: #01D7E2;
   --null_Purple: #D500FB;
+  --frame_width: 500px;
 }
 
 html, body {
@@ -59,7 +60,7 @@ nav {
   background-color: var(--null_Black);
   display: flex;
   justify-content: center;
-  gap: 70px;
+  gap: 5%;
   align-items: center;
   border-bottom: var(--null_Purple) solid 2px;
 }
@@ -70,6 +71,27 @@ nav a {
   font-weight: 400;
   padding: 0px;
   margin: 0px;
+}
+
+@media screen and (max-width: 700px) {
+  nav a {
+    font-size: 1.5em;
+  }
+  h1 {
+    font-size: 2.5em;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  nav a {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  h1 {
+    font-size: 2em;
+  }
 }
 
 nav img {
@@ -142,11 +164,11 @@ footer {
   justify-content: space-evenly;
 }
 
-/* Ratio is H = W * .56215 */
+/* Ratio is H = W * .56215 w400 h224*/
 iframe {
   margin: 5px;
-  width: 400px;
-  height: 224px;
+  width: var(--frame_width);
+  height: calc(var(--frame_width) * .5625);
   border: var(--null_Blue) 2px solid;
   z-index: 2;
 }
