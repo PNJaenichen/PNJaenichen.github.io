@@ -26,6 +26,7 @@ html {
 h1, h2 {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 600;
+  line-height: calc(1ex / 0.42);
 }
 
 h1 {
@@ -41,6 +42,7 @@ h1 {
 h3, h4, h5, h6, p {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
+  line-height: calc(1ex / 0.38);
 }
 
 h2, h3, h4, h5, h6 {
@@ -104,6 +106,7 @@ p, a {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
   font-size: 20pt;
+  line-height: calc(1ex / 0.32);
 }
 
 p {
@@ -162,6 +165,7 @@ footer {
 .videos {
   display: flex;
   justify-content: space-evenly;
+  margin: 25px 0px;
 }
 
 /* Ratio is H = W * .56215 w400 h224*/
