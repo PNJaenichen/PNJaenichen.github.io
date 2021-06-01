@@ -3,6 +3,7 @@
   --null_Blue: #01D7E2;
   --null_Purple: #D500FB;
   --frame_width: 500px;
+  --frame_small: 425px;
 }
 
 html, body {
@@ -29,6 +30,14 @@ h1, h2 {
   line-height: calc(1ex / 0.42);
 }
 
+h3, h4, h5, h6, p {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+  line-height: calc(1ex / 0.38);
+  color: var(--null_Blue);
+  font-size: 32pt;
+}
+
 h1 {
   width: 100%;
   text-align: center;
@@ -39,21 +48,36 @@ h1 {
   z-index: 1;
 }
 
-h3, h4, h5, h6, p {
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 400;
-  line-height: calc(1ex / 0.38);
-}
-
-h2, h3, h4, h5, h6 {
-  color: var(--null_Blue);
-  font-size: 32pt;
-}
-
 h2 {
   display: inline-block;
   border-bottom: var(--null_Purple) solid 2px;
   margin: 0 auto;
+  color: var(--null_Blue);
+  font-size: 32pt;
+}
+
+main {
+  position: relative;
+  background-color: transparent;
+  border-bottom: var(--null_Purple) 2px solid;
+}
+
+section {
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+}
+
+section p {
+  text-align: left;
+  width: 75%;
+  margin: 10px auto;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  background-color: var(--null_Black);
 }
 
 nav {
@@ -75,6 +99,12 @@ nav a {
   margin: 0px;
 }
 
+nav img {
+  position: absolute;
+  left: 0px;
+  height: 50px;
+}
+
 @media screen and (max-width: 700px) {
   nav a {
     font-size: 1.5em;
@@ -94,12 +124,6 @@ nav a {
   h1 {
     font-size: 2em;
   }
-}
-
-nav img {
-  position: absolute;
-  left: 0px;
-  height: 50px;
 }
 
 p, a {
@@ -138,34 +162,19 @@ p {
   border-radius: 5px;
 }
 
-main {
-  position: relative;
-  background-color: transparent;
-  border-bottom: var(--null_Purple) 2px solid;
-}
-
-section {
-  z-index: 1;
-  width: 100%;
-  text-align: center;
-}
-
-section p {
-  text-align: left;
-  width: 75%;
-  margin: 10px auto;
-}
-
-footer {
-  width: 100%;
-  text-align: center;
-  background-color: var(--null_Black);
-}
-
 .videos {
   display: flex;
   justify-content: space-evenly;
-  margin: 25px 0px;
+  margin: 15px 0px;
+}
+
+@media screen and (max-width: 950px) {
+  .videos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px 0px;
+  }
 }
 
 /* Ratio is H = W * .56215 w400 h224*/
@@ -175,6 +184,16 @@ iframe {
   height: calc(var(--frame_width) * .5625);
   border: var(--null_Blue) 2px solid;
   z-index: 2;
+}
+
+@media screen and (max-width: 525px) {
+  iframe {
+    margin: 5px;
+    width: var(--frame_small);
+    height: calc(var(--frame_small) * .5626);
+    border: var(--null_Blue) 2px solid;
+    z-index: 2;
+  }
 }
 
 .servOpt {
