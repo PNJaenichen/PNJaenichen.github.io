@@ -87,12 +87,16 @@ footer a, footer p {
 nav {
   height: 50px;
   width: 100%;
-  background-color: var(--null_Green);
+  top: -50px;
+  background-color: var(--null_darkGreen);
   display: flex;
+  position: fixed;
+  z-index: 3;
   justify-content: center;
   gap: 5%;
   align-items: center;
   border-bottom: var(--null_Teal) solid 2px;
+  transition: top 0.3s;
 }
 
 nav a {
