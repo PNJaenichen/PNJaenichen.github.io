@@ -25,30 +25,41 @@
     </header>
     <main class='no-padding no-margin'>
       <section id='videos'>
-        <h2 class='no-padding secHead'>YOUTUBE</h2>
-        <div class='videos'>
-          <iframe 
-            id="recentVideo"
-            src="https://www.youtube.com/embed/D914nNWGP6E?html5=1" 
-            title="nullQueries Recent Video" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen">
-          </iframe>
-          <iframe 
-            id="lastVideo"
-            src="https://www.youtube.com/embed/videoseries?list=PLlOuZAcnp6h5Yknv2X7dzyx9fXSkFcSEx" 
-            title="nullQueries Play List" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-          </iframe>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-lg-12 servOpt'>
+              <h2 class='no-padding'>YOUTUBE</h2>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-lg-12 videos'>
+              <iframe 
+                id="recentVideo"
+                src="https://www.youtube.com/embed/D914nNWGP6E?html5=1" 
+                title="nullQueries Recent Video" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen">
+              </iframe>
+              <iframe 
+                id="lastVideo"
+                src="https://www.youtube.com/embed/videoseries?list=PLlOuZAcnp6h5Yknv2X7dzyx9fXSkFcSEx" 
+                title="nullQueries Play List" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
         </div>
       </section>
+      <div id='contactButton' class='no-margin no-padding'>
+        <a href='https://www.youtube.com/channel/UCtKKhu8MzKSde-X-xVH-Vpw/videos'><button class='bordered'>Explore Videos</button></a>
+      </div>
       <section id='services'>  
         <div class='container'>
           <div class='row'>
             <div class='col-lg-12 servOpt'>
-              <h2 class='no-padding no-margin'>SERVICES</h2>
+              <h2 class='no-padding'>SERVICES</h2>
             </div>
           </div>
           <div class='row'>
@@ -128,33 +139,40 @@
           </div>
         </div>
       </section>
-      <div id='contactButton' class='no-margin no-padding'>
-        <button class='bordered'>Contact Me</button>
-      </div>
       <section id='aboutMe'>
-        <h2 class='no-padding no-margin secHead'>ABOUT ME</h2>
-        <p>
-          My name is Eric and I started nullQueries due to a lack of free,
-          quality information about data architecture and strategy. There's 
-          plenty of SQL, python, and database 101 stuff out there, but not
-          much on the next steps of converting that into a career building
-          end-to-end data solutions that are simple, reliable, and scalable.
-          I've worked with many people who try to code their way out of 
-          bad architecture, either unaware of the underlying problems, or 
-          unable to change things. Resulting in an unmanagable, out of 
-          control environment. SO nullQueries is my meager attempt to help
-          the dta world with solving this problem.
-        </p>
-        <p>
-          Beyond the YouTube channel I provide consulting services to 
-          directly help with problems of data strategy, architecture, and
-          struggles finding the value in your data. Whether a small business
-          struggling to manage your data in a clean useful way, or a large
-          enterprise who's users can't seem to figure out what to do with
-          the data warehouse, I have experience in finding the disconnect
-          and transforming data to provide value.
-        </p>
-        <p>Do you want to work together? Please reach out to me by e-mail.</p>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-lg-12 servOpt'>
+              <h2 class='no-padding secHead'>ABOUT ME</h2>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-lg-12 info'>
+              <p>
+                My name is Eric and I started nullQueries due to a lack of free,
+                quality information about data architecture and strategy. There's 
+                plenty of SQL, python, and database 101 stuff out there, but not
+                much on the next steps of converting that into a career building
+                end-to-end data solutions that are simple, reliable, and scalable.
+                I've worked with many people who try to code their way out of 
+                bad architecture, either unaware of the underlying problems, or 
+                unable to change things. Resulting in an unmanagable, out of 
+                control environment. SO nullQueries is my meager attempt to help
+                the dta world with solving this problem.
+              </p>
+              <p>
+                Beyond the YouTube channel I provide consulting services to 
+                directly help with problems of data strategy, architecture, and
+                struggles finding the value in your data. Whether a small business
+                struggling to manage your data in a clean useful way, or a large
+                enterprise who's users can't seem to figure out what to do with
+                the data warehouse, I have experience in finding the disconnect
+                and transforming data to provide value.
+              </p>
+              <p>Do you want to work together? Please reach out to me by e-mail.</p>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
     <footer>

@@ -50,9 +50,9 @@ h1 {
 h2 {
   display: inline-block;
   border-bottom: var(--null_Teal) solid 2px;
-  padding-left: 12.5%;
   color: var(--null_Teal);
   font-size: 32pt;
+  margin: 30px auto 30px 0;
 }
 
 main {
@@ -75,6 +75,8 @@ section p {
 
 footer {
   width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
   padding-left: 12.5%;
   text-align: left;
   background-color: var(--null_Green);
@@ -105,6 +107,12 @@ nav a {
   font-weight: 400;
   padding: 0px;
   margin: 0px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: none;
+  color: #704a2f;
 }
 
 nav img {
@@ -167,10 +175,6 @@ button {
   margin: 0;
 }
 
-.secHead {
-  margin-left: 12.5%;
-}
-
 .bordered {
   border: var(--null_Teal) 2px solid;
   margin: 0;
@@ -181,6 +185,12 @@ button {
 #contactButton {
   display: flex;
   justify-content: center;
+  margin: 30px auto 10px auto;
+}
+
+#contactButton button:hover {
+  color: #704a2f;
+  border: #005757 2px solid;
 }
 
 .videos {
@@ -237,4 +247,8 @@ iframe {
 .info p {
   width: 100%;
   font-size: 1.5em;
+}
+
+#aboutMe {
+  padding-bottom: 30px;
 }
