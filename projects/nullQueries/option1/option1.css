@@ -6,10 +6,86 @@
   --frame_small: 425px;
 }
 
+#aboutMe {
+  padding-bottom: 30px;
+}
+
+#contactButton {
+  display: flex;
+  justify-content: center;
+}
+
+#contactButton button {
+  border: var(--null_Purple) solid 2px;
+  margin: 30px auto 10px auto;
+}
+
+#heroBanner {
+  position: relative;
+  background-color: var(--null_Black)
+}
+
+#heroBanner img {
+  width: 100%;
+  height: auto;
+}
+
+.bordered {
+  border: var(--null_Blue) 2px solid;
+  margin: 0px;
+  padding: 0 5px 0 5px;
+  border-radius: 5px;
+  line-height: 100%;
+}
+
+.bordered:hover {
+  border: #23527C 2px solid;
+}
+
+.info {
+  text-align: left;
+  align-items: end;
+}
+
+.info p {
+  width: 100%;
+  font-size: 1.5em;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.servOpt {
+  display: flex;
+  align-items: center;
+  
+}
+
+.servOpt img {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.videos {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 15px 0px;
+}
+
 html, body {
   margin: 0px;
   padding: 0px;
   width: 100%;
+}
+
+html {
+  background-color: var(--null_Black);
 }
 
 body {
@@ -20,29 +96,26 @@ body {
   position: relative;
 }
 
-html {
-  background-color: var(--null_Black);
+main {
+  position: relative;
+  background-color: transparent;
+  border-bottom: var(--null_Purple) 2px solid;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, button {
+  font-family: 'Titillium Web', sans-serif;
 }
 
 h1, h2 {
-  font-family: 'Titillium Web', sans-serif;
   font-weight: 600;
   line-height: calc(1ex / 0.42);
-}
-
-h3, h4, h5, h6, p, button {
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 400;
-  line-height: calc(1ex / 0.38);
   color: var(--null_Blue);
-  font-size: 32pt;
 }
 
 h1 {
   width: 100%;
   text-align: center;
   font-size: 3em;
-  color: var(--null_Blue);
   position: absolute;
   top: 75%;
   z-index: 1;
@@ -52,14 +125,14 @@ h2 {
   display: inline-block;
   border-bottom: var(--null_Purple) solid 2px;
   margin: 30px auto;
-  color: var(--null_Blue);
   font-size: 32pt;
 }
 
-main {
-  position: relative;
-  background-color: transparent;
-  border-bottom: var(--null_Purple) 2px solid;
+h3, h4, h5, h6, p, button {
+  font-weight: 400;
+  line-height: calc(1ex / 0.38);
+  color: var(--null_Blue);
+  font-size: 32pt;
 }
 
 section {
@@ -98,7 +171,6 @@ nav {
 
 nav a {
   color: var(--null_Blue);
-  font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
   padding: 0px;
   margin: 0px;
@@ -113,6 +185,38 @@ nav img {
   position: absolute;
   left: 0px;
   height: 50px;
+}
+
+p, a {
+  font-weight: 400;
+  font-size: 20pt;
+  line-height: calc(1ex / 0.32);
+}
+
+p {
+  color: white;
+}
+
+button {
+  background-color: transparent;
+}
+
+/* Ratio is H = W * .56215 w400 h224*/
+iframe {
+  margin: 5px;
+  width: var(--frame_width);
+  height: calc(var(--frame_width) * .5625);
+  border: var(--null_Blue) 2px solid;
+  z-index: 2;
+}
+
+@media screen and (max-width: 950px) {
+  .videos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px 0px;
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -130,92 +234,11 @@ nav img {
   }
 }
 
-@media screen and (max-width: 510px) {
+@media screen and (max-width: 525px) {
   h1 {
     font-size: 2em;
   }
-}
 
-p, a {
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 400;
-  font-size: 20pt;
-  line-height: calc(1ex / 0.32);
-}
-
-p {
-  color: white;
-}
-
-#heroBanner {
-  position: relative;
-  background-color: var(--null_Black)
-}
-
-#heroBanner img {
-  width: 100%;
-  height: auto;
-}
-
-.no-padding {
-  padding: 0;
-}
-
-.no-margin {
-  margin: 0;
-}
-
-.bordered {
-  border: var(--null_Blue) 2px solid;
-  margin: 0px;
-  padding: 0 5px 0 5px;
-  border-radius: 5px;
-  line-height: 100%;
-}
-
-.bordered:hover {
-  border: #23527C 2px solid;
-}
-
-#contactButton {
-  display: flex;
-  justify-content: center;
-}
-
-button {
-  background-color: transparent;
-}
-
-#contactButton button {
-  border: var(--null_Purple) solid 2px;
-  margin: 30px auto 10px auto;
-}
-
-.videos {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 15px 0px;
-}
-
-@media screen and (max-width: 950px) {
-  .videos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 15px 0px;
-  }
-}
-
-/* Ratio is H = W * .56215 w400 h224*/
-iframe {
-  margin: 5px;
-  width: var(--frame_width);
-  height: calc(var(--frame_width) * .5625);
-  border: var(--null_Blue) 2px solid;
-  z-index: 2;
-}
-
-@media screen and (max-width: 525px) {
   iframe {
     margin: 5px;
     width: var(--frame_small);
@@ -223,30 +246,4 @@ iframe {
     border: var(--null_Blue) 2px solid;
     z-index: 2;
   }
-}
-
-.servOpt {
-  display: flex;
-  align-items: center;
-  
-}
-
-.servOpt img {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-}
-
-.info {
-  text-align: left;
-  align-items: end;
-}
-
-.info p {
-  width: 100%;
-  font-size: 1.5em;
-}
-
-#aboutMe {
-  padding-bottom: 30px;
 }
