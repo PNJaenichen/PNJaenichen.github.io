@@ -1,8 +1,7 @@
 :root {
-  --null_darkGreen: #021114;
-  --null_Green: #031B20;
-  --null_Orange: #FFA76A;
-  --null_Teal: #00F8F8;
+  --null_Black: #141414;
+  --null_Blue: #01D7E2;
+  --null_Purple: #D500FB;
   --frame_width: 500px;
   --frame_small: 425px;
 }
@@ -14,17 +13,21 @@
 #contactButton {
   display: flex;
   justify-content: center;
+}
+
+#contactButton button {
+  border: var(--null_Purple) solid 2px;
   margin: 30px auto 10px auto;
 }
 
 #contactButton button:hover {
-  color: #704a2f;
-  border: #005757 2px solid;
+  color: #23527c;
+  border: #7f1b91 2px solid;
 }
 
 #heroBanner {
   position: relative;
-  background-color: var(--null_darkGreen)
+  background-color: var(--null_Black)
 }
 
 #heroBanner img {
@@ -33,10 +36,15 @@
 }
 
 .bordered {
-  border: var(--null_Teal) 2px solid;
-  margin: 0;
+  border: var(--null_Blue) 2px solid;
+  margin: 0px;
   padding: 0 5px 0 5px;
   border-radius: 5px;
+  line-height: 100%;
+}
+
+.bordered:hover {
+  border: #23527C 2px solid;
 }
 
 .info {
@@ -49,12 +57,12 @@
   font-size: 1.5em;
 }
 
-.no-margin {
-  margin: 0;
-}
-
 .no-padding {
   padding: 0;
+}
+
+.no-margin {
+  margin: 0;
 }
 
 .servOpt {
@@ -79,17 +87,24 @@ html, body {
   margin: 0px;
   padding: 0px;
   width: 100%;
-  background-color: var(--null_darkGreen);
+}
+
+html {
+  background-color: var(--null_Black);
 }
 
 body {
+  background-image: url('../webBG.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   position: relative;
 }
 
 main {
   position: relative;
   background-color: transparent;
-  border-bottom: var(--null_Teal) 2px solid;
+  border-bottom: var(--null_Purple) 2px solid;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, button {
@@ -98,15 +113,14 @@ h1, h2, h3, h4, h5, h6, p, a, button {
 
 h1, h2 {
   font-weight: 600;
-  font-size: 36pt;
   line-height: calc(1ex / 0.42);
+  color: var(--null_Blue);
 }
 
 h1 {
   width: 100%;
   text-align: center;
   font-size: 3em;
-  color: var(--null_Orange);
   position: absolute;
   top: 75%;
   z-index: 1;
@@ -114,57 +128,22 @@ h1 {
 
 h2 {
   display: inline-block;
-  border-bottom: var(--null_Teal) solid 2px;
-  color: var(--null_Teal);
+  border-bottom: var(--null_Purple) solid 2px;
+  margin: 30px auto;
   font-size: 32pt;
-  margin: 30px auto 30px 0;
 }
 
 h3, h4, h5, h6, p, button {
   font-weight: 400;
   line-height: calc(1ex / 0.38);
-  color: var(--null_Orange);
-  font-size: 28pt;
-}
-
-nav {
-  height: 50px;
-  width: 100%;
-  top: -50px;
-  background-color: var(--null_darkGreen);
-  display: flex;
-  position: fixed;
-  z-index: 3;
-  justify-content: center;
-  gap: 5%;
-  align-items: center;
-  border-bottom: var(--null_Teal) solid 2px;
-  transition: top 0.3s;
-}
-
-nav a {
-  color: var(--null_Orange);
-  font-weight: 400;
-  padding: 0px;
-  margin: 0px;
-  text-decoration: none;
-}
-
-nav a:hover {
-  text-decoration: none;
-  color: #704a2f;
-}
-
-nav img {
-  position: absolute;
-  left: 0px;
-  height: 50px;
+  color: var(--null_Blue);
+  font-size: 32pt;
 }
 
 section {
   z-index: 1;
   width: 100%;
-  text-align: left;
+  text-align: center;
 }
 
 section p {
@@ -175,15 +154,43 @@ section p {
 
 footer {
   width: 100%;
-  padding-top: 30px;
+  text-align: center;
+  background-color: var(--null_Black);
   padding-bottom: 30px;
-  padding-left: 12.5%;
-  text-align: left;
-  background-color: var(--null_Green);
 }
 
-footer a, footer p {
-  color: var(--null_Orange)
+nav {
+  height: 50px;
+  width: 100%;
+  top: -50px;
+  background-color: var(--null_Black);
+  display: flex;
+  position: fixed;
+  z-index: 3;
+  justify-content: center;
+  gap: 5%;
+  align-items: center;
+  border-bottom: var(--null_Purple) solid 2px;
+  transition: top 0.3s;
+}
+
+nav a {
+  color: var(--null_Blue);
+  font-weight: 400;
+  padding: 0px;
+  margin: 0px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: none;
+}
+
+nav img {
+  position: absolute;
+  left: 0px;
+  height: 50px;
+  top: 0px;
 }
 
 p, a {
@@ -197,7 +204,7 @@ p {
 }
 
 button {
-  background-color: var(--null_darkGreen)
+  background-color: transparent;
 }
 
 /* Ratio is H = W * .56215 w400 h224*/
@@ -205,7 +212,7 @@ iframe {
   margin: 5px;
   width: var(--frame_width);
   height: calc(var(--frame_width) * .5625);
-  border: var(--null_Teal) 2px solid;
+  border: var(--null_Blue) 2px solid;
   z-index: 2;
 }
 
@@ -237,12 +244,12 @@ iframe {
   h1 {
     font-size: 2em;
   }
-  
+
   iframe {
     margin: 5px;
     width: var(--frame_small);
     height: calc(var(--frame_small) * .5626);
-    border: var(--null_Teal) 2px solid;
+    border: var(--null_Blue) 2px solid;
     z-index: 2;
   }
 }
