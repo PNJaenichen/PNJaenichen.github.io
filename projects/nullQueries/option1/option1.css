@@ -20,6 +20,11 @@
   margin: 30px auto 10px auto;
 }
 
+#contactButton button:hover {
+  color: #23527c;
+  border: #7f1b91 2px solid;
+}
+
 #heroBanner {
   position: relative;
   background-color: var(--null_Black)
