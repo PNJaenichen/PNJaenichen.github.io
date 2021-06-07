@@ -1,4 +1,4 @@
-import { API_KEY } from './test.js';
+import { API_KEY } from './key.js';
 
 const channel_id = 'UCtKKhu8MzKSde-X-xVH-Vpw'
 
