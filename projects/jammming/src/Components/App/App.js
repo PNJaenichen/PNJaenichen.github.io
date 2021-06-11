@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import SearchBar from '../SearchBar/SearchBar';
-import SearchResults from '../SearchResults/SearchResults';
-import Playlist from '../Playlist/Playlist';
+import { SearchBar } from '../SearchBar/SearchBar';
+import { SearchResults } from '../SearchResults/SearchResults';
+import { Playlist } from '../Playlist/Playlist';
 
-class App extends React.Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +14,12 @@ class App extends React.Component {
           name: 'Tiny Dancer',
           artist: 'Elton John',
           album: 'Madman Across The Water'
+        },
+        {
+          id: 2,
+          name: 'Indian Outlaw',
+          artist: 'Tim McGraw',
+          album: 'Love Story'
         }],
     }
   }
@@ -34,4 +40,3 @@ class App extends React.Component {
   }
 }
 
-export default App;
