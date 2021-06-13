@@ -24,6 +24,16 @@ export class App extends React.Component {
         }],
       searchResults: null,
     }
+    this.addTrack = this.addTrack.bind(this);
+  }
+
+  addTrack(track) {
+    const prevPlaylist = this.state.playlistTracks;
+    const trackIDs = prevPlaylist.map(a => a.id);
+    if (trackIDs.includes(track.id)) {
+      const newList = prevPlaylist.push(track);
+      this.setState({playlistTracks: newList});
+    }
   }
 
   render() {
@@ -33,7 +43,7 @@ export class App extends React.Component {
         <div className="App">
           <SearchBar />
           <div className='App-playlist'>
-            <SearchResults />
+            <SearchResults onAdd={this.addTrack}/>
             <Playlist name={this.state.playlistName} tracks={this.state.playlistTracks}/>
           </div>
         </div>
