@@ -21,8 +21,22 @@ export class App extends React.Component {
           name: 'Indian Outlaw',
           artist: 'Tim McGraw',
           album: 'Love Story'
-        }],
-      searchResults: null,
+        }
+      ],
+      searchResults: [
+        {
+          id: 3,
+          name: 'song3',
+          artist: 'artist3',
+          album: 'album3'
+        },
+        {
+          id: 4,
+          name: 'song4',
+          artist: 'artist4',
+          album: 'album4'
+        }
+      ],
     }
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.addTrack.bind(this);
@@ -63,9 +77,9 @@ export class App extends React.Component {
       <div>
       <h1>Ja<span className='highlight'>mmm</span>ing</h1>
         <div className="App">
-          <SearchBar />
+          <SearchBar onSearch={this.search} />
           <div className='App-playlist'>
-            <SearchResults onSearch={this.search} onAdd={this.addTrack}/>
+            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack}/>
             <Playlist name={this.state.playlistName} onNameChange={this.updatePlaylistName} tracks={this.state.playlistTracks} onRemove={this.removeTrack} onsave={this.savePlaylist} />
           </div>
         </div>
