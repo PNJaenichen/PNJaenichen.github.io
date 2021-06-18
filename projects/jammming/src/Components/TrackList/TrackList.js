@@ -4,19 +4,18 @@ import { Track } from '../Track/Track'
 
 export class TrackList extends React.Component {
   render() {
-    if (this.props.tracks) {
-      const trackElements = this.props.tracks.map(element => 
-        <Track onAdd={this.props.onAdd} 
-          onRemove={this.props.onRemove} 
-          isRemoval={this.props.isRemoval} 
-          track={element} />
-      )
-      return (
-        <div className="TrackList">
-          {trackElements}
-        </div>
-      )
-    }
-    return null
+    return (
+      <div className="TrackList">
+        { 
+          this.props.tracks.map(track => {
+            return <Track 
+              onAdd={this.props.onAdd}
+              onRemove={this.props.onRemove}
+              isRemoval={this.props.isRemoval}
+              track={track}
+              key={track.id} />
+          })}
+      </div>
+    )
   }
 }
