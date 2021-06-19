@@ -3,40 +3,15 @@ import './App.css';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { Playlist } from '../Playlist/Playlist';
+import { Spotify } from '../../util/Spotify';
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       playlistName: 'testList',
-      playlistTracks: [
-        {
-          id: 1,
-          name: 'Tiny Dancer',
-          artist: 'Elton John',
-          album: 'Madman Across The Water'
-        },
-        {
-          id: 2,
-          name: 'Indian Outlaw',
-          artist: 'Tim McGraw',
-          album: 'Love Story'
-        }
-      ],
-      searchResults: [
-        {
-          id: 3,
-          name: 'song3',
-          artist: 'artist3',
-          album: 'album3'
-        },
-        {
-          id: 4,
-          name: 'song4',
-          artist: 'artist4',
-          album: 'album4'
-        }
-      ],
+      playlistTracks: [],
+      searchResults: [],
     }
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -65,11 +40,11 @@ export class App extends React.Component {
   }
 
   savePlaylist() {
-    return this.state.playlistTracks.map(a => a.id);
+    return this.state.playlistTracks.map(a => a.uri);
   }
 
   search(term) {
-    console.log(term);
+    Spotify.search(term).then(searchResults => this.setState({searchResults: searchResults}));
   }
 
   render() {
