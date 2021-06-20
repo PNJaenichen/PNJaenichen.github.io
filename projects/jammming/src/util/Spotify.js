@@ -32,7 +32,7 @@ export const Spotify = {
     }
   },
   async savePlaylist(name, tracks) {
-    if (!name || !tracks) {
+    if (!name || !tracks.length) {
       return;
     }
     const accessToken = Spotify.getAccessToken();
@@ -41,9 +41,9 @@ export const Spotify = {
     const userResponse = await fetch('https://api.spotify.com/v1/me', {headers: headers});
     const userResults = await userResponse.json();
     userID = userResults.id;
-    const playResponse = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {headers: headers, method: 'POST', body: {name: name}})
+    const playResponse = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {headers: headers, method: 'POST', body: JSON.stringify({name: name})})
     const playResults = await playResponse.json();
     const playlistID = playResults.id;
-    await fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {headers: headers, method: 'POST', body: {uris: tracks}})
+    await fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {headers: headers, method: 'POST', body: JSON.stringify({uris: tracks})})
   }
 };
