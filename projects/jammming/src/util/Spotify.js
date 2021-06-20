@@ -30,5 +30,20 @@ export const Spotify = {
     } else {
       return results.tracks.items.map(track => ({id: track.id, name: track.name, artist: track.artists[0].name, album: track.album.name, uri: track.uri}))
     }
+  },
+  async savePlaylist(name, tracks) {
+    if (!name || !tracks) {
+      return;
+    }
+    const accessToken = Spotify.getAccessToken();
+    const headers = {'Authorization': 'Bearer ' + accessToken};
+    let userID;
+    const userResponse = await fetch('https://api.spotify.com/v1/me', {headers: headers});
+    const userResults = await userResponse.json();
+    userID = userResults.id;
+    const playResponse = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {headers: headers, method: 'POST', body: {name: name}})
+    const playResults = await playResponse.json();
+    const playlistID = playResults.id;
+    await fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {headers: headers, method: 'POST', body: {uris: tracks}})
   }
 };
