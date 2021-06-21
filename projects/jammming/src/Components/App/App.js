@@ -20,13 +20,18 @@ export class App extends React.Component {
     this.search = this.search.bind(this);
   }
 
+  componentDidMount() {
+    window.addEventListener('load', () => {Spotify.getAccessToken()});
+  }
+
   addTrack(track) {
     const prevPlaylist = this.state.playlistTracks;
     const trackIDs = prevPlaylist.map(a => a.id);
     if (!trackIDs.includes(track.id)) {
-      const newList = prevPlaylist.push(track);
-      this.setState({playlistTracks: newList});
-    }
+      prevPlaylist.push(track);
+      console.log(prevPlaylist)
+      this.setState({playlistTracks: prevPlaylist});
+    } 
   }
 
   removeTrack(track) {
