@@ -61,7 +61,7 @@ export class App extends React.Component {
         <div className="App">
           <SearchBar onSearch={this.search} />
           <div className='App-playlist'>
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack}/>
+            <SearchResults searchResults={this.state.searchResults} playlistTracks={this.state.playlistTracks} onAdd={this.addTrack}/>
             <Playlist 
               playlistName={this.state.playlistName} 
               onNameChange={this.updatePlaylistName} 
