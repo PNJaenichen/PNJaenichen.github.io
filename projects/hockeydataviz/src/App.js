@@ -1,4 +1,5 @@
-import getGame from "./components/getGame";
+import getGame from "./Components/getGame";
+import { BuildCalender } from "./Components/buildCalender"
 
 function doSearch() {
   console.log(getGame().then(value => console.log(value)));
@@ -17,8 +18,8 @@ function App() {
         <p>Get the score, date, and arena for the games returned.</p>
       </div> 
       <button onClick={doSearch}>Search</button>
-      
-    </div>
+      <BuildCalender year={2021} month={5}/>
+    </div>  
   );
 }
 
