@@ -1,10 +1,24 @@
 import React from 'react';
+import { june21 } from '../static/testFetch'
 
 export class BuildCalender extends React.Component {
   constructor(props) {
     super(props);
     this.setCalender = this.setCalender.bind(this);
+    this.state = {
+      startAPI: 'https://statsapi.web.nhl.com/api/v1/'
+    }
   }
+
+  async getCalender(start, end) {
+    /*const endAPI = `schedule?startDate=${start}&endDate=${end}`
+    const response = await fetch(this.state.startAPI + endAPI);
+    const responseJSON = await response.json();*/
+    console.log(start, end);
+    const responseJSON = setTimeout(() => {return june21}, 1000);
+    return responseJSON;
+  }
+
   setCalender(year, month) {
     let currentDate;
     const daysInMonth = new Date(year, month+1, 0).getDate();
