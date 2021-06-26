@@ -1,27 +1,25 @@
 import React from 'react';
-import { june21 } from '../static/testFetch'
+/*import { june21 } from '../static/testFetch'*/
 
 export class BuildCalender extends React.Component {
   constructor(props) {
     super(props);
     this.setCalender = this.setCalender.bind(this);
     this.state = {
-      startAPI: 'https://statsapi.web.nhl.com/api/v1/'
+      startAPI: 'https://statsapi.web.nhl.com/api/v1/',
+      monthData: null,
     }
   }
 
-  async getCalender(start, end) {
-    /*const endAPI = `schedule?startDate=${start}&endDate=${end}`
-    const response = await fetch(this.state.startAPI + endAPI);
-    const responseJSON = await response.json();*/
-    console.log(start, end);
-    const responseJSON = setTimeout(() => {return june21}, 1000);
-    return responseJSON;
-  }
-
-  setCalender(year, month) {
+  async setCalender(year, month) {
     let currentDate;
     const daysInMonth = new Date(year, month+1, 0).getDate();
+    let games = {};
+    const endAPI = `schedule?startDate=${year}-${month < 9 ? '0' + (month + 1) : month + 1}-01&endDate=${year}-${month < 9 ? '0' + (month + 1) : month + 1}-${daysInMonth}`
+    const response = await fetch('https://statsapi.web.nhl.com/api/v1/' + endAPI);
+    const responseJSON = await response.json()
+    await responseJSON.dates.forEach(x => games[parseInt(x.date.slice(8))] = x);
+    console.log(games);
     let row = [];
     let cell = [];
     for (let i = 1; i <= daysInMonth; i++) {
@@ -29,33 +27,50 @@ export class BuildCalender extends React.Component {
       if (currentDate.getDate() === 1) {
         const dayOfWeek = currentDate.getDay();
         for (let j = 1; j <= dayOfWeek; j++) {
-          cell.push(<td></td>);
+          cell.push(<td key={`blank${j}`}></td>);
         }
-        cell.push(<td>{i}</td>)
+        if (i in Object.keys(games)) {
+          cell.push(<td key={i}><a href={`#${i}`}>{i}</a></td>);
+        } else {
+          cell.push(<td key={i}>{i}</td>);
+        }   
       } else if (currentDate.getDay() === 0) {
-        row.push(<tr>{cell}</tr>)
-        cell = [<td>{i}</td>];
+        row.push(<tr key={`row${i}`}>{cell}</tr>)
+        if (i in Object.keys(games)) {
+          cell = [<td key={i}><a href={`#${i}`}>{i}</a></td>];
+        } else {
+          cell = [<td key={i}>{i}</td>]
+        }
       } else {
-        cell.push(<td>{i}</td>)
+        if (i in Object.keys(games)) {
+          cell.push(<td key={i}><a href={`#${i}`}>{i}</a></td>);
+        } else {
+          cell.push(<td key={i}>{i}</td>);
+        }   
       }
     }
-    row.push(<tr>{cell}</tr>)
+    row.push(<tr key={`rowLast`}>{cell}</tr>)
     return row;
   }
+  
   render() {
     return (
       <div className='calender'>
         <table>
-          <tr>
-            <th>SU</th>
-            <th>MO</th>
-            <th>TU</th>
-            <th>WE</th>
-            <th>TH</th>
-            <th>FR</th>
-            <th>SA</th>
-          </tr>
-          {this.setCalender(this.props.year, this.props.month)}
+          <thead>
+            <tr>
+              <th>SU</th>
+              <th>MO</th>
+              <th>TU</th>
+              <th>WE</th>
+              <th>TH</th>
+              <th>FR</th>
+              <th>SA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.setCalender(this.props.year, this.props.month)}
+          </tbody>
         </table>
       </div>
     );
