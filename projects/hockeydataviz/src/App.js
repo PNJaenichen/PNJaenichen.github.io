@@ -1,5 +1,5 @@
-import getGame from "./Components/getGame";
-import { BuildCalender } from "./Components/buildCalender"
+import getGame from "./components/getGame";
+import { BuildCalender } from "./components/buildCalender";
 
 function doSearch() {
   console.log(getGame().then(value => console.log(value)));

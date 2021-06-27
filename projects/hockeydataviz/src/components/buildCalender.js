@@ -11,14 +11,12 @@ export class BuildCalender extends React.Component {
     }
   }
 
-  async setCalender(year, month) {
+  setCalender(year, month) {
     let currentDate;
     const daysInMonth = new Date(year, month+1, 0).getDate();
     let games = {};
     const endAPI = `schedule?startDate=${year}-${month < 9 ? '0' + (month + 1) : month + 1}-01&endDate=${year}-${month < 9 ? '0' + (month + 1) : month + 1}-${daysInMonth}`
-    const response = await fetch('https://statsapi.web.nhl.com/api/v1/' + endAPI);
-    const responseJSON = await response.json()
-    await responseJSON.dates.forEach(x => games[parseInt(x.date.slice(8))] = x);
+    fetch('https://statsapi.web.nhl.com/api/v1/' + endAPI).then(response => response.json()).then(responseJSON => responseJSON.dates.forEach(x => games[parseInt(x.date.slice(8))] = x));
     console.log(games);
     let row = [];
     let cell = [];
@@ -28,26 +26,14 @@ export class BuildCalender extends React.Component {
         const dayOfWeek = currentDate.getDay();
         for (let j = 1; j <= dayOfWeek; j++) {
           cell.push(<td key={`blank${j}`}></td>);
-        }
-        if (i in Object.keys(games)) {
-          cell.push(<td key={i}><a href={`#${i}`}>{i}</a></td>);
-        } else {
-          cell.push(<td key={i}>{i}</td>);
-        }   
+        } 
+        cell.push(<td key={i}>{i}</td>);  
       } else if (currentDate.getDay() === 0) {
         row.push(<tr key={`row${i}`}>{cell}</tr>)
-        if (i in Object.keys(games)) {
-          cell = [<td key={i}><a href={`#${i}`}>{i}</a></td>];
-        } else {
-          cell = [<td key={i}>{i}</td>]
-        }
+        cell = [<td key={i}>{i}</td>]
       } else {
-        if (i in Object.keys(games)) {
-          cell.push(<td key={i}><a href={`#${i}`}>{i}</a></td>);
-        } else {
-          cell.push(<td key={i}>{i}</td>);
-        }   
-      }
+        cell.push(<td key={i}>{i}</td>);
+      }   
     }
     row.push(<tr key={`rowLast`}>{cell}</tr>)
     return row;
