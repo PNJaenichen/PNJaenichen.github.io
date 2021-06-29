@@ -6,10 +6,12 @@ export class BuildCalender extends React.Component {
     this.setCalender = this.setCalender.bind(this);
   }
 
-  setCalender(year, month) {
+  setCalender(info) {
+    const month = info[0];
+    const year = info[1];
     let currentDate;
-    const daysInMonth = new Date(year, month+1, 0).getDate();
-    let gamesToo = {};
+    const daysInMonth = new Date(year, parseInt(month)+1, 0).getDate();
+    let gamesToo = info[2];
     let row = [];
     let cell = [];
     for (let i = 1; i <= daysInMonth; i++) {
@@ -46,7 +48,7 @@ export class BuildCalender extends React.Component {
   getMonth() {
     const months = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December']
-    return months[this.props.month];
+    return months[this.props.monthlyGames[0]];
     }
   
   render() {
@@ -56,7 +58,7 @@ export class BuildCalender extends React.Component {
           <thead>
             <tr>
               <th colSpan='5'>{this.getMonth()}</th>
-              <th colSpan='2'>{this.props.year}</th>
+              <th colSpan='2'>{this.props.monthlyGames[1]}</th>
             </tr>
             <tr>
               <th>SU</th>
@@ -69,7 +71,7 @@ export class BuildCalender extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.setCalender(this.props.year, this.props.month)}
+            {this.setCalender(this.props.monthlyGames)}
           </tbody>
         </table>
       </div>

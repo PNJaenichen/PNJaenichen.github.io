@@ -24,7 +24,7 @@ class App extends React.Component {
 
         </header>
         <SearchBar onSearch={this.monthSearch} />
-        <BuildCalender year={this.state.monthlyGames[1]} month={this.state.monthlyGames[0]}/>
+        <BuildCalender monthlyGames={this.state.monthlyGames} />
       </div>  
     );
   }
