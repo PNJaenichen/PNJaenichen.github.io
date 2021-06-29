@@ -1,27 +1,17 @@
 import React from 'react';
-import { june21 } from '../static/testFetch';
 
 export class BuildCalender extends React.Component {
   constructor(props) {
     super(props);
     this.setCalender = this.setCalender.bind(this);
-    this.state = {
-      startAPI: 'https://statsapi.web.nhl.com/api/v1/',
-      monthData: null,
-    }
   }
 
   setCalender(year, month) {
     let currentDate;
     const daysInMonth = new Date(year, month+1, 0).getDate();
-    let games = {};
     let gamesToo = {};
-    const endAPI = `schedule?startDate=${year}-${month < 9 ? '0' + (month + 1) : month + 1}-01&endDate=${year}-${month < 9 ? '0' + (month + 1) : month + 1}-${daysInMonth}`
-    fetch('https://statsapi.web.nhl.com/api/v1/' + endAPI).then(response => response.json()).then(responseJSON => responseJSON.dates.forEach(x => games[parseInt(x.date.slice(8))] = x));
-    june21.dates.forEach(x => gamesToo[parseInt(x.date.slice(8))] = x);
     let row = [];
     let cell = [];
-    console.log(games);
     for (let i = 1; i <= daysInMonth; i++) {
       currentDate = new Date(year, month, i);
       if (currentDate.getDate() === 1) {
@@ -59,7 +49,6 @@ export class BuildCalender extends React.Component {
     return months[this.props.month];
     }
   
-
   render() {
     return (
       <div className='calender'>
