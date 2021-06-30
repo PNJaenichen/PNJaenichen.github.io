@@ -1,0 +1,16 @@
+table {
+  border-collapse: separate;
+  border-spacing: 15px 5px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.calTitle {
+  font-size: 60px;
+}
+
+td {
+  padding: 0;
+  width: 75px;
+  height: 65px;
+}

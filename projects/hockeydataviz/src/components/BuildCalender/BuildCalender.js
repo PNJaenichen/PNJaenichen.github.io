@@ -1,4 +1,5 @@
 import React from 'react';
+import './BuildCalender.css';
 
 export class BuildCalender extends React.Component {
   constructor(props) {
@@ -56,9 +57,8 @@ export class BuildCalender extends React.Component {
       <div className='calender'>
         <table>
           <thead>
-            <tr>
-              <th colSpan='5'>{this.getMonth()}</th>
-              <th colSpan='2'>{this.props.monthlyGames[1]}</th>
+            <tr className='calTitle'>
+              <th colSpan='7'>{`${this.getMonth()} ${this.props.monthlyGames[1]}`}</th>
             </tr>
             <tr>
               <th>SU</th>

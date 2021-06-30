@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      monthlyGames: ['5','2021',[]],
+      monthlyGames: ['','',[]],
     }
     this.monthSearch = this.monthSearch.bind(this);
   }
@@ -24,7 +24,10 @@ class App extends React.Component {
 
         </header>
         <SearchBar onSearch={this.monthSearch} />
-        <BuildCalender monthlyGames={this.state.monthlyGames} />
+        {this.state.monthlyGames[0] 
+          ? <BuildCalender monthlyGames={this.state.monthlyGames} />
+          : null
+        }
       </div>  
     );
   }
