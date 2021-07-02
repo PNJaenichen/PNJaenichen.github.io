@@ -5,6 +5,11 @@ export class BuildCalender extends React.Component {
   constructor(props) {
     super(props);
     this.setCalender = this.setCalender.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    this.props.onClick(event.target.innerText)
   }
 
   setCalender(info) {
@@ -23,22 +28,22 @@ export class BuildCalender extends React.Component {
           cell.push(<td key={`blank${j}`}></td>);
         }
         if (i in gamesToo) {
-          cell.push(<td key={i}><a href={`#${i}`}>{i}</a></td>);
+          cell.push(<td key={`day${i}`}><button id={`day${i}`} onClick={this.handleClick}>{i}</button></td>);
         } else {
-          cell.push(<td key={i}>{i}</td>); 
+          cell.push(<td key={`day${i}`}>{i}</td>); 
         }
       } else if (currentDate.getDay() === 0) {
         row.push(<tr key={`row${i}`}>{cell}</tr>)
         if (i in gamesToo) {
-          cell = [<td key={i}><a href={`#${i}`}>{i}</a></td>];
+          cell = [<td key={`day${i}`}><button id={`day${i}`} onClick={this.handleClick}>{i}</button></td>];
         } else {
-          cell = [<td key={i}>{i}</td>];
+          cell = [<td key={`day${i}`}>{i}</td>];
         }
       } else {
         if (i in gamesToo) {
-          cell.push(<td key={i}><a href={`#${i}`}>{i}</a></td>);
+          cell.push(<td key={`day${i}`}><button id={`day${i}`} onClick={this.handleClick}>{i}</button></td>);
         } else {
-          cell.push(<td key={i}>{i}</td>);
+          cell.push(<td key={`day${i}`}>{i}</td>);
         }
       }   
     }

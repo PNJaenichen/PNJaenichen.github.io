@@ -14,3 +14,9 @@ td {
   width: 75px;
   height: 65px;
 }
+
+table button {
+  border: none;
+  color: blue;
+  background-color: transparent;
+}
