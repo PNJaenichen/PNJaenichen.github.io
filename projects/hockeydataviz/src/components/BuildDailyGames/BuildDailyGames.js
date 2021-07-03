@@ -1,4 +1,5 @@
 import React from 'react';
+import './BuildDailyGames.css';
 
 export class BuildDailyGames extends React.Component {
   constructor(props) {
@@ -9,11 +10,17 @@ export class BuildDailyGames extends React.Component {
   createGame(gameInfo) {
     return gameInfo.map(game => {
       return (
-        <div key={game.gamePk} id={game.gamePk}>
-          <p>{game.status.detailedState}</p>
-          <p>{`${game.teams.away.team.name} at ${game.teams.home.team.name}`}</p>
-          <p>{`${game.teams.away.score} ${game.teams.home.score}`}</p>
-          <p>{game.venue.name}</p>
+        <div key={game.gamePk} id={game.gamePk} className='gameDisplay'>
+          <div className='gameTeams'>
+            <p>{`${game.teams.away.team.name}`}</p>
+            <p>at</p>
+            <p>{`${game.teams.home.team.name}`}</p>
+          </div>
+          <div className='gameScores'>
+            <p>{`${game.teams.away.score}`}</p> 
+            <p>{`${game.teams.home.score}`}</p>
+          </div>
+          <p>{`${game.status.detailedState} - ${game.venue.name}`}</p>
         </div>
       )
     })
