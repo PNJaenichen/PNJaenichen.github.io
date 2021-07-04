@@ -16,6 +16,17 @@
   justify-content: space-evenly;
 }
 
+.homeTeam, .awayTeam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gameTeams img {
+  height: 100px;
+  width: 100px;
+}
+
 .gameTeams p {
   word-break: break-all;
 }
