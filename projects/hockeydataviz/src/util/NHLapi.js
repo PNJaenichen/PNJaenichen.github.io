@@ -13,5 +13,16 @@ export const NHLapi = {
       responseJSON.dates.forEach(x => games[parseInt(x.date.slice(8))] = x);
       return [month, year, games];
     }
+  },
+
+  async getGameData(gameID) {
+    const endAPI = `game/${gameID}/feed/live`
+    const response = await fetch(startAPI + endAPI);
+    const responseJSON = await response.json();
+    if (!responseJSON) {
+      return {};
+    } else {
+      return responseJSON;
+    }
   }
 }

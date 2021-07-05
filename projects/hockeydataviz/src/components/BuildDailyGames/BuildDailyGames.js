@@ -6,6 +6,11 @@ export class BuildDailyGames extends React.Component {
   constructor(props) {
     super(props);
     this.createGame = this.createGame.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    this.props.onClick(event.target.parentElement.id)
   }
 
   createGame(gameInfo) {
@@ -29,7 +34,7 @@ export class BuildDailyGames extends React.Component {
             <p>{`${game.teams.away.score}`}</p> 
             <p>{`${game.teams.home.score}`}</p>
           </div>
-          <p>{`${game.status.detailedState} - ${game.venue.name}`}</p>
+          <p onClick={this.handleClick}>{`${game.status.detailedState} - ${game.venue.name}`}</p>
         </div>
       )
     })

@@ -10,9 +10,12 @@ class App extends React.Component {
     this.state = {
       monthlyGames: ['','',[]],
       dailyGames: null,
+      gameInfo: null,
     }
     this.monthSearch = this.monthSearch.bind(this);
+    this.getGameData = this.getGameData.bind(this);
     this.displayDailyGames = this.displayDailyGames.bind(this);
+    this.backToSearch = this.backToSearch.bind(this);
   }
 
   monthSearch(year, month) {
@@ -24,8 +27,18 @@ class App extends React.Component {
     this.setState({dailyGames: this.state.monthlyGames[2][gameDay].games});
   }
 
+  getGameData(gameID) {
+    NHLapi.getGameData(gameID).then(searchResults => {
+      console.log(searchResults);
+      this.setState({gameInfo: searchResults})
+    });
+  }
+
+  backToSearch() {
+    this.setState({gameInfo: null});
+  }
+
   render() {
-    console.log(this.state.dailyGames);
     return (
       <div className="App">
         <header className="App-header">
@@ -37,7 +50,7 @@ class App extends React.Component {
           : null
         }
         {this.state.dailyGames
-          ? <BuildDailyGames gameList={this.state.dailyGames} />
+          ? <BuildDailyGames gameList={this.state.dailyGames} onClick={this.getGameData} />
           : null
         }
       </div>  
