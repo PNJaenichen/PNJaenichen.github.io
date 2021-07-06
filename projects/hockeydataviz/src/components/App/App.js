@@ -2,6 +2,7 @@ import React from "react";
 import { SearchBar } from "../SearchBar/SearchBar"
 import { BuildCalender } from "../BuildCalender/BuildCalender";
 import { BuildDailyGames } from "../BuildDailyGames/BuildDailyGames";
+import { GameDisplay } from "../GameDisplay/GameDisplay"
 import { NHLapi } from "../../util/NHLapi"
 
 class App extends React.Component {
@@ -44,15 +45,19 @@ class App extends React.Component {
         <header className="App-header">
 
         </header>
-        <SearchBar onSearch={this.monthSearch} />
-        {this.state.monthlyGames[0] 
-          ? <BuildCalender onClick={this.displayDailyGames} monthlyGames={this.state.monthlyGames} />
-          : null
+        {this.state.gameInfo 
+          ? <GameDisplay onClick={this.backToSearch} gameData={this.state.gameInfo} /> 
+          : <SearchBar onSearch={this.monthSearch} /> 
         }
-        {this.state.dailyGames
-          ? <BuildDailyGames gameList={this.state.dailyGames} onClick={this.getGameData} />
-          : null
-        }
+        
+              {this.state.monthlyGames[0] && !this.state.gameInfo
+                ? <BuildCalender onClick={this.displayDailyGames} monthlyGames={this.state.monthlyGames} />
+                : null
+              }
+              {this.state.dailyGames && !this.state.gameInfo
+                ? <BuildDailyGames gameList={this.state.dailyGames} onClick={this.getGameData} />
+                : null
+              }
       </div>  
     );
   }
