@@ -1,0 +1,36 @@
+.scoreBoard {
+  width: 840px;
+  height: 300px;
+  background-image: url('../GameDisplay/3x-rink.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+
+.homeTeamGame, .awayTeamGame {
+  font-size: 100px;
+  font-weight: bold;
+  display: flex;
+  margin: 0;
+  justify-content: space-evenly;
+  position: absolute;
+  height: 300px;
+  width: 420px;
+  top: 70px;
+}
+
+.homeTeamGame {
+  left: 420px;
+}
+
+.awayTeamGame {
+  left: 0px;
+}
+
+.homeTeamGame img, .awayTeamGame img{
+  width: 175px;
+  height: 175px;
+}
