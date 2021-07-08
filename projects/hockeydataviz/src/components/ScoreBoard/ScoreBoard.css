@@ -1,0 +1,107 @@
+.scoreBoard {
+  background-color: #424242;
+  width: 600px;
+  height: 300px;
+  border: yellow 2px solid;
+  position: relative;
+  color: lightgrey;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.homeGoals, .awayGoals {
+  background-color: black;
+  width: 150px;
+  height: 100px;
+  position: absolute;
+  top: 30px;
+}
+
+.homeGoals {
+  left: 15px;
+}
+
+.awayGoals {
+  right: 15px;
+}
+
+.digit {
+  position: relative;
+}
+
+#digit11 {
+  position: absolute;
+  top: 6px;
+  left: 100px;
+  background-color: yellow;
+}
+
+#digit12 {
+  position: absolute;
+  transform: rotate(90deg);
+  top: 26px;
+  left: 120px;
+  background-color: yellow;
+}
+
+#digit13 {
+  position: absolute;
+  transform: rotate(90deg);
+  top: 26px;
+  left: 81px;
+  background-color: yellow;
+}
+
+#digit14 {
+  position: absolute;
+  left: 100px;
+  top: 46px;
+  background-color: yellow;
+}
+
+#digit15 {
+  position: absolute;
+  transform: rotate(90deg);
+  top: 66px;
+  left: 120px;
+  background-color: yellow;
+}
+
+#digit16 {
+  position: absolute;
+  transform: rotate(90deg);
+  top: 66px;
+  left: 81px;
+  background-color: yellow;
+}
+
+#digit17 {
+  position: absolute;
+  left: 100px;
+  top: 86px;
+  background-color: yellow;
+}
+
+.digitBar {
+  position: absolute;
+  height: 8px;
+  width: 31px;
+  top: 10px;
+  left: 10px;
+  border-radius: 30%;
+}
+
+.homeTeamName, .visitTeamName {
+  position: absolute;
+  top: 1px;
+}
+
+.homeTeamName {
+  left: 40px;
+}
+
+.visitTeamName {
+  right: 40px;
+}
+
+

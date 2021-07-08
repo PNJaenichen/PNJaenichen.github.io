@@ -1,4 +1,5 @@
 import React from 'react';
+import ScoreBoard from '../ScoreBoard/ScoreBoard'
 import { TeamInfo } from '../../util/TeamInfo';
 import './GameDisplay.css';
 
@@ -16,7 +17,8 @@ export class GameDisplay extends React.Component {
     return (
       <div>
         <button onClick={this.handleReturn}>Return</button>
-        <div className='scoreBoard'>
+        <ScoreBoard />
+        <div className='iceRink'>
           <div className='awayTeamGame'>
             <img src={TeamInfo[this.props.gameData.gameData.teams.away.name].logo} alt='Away Team Logo'></img>
             <p>{this.props.gameData.liveData.linescore.teams.away.goals}</p>
