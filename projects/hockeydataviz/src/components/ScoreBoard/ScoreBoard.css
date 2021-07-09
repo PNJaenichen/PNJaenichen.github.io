@@ -2,11 +2,42 @@
   background-color: #424242;
   width: 600px;
   height: 300px;
-  border: yellow 2px solid;
+  border: lightgrey 2px solid;
   position: relative;
   color: lightgrey;
   font-weight: 500;
   font-size: 18px;
+}
+
+.gameTime {
+  background-color: black;
+  width: 240px;
+  height: 100px;
+  position: absolute;
+  top: 0px;
+  left: 178px;
+  border-radius: 15px;
+  border: lightgrey 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.minutes, .seconds {
+  display: flex;
+}
+
+.minutes .digitBar, .seconds .digitBar {
+  background-color: red;
+  border: red;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: white;
+  border-radius: 50%;
+  margin: 40px 3px 40px 3px;
 }
 
 .homeGoals, .awayGoals {
@@ -15,6 +46,10 @@
   height: 100px;
   position: absolute;
   top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding-right: 5px;
 }
 
 .homeGoals {
@@ -27,68 +62,71 @@
 
 .digit {
   position: relative;
+  height: 88px;
+  width: 49px;
+  padding: 0px;
+  margin: 0 3px 0 3px;
 }
 
-#digit11 {
+.topBar {
   position: absolute;
-  top: 6px;
-  left: 100px;
+  top: 2px;
+  left: 9px;
   background-color: yellow;
 }
 
-#digit12 {
+.uprBar {
   position: absolute;
   transform: rotate(90deg);
-  top: 26px;
-  left: 120px;
+  top: 21px;
+  left: 27px;
   background-color: yellow;
 }
 
-#digit13 {
+.uplBar {
   position: absolute;
   transform: rotate(90deg);
-  top: 26px;
-  left: 81px;
+  top: 21px;
+  left: -9px;
   background-color: yellow;
 }
 
-#digit14 {
+.midBar {
   position: absolute;
-  left: 100px;
-  top: 46px;
+  left: 9px;
+  top: 40px;
   background-color: yellow;
 }
 
-#digit15 {
-  position: absolute;
-  transform: rotate(90deg);
-  top: 66px;
-  left: 120px;
-  background-color: yellow;
-}
-
-#digit16 {
+.lorBar {
   position: absolute;
   transform: rotate(90deg);
-  top: 66px;
-  left: 81px;
+  top: 59px;
+  left: 27px;
   background-color: yellow;
 }
 
-#digit17 {
+.lolBar {
   position: absolute;
-  left: 100px;
-  top: 86px;
+  transform: rotate(90deg);
+  top: 59px;
+  left: -9px;
+  background-color: yellow;
+}
+
+.botBar {
+  position: absolute;
+  left: 9px;
+  top: 78px;
   background-color: yellow;
 }
 
 .digitBar {
-  position: absolute;
   height: 8px;
   width: 31px;
-  top: 10px;
-  left: 10px;
   border-radius: 30%;
+  margin: 0;
+  border: yellow solid 1px;
 }
 
 .homeTeamName, .visitTeamName {
