@@ -102,6 +102,11 @@ export default class ScoreBoard extends React.Component {
         </div>
         <p className='visitTeamName'>Visitor Team</p>
         {this.displayBuilder(this.props.awayScore, 'away')}
+        <div className='shots'>
+          {this.displayBuilder(this.props.homeShots, 'homeShot')}
+          <p>Shots on Goal</p>
+          {this.displayBuilder(this.props.awayShots, 'awayShot')}
+        </div>
       </div>
     )
   }

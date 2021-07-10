@@ -16,10 +16,12 @@ export class GameDisplay extends React.Component {
   render() {
     const homeScore = this.props.gameData.liveData.linescore.teams.home.goals;
     const awayScore = this.props.gameData.liveData.linescore.teams.away.goals;
+    const homeShots = this.props.gameData.liveData.boxscore.teams.home.teamStats.teamSkaterStats.shots;
+    const awayShots = this.props.gameData.liveData.boxscore.teams.away.teamStats.teamSkaterStats.shots;
     return (
       <div>
         <button onClick={this.handleReturn}>Return</button>
-        <ScoreBoard awayScore={awayScore} homeScore={homeScore}/>
+        <ScoreBoard awayScore={awayScore} homeScore={homeScore} awayShots={awayShots} homeShots={homeShots} />
         <div className='iceRink'>
           <div className='awayTeamGame'>
             <img src={TeamInfo[this.props.gameData.gameData.teams.away.name].logo} alt='Away Team Logo'></img>

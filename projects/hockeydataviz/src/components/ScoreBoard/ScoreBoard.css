@@ -141,4 +141,39 @@
   right: 40px;
 }
 
+.shots {
+  position: absolute;
+  top: 105px;
+  left: 178px;
+  width: 240px;
+  height: 75px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0px;
+}
+
+.shots p {
+  width: 50px;
+  line-height: 19px;
+  margin: 0;
+}
+
+.homeShots, .awayShots {
+  height: 50px;
+  width: 55px;
+  background-color: black;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 10px 0 0;
+  margin: 0px;
+  display: flex;
+}
+
+.shots .digit {
+  transform: scale(.45);
+  padding: 0;
+  margin: 0;
+}
 

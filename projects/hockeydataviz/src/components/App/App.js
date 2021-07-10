@@ -30,7 +30,6 @@ class App extends React.Component {
 
   getGameData(gameID) {
     NHLapi.getGameData(gameID).then(searchResults => {
-      console.log(searchResults);
       this.setState({gameInfo: searchResults})
     });
   }
