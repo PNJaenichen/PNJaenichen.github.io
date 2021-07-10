@@ -6,8 +6,8 @@ const buildDigits ={
     'lorBar': true, 'lolBar': false, 'botBar': false},
   2: {'topBar': true, 'uprBar': true, 'uplBar': false, 'midBar': true,
     'lorBar': false, 'lolBar': true, 'botBar': true}, 
-  3: {'topBar': true, 'uprBar': false, 'uplBar': true, 'midBar': true,
-    'lorBar': false, 'lolBar': true, 'botBar': true},
+  3: {'topBar': true, 'uprBar': true, 'uplBar': false, 'midBar': true,
+    'lorBar': true, 'lolBar': false, 'botBar': true},
   4: {'topBar': false, 'uprBar': true, 'uplBar': true, 'midBar': true,
     'lorBar': true, 'lolBar': false, 'botBar': false},
   5: {'topBar': true, 'uprBar': false, 'uplBar': true, 'midBar': true,
@@ -22,100 +22,86 @@ const buildDigits ={
     'lorBar': true, 'lolBar': false, 'botBar': true},
   0: {'topBar': true, 'uprBar': true, 'uplBar': true, 'midBar': false,
     'lorBar': true, 'lolBar': true, 'botBar': true},
-}
+};
+
+const bars = ['topBar', 'uprBar', 'uplBar', 'midBar', 'lorBar', 'lolBar',
+'botBar'];
 
 export default class ScoreBoard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.digitBuilder = this.digitBuilder.bind(this);
+  }
+
+  digitBuilder(digit) {
+    return bars.map(bar => {
+      if (buildDigits[digit][bar]) {
+        return (<div className={`digitBar ${bar}`}></div>)
+      } else {
+        return (<div className={`digitBar ${bar}`} style={{backgroundColor: 'black'}}></div>)
+      }
+    })
+  }
+
+  displayBuilder(disp, location) {
+    let locationID;
+    if (location === 'home' || location === 'away') {
+      locationID = `${location}Goals`;
+    } else {
+      locationID = `${location}s`;
+    }
+    if (disp < 10) {
+      return (
+        <div className={locationID}>
+          <div id={`${location}RightDigit`} className='digit'>
+            {this.digitBuilder(0)}
+          </div>
+          <div id={`${location}LeftDigit`} className='digit'>
+            {this.digitBuilder(disp)}
+          </div>
+        </div>
+      )
+    } else if (disp > 9 && disp < 100) {
+      const splitNums = disp.toString().split('').map(x => parseInt(x));
+      return (
+        <div className={locationID}>
+          <div id={`${location}RightDigit`} className='digit'>
+            {this.digitBuilder(splitNums[0])}
+          </div>
+          <div id={`${location}LeftDigit`} className='digit'>
+            {this.digitBuilder(splitNums[1])}
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className={locationID}>
+          <div id={`${location}RightDigit`} className='digit'>
+            {this.digitBuilder(0)}
+          </div>
+          <div id={`${location}LeftDigit`} className='digit'>
+            {this.digitBuilder(0)}
+          </div>
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className='scoreBoard'>
         <p className='homeTeamName'>Home Team</p>
-        <div className='homeGoals'>
-          <div id='homeRightDigit' className='digit'>
-            <div className="digitBar topBar"></div>
-            <div className="digitBar uprBar"></div>
-            <div className="digitBar uplBar"></div>
-            <div className="digitBar midBar"></div>
-            <div className="digitBar lorBar"></div>
-            <div className="digitBar lolBar"></div>
-            <div className="digitBar botBar"></div>
-          </div>
-          <div id='homeLeftDigit' className='digit'>
-            <div className="digitBar topBar"></div>
-            <div className="digitBar uprBar"></div>
-            <div className="digitBar uplBar"></div>
-            <div className="digitBar midBar"></div>
-            <div className="digitBar lorBar"></div>
-            <div className="digitBar lolBar"></div>
-            <div className="digitBar botBar"></div>
-          </div>
-        </div>    
+        {this.displayBuilder(this.props.homeScore, 'home')}    
         <div className='gameTime'>
-          <div className='minutes'>
-            <div id='minuteRightDigit' className='digit'>
-              <div className="digitBar topBar"></div>
-              <div className="digitBar uprBar"></div>
-              <div className="digitBar uplBar"></div>
-              <div className="digitBar midBar"></div>
-              <div className="digitBar lorBar"></div>
-              <div className="digitBar lolBar"></div>
-              <div className="digitBar botBar"></div>
-            </div>
-            <div id='minuteLeftDigit' className='digit'>
-              <div className="digitBar topBar"></div>
-              <div className="digitBar uprBar"></div>
-              <div className="digitBar uplBar"></div>
-              <div className="digitBar midBar"></div>
-              <div className="digitBar lorBar"></div>
-              <div className="digitBar lolBar"></div>
-              <div className="digitBar botBar"></div>
-            </div>
-          </div>
+          {this.displayBuilder(0, 'minute')}
           <div className='timeBreak'>
             <div className='dot'></div>
             <div className='dot'></div>
           </div>
-          <div className='seconds'>
-            <div id='secondRightDigit' className='digit'>
-              <div className="digitBar topBar"></div>
-              <div className="digitBar uprBar"></div>
-              <div className="digitBar uplBar"></div>
-              <div className="digitBar midBar"></div>
-              <div className="digitBar lorBar"></div>
-              <div className="digitBar lolBar"></div>
-              <div className="digitBar botBar"></div>
-            </div>
-            <div id='secondLeftDigit' className='digit'>
-              <div className="digitBar topBar"></div>
-              <div className="digitBar uprBar"></div>
-              <div className="digitBar uplBar"></div>
-              <div className="digitBar midBar"></div>
-              <div className="digitBar lorBar"></div>
-              <div className="digitBar lolBar"></div>
-              <div className="digitBar botBar"></div>
-            </div>
-          </div>
+          {this.displayBuilder(0, 'second')}
         </div>
         <p className='visitTeamName'>Visitor Team</p>
-        <div className='awayGoals'>
-          <div id='awayRightDigit' className='digit'>
-            <div className="digitBar topBar"></div>
-            <div className="digitBar uprBar"></div>
-            <div className="digitBar uplBar"></div>
-            <div className="digitBar midBar"></div>
-            <div className="digitBar lorBar"></div>
-            <div className="digitBar lolBar"></div>
-            <div className="digitBar botBar"></div>
-          </div>
-          <div id='awayLeftDigit' className='digit'>
-            <div className="digitBar topBar"></div>
-            <div className="digitBar uprBar"></div>
-            <div className="digitBar uplBar"></div>
-            <div className="digitBar midBar"></div>
-            <div className="digitBar lorBar"></div>
-            <div className="digitBar lolBar"></div>
-            <div className="digitBar botBar"></div>
-          </div>
-        </div>
+        {this.displayBuilder(this.props.awayScore, 'away')}
       </div>
     )
   }
