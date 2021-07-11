@@ -4,6 +4,7 @@ import { BuildCalender } from "../BuildCalender/BuildCalender";
 import { BuildDailyGames } from "../BuildDailyGames/BuildDailyGames";
 import { GameDisplay } from "../GameDisplay/GameDisplay"
 import { NHLapi } from "../../util/NHLapi"
+import './App.css';
 
 class App extends React.Component {
   constructor(props) {

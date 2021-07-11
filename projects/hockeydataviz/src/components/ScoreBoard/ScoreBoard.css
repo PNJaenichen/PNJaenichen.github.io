@@ -7,6 +7,7 @@
   color: lightgrey;
   font-weight: 500;
   font-size: 18px;
+  margin: 20px;
 }
 
 .gameTime {
@@ -177,3 +178,16 @@
   margin: 0;
 }
 
+.teamLogos {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  top: 130px;
+  padding: 0 10px 0 10px;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+}

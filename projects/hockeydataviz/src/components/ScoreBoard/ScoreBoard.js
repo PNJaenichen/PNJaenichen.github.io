@@ -1,5 +1,6 @@
 import React from 'react';
 import './ScoreBoard.css';
+import { TeamInfo } from '../../util/TeamInfo';
 
 const buildDigits ={
   1: {'topBar': false, 'uprBar': true, 'uplBar': false, 'midBar': false,
@@ -88,10 +89,12 @@ export default class ScoreBoard extends React.Component {
   }
 
   render() {
+    const homeTeam = this.props.boxscore.home;
+    const awayTeam = this.props.boxscore.away;
     return (
       <div className='scoreBoard'>
         <p className='homeTeamName'>Home Team</p>
-        {this.displayBuilder(this.props.homeScore, 'home')}    
+        {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.goals, 'home')}    
         <div className='gameTime'>
           {this.displayBuilder(0, 'minute')}
           <div className='timeBreak'>
@@ -101,11 +104,15 @@ export default class ScoreBoard extends React.Component {
           {this.displayBuilder(0, 'second')}
         </div>
         <p className='visitTeamName'>Visitor Team</p>
-        {this.displayBuilder(this.props.awayScore, 'away')}
+        {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.goals, 'away')}
         <div className='shots'>
-          {this.displayBuilder(this.props.homeShots, 'homeShot')}
+          {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.shots, 'homeShot')}
           <p>Shots on Goal</p>
-          {this.displayBuilder(this.props.awayShots, 'awayShot')}
+          {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.shots, 'awayShot')}
+        </div>
+        <div className='teamLogos'>
+          <img src={TeamInfo[homeTeam.team.name].logo} alt={`${homeTeam.team.name} Logo`} className='logo'></img>
+          <img src={TeamInfo[awayTeam.team.name].logo} alt={`${awayTeam.team.name} Logo`} className='logo'></img>
         </div>
       </div>
     )

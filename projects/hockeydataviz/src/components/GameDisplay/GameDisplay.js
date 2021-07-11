@@ -1,6 +1,5 @@
 import React from 'react';
 import ScoreBoard from '../ScoreBoard/ScoreBoard'
-import { TeamInfo } from '../../util/TeamInfo';
 import './GameDisplay.css';
 
 export class GameDisplay extends React.Component {
@@ -14,24 +13,11 @@ export class GameDisplay extends React.Component {
   }
 
   render() {
-    const homeScore = this.props.gameData.liveData.linescore.teams.home.goals;
-    const awayScore = this.props.gameData.liveData.linescore.teams.away.goals;
-    const homeShots = this.props.gameData.liveData.boxscore.teams.home.teamStats.teamSkaterStats.shots;
-    const awayShots = this.props.gameData.liveData.boxscore.teams.away.teamStats.teamSkaterStats.shots;
     return (
-      <div>
+      <div className='gameDisplay'>
         <button onClick={this.handleReturn}>Return</button>
-        <ScoreBoard awayScore={awayScore} homeScore={homeScore} awayShots={awayShots} homeShots={homeShots} />
+        <ScoreBoard boxscore={this.props.gameData.liveData.boxscore.teams} />
         <div className='iceRink'>
-          <div className='awayTeamGame'>
-            <img src={TeamInfo[this.props.gameData.gameData.teams.away.name].logo} alt='Away Team Logo'></img>
-            <p>{awayScore}</p>
-          </div>
-          <p>:</p>
-          <div className='homeTeamGame'>
-            <p>{homeScore}</p>
-            <img src={TeamInfo[this.props.gameData.gameData.teams.home.name].logo} alt='Home Team Logo'></img>
-          </div>
         </div>
       </div>
     )
