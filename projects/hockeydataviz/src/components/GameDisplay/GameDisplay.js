@@ -16,7 +16,10 @@ export class GameDisplay extends React.Component {
     return (
       <div className='gameDisplay'>
         <button onClick={this.handleReturn}>Return</button>
-        <ScoreBoard boxscore={this.props.gameData.liveData.boxscore.teams} />
+        <ScoreBoard 
+          boxscore={this.props.gameData.liveData.boxscore.teams} 
+          timeRemaining={this.props.gameData.liveData.plays.currentPlay.about} 
+        />
         <div className='iceRink'>
         </div>
       </div>

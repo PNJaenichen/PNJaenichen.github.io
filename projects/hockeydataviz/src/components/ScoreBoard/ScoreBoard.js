@@ -93,26 +93,46 @@ export default class ScoreBoard extends React.Component {
     const awayTeam = this.props.boxscore.away;
     return (
       <div className='scoreBoard'>
-        <p className='homeTeamName'>Home Team</p>
-        {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.goals, 'home')}    
         <div className='gameTime'>
-          {this.displayBuilder(0, 'minute')}
-          <div className='timeBreak'>
-            <div className='dot'></div>
-            <div className='dot'></div>
+            {this.displayBuilder(0, 'minute')}
+            <div className='timeBreak'>
+              <div className='dot'></div>
+              <div className='dot'></div>
+            </div>
+            {this.displayBuilder(0, 'second')}
           </div>
-          {this.displayBuilder(0, 'second')}
-        </div>
-        <p className='visitTeamName'>Visitor Team</p>
-        {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.goals, 'away')}
-        <div className='shots'>
-          {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.shots, 'homeShot')}
-          <p>Shots on Goal</p>
-          {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.shots, 'awayShot')}
-        </div>
         <div className='teamLogos'>
           <img src={TeamInfo[homeTeam.team.name].logo} alt={`${homeTeam.team.name} Logo`} className='logo'></img>
           <img src={TeamInfo[awayTeam.team.name].logo} alt={`${awayTeam.team.name} Logo`} className='logo'></img>
+        </div>
+        <p className='homeTeamName'>Home Team</p>
+        {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.goals, 'home')}    
+        <p className='visitTeamName'>Visitor Team</p>
+        {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.goals, 'away')}
+        <div className='periodMarkers'>
+          <div className='periodLight'></div>
+          <p>1</p>
+          <div className='periodLight'></div>
+          <p>2</p>
+          <div className='periodLight'></div>
+          <p>3</p>
+          <div className='periodLight'></div>
+          <p>OT</p>
+        </div>
+        <div id='shotStat' className='stats'>
+          {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.shots, 'homeStat')}
+          <p>Shots on Goal</p>
+          {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.shots, 'awayStat')}
+        </div>
+        <div id='hitStat' className='stats'>
+          {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.hits, 'homeStat')}
+          <p>Hits</p>
+          {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.hits, 'awayStat')}
+        </div>
+        <div id='pppStat' className='stats'>
+          {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.powerPlayPercentage, 'homeStat')}
+          <p>PP %</p>
+          {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.powerPlayPercentage, 'awayStat')}
         </div>
       </div>
     )
