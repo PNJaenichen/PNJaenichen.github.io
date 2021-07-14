@@ -1,5 +1,6 @@
 import React from 'react';
 import ScoreBoard from '../ScoreBoard/ScoreBoard'
+import RinkDisplay from '../RinkDisplay/RinkDisplay'
 import './GameDisplay.css';
 
 export class GameDisplay extends React.Component {
@@ -20,8 +21,7 @@ export class GameDisplay extends React.Component {
           boxscore={this.props.gameData.liveData.boxscore.teams} 
           timeRemaining={this.props.gameData.liveData.plays.currentPlay.about} 
         />
-        <div className='iceRink'>
-        </div>
+        <RinkDisplay gameInfo={this.props.gameData.liveData} />
       </div>
     )
   }

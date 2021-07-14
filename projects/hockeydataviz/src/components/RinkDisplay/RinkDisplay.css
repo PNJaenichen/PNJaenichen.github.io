@@ -1,0 +1,18 @@
+.iceRink {
+  width: 840px;
+  height: 340px;
+  background-image: url('../RinkDisplay/3x-rink.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+
+.centerLogo {
+  height: 80px;
+  width: 80px;
+  opacity: 0.6;
+  z-index: -1;
+}
