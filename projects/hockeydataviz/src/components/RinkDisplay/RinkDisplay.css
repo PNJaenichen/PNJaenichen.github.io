@@ -1,18 +1,33 @@
 .iceRink {
-  width: 840px;
+  width: 800px;
   height: 340px;
-  background-image: url('../RinkDisplay/3x-rink.png');
-  background-repeat: no-repeat;
-  background-position: center;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
   position: relative;
+  border: 1px red solid;
+  padding: 0;
+  margin: 0;
 }
 
 .centerLogo {
+  position: absolute;
   height: 80px;
   width: 80px;
   opacity: 0.6;
   z-index: -1;
+  margin: 0;
+  padding: 0;
+}
+
+.centerIce {
+  position: absolute;
+  top: 155px;
+  left: 396px;
+}
+
+.playLocation {
+  position: absolute;
+  top: -15px;
+  left: -5px;
+  margin: 0;
+  padding: 0;
 }
