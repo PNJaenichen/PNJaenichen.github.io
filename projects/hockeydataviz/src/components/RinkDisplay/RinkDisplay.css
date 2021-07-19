@@ -3,9 +3,10 @@
   height: 340px;
   display: flex;
   position: relative;
-  border: 1px red solid;
+  border: 1px grey solid;
   padding: 0;
   margin: 0;
+  background-image: url('./3x-rink.png');
 }
 
 .centerLogo {
@@ -13,9 +14,11 @@
   height: 80px;
   width: 80px;
   opacity: 0.6;
-  z-index: 1;
+  z-index: -1;
   margin: 0;
   padding: 0;
+  top: 130px;
+  left: 360px;
 }
 
 .centerIce {
@@ -30,4 +33,12 @@
   left: -5px;
   margin: 0;
   padding: 0;
+}
+
+.testLocation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: green 1px solid;
+  line-height: 0px;
 }
