@@ -1,6 +1,6 @@
 .iceRink {
-  width: 800px;
-  height: 340px;
+  width: 600px;
+  height: 255px;
   display: flex;
   position: relative;
   border: 1px grey solid;
@@ -21,24 +21,20 @@
   left: 360px;
 }
 
-.centerIce {
-  position: absolute;
-  top: 155px;
-  left: 395px;
-}
-
 .playLocation {
   position: absolute;
-  top: -15px;
-  left: -5px;
+  top: 128px;
+  left: 300px;
+  height: 11px;
+  width: 11px;
   margin: 0;
   padding: 0;
+  transform-origin: center;
+  text-align: center;
+  font-size: 12px;
+  line-height: 8px;
 }
 
 .testLocation {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: green 1px solid;
-  line-height: 0px;
+  transform: translateX(-207px) translateY(66px);
 }

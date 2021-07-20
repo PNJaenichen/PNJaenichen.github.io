@@ -35,9 +35,8 @@ export default class RinkDisplay extends React.Component {
           <button>Penalties</button>
         </div>
         <div className='iceRink'>
-          <p className='centerIce'>+</p>
           <p className='playLocation'>+</p>
-          <div className='testLocation'>+</div>
+          <div className={'testLocation playLocation'}>{'\u2613'}</div>
           {centerLogo}
         </div>
       </div>
