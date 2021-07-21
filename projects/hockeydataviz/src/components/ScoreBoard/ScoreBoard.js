@@ -37,9 +37,9 @@ export default class ScoreBoard extends React.Component {
   digitBuilder(digit) {
     return bars.map(bar => {
       if (buildDigits[digit][bar]) {
-        return (<div className={`digitBar ${bar}`}></div>)
+        return (<div key={`${digit}-${bar}`} className={`digitBar ${bar}`}></div>)
       } else {
-        return (<div className={`digitBar ${bar}`} style={{backgroundColor: 'black'}}></div>)
+        return (<div key={`${digit}-${bar}`} className={`digitBar ${bar}`} style={{backgroundColor: 'black'}}></div>)
       }
     })
   }
@@ -51,13 +51,24 @@ export default class ScoreBoard extends React.Component {
     } else {
       locationID = `${location}s`;
     }
-    if (disp < 10) {
+    if (disp === 0) {
       return (
         <div className={locationID}>
-          <div id={`${location}RightDigit`} className='digit'>
+          <div key={`${location}RightDigit`} id={`${location}RightDigit`} className='digit'>
             {this.digitBuilder(0)}
           </div>
-          <div id={`${location}LeftDigit`} className='digit'>
+          <div key={`${location}LeftDigit`} id={`${location}LeftDigit`} className='digit'>
+            {this.digitBuilder(0)}
+          </div>
+        </div>
+      )
+    } else if (disp < 10 && disp > 0) {
+      return (
+        <div className={locationID}>
+          <div key={`${location}RightDigit`} id={`${location}RightDigit`} className='digit'>
+            {this.digitBuilder(0)}
+          </div>
+          <div key={`${location}LeftDigit`} id={`${location}LeftDigit`} className='digit'>
             {this.digitBuilder(disp)}
           </div>
         </div>
@@ -66,10 +77,10 @@ export default class ScoreBoard extends React.Component {
       const splitNums = disp.toString().split('').map(x => parseInt(x));
       return (
         <div className={locationID}>
-          <div id={`${location}RightDigit`} className='digit'>
+          <div key={`${location}RightDigit`} className='digit'>
             {this.digitBuilder(splitNums[0])}
           </div>
-          <div id={`${location}LeftDigit`} className='digit'>
+          <div key={`${location}LeftDigit`} id={`${location}LeftDigit`} className='digit'>
             {this.digitBuilder(splitNums[1])}
           </div>
         </div>
@@ -77,10 +88,10 @@ export default class ScoreBoard extends React.Component {
     } else {
       return (
         <div className={locationID}>
-          <div id={`${location}RightDigit`} className='digit'>
+          <div key={`${location}RightDigit`} id={`${location}RightDigit`} className='digit'>
             {this.digitBuilder(0)}
           </div>
-          <div id={`${location}LeftDigit`} className='digit'>
+          <div key={`${location}LeftDigit`} id={`${location}LeftDigit`} className='digit'>
             {this.digitBuilder(0)}
           </div>
         </div>

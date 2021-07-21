@@ -11,7 +11,12 @@ import './RinkDisplay.css';
 export default class RinkDisplay extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      playType: '',
+    }
     this.setupIce = this.setupIce.bind(this);
+    this.addPlays = this.addPlays.bind(this);
+    this.setPlayType = this.setPlayType.bind(this);
   }
 
   setupIce() {
@@ -19,24 +24,42 @@ export default class RinkDisplay extends React.Component {
     return <img className='centerLogo' src={teamLogo} alt=''></img>;
   }
 
+  setPlayType(e) {
+    this.setState({playType: e.target.value})
+  }
+
+  addPlays(playType) {
+    const chosenPlays = this.props.gameInfo.plays.allPlays.filter(x => x.result.event === playType)
+    const playDisplay = chosenPlays.map(x => {
+      const scaleX = x.coordinates.x * 4;
+      const scaleY = x.coordinates.y * -4;
+      return (
+        <div key={`${x.result.eventCode}`} className='playLocation' style={{transform: `translateX(${scaleX}px) translateY(${scaleY}px)`}}>{'\u2613'}</div>
+      )
+    })
+    return playDisplay
+  }
+
   render() {
     const centerLogo = this.setupIce();
     return (
       <div>
         <div className='buttonPool'>
-          <button>Faceoffs</button>
-          <button>Shots</button>
-          <button>Blocked Shots</button>
-          <button>Takeaways</button>
-          <button>Hits</button>
-          <button>Missed Shots</button>
-          <button>Giveaways</button>
-          <button>Goals</button>
-          <button>Penalties</button>
+          <button value='Faceoff' onClick={this.setPlayType}>Faceoffs</button>
+          <button value='Shot' onClick={this.setPlayType}>Shots</button>
+          <button value='Blocked Shot' onClick={this.setPlayType}>Blocked Shots</button>
+          <button value='Takeaway' onClick={this.setPlayType}>Takeaways</button>
+          <button value='Hit' onClick={this.setPlayType}>Hits</button>
+          <button value='Missed Shot' onClick={this.setPlayType}>Missed Shots</button>
+          <button value='Giveaway' onClick={this.setPlayType}>Giveaways</button>
+          <button value='Goal' onClick={this.setPlayType}>Goals</button>
+          <button value='Penalty' onClick={this.setPlayType}>Penalties</button>
         </div>
+        <p>{this.state.playType}</p>
         <div className='iceRink'>
-          <p className='playLocation'>+</p>
-          <div className={'testLocation playLocation'}>{'\u2613'}</div>
+          <p className='playLocation'>{'\u2613'}</p>
+          <div className='playLocation' style={{transform: 'translateX(-276px) translateY(88px)'}}>{'\u2613'}</div>
+          {this.addPlays(this.state.playType)}
           {centerLogo}
         </div>
       </div>

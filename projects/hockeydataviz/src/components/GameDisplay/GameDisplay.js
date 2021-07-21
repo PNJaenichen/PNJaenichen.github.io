@@ -25,4 +25,4 @@ export class GameDisplay extends React.Component {
       </div>
     )
   }
-}
+} 
