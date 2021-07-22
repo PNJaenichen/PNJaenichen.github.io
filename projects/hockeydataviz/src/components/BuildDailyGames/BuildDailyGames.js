@@ -18,7 +18,7 @@ export class BuildDailyGames extends React.Component {
       const homeTeam = TeamInfo[game.teams.home.team.name] ? TeamInfo[game.teams.home.team.name] : {};
       const awayTeam = TeamInfo[game.teams.away.team.name] ? TeamInfo[game.teams.away.team.name] : {};
       return (
-        <div key={game.gamePk} id={game.gamePk} className='gameDisplay'>
+        <div key={game.gamePk} id={game.gamePk} className='gameDisplay' onClick={this.handleClick}>
           <div className='gameTeams'>
             <div className='awayTeam'>
               <img src={awayTeam.logo} alt={`${awayTeam.abbreviation ? awayTeam.abbreviation : 'No'} logo`}></img>
@@ -34,7 +34,7 @@ export class BuildDailyGames extends React.Component {
             <p>{`${game.teams.away.score}`}</p> 
             <p>{`${game.teams.home.score}`}</p>
           </div>
-          <p onClick={this.handleClick}>{`${game.status.detailedState} - ${game.venue.name}`}</p>
+          <p>{`${game.status.detailedState} - ${game.venue.name}`}</p>
         </div>
       )
     })
