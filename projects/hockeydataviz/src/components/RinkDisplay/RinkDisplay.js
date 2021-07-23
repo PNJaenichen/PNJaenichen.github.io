@@ -31,10 +31,16 @@ export default class RinkDisplay extends React.Component {
   addPlays(playType) {
     const chosenPlays = this.props.gameInfo.plays.allPlays.filter(x => x.result.event === playType)
     const playDisplay = chosenPlays.map(x => {
+      let pColor = 'black';
+      let sColor = 'green';
+      if (x.team) {
+        pColor = TeamInfo[x.team.name].pColor;
+        sColor = TeamInfo[x.team.name].sColor;
+      }
       const scaleX = x.coordinates.x * 4;
       const scaleY = x.coordinates.y * -4;
       return (
-        <div key={`${x.result.eventCode}`} className='playLocation' style={{transform: `translateX(${scaleX}px) translateY(${scaleY}px)`}}>{'\u2613'}</div>
+        <div key={`${x.result.eventCode}`} className='playLocation' style={{color: `${pColor}`, textShadow: `2px 2px 2px ${sColor}`, transform: `translateX(${scaleX}px) translateY(${scaleY}px)`}}>{'\u2613'}</div>
       )
     })
     return playDisplay
@@ -58,7 +64,7 @@ export default class RinkDisplay extends React.Component {
         <p>{this.state.playType}</p>
         <div className='iceRink'>
           <p className='playLocation'>{'\u2613'}</p>
-          <div className='playLocation' style={{transform: 'translateX(-276px) translateY(88px)'}}>{'\u2613'}</div>
+          <div className='playLocation' style={{color: '#F47A38', textShadow: '2px 2px 2px #B9975B', transform: 'translateX(-276px) translateY(88px)'}}>{'\u2613'}</div>
           {this.addPlays(this.state.playType)}
           {centerLogo}
         </div>
