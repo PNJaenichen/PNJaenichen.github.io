@@ -32,6 +32,7 @@ export default class ScoreBoard extends React.Component {
   constructor(props) {
     super(props);
     this.digitBuilder = this.digitBuilder.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   digitBuilder(digit) {
@@ -99,6 +100,10 @@ export default class ScoreBoard extends React.Component {
     }
   }
 
+  handleClick(e) {
+    this.props.periodSelect(e.target.nextSibling.innerText);
+  }
+
   render() {
     const homeTeam = this.props.boxscore.home;
     const awayTeam = this.props.boxscore.away;
@@ -121,14 +126,46 @@ export default class ScoreBoard extends React.Component {
         <p className='visitTeamName'>Visitor Team</p>
         {this.displayBuilder(awayTeam.teamStats.teamSkaterStats.goals, 'away')}
         <div className='periodMarkers'>
-          <div className='periodLight'></div>
+          <div 
+            className='periodLight'
+            style={this.props.period === '1' ? {backgroundColor: 'yellow'} : {backgroundColor: 'black'}} 
+            name='1' 
+            onClick={this.handleClick}
+          >
+          </div>
           <p>1</p>
-          <div className='periodLight'></div>
+          <div 
+            className='periodLight' 
+            style={this.props.period === '2' ? {backgroundColor: 'yellow'} : {backgroundColor: 'black'}} 
+            name='2' 
+            onClick={this.handleClick}
+          >
+          </div>
           <p>2</p>
-          <div className='periodLight'></div>
+          <div 
+            className='periodLight' 
+            style={this.props.period === '3' ? {backgroundColor: 'yellow'} : {backgroundColor: 'black'}} 
+            name='3' 
+            onClick={this.handleClick}
+          >
+          </div>
           <p>3</p>
-          <div className='periodLight'></div>
+          <div 
+            className='periodLight' 
+            style={this.props.period === 'OT' ? {backgroundColor: 'yellow'} : {backgroundColor: 'black'}} 
+            name='OT' 
+            onClick={this.handleClick}
+          >
+          </div>
           <p>OT</p>
+          <div 
+            className='periodLight' 
+            style={this.props.period === 'F' ? {backgroundColor: 'yellow'} : {backgroundColor: 'black'}} 
+            name='F' 
+            onClick={this.handleClick}
+          >
+          </div>
+          <p>F</p>
         </div>
         <div id='shotStat' className='stats'>
           {this.displayBuilder(homeTeam.teamStats.teamSkaterStats.shots, 'homeStat')}
