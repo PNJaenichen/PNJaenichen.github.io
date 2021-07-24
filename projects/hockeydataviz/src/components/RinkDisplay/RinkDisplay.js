@@ -29,7 +29,15 @@ export default class RinkDisplay extends React.Component {
   }
 
   addPlays(playType) {
-    const chosenPlays = this.props.gameInfo.plays.allPlays.filter(x => x.result.event === playType)
+    const allPickedPlays = this.props.gameInfo.plays.allPlays.filter(x => x.result.event === playType)
+    let chosenPlays;
+    if (this.props.period !== 'F' && this.props.period !== 'OT') {
+      chosenPlays = allPickedPlays.filter(x => x.about.period.toString() === this.props.period);
+    } else if (this.props.period === 'OT') {
+      chosenPlays = allPickedPlays.filter(x => x.about.ordinalNum.includes(this.props.period));
+    } else {
+      chosenPlays = allPickedPlays;
+    }
     const playDisplay = chosenPlays.map(x => {
       let pColor = 'black';
       let sColor = 'green';
@@ -63,8 +71,6 @@ export default class RinkDisplay extends React.Component {
         </div>
         <p>{this.state.playType}</p>
         <div className='iceRink'>
-          <p className='playLocation'>{'\u2613'}</p>
-          <div className='playLocation' style={{color: '#F47A38', textShadow: '2px 2px 2px #B9975B', transform: 'translateX(-276px) translateY(88px)'}}>{'\u2613'}</div>
           {this.addPlays(this.state.playType)}
           {centerLogo}
         </div>
