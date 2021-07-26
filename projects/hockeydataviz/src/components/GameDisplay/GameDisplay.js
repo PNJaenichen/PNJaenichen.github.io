@@ -7,7 +7,7 @@ export class GameDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      period: '3',
+      period: '',
     }
     this.handleReturn = this.handleReturn.bind(this);
     this.changePeriod = this.changePeriod.bind(this);
@@ -27,7 +27,7 @@ export class GameDisplay extends React.Component {
         <button onClick={this.handleReturn}>Return</button>
         <ScoreBoard 
           boxscore={this.props.gameData.liveData.boxscore.teams} 
-          timeRemaining={this.props.gameData.liveData.plays.currentPlay.about} 
+          timeRemaining={this.props.gameData.liveData.plays.currentPlay ? this.props.gameData.liveData.plays.currentPlay.about : '00:00'} 
           periodSelect={this.changePeriod}
           period={this.state.period}
         />
