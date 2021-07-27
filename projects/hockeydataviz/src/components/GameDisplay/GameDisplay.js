@@ -7,7 +7,7 @@ export class GameDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      period: '',
+      period: 'F',
     }
     this.handleReturn = this.handleReturn.bind(this);
     this.changePeriod = this.changePeriod.bind(this);

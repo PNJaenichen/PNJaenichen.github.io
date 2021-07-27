@@ -1,34 +1,26 @@
-![By-the-Picture Logo](/static/Logo.png)
+![By-the-Picture Logo](/public/Logo.png)
 
 # Rink Side: Hockey By the Picture
 
 ## Description
 
-This website allows a user to access the NHL API and display the scores for teams based on season. 
+This website allows a user to access the NHL API  in order to choose a game and display the recorded plays of a select number of play types: Faceoffs, Shots, Blocked Shots, Takeaways, Hits, Missed Shots, Giveaways Goals, and Penalties.
 
-A user can select two teams and get the scores of games between those two teams 
-in a season.
+A user can select a month and a year, the app will then display all days of that month which have recorded games. Selecting a day will then display all of the recorded games of that day with team logos and scores. 
 
-If the user selects a single team, or selects the same team for both entries it 
-will return all of the scores for a team in the selected season. 
+Selecting a game, the app will display a scoreboard and a rink. Buttons allow selection of playtypes. There location will be shown on the rink in their recorded position and color coded to the team's primary color. A user can limit the plays to specific periods or for the entire game.
 
 ## Technology Utilized
 
-This application was created using html, css (utilizing bootstrap), and javascript within a react application. 
-
-It utilizes the *uniqid* to create unique ids when required.
+This application was created using html, css, and javascript within a react application. 
 
 ## Utilization
 
 The following comes the initial landing page:
 
-> Click the search link above. Make a choice for at least team 1 and the associated season.
-> If a single team is selected, than all of that teams regular season games will be returned.
-> If both teams are selected, than only games between those two teams will be returned.
-> Get the score, date, and arena for the games returned.
+> Select a month and year below. If games were played in that month then the day will be blue. Select the desired day aand then select the game you wish to view.
 
 ## Copyrights
 
-* The team logos are linked to those used by ESPN and are copyrighted by the 
-individual franchises.
-* The rink image is a recreation by the author of the one utilized by ESPN
+* The team logos are linked to those used by ESPN and are copyrighted by the individual franchises.
+* The rink image is a recreation by the author based on the rink dimensions provided in the NHL rulebook

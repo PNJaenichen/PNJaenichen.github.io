@@ -33,6 +33,11 @@ export class SearchBar extends React.Component {
     const yearOptions = years.map(x => <option key={`year${x}`} value={x}>{x}</option>)
     return (
       <div className='SearchBar'>
+        <p> 
+          Select a month and year below. If games were played in that month
+          then the day will be blue. Select the desired day aand then select
+          the game you wish to view.
+        </p>
         <label>Select Month:
           <select value={this.state.month} onChange={this.handleMonthChange}>
             {monthOptions}
