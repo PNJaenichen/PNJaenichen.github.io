@@ -24,5 +24,16 @@ export const NHLapi = {
     } else {
       return responseJSON;
     }
+  },
+
+  async getGameReport(gameID, seasonStart, seasonEnd) {
+    const htmlReport = `http://www.nhl.com/scores/htmlreports/${seasonStart}${seasonEnd}/PL${gameID}.HTM`;
+    const response = await fetch(htmlReport);
+    const responseJSON = await response.text();
+    if (!responseJSON) {
+      return {};
+    } else {
+      return responseJSON;
+    }
   }
 }
