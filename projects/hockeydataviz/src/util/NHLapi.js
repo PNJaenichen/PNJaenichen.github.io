@@ -26,14 +26,14 @@ export const NHLapi = {
     }
   },
 
-  async getGameReport(gameID, seasonStart, seasonEnd) {
-    const htmlReport = `http://www.nhl.com/scores/htmlreports/${seasonStart}${seasonEnd}/PL${gameID}.HTM`;
+  async getGameReport(gameID, season) {
+    const htmlReport = `http://www.nhl.com/scores/htmlreports/${season}/PL${gameID}.HTM`;
     const response = await fetch(htmlReport)
     const responseText = response.text()
     if (!responseText) {
-      return '';
+      return ''
     } else {
-      return responseText;
+      return responseText
     }
   }
 }
