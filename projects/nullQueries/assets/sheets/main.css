@@ -7,17 +7,18 @@
 }
 
 #aboutMe {
+  margin-top: 120px;
   padding-bottom: 30px;
 }
 
 #aboutMe p {
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
 #contactButton {
   display: flex;
   justify-content: center;
-  margin-bottom: 60px;
+  margin-bottom: 120px;
 }
 
 #contactButton button {
@@ -61,11 +62,15 @@
 .info {
   text-align: left;
   align-items: end;
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
 }
 
 .info p {
   width: 100%;
   font-size: 1.5em;
+  margin-top: 0;
 }
 
 .no-padding {
@@ -79,12 +84,14 @@
 .servOpt {
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 
 .servOpt img {
-  width: 125px;
-  height: 125px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto;
+  padding: 0;
 }
 
 .videos {
