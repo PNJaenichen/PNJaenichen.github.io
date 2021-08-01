@@ -10,14 +10,21 @@
   padding-bottom: 30px;
 }
 
+#aboutMe p {
+  padding-bottom: 10px;
+}
+
 #contactButton {
   display: flex;
   justify-content: center;
+  margin-bottom: 60px;
 }
 
 #contactButton button {
   border: var(--null_Purple) solid 2px;
   margin: 30px auto 10px auto;
+  background-color: var(--null_Black);
+  padding-bottom: 8px;
 }
 
 #contactButton button:hover {
@@ -47,6 +54,10 @@
   border: #23527C 2px solid;
 }
 
+.container {
+  width: 90%;
+}
+
 .info {
   text-align: left;
   align-items: end;
@@ -68,12 +79,11 @@
 .servOpt {
   display: flex;
   align-items: center;
-  
 }
 
 .servOpt img {
-  width: 200px;
-  height: 200px;
+  width: 125px;
+  height: 125px;
   margin: 0 auto;
 }
 
@@ -92,7 +102,7 @@ html, body {
 html {
   background-color: var(--null_Black);
 }
-
+ 
 body {
   background-image: url('../webBG.jpg');
   background-repeat: no-repeat;
