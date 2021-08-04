@@ -31,9 +31,9 @@ export const NHLapi = {
     const response = await fetch(htmlReport)
     const responseText = response.text()
     if (!responseText) {
-      return ''
+      return '';
     } else {
-      return responseText
+      return responseText;
     }
   }
 }

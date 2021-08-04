@@ -33,6 +33,8 @@ export class GameDisplay extends React.Component {
   }
   
   render() {
+    const testString = PlayParser(this.state.playerOnIce).innerText;
+    console.log(testString)
     return (
       <div className='gameDisplay'>
         <button onClick={this.handleReturn}>Return</button>
@@ -44,9 +46,8 @@ export class GameDisplay extends React.Component {
         />
         <RinkDisplay gameInfo={this.props.gameData.liveData} period={this.state.period} />
         <div>
-          {PlayParser(this.state.playerOnIce).innerHTML}
+          {testString}
         </div>
-        
       </div>
     )
   }
