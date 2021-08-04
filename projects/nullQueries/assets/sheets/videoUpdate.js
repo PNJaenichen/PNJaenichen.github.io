@@ -10,5 +10,14 @@ async function setRecent() {
   vidFrame.src = `https://www.youtube.com/embed/${recentVideo}?html5=1`
 }
 
+function init() {
+  const vidDefer = document.getElementsByTagName('iframe');
+  for (let i = 0; i < vidDefer.length; i++) {
+    if (vidDefer[i].getAttribute('data-src')) {
+      vidDefer[i].setAttribute('src', vidDefer[i].getAttribute('data-src'));
+    }
+  }
+}
 
-API_KEY ? setRecent() : console.log('No Key');
+API_KEY ? setRecent() : '';
+window.onload = init;
