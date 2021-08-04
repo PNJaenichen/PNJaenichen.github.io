@@ -20,4 +20,4 @@ function init() {
 }
 
 API_KEY ? setRecent() : '';
-window.onload = init;
+window.onload = init();
