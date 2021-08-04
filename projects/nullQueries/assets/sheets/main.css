@@ -44,8 +44,16 @@
   height: auto;
 }
 
-#videos h2 {
+#videos h2, #podcast h2 {
   margin-bottom: 75px;
+}
+
+#podcast {
+  margin-bottom: 30px;
+}
+
+#podcast iframe {
+  height: 180px
 }
 
 .bordered {
