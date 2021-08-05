@@ -12,6 +12,7 @@ async function setRecent() {
 
 function init() {
   const vidDefer = document.getElementsByTagName('iframe');
+  console.log(vidDefer);
   for (let i = 0; i < vidDefer.length; i++) {
     if (vidDefer[i].getAttribute('data-src')) {
       vidDefer[i].setAttribute('src', vidDefer[i].getAttribute('data-src'));
