@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+
+:root {
+    --papaya: #FAB41E;
+    --yaleBlue: #17468B;
+    --avsBurgandy: #6F263D;
+    --avsBlue: #236192;
+    --avsSilver: #A2AAAD;
+}
+
+*, *::before, *::after {
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+html {
+    font-size: 16px;
+    background-color: var(--avsSilver);
+}
+
+h1 {
+    font-family: "Roboto Slab", serif;
+    font-weight: 700;
+    font-size: 26px;
+}
+
+h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+p, li, ol, ul {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6em;
+}

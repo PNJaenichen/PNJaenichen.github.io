@@ -1,0 +1,79 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  overflow: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template: repeat(16, 1fr) / repeat(16, 1fr);
+}
+
+.hero-image {
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../pinatubo_phrog.webp');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  border-radius: 5px;
+}
+
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+header {
+  grid-area: 1 / 1 / 5 / 16;
+}
+
+.logo {
+  height: 225px;
+  width: 225px;
+  float: left;  
+  border-radius: 5px;  
+}
+
+nav {
+  grid-area: 5 / 1 / 6 / 16;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+main {
+  grid-area: 6 / 1 / 11 / 16;
+}
+
+footer {
+  grid-area: 15 / 1 / 16 / 16;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 75px;
+}
+
+footer img {
+  width: 50px;
+  height: 50px;
+  mix-blend-mode: multiply;
+}
+
+p, ol, ul, li {
+  padding: 0;
+}
+
+ol, ul {
+  margin-left: 50px;
+}
+
+span {
+  padding: 0;
+  margin: 0;
+}
