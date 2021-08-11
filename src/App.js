@@ -1,7 +1,7 @@
-import { Route, Switch } from 'react-router-dom';
-import Blog from './Blog';
-import Home from './Home';
-import Projects from './Projects';
+import { Route, Switch } from "react-router-dom";
+import Blog from "./Containers/Blog/Blog";
+import Home from "./Containers/Home/Home"
+import Projects from "./Containers/Projects/Projects";
 import ResumeCV from './ResumeCV';
 import React from 'react';
 

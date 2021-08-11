@@ -1,19 +1,6 @@
-html, body {
-  height: 100%;
-}
-
-body {
-  overflow: auto;
-}
-
-.grid {
-  display: grid;
-  grid-template: repeat(16, 1fr) / repeat(16, 1fr);
-}
-
 .hero-image {
-  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../pinatubo_phrog.webp');
-  height: 100%;
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../../assets/pinatubo_phrog.webp');
+  height: 235px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,10 +17,6 @@ body {
   color: white;
 }
 
-header {
-  grid-area: 1 / 1 / 5 / 16;
-}
-
 .logo {
   height: 225px;
   width: 225px;
@@ -42,17 +25,11 @@ header {
 }
 
 nav {
-  grid-area: 5 / 1 / 6 / 16;
   display: flex;
   justify-content: space-evenly;
 }
 
-main {
-  grid-area: 6 / 1 / 11 / 16;
-}
-
 footer {
-  grid-area: 15 / 1 / 16 / 16;
   display: flex;
   flex-direction: row;
   justify-content: center;
