@@ -1,26 +1,45 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Footer from "../../Components/Footer/Footer";
 import "../../assets/sheets/main.css";
 import "../../assets/sheets/normalize.css";
+import "./blog.css"
+import pixelKiwi from "../../assets/pixel-jaenichen.webp";
+import { posts } from "./posts";
 
 export default class Blog extends React.Component {
+  cardCreater() {
+    return posts.map(post => {
+      const subDate = post.subtitle ? `${post.subtitle}; ${post.date}` : post.date;
+      return (
+        <div className="card">
+          <h3>{post.title}</h3>
+          <h4>{subDate}</h4>
+          <div className="fakeimg"><img src={post.image} alt="Empty" height="100%" /></div>
+          {post.text.map(paragraph => <p>{paragraph}</p>)}
+        </div> 
+      )
+    })
+  }
   render() {
     return (
       <div>
         <div className="header">
-          <h2>Blog Page</h2>
+          <h2>Kiwi's Coding Journey</h2>
         </div>
         <main>
           <div className="leftcolumn">
+            {this.cardCreater()}
+          </div>
+          <div className="rightcolumn">
             <div className="card">
-              <h3>LOREM IPSUM...</h3>
-              <h4>...dolor sit amet; MMM DD, YYYY</h4>
-              <div className="fakeimg"><img src="" alt="Empty" height="100%" /></div>
-              <p>This is a blog entry</p>
-              <p>Consectetur adipisicing elit.</p>
+              <h3>About Me</h3>
+              <div class="fakeimg" style={{height: "100px"}}><img src={pixelKiwi} style={{height: "100px"}} alt="pixelated author" /></div>
             </div>
           </div>
-          
+          <Link to="/">Return to Main Page</Link>
         </main>
+        <Footer />
       </div>
     );
   }

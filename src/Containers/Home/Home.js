@@ -2,10 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import DayCounter from "../../Components/DayCounter/DayCounter"
 import authorPix from "../../assets/pixel-jaenichen.webp";
-import emailPng from "../../assets/email.png";
-import linkedInPng from "../../assets/linkedin.png";
-import gitHubPng from "../../assets/github.png";
-import twitterPng from "../../assets/twitter.png";
+import Footer from "../../Components/Footer/Footer"
 import "./home.css";
 import "../../assets/sheets/main.css";
 import "../../assets/sheets/normalize.css";
@@ -55,12 +52,7 @@ export default class Home extends React.Component {
             </ol>
             <DayCounter />
           </main>
-        <footer>
-          <a href="mailto:pnjaenichen@gmail.com"><img className="foot_img" src={emailPng} alt="email to author" /></a>
-          <a href="https://github.com/PNJaenichen"><img className="foot_img" src={gitHubPng} alt="author's github" /></a>
-          <a href="https://www.linkin.com/in/pauljaenichen"><img className="foot_img" src={linkedInPng} alt="author's linkedin" /></a>
-          <a href="https://www.twitter.com/MeadyOkerGamer"><img className="foot_img" src={twitterPng} alt="author's twitter" /></a>
-        </footer>
+        <Footer />
       </div>     
     );
   }
