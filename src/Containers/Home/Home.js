@@ -21,7 +21,7 @@ export default class Home extends React.Component {
           <nav>
             <Link to="/Blog">Blog</Link>
             <Link to="/Projects">Projects</Link>
-            <Link to="/Resume_CV">Resume/CV</Link>
+            <Link to="/ResumeCV">Resume/CV</Link>
           </nav>
         </header>
         <main>

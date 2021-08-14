@@ -1,0 +1,59 @@
+html, body {
+  color: black;
+  margin-bottom: 2em;
+  min-height: 100%;
+  text-align: justify;
+  padding: 1px;
+}
+.grid {
+  display: grid;
+  grid-template: repeat(16, 1fr) / repeat(16, 1fr);
+}
+footer {
+  height: 2em;
+  width: 100%;
+  grid-area: 15 / 1 / 16 / 16;
+  text-align: center;
+}
+.expEntry {
+  display: flex;
+}
+.leftColumn {
+  background-color: #236192;
+  color: white;
+  padding: 2px;
+  grid-area: 1 / 1 / 15 / 5;
+}
+.leftColumn p {
+  padding: 2px;
+  margin: 2px;
+}
+.leftColumn h3 {
+  padding: 2px;
+  margin: 2px;
+}
+.seperator {
+  background-color: #6F263D;
+  padding: 5px;
+}
+.seperator h2 {
+  font-weight: bold;
+  padding: 0;
+}
+.levelText {
+  text-align: right;
+}
+.rightColumn {
+  padding: 1%;
+  grid-area: 1 / 5 / 16 / 16;
+}
+.dateColumn {
+  width: 30%;
+}
+.experienceColumn {
+  width: 70%;
+}
+progress {
+  appearance: none;
+  border: none;
+}
