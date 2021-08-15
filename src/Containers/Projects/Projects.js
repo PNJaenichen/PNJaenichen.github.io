@@ -9,12 +9,12 @@ export default class Projects extends React.Component {
     return projects.map(project => {
       uniqID += 1;
       return [
-        <input type="radio" id={`tab${uniqID}`} name="something" checked />,
-        <label className="tabButton" for={`tab${uniqID}`}>{`${project.title} Page`}</label>,
+        <input key={`projectIn${uniqID}`} type="radio" id={`tab${uniqID}`} name="something" defaultChecked onClick={() => true} />,
+        <label key={`projectLab${uniqID}`} className="tabButton" htmlFor={`tab${uniqID}`}>{`${project.title} Page`}</label>,
         (
-        <div className="tab">
+        <div key={`project${uniqID}`} className="tab">
           <div className="content">
-            <div key={`project${uniqID}`} className="project">
+            <div className="project">
               <div className="thumbnail-container left-column">
                 <div className="thumbnail">
                   <img src={project.thumbnail} alt={`Thumbnail of ${project.title}`}/>
@@ -49,8 +49,8 @@ export default class Projects extends React.Component {
           in skill as sites get better with more practice.
         </p>
         <div className="tabsy">
-          <input type="radio" id="freeCode" name="syllabus" checked />
-          <label className="tabButton" for="freeCode">FreeCodeCamp</label>
+          <input type="radio" id="freeCode" name="syllabus" defaultChecked onClick={() => true} />
+          <label className="tabButton" htmlFor="freeCode">FreeCodeCamp</label>
           <div className="tab">
             <div className="content">
               <div className="tabsy">
@@ -58,8 +58,8 @@ export default class Projects extends React.Component {
               </div>
             </div>
           </div>
-          <input type="radio" id="odinProject" name="syllabus" />
-          <label className="tabButton" for="odinProject">The Odin Project</label>
+          <input type="radio" id="odinProject" name="syllabus" onClick={() => true} />
+          <label className="tabButton" htmlFor="odinProject">The Odin Project</label>
           <div className="tab">
             <div className="content">
               <div className="tabsy">
@@ -67,8 +67,8 @@ export default class Projects extends React.Component {
               </div>
             </div>
           </div>
-          <input type="radio" id="persProjects" name="syllabus" />
-          <label className="tabButton" for="persProjects">Personal Project</label>
+          <input type="radio" id="persProjects" name="syllabus" onClick={() => true} />
+          <label className="tabButton" htmlFor="persProjects">Personal Project</label>
           <div className="tab">
             <div className="content">
               <div className="tabsy">

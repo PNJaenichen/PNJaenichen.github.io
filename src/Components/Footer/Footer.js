@@ -1,8 +1,8 @@
 import React from "react";
-import emailPng from "../../assets/email.png";
-import linkedInPng from "../../assets/linkedin.png";
-import gitHubPng from "../../assets/github.png";
-import twitterPng from "../../assets/twitter.png";
+import emailPng from "../../assets/email.webp";
+import linkedInPng from "../../assets/linkedin.webp";
+import gitHubPng from "../../assets/github.webp";
+import twitterPng from "../../assets/twitter.webp";
 
 export default class Footer extends React.Component {
   render() {

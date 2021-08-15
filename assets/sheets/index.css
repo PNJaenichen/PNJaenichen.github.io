@@ -9,7 +9,7 @@ body {
     grid-template: repeat(16, 1fr) / repeat(16, 1fr);
 }
 .hero-image {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../pinatubo_phrog.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../../src/assets/pinatubo_phrog.webp');
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;

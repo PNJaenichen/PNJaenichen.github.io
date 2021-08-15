@@ -17,7 +17,7 @@ class App extends React.Component {
           <Route path="/Blog">
             <Blog />
           </Route>
-          <Route path="/Projects">
+          <Route exact path="/Projects">
             <Projects />
           </Route>
           <Route path="/ResumeCV">

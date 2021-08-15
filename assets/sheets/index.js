@@ -12,7 +12,7 @@ function dayDifference(input1, input2) {
   return Math.floor(diffTime / (1000 * 3600 * 24));
 }
 
-const dates = [new Date(), new Date(2021, 0, 4), new Date(2021, 2, 13)];
+const dates = [new Date(), new Date(2021, 0, 4), new Date(2021, 7, 15)];
 
 const statement = document.createElement('p');
 let final = '';
