@@ -11,18 +11,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/Blog">
-            <Blog />
-          </Route>
-          <Route exact path="/Projects">
-            <Projects />
-          </Route>
-          <Route path="/ResumeCV">
-            <ResumeCV />
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route path="/Blog" component={Blog} />
+          <Route exact path="/Projects" component={Projects} />
+          <Route path="/ResumeCV" component={ResumeCV} />
         </Switch>
       </div>
     );

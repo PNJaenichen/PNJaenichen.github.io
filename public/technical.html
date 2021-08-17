@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>Technical Sample Page</title>
+    <style>
+        nav {
+            position: fixed;
+            min-width: 290px;
+            top: 0px;
+            left: 25px;
+            width: 150px;
+            height: 100%;
+            background-color: white;
+        }
+        main {
+            position: absolute;
+            margin-left: 310px;
+            padding: 20px;
+            margin-bottom: 110px;
+        }
+        code {
+            background-color: lightgray;   
+        }
+        pre code {
+            display: block;
+        }
+        @media only screen and (max-width: 815px) {
+            nav {
+                top: 0;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                max-height: 125px;
+                z-index: 1;
+            }
+            main {
+                position: relative;
+                margin-left: 0px;
+                margin-top: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Basic Elements of HTML</h1>
+        <a href="#Headers">Headers</a>
+        <a href="#Paragraphs">Paragraphs</a>
+        <a href="#Hyperlinks">Hyperlinks</a>
+        <a href="#Lists">Lists</a>
+        <a href="#Images">Images</a>
+    </nav>
+    <main>
+        <section id="Headers">
+            <h2>Headers</h2>
+            <p>The <code>&lt;header&gt;</code> element represents a container for inductory content or a set of navigational links.  A header element typically contains:</p>
+            <ul>
+                <li>One or more heading elements; h1 to h6</li>
+                <li>logo or icon</li>
+                <li>authorship information</li>
+            </ul>
+            <p>You can have as many header elements as you want.</p>
+        </section>
+        <section id="Paragraphs">
+            <h2>Paragraphs</h2>
+            <p>The <code>&lt;p&gt;</code> tag defines a paragraph</p>
+            <p>Browsers automatically add some space (margin) before and after each paragraph element.  The margins can be modified with CSS (with the margin properties.</p>
+        </section>
+        <section id="Hyperlinks">
+            <h2>Hyperlinks</h2>
+            <p>The <code>&lt;a&gt;</code> tag defines a hyperlink, which is used to link from one page to another.  By default links will appears as follows in browsers:</p>
+            <ul>
+                <li>An unvisited link is underlined and blue</li>
+                <li>A visisted link is underlined and purple</li>
+                <li>An active link is underlined and red</li>
+            </ul>
+            <p>The most important attribute of the <code>&lt;a&gt;</code> element is the href attribute, which indicates the link's destination.</p>
+        </section>
+        <section id="Lists">
+            <h2>Lists</h2>
+            <p>There are two types of lists.  Unordered lists use the <code>&lt;ul&gt;</code> element tag.  Ordered lists use the <code>&lt;ol&gt;</code> element tag.</p>
+            <pre><code>
+            &lt;ol&gt;
+                &lt;li&gt;Start car&lt;/li&gt;
+                &lt;li&gt;Put car in drive&lt;/li&gt;
+                &lt;li&gt;Use gas pedal&lt;/li&gt;
+            &lt;ol&gt;
+            
+            &lt;ul&gt;
+                &lt;li&gt;Apples&lt;/li&gt;
+                &lt;li&gt;Carrots&lt;/li&gt;
+                &lt;li&gt;Milk&lt;/li&gt;
+            &lt;ul&gt;
+            </code></pre>
+            <ol>
+                <li>Start car</li>
+                <li>Put car in drive</li>
+                <li>Use gas pedal</li>
+            </ol>
+            <ul>
+                <li>Apples</li>
+                <li>Carrots</li>
+                <li>Milk</li>
+            </ul>
+        </section>
+        <section id="Images">
+            <h2>Images</h2>
+            <p>The <code>&lt;img&gt;</code> tag defines an image in an HTML page.  It requires two attributes <code>src</code> and <code>alt</code>.</p>
+            <p>In HTML the <code>&lt;img&gt;</code> tag has no end tag.</p>
+        </section>
+    </main>
+</body>
+<footer>
+    <a href="/product">Return to Project Page</a>
+</footer>
+</html>

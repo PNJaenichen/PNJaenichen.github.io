@@ -16,28 +16,28 @@ import benefit from "../../assets/benefit.webp";
 export const projectsFCC = [
   {
     title: "Tribute",
-    url: "../../../projects/tribute.html",
+    url: "/tribute.html",
     thumbnail: tribute,
     shortDesc: "The project was to build a tribute page with nine user stories.",
     longDesc: "This was the first website I had built from scratch since I tried to learn the language back in my Geocities days. The page itself is bare. It meets the requirements of the project but not much beyond that. My biggest challenge was getting the image to resize as the window was resized."
   },
   {
     title: "Survey",
-    url: "#",
+    url: "/survey.html",
     thumbnail: survey,
     shortDesc: "The project was to build a survey form with 16 user stories.",
     longDesc: "This project took a bit more CSS googling, especially to line up all the labels with the respective elements. The page itself is bland, as it was designed to meet the requirements of the project."
   },
   {
     title: "Product Landing",
-    url: "#",
+    url: "/product.html",
     thumbnail: product,
     shortDesc: "The project was to build a product landing page that had 15 user stories.",
     longDesc: "The part I found most difficult about this particular project was create the 'cards' for each of the elements at the bottom of the page. This was also my first look at the iframe element putting the YouTube video in."
   },
   {
     title: "Technical",
-    url: "#",
+    url: "/technical.html",
     thumbnail: technical,
     shortDesc: "The project was to build a page with technical documentation that had 15 user stories.",
     longDesc: "This project saw the use of some new HTML elements. I found the most difficult portion to be the creation of the navigation bar. It is responsive in that on larger screens it sits on the left side of the window while on smaller screens it shifts to the top. Like the other projects from FreeCodeCamp this project meets the requirements of the project and is bare after that."
