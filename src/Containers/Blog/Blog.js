@@ -1,9 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
-import "../../assets/sheets/main.css";
-import "../../assets/sheets/normalize.css";
-import "./blog.css"
 import pixelKiwi from "../../assets/pixel-jaenichen.webp";
 import { posts } from "./posts";
 
