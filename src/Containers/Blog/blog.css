@@ -5,7 +5,7 @@ body {
 }
 
 /* Header/Blog Title */
-.header {
+#blogHeader {
   padding: 30px;
   font-size: 40px;
   text-align: center;
@@ -14,20 +14,20 @@ body {
  
 /* Create two unequal columns that floats next to each other */
 /* Left column */
-.leftcolumn {
+#blogLeftColumn {
   float: left;
   width: 74%;
 }
 
 /* Right column */
-.rightcolumn {
+#blogRightColumn {
   float: right;
   width: 24%;
   padding-left: 20px;
 }
 
 /* Fake image */
-.fakeimg {
+.blogFakeImg {
   background-color: #aaa;
   width: auto;
   height: 200px;
@@ -35,7 +35,7 @@ body {
 }
 
 /* Add a card effect for articles */
-.card {
+.blogCard {
   background-color: white;
   padding: 20px;
   margin-top: 20px;

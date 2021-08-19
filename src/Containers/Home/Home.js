@@ -2,15 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import DayCounter from "../../Components/DayCounter/DayCounter"
 import authorPix from "../../assets/pixel-jaenichen.webp";
-import Footer from "../../Components/Footer/Footer"
+import Footer from "../../Components/Footer/Footer";
+import "../../../src/assets/sheets/main.css";
+import "./home.css"
 
 export default class Home extends React.Component {
   render() {
     return (
       <div>
         <header>
-          <div className="hero-image">
-            <div className="hero-text">
+          <div id="hero-image">
+            <div id="hero-text">
               <h1>Nate "Kiwi" Jaenichen</h1>
               <p>Web Developer / Gamer</p>
             </div>
@@ -22,7 +24,7 @@ export default class Home extends React.Component {
           </nav>
         </header>
         <main>
-          <img className="logo" src={authorPix} alt="Pixel Art of Author"></img>
+          <img id="logo" src={authorPix} alt="Pixel Art of Author"></img>
           <p>
             My programming journey started in 2017 when I began my 
             graduate studies in Data Analytics. I learned a small 

@@ -1,4 +1,4 @@
-.hero-image {
+#hero-image {
   background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../../assets/pinatubo_phrog.webp');
   height: 235px;
   background-position: center;
@@ -8,7 +8,7 @@
   border-radius: 5px;
 }
 
-.hero-text {
+#hero-text {
   text-align: center;
   position: absolute;
   top: 50%;
@@ -17,7 +17,7 @@
   color: white;
 }
 
-.logo {
+#logo {
   height: 225px;
   width: 225px;
   float: left;  

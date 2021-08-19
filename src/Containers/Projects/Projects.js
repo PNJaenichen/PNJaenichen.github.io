@@ -1,5 +1,7 @@
 import React from "react";
 import { projectsFCC, projectsOdin, persProjects } from "./projectList";
+import "../../../src/assets/sheets/main.css";
+import "./projects.css"
 
 let uniqID = 0;
 

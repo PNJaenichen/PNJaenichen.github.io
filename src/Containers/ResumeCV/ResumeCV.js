@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./resume.css";
 
 export default class ResumeCV extends React.Component {
   render() {
