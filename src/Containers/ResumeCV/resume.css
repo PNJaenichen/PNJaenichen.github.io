@@ -18,34 +18,38 @@ footer {
 .expEntry {
   display: flex;
 }
-.leftColumn {
+.resumeleftColumn {
   background-color: #236192;
   color: white;
   padding: 2px;
   grid-area: 1 / 1 / 15 / 5;
 }
-.leftColumn p {
+.resumeleftColumn p {
   padding: 2px;
   margin: 2px;
 }
-.leftColumn h3 {
+.resumeleftColumn h3 {
   padding: 2px;
   margin: 2px;
 }
-.seperator {
+.resumeSeperator {
   background-color: #6F263D;
   padding: 5px;
 }
-.seperator h2 {
+.resumeSeperator h2 {
   font-weight: bold;
   padding: 0;
 }
 .levelText {
   text-align: right;
 }
-.rightColumn {
+.resumeRightColumn {
   padding: 1%;
   grid-area: 1 / 5 / 16 / 16;
+}
+
+.resumeRightColumn h2 {
+  color: black;
 }
 .dateColumn {
   width: 30%;

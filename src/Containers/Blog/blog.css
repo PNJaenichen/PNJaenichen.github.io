@@ -41,6 +41,10 @@ body {
   margin-top: 20px;
 }
 
+#blogHeader h2, .blogCard h3, .blogCard h4 {
+  color: black;
+}
+
 /* Clear floats after the columns */
 .row:after {
   content: "";

@@ -41,7 +41,7 @@ export default class Projects extends React.Component {
   render() {
     return (
       <div>
-        <h1>My Projects</h1>
+        <h1 className="projectHeader">My Projects</h1>
         <p>
           The following projects were created by me while working through
           various courses as I learn web development. Generally speaking, 

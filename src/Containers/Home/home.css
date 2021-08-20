@@ -1,3 +1,7 @@
+#homeMain {
+  width: 100%;
+}
+
 #hero-image {
   background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../../assets/pinatubo_phrog.webp');
   height: 235px;
@@ -24,6 +28,14 @@
   border-radius: 5px;  
 }
 
+#homeMain p {
+  text-align: justify;
+}
+
+#homeMain li {
+  clear: left;
+}
+
 nav {
   display: flex;
   justify-content: space-evenly;
@@ -33,6 +45,7 @@ footer {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   height: 75px;
 }
 

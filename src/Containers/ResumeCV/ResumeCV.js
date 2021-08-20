@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./resume.css";
 
 export default class ResumeCV extends React.Component {
   render() {
-    return (
+    return ( 
       <div className="grid">
-        <div className="leftColumn">
+        <div className="resumeleftColumn">
           <h1>Nate Jaenichen</h1>
-          <div className="seperator">
+          <div className="resumeSeperator">
             <h2>Personal Info</h2>
           </div>
           <h3>Address</h3>
@@ -18,36 +19,36 @@ export default class ResumeCV extends React.Component {
           <p>pnjaenichen@gmail.com</p>
           <h3>LinkedIn</h3>
           <p>linkedin.com/in/pauljaenichen</p>
-          <div className="seperator">
+          <div className="resumeSeperator">
             <h2>Skills</h2>
           </div>
           <p></p>
-          <div className="seperator">
+          <div className="resumeSeperator">
             <h2>Programming</h2>
           </div>
-          <label for="python">Python</label>
+          <label htmlFor="python">Python</label>
           <progress id="python" max="100" value="50"></progress>
-          <p class="levelText">Good</p>
-          <label for="python">Javascript</label>
+          <p className="levelText">Good</p>
+          <label htmlFor="python">Javascript</label>
           <progress id="python" max="100" value="70"></progress>
-          <p class="levelText">Very Good</p>
-          <label for="python">CSS</label>
+          <p className="levelText">Very Good</p>
+          <label htmlFor="python">CSS</label>
           <progress id="python" max="100" value="50"></progress>
-          <p class="levelText">Good</p>
-          <label for="python">HTML</label>
+          <p className="levelText">Good</p>
+          <label htmlFor="python">HTML</label>
           <progress id="python" max="100" value="50"></progress>
-          <p class="levelText">Good</p>
-          <div className="seperator">
+          <p className="levelText">Good</p>
+          <div className="resumeSeperator">
             <h2>Languages</h2>
           </div>
-          <label for="python">English</label>
+          <label htmlFor="python">English</label>
           <progress id="python" max="100" value="90"></progress>
-          <p class="levelText">Native</p>
-          <label for="python">German</label>
+          <p className="levelText">Native</p>
+          <label htmlFor="python">German</label>
           <progress id="python" max="100" value="25"></progress>
-          <p class="levelText">Basic</p>
+          <p className="levelText">Basic</p>
         </div>
-        <div className="rightColumn">
+        <div className="resumeRightColumn">
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab 
             quidem fuga, maiores, sequi praesentium omnis vitae laborum, 
@@ -92,7 +93,7 @@ export default class ResumeCV extends React.Component {
           <h2>Interests</h2>
           <p>Avid board gamer with a podcast (<a href="https://www.firstturncast.com">First Turn</a>)</p>
         </div>
-        <footer>
+        <footer id="resumeFooter">
           <Link to="/">Return to Main Page</Link>
         </footer>
       </div>

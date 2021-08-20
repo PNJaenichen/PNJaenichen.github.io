@@ -23,7 +23,7 @@ export default class Home extends React.Component {
             <Link to="/ResumeCV">Resume/CV</Link>
           </nav>
         </header>
-        <main>
+        <main id="homeMain">
           <img id="logo" src={authorPix} alt="Pixel Art of Author"></img>
           <p>
             My programming journey started in 2017 when I began my 
