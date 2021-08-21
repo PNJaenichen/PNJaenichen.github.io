@@ -34,7 +34,7 @@ export default class Blog extends React.Component {
         <div id="blogHeader">
           <h2>Kiwi's Coding Journey</h2>
         </div>
-        <main>
+        <main id="blogMain">
           <div id="blogLeftColumn">
             {this.cardCreater()}
           </div>
