@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Google</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Roboto', 'san-serif';
+                color: darkgray;
+            }
+            main {
+                position: fixed;
+                top: 21%;
+                width: 100%;
+            }
+            #logo {
+                display: block;
+                margin: 1.5% auto 1.5% auto;
+            }
+            #find input{
+                display: block;
+                margin: 1.5% auto 1.5% auto;
+                width: 475px;
+                height: 40px;
+                border-radius: 25px;
+            }
+            #searcher {
+                width: 325px;
+                display: flex;
+                margin: 3% auto 1.5% auto;
+                align-items: center;
+                justify-content: space-evenly;
+            }
+            ul {
+                list-style-type: none;
+            }
+            #bottom-bar {
+                position: fixed;
+                display: flex;
+                bottom: 0;
+                justify-content: space-between;
+                align-items: baseline;
+                width: 100%;
+                margin: 0 auto 0 auto;
+                background-color: lightgray;
+            }
+            #top-bar {
+                position: fixed;
+                display: flex;
+                top: 0;
+                justify-content: space-between;
+                align-items: baseline;
+                width: 100%;
+                margin: 0 auto 0 auto;
+            }
+            li {
+                display: inline;
+                padding-right: 15px;
+                width: 100%;
+            }
+            .left-side {
+                display: flex;
+                justify-content: space-evenly;
+            }
+            .right-side {
+                display: flex;
+                justify-content: space-evenly;
+            }
+            a {
+                text-decoration: none;
+                color: darkslategrey;
+                font-size: small;
+            }
+        </style>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+    </head>
+    <body>
+        <header>
+            <nav id="top-bar">
+                <div class="left-side">
+                    <ul>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Store</a></li>
+                    </ul>
+                </div>
+                <div class="right-side">
+                    <ul>
+                        <li><a href="">Gmail</a></li>
+                        <li><a href="">Images</a></li>
+                        <li><a href="">Apps</a></li>
+                        <li><button>Sign in</button></li>
+                    </ul>
+                </div> 
+            </nav>
+        </header>
+        <main>
+            <img id="logo" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo">
+            <div id="find">
+                <input type="text">
+            </div>
+            <div id="searcher">
+                <button>Google Search</button>
+                <button>I'm Feeling Lucky</button>
+            </div>
+        </main>
+        <footer>   
+            <nav id="bottom-bar">
+                <div class="left-side">
+                    <ul>
+                        <li><a href="">Advertising</a></li>
+                        <li><a href="">Business</a></li>
+                        <li><a href="">How Search works</a></li>
+                    </ul>
+                </div>
+                <div class="right-side">
+                    <ul>
+                        <li><a href="">Privacy</a></li>
+                        <li><a href="">Terms</a></li>
+                        <li><a href="">Settings</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </footer>
+    </body>
+    
+</html>

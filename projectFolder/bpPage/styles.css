@@ -1,0 +1,101 @@
+html {
+    background-color: #A8D0EA;
+    background-image: url("benefit_back.png");
+    background-position: center;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+}
+body {
+    margin: 5%;
+    padding: 2%;
+    background-color: white;
+    border-radius: 5px;
+}
+header {
+    display: flex;
+    justify-content: space-evenly;
+    color: #765be1;
+}
+header img {
+    max-width: 300px;
+    width: 25%;
+    height: auto;
+}
+main {
+    display: flex;
+    justify-content: space-evenly;
+}
+article {
+    background-color: firebrick;
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+    margin: 1%;
+    width: 30%;
+    box-shadow: 0 4px 8px 0 darkred;
+}
+article a {
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+    margin: 5px;
+    padding: 5px;
+}
+footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 5px 5px 5px 0;
+}
+footer a {
+    background-color: #765be1;
+    color: white;
+    padding: 10px;
+    border-radius: 25px;
+    text-decoration: none;
+    box-shadow: none;
+    transition: box-shadow 0.1s;
+}
+footer a:hover {
+    box-shadow: 0 4px 8px 0 black; 
+}
+#countdown {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    color: #765be1;
+}
+#days {
+    margin: 0;
+    font-size: 300%;
+}
+#fund {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+#logo {
+    width: 100%;
+    max-width: 450px;
+}
+#message {
+    font-size: 150%;
+    margin-top: 15px;
+}
+#NOVA {
+    color: white;
+    text-decoration: none;
+}
+
+#NOVA:hover, article a:hover {
+    color: blue;
+}
+#otherDes {
+    font-size: 150%;
+}
+.info p::first-letter {
+    font-size: 150%;
+}
