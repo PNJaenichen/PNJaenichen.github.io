@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Tic Tac Toe</title>
+    <link rel="icon" href="data:;base64,=">
+    <link rel="stylesheet" href="tictactoe.css">
+</head> 
+<body>
+    <div id="player-board">
+        <div id="grid-container">
+            <div id="topLeft" class="centering"></div>
+            <div id="topCenter" class="centering topBorder"></div>
+            <div id="topRight" class="centering"></div>
+            <div id="centerLeft" class="centering sideBorder"></div>
+            <div id="centerCenter" class="centering"></div>
+            <div id="centerRight" class="centering sideBorder"></div>
+            <div id="bottomLeft" class="centering"></div>
+            <div id="bottomCenter" class="centering topBorder"></div>
+            <div id="bottomRight" class="centering"></div>
+        </div>
+    </div>
+    <br>
+    <div id='nameBoard'>
+        <div id='xPlayer'></div> 
+        <div id='oPlayer'></div>
+    </div>
+    <div id="player-info">
+        <div id="first-Player" class="inputText">
+            <label for="pOne">Player One:</label>
+            <input type="text" id="pOne" name="pOne"></input>
+        </div>
+        <div id="second-Player" class="inputText">
+            <label for="pTwo">Player Two:</label>
+            <input type="text" id="pTwo" name="pTwo"></input>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-evenly;">
+        <button id="startGame">Start</button>
+        <button id="resetBoard">Reset</button>
+    </div>
+    <div id="winScreen">
+        <div id='winner'></div>
+
+        <div>
+            <input type='button' id="playAgain" value="Play Again" onclick='boardModule.resetBoard()'></input>
+        </div>
+    </div> 
+    <script src="tictactoe.js"></script>
+</body>
+</html>

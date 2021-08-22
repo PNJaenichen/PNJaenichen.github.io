@@ -1,0 +1,81 @@
+#player-board {
+    width: 310px;
+}
+#player-info {
+    width: 310px;
+}
+#nameBoard {
+    display: flex; 
+    justify-content: space-evenly;
+}
+#winScreen {
+    display: none;
+    flex-direction: column;
+    width: 250px;
+    height: 125px;
+    position: absolute;
+    background-color: rgba(249,166,2,1);
+    align-items: center;
+    justify-content: space-evenly;
+    top: 95px;
+    left: 33px;
+}
+#grid-container {
+    display: grid;
+    width: 300px;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    gap: 0px 0px;
+    grid-template-areas:
+        "topLeft topCenter topRight"
+        "centerLeft centerCenter centerRight"
+        "bottomLeft bottomCenter bottomRight";
+  }
+.inputText {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#topLeft { 
+    grid-area: topLeft; 
+}
+#topCenter { 
+    grid-area: topCenter;
+}
+#topRight { 
+    grid-area: topRight;
+}
+#centerLeft { 
+    grid-area: centerLeft; 
+}
+#centerCenter { 
+    grid-area: centerCenter;
+    text-align: center;
+    border: 2px solid black;
+}
+#centerRight { 
+    grid-area: centerRight; 
+}
+#bottomLeft { 
+    grid-area: bottomLeft; 
+}
+#bottomCenter { 
+    grid-area: bottomCenter;
+}
+#bottomRight {
+    grid-area: bottomRight;
+}
+.topBorder {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+.sideBorder {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+.centering {
+    display: flex;
+    justify-content: center;
+    line-height: 150%;
+    font-size: 4em;
+}

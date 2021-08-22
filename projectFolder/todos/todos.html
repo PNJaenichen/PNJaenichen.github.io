@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>To Dos</title>
+    <link rel="icon" href="data:;base64,=">
+    <link rel="stylesheet" href="todos.css">
+</head> 
+<body>
+    <div id="pomodoro">
+        <div class="container">
+            <h3>Pomodoro Clock</h3>
+            <div id="tomato">
+                <div id="tomatoTop"></div>
+                <div id="tomatoFill"></div>
+                <div id="timerFace">50:00</div>
+                <button id="reset50">50:00</button>
+                <button id="break10">10:00</button>
+                <button id="pauseRestart">|| / &#9654;</button>
+            </div>
+        </div>        
+    </div>
+    <div id="graphKey">
+        <div class="keyPri" style="background-color: red;"></div>
+        <p>High</p>
+        <div class="keyPri" style="background-color: yellow;"></div>
+        <p>Medium</p>
+        <div class="keyPri" style="background-color: green;"></div>
+        <p>Low</p>
+        <div class="keyDue" style="border-color: black;"></div>
+        <p>Due in 4+ Days</p>
+        <div class="keyDue" style="border-color: green;"></div>
+        <p>Due in 1-3 Days</p>
+        <div class="keyDue" style="border-color: yellow;"></div>
+        <p>Due Today</p>
+        <div class="keyDue" style="border-color: red;"></div>
+        <p>Past Due</p>
+    </div>
+    <button id="newTodo">Add To Do ...</button>
+    <div id='inputTodo'>
+        <label for="title">Task:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="project">Project:</label>
+        <input type="text" id="project" name="project" value="Default" required>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50" required>Input Task information</textarea>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate" required>
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority">
+            <option value="1">High</option>
+            <option value="2">Medium</option>
+            <option value="3">Low</option>
+        </select>
+        <input id="addButton" type="submit" value="Submit">
+    </div>
+    <div id="projects"></div>
+</body>
+<script src="todos.js"></script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Random Projects</title>
+        <link rel="icon" href="data:;base64,=">
+        <link rel="stylesheet" href="random.css">
+    </head>
+    <body>
+        <div id="dropMenu">
+            <h2>Menu</h2>
+            <div id="menuElements">
+                <p>Blog</p>
+                <p>Projects</p>
+                <p>Design System</p>
+                <p>Resume/CV</p>
+            </div>
+        </div>
+        <div id="pictureFrame">
+            <div class="controls">
+                <button class="slideShow" onclick="plusDivs(-1)">&#10094;</button>
+                <button class="slideShow" onclick="plusDivs(1)">&#10095;</button>
+            </div>
+            <img class="mySlides" src="../../assets/board_games1.jpg">
+            <img class="mySlides" src="../../assets/board_games2.jpg">
+            <img class="mySlides" src="../../assets/board_games3.jpg">
+            <img class="mySlides" src="../../assets/board_games4.jpg">
+            <div class='dotControl'>
+                <div class="slideDot" onclick="showImage(1)"></div>
+                <div class="slideDot" onclick="showImage(2)"></div>
+                <div class="slideDot" onclick="showImage(3)"></div>
+                <div class="slideDot" onclick="showImage(4)"></div>
+            </div>
+        </div>
+        <div>
+            <form name="validateForm">
+                <label id="email-label" for="email">Email:</label>
+                <input id="email" type="email" required placeholder="Enter Email">  
+                <label id="country-label" for="country">Country:</label>
+                <input id="country" type="text" pattern="[a-zA-Z]{3,}" required placeholder="Enter Country">
+                <label id="zipCode-label" for="zipCode" class="label">Zip Code:</label>
+                <input id="zipCode" type="text" pattern="[0-9]{5}" placeholder="Enter Zip Code" required>
+                <label id="password-label" for="passwordOne" class="label">Password:</label>
+                <input id="passwordOne" type="password" required>
+                <label id="confirm-pass-label" for="passwordTwo" class="label">Confirm Password:</label>
+                <input id="passwordTwo" type="password">
+                <button type='submit'>Validate</button>
+            </form>
+        </div>
+        <div id="hockey">
+            <label id='gameDrop' for='gameList'>Choose a Game:</label>
+            <select id='gameList'>
+                <option value='2019020666'>COL at NYR</option>
+                <option value='2019020667'>OTT at WSH</option>
+                <option value='2019020668'>PHI at CAR</option>
+                <option value='2019020669'>MTL at DET</option>
+            </select>
+            <button id='gameScore' type='submit'>Score</button>
+            <p id='gameInfo'></p>
+        </div>
+        <script src="random.js"></script>
+    </body>
+</html>
