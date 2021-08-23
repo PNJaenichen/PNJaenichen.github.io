@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { projectsFCC, projectsOdin, persProjects } from "./projectList";
 import "../../../src/assets/sheets/main.css";
 import "./projects.css"
@@ -78,6 +79,9 @@ export default class Projects extends React.Component {
             </div>
           </div>
         </div>
+        <footer>
+          <Link to="/">Return to Main Page</Link>
+        </footer>
       </div>
     );
   }
