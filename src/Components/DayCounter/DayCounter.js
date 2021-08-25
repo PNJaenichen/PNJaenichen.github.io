@@ -6,7 +6,7 @@ export default class DayCounter extends React.Component {
     this.state = {
       today: new Date(),
       start: new Date(2021, 0, 4),
-      updated: new Date(2021, 7, 9)
+      updated: new Date(2021, 7, 23)
     }
     this.formatDate = this.formatDate.bind(this);
     this.dayDifference = this.dayDifference.bind(this);
@@ -29,7 +29,7 @@ export default class DayCounter extends React.Component {
     let final = "";
     if (this.dayDifference(this.state.today, this.state.updated) === 0) {
       final = "is today.";
-    } else if (this.dayDifference(this.state.today, this.state.updated) === 0) {
+    } else if (this.dayDifference(this.state.today, this.state.updated) === 1) {
       final = "was yesterday!";
     } else {
       final = `was ${this.dayDifference(this.state.today, this.state.updated)} days ago.`;

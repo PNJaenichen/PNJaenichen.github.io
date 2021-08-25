@@ -37,6 +37,8 @@ export default class Home extends React.Component {
           <p>
             As I continue this development journey, I will update this
             page in order to improve it with the various things I learn.
+            As of August 2021 it has shifted from html/css to a React 
+            Router based page.
           </p>
           <p>
             As of 1/5/21, this page is being hosted via Github Pages. 
