@@ -47,63 +47,63 @@ export const projectsFCC = [
 export const projectsOdin = [
   {
     title: "Google",
-    url: "#",
+    url: "/projectFolder/google-homepage/google.html",
     thumbnail: google,
     shortDesc: "The project was to build replica of the Google homepage.",
     longDesc: "This was a nice exercise of HTML and CSS, especially as I was getting back into learning front end development. The real benefit I found in this project (beyond more practice with the code) was the integration of the assignment with GitHub."
   },
   {
     title: "Rock, Paper, Scissors Game",
-    url: "#",
+    url: "/projectFolder/rockpaperscissors/RPS.html",
     thumbnail: RPS,
     shortDesc: "The project was to build a website that enabled the user to play Rock, Paper, Scissors against a random opponent.",
     longDesc: "This project shifted the focus from HTML and CSS to javascript. There were two portions to this exercise, one which used the console and then updating it to show everything on the page. This was my first attempt at adjusting a pages DOM utilizing javascript."
   },
   {
     title: "Etch-A-Sketch",
-    url: "#",
+    url: "/projectFolder/etch-a-sketch/etchasketch.html",
     thumbnail: etchasketch,
     shortDesc: "The project was to build a website that mimicked the Etch-a-Sketch toy.",
     longDesc: "This project provided more opportunity to adjust a pages DOM. I found the reseting and rebuilding the canvas the most difficult and took some work. The actual changing of the 'pixels' was new but it was easy enough to figure out with a small amount of reading/googling."
   },
   {
     title: "Calculator",
-    url: "#",
+    url: "/projectFolder/calculator/calculator.html",
     thumbnail: calculator,
     shortDesc: "The project was to build a simple calculator that does basic mathmatical operations.",
     longDesc: "This one had a few interesting elements. One was taking user input and performing the operations required. It took some figuring out to get it to work like a basic calculator. One of the other challenges was to make sure that only a single decimal was input, which programtically I knew how to do it, but it took a little with javascript specific elements in order to get it done."
   },
   {
     title: "Library",
-    url: "#",
+    url: "/projectFolder/library/library.html",
     thumbnail: library,
     shortDesc: "The project was to build an application where a user could add and remove books from a 'library' and mark whether they had been read or not.",
     longDesc: "This is a very plain looking website and could certainly use a visual uplift. DOM manipulation and Event listeners were big in this one. THe hardest part was to figure out how to create listeners for elements on the page that had not been created yet via the script. The other item I focused on, was ensuring that the user input went to the elements 'textContent' vice 'innerHTML' to add additional security. Unfortunately the library is not persistent, that would be the next step."
   },
   {
     title: "Tic Tac Toe",
-    url: "#",
+    url: "/projectFolder/TicTacToe/tictactoe.html",
     thumbnail: tictactoe,
     shortDesc: "Lorem",
     longDesc: "Ipsum"
   },
   {
     title: "Restaurant",
-    url: "#",
+    url: "/#/projects",
     thumbnail: restaurant,
     shortDesc: "The goal of this project was to create a site that would utilize tabs in order to display information about a restaurant. The real goal was to utilize webpack and different javascript modules.",
     longDesc: "The tabs themselves were easy to complete. The Odin Project provided a page with tons of examples and I just chose the one I like the most and then used the developers tools to learn how it was made. After that creating the modules that build the DOM for each tab was relatively easy. It took a bit of online searching to figure out webpack with multiple entries but I figured that out as well. I think if I would refactor this, it would be to find an better way at creating the DOM. Especially for the second tab, which repeated itself tons of times to create each of the elements. I like the took of the tabs and I think eventually I wanted to adjust this portion of the page to look more like that instead of the current layout."
   },
   {
     title: "Todo List",
-    url: "#",
+    url: "/projectFolder/todos/todos.html",
     thumbnail: todos,
     shortDesc: "The intent was to provide the user with the ability to create dynamic todo list items. These items needed due dates, be editable, and stay within a designated category. It also used Local Storage.",
     longDesc: "The hardest part of this project was making sure that only one object would expand while it was being hovered over and items would still expand when editing another. I took this a step forward and added the Pomodoro Tomato clock. It is built with HTML/CSS and the timer itself is Javascript."
   },
   {
     title: "Weather App",
-    url: "#",
+    url: "/#/projects",
     thumbnail: weather,
     shortDesc: "Their were two learning objectives behind this project. The first was accessing an API. I had done this previously using the NHL API, however that was with Python. I did it again during the course of the syllabus but using Javascript as well. The second objective was the use of async/await to ensure that the API request is complete prior to building the site.",
     longDesc: "My struggle here was figuring out where to put the code to work with the return from the API. I could not find a way to work with it out as a return, but got results when I worked with it from within the async/await function. I am still not sure if this is the way it works OR that I simply did not find the right answer to make that happy. THat would be what I would work on for refactoring, as of right now that function both makes the request to the API and adjust the DOM, while I at least have other functions performing the actual work with the API return. NOTE: The API key is not in the code and the website will not work. The screenshot to the left displays its current look."
@@ -113,7 +113,7 @@ export const projectsOdin = [
 export const persProjects = [
   {
     title: "bP's Benefit",
-    url: "#",
+    url: "/projectFolder/bpPage/benefit.html",
     thumbnail: benefit,
     shortDesc: "This was my first 'real' project. My wife wanted to raise money for charity and did a virtual 5k along with it. I sat down with her and created a wire diagram of what she envisioned for the website. I had a friend help create a graphic that I could build from.",
     longDesc: "I really enjoyed this. Trying to recreate something that was designed for a specific purpose. The site overall was relatively simple with a countdown to her brithday. The one thing I would refactor is the countdown. There was a rounding error depending on what half of the day you visited the page. In the morning the countdown would be correct however in the afternoon it rounded the difference downand would be a day early as a result. Most important though was my wife loved it and she raised just over $900!"
