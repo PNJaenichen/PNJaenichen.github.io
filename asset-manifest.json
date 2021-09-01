@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.8c3e71ff.chunk.css",
-    "main.js": "/static/js/main.2b1d811e.chunk.js",
-    "main.js.map": "/static/js/main.2b1d811e.chunk.js.map",
+    "main.js": "/static/js/main.c2c24138.chunk.js",
+    "main.js.map": "/static/js/main.c2c24138.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.c8755411.js",
     "runtime-main.js.map": "/static/js/runtime-main.c8755411.js.map",
     "static/js/2.e0386dbd.chunk.js": "/static/js/2.e0386dbd.chunk.js",
@@ -20,6 +20,7 @@
     "static/media/google.14dcf9c1.webp": "/static/media/google.14dcf9c1.webp",
     "static/media/library.ded54667.webp": "/static/media/library.ded54667.webp",
     "static/media/linkedin.a621e9e0.webp": "/static/media/linkedin.a621e9e0.webp",
+    "static/media/nullQuery.cbe3b736.webp": "/static/media/nullQuery.cbe3b736.webp",
     "static/media/home.css": "/static/media/pinatubo_phrog.7928d6c7.webp",
     "static/media/pixel-jaenichen.b2fe1fac.webp": "/static/media/pixel-jaenichen.b2fe1fac.webp",
     "static/media/product.a4219f1c.webp": "/static/media/product.a4219f1c.webp",
@@ -38,6 +39,6 @@
     "static/js/runtime-main.c8755411.js",
     "static/js/2.e0386dbd.chunk.js",
     "static/css/main.8c3e71ff.chunk.css",
-    "static/js/main.2b1d811e.chunk.js"
+    "static/js/main.c2c24138.chunk.js"
   ]
 }
