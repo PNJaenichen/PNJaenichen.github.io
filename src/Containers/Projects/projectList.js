@@ -12,6 +12,7 @@ import restaurant from "../../assets/restaurant.webp";
 import todos from "../../assets/todos.webp";
 import weather from "../../assets/weather.webp";
 import benefit from "../../assets/benefit.webp";
+import nullQuery from "../../assets/nullQuery.webp";
 
 export const projectsFCC = [
   {
@@ -117,6 +118,13 @@ export const persProjects = [
     thumbnail: benefit,
     shortDesc: "This was my first 'real' project. My wife wanted to raise money for charity and did a virtual 5k along with it. I sat down with her and created a wire diagram of what she envisioned for the website. I had a friend help create a graphic that I could build from.",
     longDesc: "I really enjoyed this. Trying to recreate something that was designed for a specific purpose. The site overall was relatively simple with a countdown to her brithday. The one thing I would refactor is the countdown. There was a rounding error depending on what half of the day you visited the page. In the morning the countdown would be correct however in the afternoon it rounded the difference downand would be a day early as a result. Most important though was my wife loved it and she raised just over $900!"
+  },
+  {
+    title: "nullQueries Homepage",
+    url: "https://www.nullqueries.com",
+    thumbnail: nullQuery,
+    shortDesc: "This was my second project. My buddy started a YouTube channel making videos about working with data.",
+    longDesc: "He created the design that I then recreated. We were able to go back and forth in order to make adjustments that he wanted. We also were able to make adjustments to improve the site's performance. My biggest learning point was utilziing the YouTube API to pull the most recent video from his channel and displaying it on the website."
   }
 ]
 
