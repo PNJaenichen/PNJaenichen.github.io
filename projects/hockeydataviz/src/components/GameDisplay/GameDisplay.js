@@ -1,8 +1,8 @@
 import React from 'react';
-import ScoreBoard from '../ScoreBoard/ScoreBoard'
-import RinkDisplay from '../RinkDisplay/RinkDisplay'
-import PlayParser from '../PlayParser/PlayParser'
-import { NHLapi } from '../../util/NHLapi'
+import ScoreBoard from '../ScoreBoard/ScoreBoard';
+import RinkDisplay from '../RinkDisplay/RinkDisplay';
+import PlayParser from '../PlayParser/PlayParser';
+import { NHLapi } from '../../util/NHLapi';
 import './GameDisplay.css';
 
 export class GameDisplay extends React.Component {
@@ -33,7 +33,7 @@ export class GameDisplay extends React.Component {
   }
   
   render() {
-    const testString = PlayParser(this.state.playerOnIce).innerText;
+    const testString = PlayParser(this.state.playerOnIce);
     console.log(testString)
     return (
       <div className='gameDisplay'>
@@ -45,9 +45,7 @@ export class GameDisplay extends React.Component {
           period={this.state.period}
         />
         <RinkDisplay gameInfo={this.props.gameData.liveData} period={this.state.period} />
-        <div>
-          {testString}
-        </div>
+        <div dangerouslySetInnerHTML={{ __html: testString }}></div>
       </div>
     )
   }
