@@ -34,7 +34,6 @@ export class GameDisplay extends React.Component {
   
   render() {
     const testString = PlayParser(this.state.playerOnIce);
-    console.log(testString)
     return (
       <div className='gameDisplay'>
         <button onClick={this.handleReturn}>Return</button>
