@@ -27,13 +27,11 @@ export class GameDisplay extends React.Component {
   componentDidMount() {
     const gameInfo = this.props.gameData.gameData.game;
     NHLapi.getGameReport(gameInfo.pk.toString().slice(4,), gameInfo.season).then(results => {
-      this.setState({playerOnIce: results})
+      this.setState({playerOnIce: PlayParser(results)})
     })
-    
   }
   
   render() {
-    const testString = PlayParser(this.state.playerOnIce);
     return (
       <div className='gameDisplay'>
         <button onClick={this.handleReturn}>Return</button>
@@ -44,7 +42,7 @@ export class GameDisplay extends React.Component {
           period={this.state.period}
         />
         <RinkDisplay gameInfo={this.props.gameData.liveData} period={this.state.period} />
-        <div dangerouslySetInnerHTML={{ __html: testString }}></div>
+        <div dangerouslySetInnerHTML={{ __html: this.state.playerOnIce }}></div>
       </div>
     )
   }
