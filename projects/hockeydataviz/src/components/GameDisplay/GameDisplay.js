@@ -32,6 +32,7 @@ export class GameDisplay extends React.Component {
   }
   
   render() {
+    console.log(this.state.playerOnIce)
     return (
       <div className='gameDisplay'>
         <button onClick={this.handleReturn}>Return</button>
@@ -42,7 +43,7 @@ export class GameDisplay extends React.Component {
           period={this.state.period}
         />
         <RinkDisplay gameInfo={this.props.gameData.liveData} period={this.state.period} />
-        <div dangerouslySetInnerHTML={{ __html: this.state.playerOnIce }}></div>
+        <div></div>
       </div>
     )
   }
