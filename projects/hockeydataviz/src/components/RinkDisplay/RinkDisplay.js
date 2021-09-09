@@ -13,10 +13,23 @@ export default class RinkDisplay extends React.Component {
     super(props);
     this.state = {
       playType: '',
+      rosterInfo: {},
     }
     this.setupIce = this.setupIce.bind(this);
     this.addPlays = this.addPlays.bind(this);
     this.setPlayType = this.setPlayType.bind(this);
+  }
+
+  componentDidMount() {
+    const awayTeam = {};
+    const homeTeam = {}
+    Object.entries(this.props.gameInfo.boxscore.teams.away.players).map(player => 
+      awayTeam[player[1].jerseyNumber] = {id: player[1].person.id, name: player[1].person.fullName, position: player[1].position.code}
+    );
+    Object.entries(this.props.gameInfo.boxscore.teams.home.players).map(player =>
+      homeTeam[player[1].jerseyNumber] = {id: player[1].person.id, name: player[1].person.fullName, position: player[1].position.code}
+    );
+    this.setState({rosterInfo: {away: awayTeam, home: homeTeam}});
   }
 
   setupIce() {

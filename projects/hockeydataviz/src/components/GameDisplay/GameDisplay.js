@@ -32,7 +32,6 @@ export class GameDisplay extends React.Component {
   }
   
   render() {
-    console.log(this.state.playerOnIce)
     return (
       <div className='gameDisplay'>
         <button onClick={this.handleReturn}>Return</button>
