@@ -16,9 +16,9 @@ export default function PlayParser(htmlReport) {
   
   // pull the playId, period number, time stamp, away team, and home team information
   const playBreakDown = rowBreakDown.map(row => row.map(element => {
-    return [element[0].innerText, element[1].innerText, element[3].innerText.match(/(\d{1,2}:\d{2})/g), element[6].innerText.replace(spaces, "").match(digits), element[7].innerText.replace(spaces, "").match(digits), element[4].innerText]
+    return [parseInt(element[0].innerText), element[1].innerText, element[3].innerText.match(/(\d{1,2}:\d{2})/g), element[6].innerText.replace(spaces, "").match(digits), element[7].innerText.replace(spaces, "").match(digits), element[4].innerText]
   }));
   
   // add it all to a single array and return it
-  return Array.prototype.concat.apply([], playBreakDown.map(row => row.filter(element => element[3] !== null && element[4] !== null)))
+  return Array.prototype.concat.apply([], playBreakDown.map(row => row.filter(element => element[3] !== null && element[4] !== null && !["PGSTR", "PGEND", "ANTHEM", "PSTR", "PEND"].includes(element[5]))))
 } 
