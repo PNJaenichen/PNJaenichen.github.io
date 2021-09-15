@@ -9,6 +9,12 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
+<p> --- Aug-Sept 2021 --- </p>
+<ul>
+  <li>Changed regular website to React application</li>
+  <li>Started a react application to visualize the hockey data provided by the NHL API</li>
+</ul>
+
 <p> --- 04/03/2021 --- </p>
 <ul>
   <li>Refactor and update README file</li>
