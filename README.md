@@ -9,28 +9,45 @@
   <li>Have a project to give additional purpose to my learning</li>
 </ol>
 
-<p> --- Aug-Sept 2021 --- </p>
+<p> --- September 2021 --- </p>
 <ul>
-  <li>Changed regular website to React application</li>
-  <li>Started a react application to visualize the hockey data provided by the NHL API</li>
+  <li>Created a function that parses HTML to get player on ice for each play in a game for the Hockey Visualization Project</li>
+  <li>No coding from 9/15 to 9/20 while attending GenCon 2021</li>
 </ul>
 
-<p> --- 04/03/2021 --- </p>
+<p> --- August 2021 --- </p>
 <ul>
-  <li>Refactor and update README file</li>
+  <li>Changed website to a React application<li>
+  <li>Continued working on Hockey Visualization Project</li>
+  <li>Finished nullQueries page for customer</li>
 </ul>
 
-<p> --- 04/02/2021 --- </p>
+<p> --- July 2021 --- </p>
+<ul>
+  <li>Continued working on Hockey Visualization Project</li>
+  <li>Started looking at the requirements for Open Source CS</li>
+</ul>
+
+<p> --- June 2021 --- </p>
+<ul>
+  <li>Refactor of nullQueries</li>
+  <li>Completed Jammming project from Codecademy</li>
+  <li>Started working on Hockey Visualization personal project</li>
+</ul>
+
+<p> --- May 2021 --- </p>
+<ul>
+  <li>Started working on nullQueries web pages</li>
+</ul>
+
+<p> --- April 2021  --- </p>
 <ul>
   <li>Completed ReactJS.org Tutorial</li>
+  <li>Refactored many of The Odin Project projects</li>
+  <li>Started Learning React</li>
 </ul>
 
-<p> --- 04/01/2021 --- </p>
-<ul>
-  <li>Started ReactJS.org Tutorial</li>
-</ul>
-
-<p> --- 03/01/2021 to 03/31/2021 --- </p>
+<p> --- March 2021 --- </p>
 <ul>
   <li>Finished switch for Projects page from CSS to JS</li>
   <li>Finished Todos project</li>
@@ -40,14 +57,14 @@
   <li>Created Design System and started transition to it<li>
 </ul>
 
-<p> --- 02/01/2021 to 2/28/2021 --- </p>
+<p> --- February 2021 --- </p>
 <ul>
   <li>Started transition of project page tabs from CSS to JS</li>
   <li>Created and finished bP's benefit page</li>
   <li>Created the Todos Project from The Odin Project</li>
 </ul>
 
-<p> --- 01/01/2021 to 01/30/2021 --- </p>
+<p> --- January 2021 --- </p>
 <ul>
   <li>Normalized CSS across the project with normalize.css from github.com/necolas/normalize.css</li>
   <li>Moved style portions from HTML files to their own CSS files for the blog and projects pages</li>
