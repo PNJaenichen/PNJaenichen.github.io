@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import General from './components/general'
-import Education from './components/education'
-import Experience from './components/experience'
+import General from './projects/cv-project/components/general'
+import Education from './projects/cv-project/components/education'
+import Experience from './projects/cv-project/components/experience'
 
-class App extends Component {
+class resumeApp extends Component {
   constructor() {
     super()
     this.state = {}
@@ -24,4 +24,4 @@ class App extends Component {
   };
 }
 
-export default App;
+export default resumeApp;
