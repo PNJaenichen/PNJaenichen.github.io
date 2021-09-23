@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import General from './projects/cv-project/components/general'
-import Education from './projects/cv-project/components/education'
-import Experience from './projects/cv-project/components/experience'
+import General from './components/projects/cv-project/components/general'
+import Education from './components/projects/cv-project/components/education'
+import Experience from './components/projects/cv-project/components/experience'
 
 class resumeApp extends Component {
   constructor() {
