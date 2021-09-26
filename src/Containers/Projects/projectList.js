@@ -90,7 +90,7 @@ export const projectsOdin = [
   },
   {
     title: "Restaurant",
-    url: "/#/projects",
+    url: "/projectFolder/restaurant/dist/index.html",
     thumbnail: restaurant,
     shortDesc: "The goal of this project was to create a site that would utilize tabs in order to display information about a restaurant. The real goal was to utilize webpack and different javascript modules.",
     longDesc: "The tabs themselves were easy to complete. The Odin Project provided a page with tons of examples and I just chose the one I like the most and then used the developers tools to learn how it was made. After that creating the modules that build the DOM for each tab was relatively easy. It took a bit of online searching to figure out webpack with multiple entries but I figured that out as well. I think if I would refactor this, it would be to find an better way at creating the DOM. Especially for the second tab, which repeated itself tons of times to create each of the elements. I like the took of the tabs and I think eventually I wanted to adjust this portion of the page to look more like that instead of the current layout."
@@ -104,11 +104,11 @@ export const projectsOdin = [
   },
   {
     title: "Weather App",
-    url: "/#/projects",
+    url: "/projectFolder/weatherApp/weather.html",
     thumbnail: weather,
     shortDesc: "Their were two learning objectives behind this project. The first was accessing an API. I had done this previously using the NHL API, however that was with Python. I did it again during the course of the syllabus but using Javascript as well. The second objective was the use of async/await to ensure that the API request is complete prior to building the site.",
     longDesc: "My struggle here was figuring out where to put the code to work with the return from the API. I could not find a way to work with it out as a return, but got results when I worked with it from within the async/await function. I am still not sure if this is the way it works OR that I simply did not find the right answer to make that happy. THat would be what I would work on for refactoring, as of right now that function both makes the request to the API and adjust the DOM, while I at least have other functions performing the actual work with the API return. NOTE: The API key is not in the code and the website will not work. The screenshot to the left displays its current look."
-  }
+  },
 ]
 
 export const persProjects = [
