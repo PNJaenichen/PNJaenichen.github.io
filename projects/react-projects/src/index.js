@@ -7,7 +7,7 @@ import './cv-project.css'
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
-      <App testMessage="poop"/>
+      <App testMessage={document.querySelector('input[name="projectName"]:checked').value}/>
     </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
