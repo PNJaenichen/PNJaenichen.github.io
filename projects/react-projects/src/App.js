@@ -1,28 +1,27 @@
 import React from "react";
+import JammmingApp from "./components/projects/jammming/Components/App/JammmingApp";
+import ResumeApp from "./components/projects/cv-project/resumeApp";
+import TaskApp from "./components/projects/task-app/taskApp";
 
 export default class App extends React.Component {
-  makeChange() {
-    this.props.onChange();
-  }
-
   render() {
-    let message = "";
+    let reactProj = "";
     switch (this.props.testMessage) {
       case "cv-project":
-        message = "The CV Project was selected.";
+        reactProj = <ResumeApp />;
         break;
       case "jammming":
-        message = "The Jammming Project was selected.";
+        reactProj = <JammmingApp />;
         break;
       case "task-app":
-        message = "The Task App Project was selected.";
+        reactProj = <TaskApp />;
         break;
       default:
-        message = "No project has been selected.";
+        reactProj = "No project has been selected.";
     }
     return (
       <div>
-        <p>{message}</p>    
+        {reactProj}    
       </div>
     )
   }

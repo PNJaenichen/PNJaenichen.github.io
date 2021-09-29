@@ -5,7 +5,7 @@ import { SearchResults } from '../SearchResults/SearchResults';
 import { Playlist } from '../Playlist/Playlist';
 import { Spotify } from '../../util/Spotify';
 
-export class App extends React.Component {
+export default class JammmingApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

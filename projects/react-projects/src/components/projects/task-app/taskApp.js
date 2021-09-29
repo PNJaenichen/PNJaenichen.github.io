@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import uniqid from 'uniqid'
 import Overview from './components/Overview';
 
-class App extends Component {
+class TaskApp extends Component {
   constructor() {
     super();
     this.state = {
@@ -36,4 +36,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default TaskApp;
