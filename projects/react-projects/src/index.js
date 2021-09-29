@@ -4,12 +4,25 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './cv-project.css'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <HashRouter>
-      <App testMessage={document.querySelector('input[name="projectName"]:checked').value}/>
-    </HashRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+let radioValue = document.querySelector('input[name="projectName"]:checked').value;
+
+function renderComponent(radio) {
+  ReactDOM.render(
+    <React.StrictMode>
+      <HashRouter>
+        <App testMessage={radio} />
+      </HashRouter>
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}
+
+document.querySelectorAll('[name="projectName"]').forEach((elem) => {
+  elem.addEventListener('change', function() {
+    radioValue = document.querySelector('input[name="projectName"]:checked').value; 
+    renderComponent(radioValue);
+  });
+});
+
+renderComponent(radioValue);
 
