@@ -1,12 +1,8 @@
+import unicodedata
 import requests
 from bs4 import BeautifulSoup
 
 API_URL = "https://statsapi.web.nhl.com/api/v1/"
-
-web_request = requests.get(API_URL + 'schedule?startDate=2021-10-12&endDate=2021-10-12')
-webpage = web_request.content
-
-soup = BeautifulSoup(webpage, 'html.parser')
 
 def search_for_games(start, end=None):
   """
@@ -61,10 +57,44 @@ def get_player_on_ice_info(gameID):
   second digit indicates the round, the third digit indicates the matchup, 
   and the final digit indicates the game number.
 
-  Returns a BeautifulSoup Object
+  Returns a list of plays that requires additional cleaning.
   """
 
   season = f"{gameID[:4]}{int(gameID[:4]) + 1}"
   web_request = requests.get(f"http://www.nhl.com/scores/htmlreports/{season}/PL{gameID[4:]}.HTM")
-
   return BeautifulSoup(web_request.content, 'html.parser')
+
+def clean_play_by_play(pages):
+  """
+  Takes the raw html from the NHL play by play page and parses out each 
+  of the plays.
+
+  Takes a single parameter, 'pages' which is a list of elements from the
+  NHL Play by Play site with the class of page. It then parses out each
+  of the plays and does an initial cleaning of the data.
+
+  Returns a list of plays, with each of those being a list. The first 
+  element is the column names, and the following elements contain the play
+  information.
+  """
+  allPlays = []
+
+  for page in pages:
+    tableRows = [row for row in page.table.children if row != "\n"]
+    data = []
+    for row in tableRows:
+      rowCells = [block for block in row.children if block != "\n"]
+      cleanRow = []
+      for row in rowCells:
+        cleanRow.append(unicodedata.normalize('NFKD', row.get_text()).strip().replace("\n",""))
+      data.append(cleanRow)
+    for play in data:
+      cleanData = [play for play in data if len(play) == 8]
+    for play in cleanData:
+      allPlays.append(play)
+
+  for play in allPlays:
+    print(play)
+  
+  return allPlays
+
