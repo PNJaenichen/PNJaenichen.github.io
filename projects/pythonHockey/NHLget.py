@@ -1,5 +1,6 @@
 import unicodedata
 import requests
+import re
 from bs4 import BeautifulSoup
 
 API_URL = "https://statsapi.web.nhl.com/api/v1/"
@@ -91,10 +92,17 @@ def clean_play_by_play(pages):
     for play in data:
       cleanData = [play for play in data if len(play) == 8]
     for play in cleanData:
+      play[3] = re.findall(r'(\d{1,2}:\d{2})', play[3])
+      homePlayers = {}
+      visitPlayers = {}
+      if 'Ice' not in play[6]:
+        for player in play[6].split():
+          homePlayers[player[-1]] = player[:-1]
+        for player in play[7].split():
+          visitPlayers[player[-1]] = player[:-1]
+        play[6] = homePlayers
+        play[7] = visitPlayers
       allPlays.append(play)
 
-  for play in allPlays:
-    print(play)
-  
   return allPlays
 
