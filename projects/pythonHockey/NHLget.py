@@ -97,9 +97,19 @@ def clean_play_by_play(pages):
       visitPlayers = {}
       if 'Ice' not in play[6]:
         for player in play[6].split():
-          homePlayers[player[-1]] = player[:-1]
+          if (player[-1] == 'D') & ('D1' in homePlayers):
+            homePlayers['D2'] = player[:-1]
+          elif player[-1] == 'D':
+            homePlayers['D1'] = player[:-1]
+          else:
+            homePlayers[player[-1]] = player[:-1]
         for player in play[7].split():
-          visitPlayers[player[-1]] = player[:-1]
+          if (player[-1] == 'D') & ('D1' in visitPlayers):
+            visitPlayers['D2'] = player[:-1]
+          elif player[-1] == 'D':
+            visitPlayers['D1'] = player[:-1]
+          else:
+            visitPlayers[player[-1]] = player[:-1]
         play[6] = homePlayers
         play[7] = visitPlayers
       allPlays.append(play)
