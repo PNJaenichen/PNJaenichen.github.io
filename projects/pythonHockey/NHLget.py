@@ -5,6 +5,13 @@ from bs4 import BeautifulSoup
 
 API_URL = "https://statsapi.web.nhl.com/api/v1/"
 
+play_id_dict = {'GAME_SCHEDULED': 'PGSTR', 'PERIOD_READY': 'PGEND', 
+'PERIOD_START': 'PSTR', 'FACEOFF': 'FAC', 'HIT': 'HIT', 'STOP': 'STOP', 
+'SHOT': 'SHOT', 'TAKEAWAY': 'TAKE', 'BLOCKED_SHOT': 'BLOCK', 
+'MISSED_SHOT': 'MISS', 'GIVEAWAY': 'GIVE', 'PERIOD_END': 'PEND', 
+'PERIOD_OFFICIAL': '', 'GOAL': 'GOAL', 'PENALTY': 'PENL', 'GAME_END': 'GEND', 
+'GAME_OFFICIAL': ''}
+
 def search_for_games(start, end=None):
   """
   Gets the list of Game IDs for games played during the requested time period.
@@ -47,8 +54,8 @@ def get_game_info(gameID):
 
 def get_player_on_ice_info(gameID):
   """
-  Gets player on ice information for a game from the Official Game Play by 
-  Play document produced by the NHL via NHL.com.
+  Gets play information that includes players involved and players on the
+  ice at the time of the play. 
 
   Takes a single parameter, gameID, in string format.
 
@@ -58,13 +65,18 @@ def get_player_on_ice_info(gameID):
   second digit indicates the round, the third digit indicates the matchup, 
   and the final digit indicates the game number.
 
-  Returns a list of plays that requires additional cleaning.
+  Returns a list of plays.
   """
 
   season = f"{gameID[:4]}{int(gameID[:4]) + 1}"
   web_request = requests.get(f"http://www.nhl.com/scores/htmlreports/{season}/PL{gameID[4:]}.HTM")
   soup = BeautifulSoup(web_request.content, 'html.parser')
-  return clean_play_by_play(soup.select('.page'))
+
+  plays = get_game_info('2021020001')['liveData']['plays']['allPlays']
+
+  main_plays = clean_play_by_play(soup.select('.page'))
+
+  return combine_play_information(main_plays, plays)
 
 def clean_play_by_play(pages):
   """
@@ -75,9 +87,7 @@ def clean_play_by_play(pages):
   NHL Play by Play site with the class of page. It then parses out each
   of the plays and does an initial cleaning of the data.
 
-  Returns a list of plays, with each of those being a list. The first 
-  element is the column names, and the following elements contain the play
-  information.
+  Returns a list of plays, with each of those being a list. 
   """
   allPlays = []
 
@@ -117,3 +127,40 @@ def clean_play_by_play(pages):
 
   return allPlays
 
+def combine_play_information(main_info, player_info):
+  """
+  Takes two parameters. The first is a list of plays from the NHL Play by
+  Play HTML report that has been parsed. The second is the list of plays
+  from the same game from the NHL API. It then executes an inner join 
+  based on the period, time into the period, and the event type.
+
+  Returns a list of plays in the following format: [playId, period, strength,
+  [Time Elapsed, Time Remaining], Event, Descripition, Away Team Players on
+  Ice, Home Team Players on Ice, ...1-4 players involved in the play, dateTime,
+  Coordinates]
+  """
+  final_plays = main_info
+  track_i = 0
+  for mainPlay in final_plays:
+    if mainPlay[0] == '#':
+      continue
+    if mainPlay[3][0][0:2] == '0:':
+      mainPlay[3][0] = '00:' + mainPlay[3][0][-2:]
+    for ind in range(track_i, len(player_info)):
+      if all([
+          play_id_dict[player_info[ind]['result']['eventTypeId']] == mainPlay[4],
+          player_info[ind]['about']['period'] == int(mainPlay[1]),
+          player_info[ind]['about']['periodTime'] == mainPlay[3][0]
+      ]):
+        if 'players' in player_info[ind]:
+          mainPlay.append(player_info[ind]['players'][0])
+          if len(player_info[ind]['players']) > 1:
+            mainPlay.append(player_info[ind]['players'][1])
+          if len(player_info[ind]['players']) > 2:
+            mainPlay.append(player_info[ind]['players'][2])
+          if len(player_info[ind]['players']) > 3:
+            mainPlay.append(player_info[ind]['players'][3])
+        mainPlay.append(player_info[ind]['about']['dateTime'])
+        mainPlay.append(player_info[ind]['coordinates'])
+        track_i = ind + 1
+  return final_plays
