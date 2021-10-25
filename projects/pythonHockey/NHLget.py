@@ -103,27 +103,30 @@ def clean_play_by_play(pages):
     for play in data:
       cleanData = [play for play in data if len(play) == 8]
     for play in cleanData:
-      play[3] = re.findall(r'(\d{1,2}:\d{2})', play[3])
-      homePlayers = {}
-      visitPlayers = {}
-      if 'Ice' not in play[6]:
-        for player in play[6].split():
-          if (player[-1] == 'D') & ('D1' in homePlayers):
-            homePlayers['D2'] = player[:-1]
-          elif player[-1] == 'D':
-            homePlayers['D1'] = player[:-1]
-          else:
-            homePlayers[player[-1]] = player[:-1]
-        for player in play[7].split():
-          if (player[-1] == 'D') & ('D1' in visitPlayers):
-            visitPlayers['D2'] = player[:-1]
-          elif player[-1] == 'D':
-            visitPlayers['D1'] = player[:-1]
-          else:
-            visitPlayers[player[-1]] = player[:-1]
-        play[6] = homePlayers
-        play[7] = visitPlayers
-      allPlays.append(play)
+      if play[0] == '#':
+        continue
+      else:
+        play[3] = re.findall(r'(\d{1,2}:\d{2})', play[3])
+        homePlayers = {}
+        visitPlayers = {}
+        if 'Ice' not in play[6]:
+          for player in play[6].split():
+            if (player[-1] == 'D') & ('D1' in homePlayers):
+              homePlayers['D2'] = player[:-1]
+            elif player[-1] == 'D':
+              homePlayers['D1'] = player[:-1]
+            else:
+              homePlayers[player[-1]] = player[:-1]
+          for player in play[7].split():
+            if (player[-1] == 'D') & ('D1' in visitPlayers):
+              visitPlayers['D2'] = player[:-1]
+            elif player[-1] == 'D':
+              visitPlayers['D1'] = player[:-1]
+            else:
+              visitPlayers[player[-1]] = player[:-1]
+          play[6] = homePlayers
+          play[7] = visitPlayers
+        allPlays.append(play)
 
   return allPlays
 
@@ -160,6 +163,11 @@ def combine_play_information(main_info, player_info):
             mainPlay.append(player_info[ind]['players'][2])
           if len(player_info[ind]['players']) > 3:
             mainPlay.append(player_info[ind]['players'][3])
+          for _ in range(len(player_info[ind]['players']),4):
+            mainPlay.append('')
+        else:
+          for _ in range(0,4):
+            mainPlay.append('')
         mainPlay.append(player_info[ind]['about']['dateTime'])
         mainPlay.append(player_info[ind]['coordinates'])
         track_i = ind + 1
