@@ -147,22 +147,25 @@ def combine_play_information(main_info, player_info):
   for mainPlay in final_plays:
     if mainPlay[0] == '#':
       continue
-    if mainPlay[3][0][0:2] == '0:':
-      mainPlay[3][0] = '00:' + mainPlay[3][0][-2:]
+    perTime, timeLeft = mainPlay.pop(3)
+    if perTime[0:2] == '0:':
+      perTime = '00:' + perTime[-2:]
+    mainPlay.insert(3, perTime)
+    mainPlay.insert(4, timeLeft)
     for ind in range(track_i, len(player_info)):
       if all([
-          play_id_dict[player_info[ind]['result']['eventTypeId']] == mainPlay[4],
+          play_id_dict[player_info[ind]['result']['eventTypeId']] == mainPlay[5],
           player_info[ind]['about']['period'] == int(mainPlay[1]),
-          player_info[ind]['about']['periodTime'] == mainPlay[3][0]
+          player_info[ind]['about']['periodTime'] == mainPlay[3]
       ]):
         if 'players' in player_info[ind]:
-          mainPlay.append(player_info[ind]['players'][0])
+          mainPlay.append(player_info[ind]['players'][0]['player']['fullName'])
           if len(player_info[ind]['players']) > 1:
-            mainPlay.append(player_info[ind]['players'][1])
+            mainPlay.append(player_info[ind]['players'][1]['player']['fullName'])
           if len(player_info[ind]['players']) > 2:
-            mainPlay.append(player_info[ind]['players'][2])
+            mainPlay.append(player_info[ind]['players'][2]['player']['fullName'])
           if len(player_info[ind]['players']) > 3:
-            mainPlay.append(player_info[ind]['players'][3])
+            mainPlay.append(player_info[ind]['players'][3]['player']['fullName'])
           for _ in range(len(player_info[ind]['players']),4):
             mainPlay.append('')
         else:
