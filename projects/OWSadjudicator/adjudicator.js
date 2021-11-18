@@ -3,19 +3,26 @@ function dieRoller(sides) {
 }
 
 function surfaceStrike(incoming, defense=[], cap=false, aew=false, io=[]) {
+  const dice_sides = [20, 16, 12, 10, 8, 6, 4]
   const missiles = incoming;
+  if (aew) {
+    console.log(missiles['4'])
+    console.log(missiles['10'])
+
+  }
+  
+  let total_sm = 0;
+  let total_inbound = Object.values(missiles).reduce((a, b) => a + b);
   if (defense.length > 0) {
-    let total_sm = 0;
     for (const [key, value] of Object.entries(defense)) {
       if (key == 0) {
-        continue
+        continue;
       } else {
         total_sm += value[1];
       }
     }
-    console.log(total_sm)
   }
-  
+  console.log(total_inbound);
   const missile_rolls = []
   for (const [key, value] of Object.entries(missiles)) {
     for (let i = 0; i < value; i++) {
@@ -27,9 +34,9 @@ function surfaceStrike(incoming, defense=[], cap=false, aew=false, io=[]) {
 
 const doc = document.getElementById('testArea');
 
-const inbound_missiles = {12: 4};
+const inbound_missiles = {10: 1, 12: 3};
 const defense = [4, [6 , 4], [5, 2]]
-const results = surfaceStrike(inbound_missiles, defense);
+const results = surfaceStrike(inbound_missiles, defense, false, true, []);
 doc.innerText = results;
 /*
   Surface Strike
