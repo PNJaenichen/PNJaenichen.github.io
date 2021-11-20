@@ -60,11 +60,11 @@ function promoteAll(missiles) {
 function demoteOne(missiles) {
   let dice = Object.keys(missiles).map(x => parseInt(x)).reverse();
   let high_missile = dice[0]
-  if (missiles[high_missile] == 0) {
+  if (missiles[high_missile] === 0) {
     if (dice.length > 1) {
       delete missiles[high_missile];
       high_missile = dice[1];
-    } else if (dice.length == 1) {
+    } else if (dice.length === 1) {
       delete missiles[high_missile];
       return missiles;
     }
@@ -110,7 +110,7 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   let total_sm = 0;
   if (defense.length > 0) {
     for (const [key, value] of Object.entries(defense)) {
-      if (key == 0) {
+      if (key === 0) {
         continue;
       } else {
         total_sm += value[1];
@@ -135,6 +135,23 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   }
   console.log(missiles)
   const missile_rolls = []
+  if (defense.length === 1) {
+    for (const [key, value] of Object.entries(missiles)) {
+      for (let i = 0; i < value; i++) {
+        missile_rolls.push(dieRoller(key))
+      }
+    }
+    console.log("I'm here")
+    return missile_rolls.filter(x => x >= defense[0])
+  } else {
+      let def_sm = defense.slice(1);
+      for (let [key, value] of [...def_sm]) {
+        for (let i = 0; i < value; i++) {
+
+        }
+      }
+
+  }
   for (const [key, value] of Object.entries(missiles)) {
     for (let i = 0; i < value; i++) {
       missile_rolls.push(dieRoller(key))
@@ -149,16 +166,7 @@ const inbound_missiles = {10: 1, 12: 3};
 const defense = [4, [6 , 2]]
 const results = surfaceStrike(inbound_missiles, defense, 2, 0, 2);
 doc.innerText = results;
-/*
-  Surface Strike
 
-  Modifiers:
-    ** AEW Support (Blue Only) 2x Demo to all
-    ** CAP Support 1x Demo 1:1
-    ** Excess shields 1x Demo 1:1
-    ** SIGINT/EMSO 1x Promo to all
-    ** Disrupted C2/Active & Passive CM 1x demo to all
- */
 
 /*
   Submarine Attack
@@ -191,3 +199,14 @@ doc.innerText = results;
 
 
 */
+
+/*
+
+inbound
+d6 x3
+d8 x1
+
+defense
+6 x2
+
+*/ 
