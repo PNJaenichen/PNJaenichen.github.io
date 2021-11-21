@@ -71,33 +71,33 @@ function demoteOne(missiles) {
   }
   switch (high_missile) {
     case 4:
-      missiles[4] -= 1;
+      missiles[4] === 1 ? delete missiles[4] : missiles[4] -= 1;
       break;
     case 6:
-      missiles[6] -= 1;
       missiles.hasOwnProperty(4) ? missiles[4] += 1 : missiles[4] = 1;
+      missiles[6] === 1 ? delete missiles[6] : missiles[6] -= 1;
       break;
     case 8:
-      missiles[8] -= 1;
       missiles.hasOwnProperty(8) ? missiles[6] += 1 : missiles[6] = 1;
+      missiles[8] === 1 ? delete missiles[8] : missiles[8] -= 1;
       break;
     case 10:
-      missiles[10] -= 1;
       missiles.hasOwnProperty(10) ? missiles[8] += 1 : missiles[8] = 1;
+      missiles[10] === 1 ? delete missiles[10] : missiles[10] -= 1;
       break;
     case 12:
-      missiles[12] -= 1;
       missiles.hasOwnProperty(12) ? missiles[10] += 1 : missiles[10] = 1;
+      missiles[12] === 1 ? delete missiles[12] : missiles[12] -= 1;
       break;
     case 16:
-      missiles[16] -= 1;
       missiles.hasOwnProperty(16) ? missiles[12] += 1 : missiles[12] = 1;
+      missiles[16] === 1 ? delete missiles[16] : missiles[16] -= 1;
       break;
     default:
-      missiles[20] -= 1;
       missiles.hasOwnProperty(20) ? missiles[16] += 1 : missiles[16] = 1;
+      missiles[20] === 1 ? delete missiles[20] : missiles[20] -= 1;
   }
-  return missiles;
+  return missiles
 }
 
 function dieRoller(sides) {
@@ -106,7 +106,6 @@ function dieRoller(sides) {
 
 function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   let missiles = incoming;
-  console.log(missiles)
   let total_sm = 0;
   if (defense.length > 0) {
     for (const [key, value] of Object.entries(defense)) {
@@ -123,17 +122,14 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   for (let i = 0; i < demotions; i++) {
     demoteAll(missiles);
   }
-  console.log(missiles)
   for (let i = 0; i < cap; i++) {
     demoteOne(missiles);
   }
-  console.log(missiles)
   let total_inbound = Object.keys(missiles).length > 0 ? Object.values(missiles).reduce((a, b) => a + b) : 0;
 
   for (let i = 0; i < (total_sm - total_inbound); i++) {
     demoteOne(missiles)
   }
-  console.log(missiles)
   const missile_rolls = []
   if (defense.length === 1) {
     for (const [key, value] of Object.entries(missiles)) {
@@ -141,29 +137,40 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
         missile_rolls.push(dieRoller(key))
       }
     }
-    console.log("I'm here")
     return missile_rolls.filter(x => x >= defense[0])
   } else {
       let def_sm = defense.slice(1);
+      let def_rolls = []
       for (let [key, value] of [...def_sm]) {
         for (let i = 0; i < value; i++) {
-
+          def_rolls.push(key)
         }
       }
-
+      const miss_diff = total_inbound - def_rolls.length
+      if (def_rolls.length < total_inbound) {
+        for (let i = 0; i < miss_diff; i++) {
+          def_rolls.push(defense[0])
+        }
+      }
+      def_rolls.reverse()
+      let def_sm_track = 0;
+      for (const [key, value] of Object.entries(missiles)) {
+        for (let i = 0; i < value; i++) {
+          let in_result = (dieRoller(key))
+          if (in_result >= def_rolls[def_sm_track]) {
+            missile_rolls.push(in_result)
+          }
+          def_sm_track += 1;
+        }
+      }
   }
-  for (const [key, value] of Object.entries(missiles)) {
-    for (let i = 0; i < value; i++) {
-      missile_rolls.push(dieRoller(key))
-    }
-  }
-  return missile_rolls.filter(x => x >= defense[0]);
+  return missile_rolls;
 }
 
 const doc = document.getElementById('testArea');
 
-const inbound_missiles = {10: 1, 12: 3};
-const defense = [4, [6 , 2]]
+const inbound_missiles = {10: 1, 12: 3, 16: 2};
+const defense = [4, [6 , 3], [5, 3]]
 const results = surfaceStrike(inbound_missiles, defense, 2, 0, 2);
 doc.innerText = results;
 
@@ -208,5 +215,11 @@ d8 x1
 
 defense
 6 x2
+4 inf
+
+d8 v 6
+d6 v 6
+d6 v 4
+d6 v 4
 
 */ 
