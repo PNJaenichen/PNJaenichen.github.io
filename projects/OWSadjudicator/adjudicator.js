@@ -167,13 +167,33 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   return missile_rolls;
 }
 
-const doc = document.getElementById('testArea');
+function getStrikeResults() {
+  const promos = document.getElementById('promo_input').value ? parseInt(document.getElementById('promo_input').value) : 0;
+  let demos = document.getElementById('demo_input').value ? parseInt(document.getElementById('demo_input').value) : 0;
+  const cap = document.getElementById('cap_input').value ? parseInt(document.getElementById('cap_input').value) : 0;
+  const base_def = document.getElementById('target_def').value ? parseInt(document.getElementById('target_def').value) : 0;
+  const inbound = {};
+  const defense = [base_def];
+  for (let user_input of ['inbound_one', 'inbound_two', 'inbound_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
+      inbound[parseInt(document.getElementById(user_input).value)] = parseInt(document.getElementById(user_input + '_total').value);
+    }
+  }
+  for (let user_input of ['def_one', 'def_two', 'def_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total')) {
+      const missile_set = [parseInt(document.getElementById(user_input).value), parseInt(document.getElementById(user_input + '_total').value)];
+      defense.push(missile_set);
+    }
+  }
+  if (defense.length > 1) {
+    demos += document.getElementById("aew_input").checked ? 2 : 0;
+  }
+  return surfaceStrike(inbound, defense, cap, promos, demos)
+}
 
-const inbound_missiles = {10: 1, 12: 3, 16: 2};
-const defense = [4, [6 , 3], [5, 3]]
-const results = surfaceStrike(inbound_missiles, defense, 2, 0, 2);
-doc.innerText = results;
-
+document.getElementById('strikeSubmit').addEventListener('click', () => {
+  document.getElementById('resultArea_strike').innerText = getStrikeResults();
+  }, false);
 
 /*
   Submarine Attack
@@ -206,20 +226,3 @@ doc.innerText = results;
 
 
 */
-
-/*
-
-inbound
-d6 x3
-d8 x1
-
-defense
-6 x2
-4 inf
-
-d8 v 6
-d6 v 6
-d6 v 4
-d6 v 4
-
-*/ 
