@@ -31,27 +31,27 @@ function demoteAll(missiles) {
 
 function promoteAll(missiles) {
   if (missiles['16']) {
-    missiles['20'] += missiles['16'];
+    missiles['20'] = missiles['16'];
     delete missiles['16'];
   }
   if (missiles['12']) {
-    missiles['16'] += missiles['12'];
+    missiles['16'] = missiles['12'];
     delete missiles['12'];
   }
   if (missiles['10']) {
-    missiles['12'] += missiles['10'];
+    missiles['12'] = missiles['10'];
     delete missiles['10'];
   }
   if (missiles['8']) {
-    missiles['10'] += missiles['8'];
+    missiles['10'] = missiles['8'];
     delete missiles['12'];
   }
   if (missiles['6']) {
-    missiles['8'] += missiles['6'];
+    missiles['8'] = missiles['6'];
     delete missiles['6'];
   }
   if (missiles['4']) {
-    missiles['6'] += missiles['4'];
+    missiles['6'] = missiles['4'];
     delete missiles['4'];
   }
   return missiles;
