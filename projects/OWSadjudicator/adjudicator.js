@@ -78,23 +78,23 @@ function demoteOne(missiles) {
       missiles[6] === 1 ? delete missiles[6] : missiles[6] -= 1;
       break;
     case 8:
-      missiles.hasOwnProperty(8) ? missiles[6] += 1 : missiles[6] = 1;
+      missiles.hasOwnProperty(6) ? missiles[6] += 1 : missiles[6] = 1;
       missiles[8] === 1 ? delete missiles[8] : missiles[8] -= 1;
       break;
     case 10:
-      missiles.hasOwnProperty(10) ? missiles[8] += 1 : missiles[8] = 1;
+      missiles.hasOwnProperty(8) ? missiles[8] += 1 : missiles[8] = 1;
       missiles[10] === 1 ? delete missiles[10] : missiles[10] -= 1;
       break;
     case 12:
-      missiles.hasOwnProperty(12) ? missiles[10] += 1 : missiles[10] = 1;
+      missiles.hasOwnProperty(10) ? missiles[10] += 1 : missiles[10] = 1;
       missiles[12] === 1 ? delete missiles[12] : missiles[12] -= 1;
       break;
     case 16:
-      missiles.hasOwnProperty(16) ? missiles[12] += 1 : missiles[12] = 1;
+      missiles.hasOwnProperty(12) ? missiles[12] += 1 : missiles[12] = 1;
       missiles[16] === 1 ? delete missiles[16] : missiles[16] -= 1;
       break;
     default:
-      missiles.hasOwnProperty(20) ? missiles[16] += 1 : missiles[16] = 1;
+      missiles.hasOwnProperty(16) ? missiles[16] += 1 : missiles[16] = 1;
       missiles[20] === 1 ? delete missiles[20] : missiles[20] -= 1;
   }
   return missiles
@@ -109,7 +109,7 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   let total_sm = 0;
   if (defense.length > 0) {
     for (const [key, value] of Object.entries(defense)) {
-      if (key === 0) {
+      if (key === '0') {
         continue;
       } else {
         total_sm += value[1];
@@ -126,10 +126,11 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
     demoteOne(missiles);
   }
   let total_inbound = Object.keys(missiles).length > 0 ? Object.values(missiles).reduce((a, b) => a + b) : 0;
-
+  console.log(missiles, total_sm, total_inbound)
   for (let i = 0; i < (total_sm - total_inbound); i++) {
     demoteOne(missiles)
   }
+  console.log(missiles)
   const missile_rolls = []
   if (defense.length === 1) {
     for (const [key, value] of Object.entries(missiles)) {
