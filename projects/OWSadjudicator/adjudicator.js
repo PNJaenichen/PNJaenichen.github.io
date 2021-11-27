@@ -168,6 +168,14 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   return missile_rolls;
 }
 
+function subAttack(targStep, ASW=[]) {
+  return `The target has ${targStep} ${targStep === 1 ? 'step' : 'steps'}`
+}
+
+function subAttackResults() {
+  return subAttack(1);
+}
+
 function getStrikeResults() {
   const promos = document.getElementById('promo_input').value ? parseInt(document.getElementById('promo_input').value) : 0;
   let demos = document.getElementById('demo_input').value ? parseInt(document.getElementById('demo_input').value) : 0;
@@ -195,6 +203,10 @@ function getStrikeResults() {
 document.getElementById('strikeSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_strike').innerText = getStrikeResults();
   }, false);
+
+document.getElementById('torpedoSubmit').addEventListener('click', () => {
+  document.getElementById('resultArea_torpedo').innerText = subAttackResults();
+}, false);
 
 /*
   Submarine Attack
