@@ -126,11 +126,9 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
     demoteOne(missiles);
   }
   let total_inbound = Object.keys(missiles).length > 0 ? Object.values(missiles).reduce((a, b) => a + b) : 0;
-  console.log(missiles, total_sm, total_inbound)
   for (let i = 0; i < (total_sm - total_inbound); i++) {
     demoteOne(missiles)
   }
-  console.log(missiles)
   const missile_rolls = []
   if (defense.length === 1) {
     for (const [key, value] of Object.entries(missiles)) {
@@ -168,41 +166,6 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   return missile_rolls;
 }
 
-function findSub(subDetect, ASW=[false, false, false, {}]) {
-  let ASW_assets = ASW[4];
-  let promo_demo = ASW.slice(0,-1).reduce((acc, a) => acc + a, 0)
-  if (promo_demo > 0) {
-    for (let i = 0; i < promo_demo; i++) {
-      ASW_assets = promoteAll(ASW_assets)
-    }
-  }
-  
-  console.log(promo_demo)
-
-  return false
-}
-
-// ASW [running silent, littoral water, cavitation, sub detection, ASW assets]
-
-function subAttack(targStep, ASW=[0, 0, 0, 8, {}], subDetect, subDef) {
-  if (findSub(8, [-1, -1, 1, {}])) {
-    return 'The sub was found.'
-  }
-  findSub(8, [-1, -1, 1, {}])
-  findSub(8, [-1, -1, 0, {}])
-  findSub(8, [-1, 0, 1, {}])
-  findSub(8, [0, -1, 1, {}])
-  findSub(8, [0, 0, 1, {}])
-  findSub(8, [0, -1, 0, {}])
-  findSub(8, [-1, 0, 0, {}])
-  findSub(8, [0, 0, 0, {}])
-  return `The target has ${targStep} ${targStep === 1 ? 'step' : 'steps'}`
-}
-
-function subAttackResults() {
-  return subAttack(1);
-}
-
 function getStrikeResults() {
   const promos = document.getElementById('promo_input').value ? parseInt(document.getElementById('promo_input').value) : 0;
   let demos = document.getElementById('demo_input').value ? parseInt(document.getElementById('demo_input').value) : 0;
@@ -231,17 +194,73 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_strike').innerText = getStrikeResults();
   }, false);
 
+function findSub(subDetect, ASW=[0, 0, 0, {}]) {
+  let ASW_assets = ASW[3];
+  let promo_demo = ASW.slice(0,-1).reduce((acc, a) => acc + a, 0);
+  if (promo_demo > 0) {
+    for (let i = 0; i < promo_demo; i++) {
+      ASW_assets = promoteAll(ASW_assets)
+    }
+  } else {
+    for (let i = 0; i > promo_demo; i--) {
+      ASW_assets = demoteAll(ASW_assets)
+    }
+  }
+  const ASW_rolls = []
+  for (const [key, value] of Object.entries(ASW_assets)) {
+    for (let i = 0; i < value; i++) {
+      ASW_rolls.push(dieRoller(key))
+    }
+  }
+  const checked_results = ASW_rolls.filter(x => x >= subDetect);
+    
+  return checked_results.length > 0
+}
+
+function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 8, {}]) {
+  let checked_results = [];
+  if (findSub(subDetect, ASW)) {
+    const ASW_attacks = []
+    for (const [key, value] of Object.entries(ASW[3])) {
+      for (let i = 0; i < value; i++) {
+        ASW_attacks.push(dieRoller(key))
+      }
+    }
+    checked_results = ASW_attacks.filter(x => x >= subDef);
+  }
+  let torp_results =  [];
+  for (let i = 0; i < targStep; i++) {
+    torp_results.push(dieRoller(torpStr))
+  }
+  torp_results = torp_results.filter(x => x >= targDef)
+  console.log(checked_results.length > 0 ? 'The sub was destroyed.' : 'The sub survived.')
+  return `${torp_results.length > 0 ? 'The target took ' + torp_results.length + ' hits' : 'The target was not hit'}. ${findSub(8, ASW) ? 'The sub was found.' : 'The sub was undetected.'}`
+}
+
+function subAttackResults() {
+  const asw = [];
+  asw.push(document.getElementById("torp_run_silent").checked ? -1 : 0);
+  asw.push(document.getElementById("torp_littorals").checked ? -1 : 0);
+  asw.push(document.getElementById("torp_cavitation").checked ? 1 : 0);
+  asw.push({});
+  for (let user_input of ['ASW_asset_one', 'ASW_asset_two']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
+      asw[3][parseInt(document.getElementById(user_input).value)] = parseInt(document.getElementById(user_input + '_total').value);
+    }
+  }
+  const target_steps = document.getElementById("torp_target_step").value ? parseInt(document.getElementById("torp_target_step").value) : 0;
+  const target_def = document.getElementById("torp_target_def").value ? parseInt(document.getElementById("torp_target_def").value) : 0;
+  const sub_detect = document.getElementById("torp_sub_detect").value ? parseInt(document.getElementById("torp_sub_detect").value) : 0;
+  const sub_def = document.getElementById("torp_sub_def").value ? parseInt(document.getElementById("torp_sub_def").value) : 0;
+  const torp_str = document.getElementById("torp_str").value ? parseInt(document.getElementById("torp_str").value) : 0;
+  console.log(target_steps, target_def, sub_detect, sub_def, torp_str, asw);
+  return subAttack(target_steps, target_def, sub_detect, sub_def, torp_str, asw);
+}
+
 document.getElementById('torpedoSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_torpedo').innerText = subAttackResults();
 }, false);
 
-/*
-  Submarine Attack
-
-  3. all units in ASW roll for detection
-     a. if successful roll for attack
-  4. Sub attacks, 1 torp per step
-*/
 
 /* 
   Surface to Air
@@ -249,11 +268,19 @@ document.getElementById('torpedoSubmit').addEventListener('click', () => {
   Missiles vs Aircraft
 */
 
+document.getElementById('airStrikeSubmit').addEventListener('click', () => {
+  document.getElementById('resultArea_airStrike').innerText = 'Nothing here yet you fool!';
+}, false);
+
 /*
   Air to Air 
 
   Air vs. Air, simultaneous attacks
 */
+
+document.getElementById('airToAirSubmit').addEventListener('click', () => {
+  document.getElementById('resultArea_airToAir').innerText = 'Still working on this one too!';
+}, false);
 
 /*
   SOF Direct Action
@@ -261,8 +288,16 @@ document.getElementById('torpedoSubmit').addEventListener('click', () => {
   Roll for detection, if not detected, roll for direct action
 */
 
+document.getElementById('sofDirectActionSubmit').addEventListener('click', () => {
+  document.getElementById('resultArea_sofDirectAction').innerText = 'Got you again, moron!';
+}, false);
+
 /*
   Ground Combat
 
 
 */
+
+document.getElementById('groundCombatSubmit').addEventListener('click', () => {
+  document.getElementById('resultArea_groundCombat').innerText = 'Certainly hope I remember to fix this.';
+}, false);

@@ -105,9 +105,104 @@
       <div id="torpedoAttack_div">
         <h2>Torpedo Attack</h2>
         <form id="torpedoAttack" action="">
+          <p id="torpAttDesc">
+            Utilize the following tool for adjudicated torpedo attacks. This
+            tool was created utilizing the OWS 1.7 ruleset.
+          </p>
+          <fieldset>
+            <label>ASW Assets:</label>
+            <br>
+            <label id="ASW_asset_one_label" for="ASW_asset_one">ASW Type 1</label>
+            <select id="ASW_asset_one">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+            <label id="ASW_asset_one_tot_label" for="ASW_asset_one_total">Total</label>
+            <input id="ASW_asset_one_total" type="number" min=0 max=10 placeholder=0>
+            <br>
+            <label id="ASW_asset_two_label" for="ASW_asset_two">ASW Type 2</label>
+            <select id="ASW_asset_two">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+            <label id="ASW_asset_two_tot_label" for="ASW_asset_two_total">Total</label>
+            <input id="ASW_asset_two_total" type="number" min=0 max=10 placeholder=0>
+          </fieldset>
+          <label id="torp_target_step_label" for="torp_target_step">Target Steps:</label> 
+          <input id="torp_target_step" type="number" min=1 max=10 placeholder=4>
+          <br>
+          <label id="torp_target_def_label" for="torp_target_def">Target Defense:</label>
+          <input id="torp_target_def" type="number" min=0 max=10 placeholder=0>
+          <br>
+          <label id="torp_sub_detect_label" for="torp_sub_detect">Sub Detection:</label>
+          <input id="torp_sub_detect" type="number" min=0 max=5 placeholder=0>
+          <br>
+          <label id="torp_sub_def_label" for="torp_sub_def">Sub Defense:</label>
+          <input id="torp_sub_def" type="number" min=0 max=5 placeholder=0>
+          <br>
+          <label id="torp_str_label" for="torp_str">Torpedo Strength:</label>
+            <select id="torp_str">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+          <br>
+          <label><input id="torp_run_silent" type="checkbox">Running Silent</label>
+          <label><input id="torp_littorals" type="checkbox">Littorals</label>
+          <label><input id="torp_cavitation" type="checkbox">Cavitation</label>
+          <br>
           <button id="torpedoSubmit" type="button">Ajudicate</button>
         </form>
         <div id="resultArea_torpedo"></div> 
+      </div>
+      <hr>
+      <div id="airStrike_div">
+        <h2>Air Strike</h2>
+        <form id="airStrike" action="">
+          <button id="airStrikeSubmit" type="button">Ajudicate</button>
+        </form>
+        <div id="resultArea_airStrike"></div>
+      </div>
+      <hr>
+      <div id="airToAir_div">
+        <h2>Air to Air Combat</h2>
+        <form id="airToAir" action="">
+          <button id="airToAirSubmit" type="button">Ajudicate</button>
+        </form>
+        <div id="resultArea_airToAir"></div>
+      </div>
+      <hr>
+      <div id="sofDirectAction_div">
+        <h2>SOF Direct Action</h2>
+        <form id="sofDirectAction" action="">
+          <button id="sofDirectActionSubmit" type="button">Ajudicate</button>
+        </form>
+        <div id="resultArea_sofDirectAction"></div>
+      </div>
+      <hr>
+      <div id="groundCombat_div">
+        <h2>Ground Combat</h2>
+        <form id="groundCombat" action="">
+          <button id="groundCombatSubmit" type="button">Ajudicate</button>
+        </form>
+        <div id="resultArea_groundCombat"></div>
       </div>
     <footer>
 
