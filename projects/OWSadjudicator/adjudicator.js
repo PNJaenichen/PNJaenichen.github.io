@@ -168,7 +168,34 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   return missile_rolls;
 }
 
-function subAttack(targStep, ASW=[]) {
+function findSub(subDetect, ASW=[false, false, false, {}]) {
+  let ASW_assets = ASW[4];
+  let promo_demo = ASW.slice(0,-1).reduce((acc, a) => acc + a, 0)
+  if (promo_demo > 0) {
+    for (let i = 0; i < promo_demo; i++) {
+      ASW_assets = promoteAll(ASW_assets)
+    }
+  }
+  
+  console.log(promo_demo)
+
+  return false
+}
+
+// ASW [running silent, littoral water, cavitation, sub detection, ASW assets]
+
+function subAttack(targStep, ASW=[0, 0, 0, 8, {}], subDetect, subDef) {
+  if (findSub(8, [-1, -1, 1, {}])) {
+    return 'The sub was found.'
+  }
+  findSub(8, [-1, -1, 1, {}])
+  findSub(8, [-1, -1, 0, {}])
+  findSub(8, [-1, 0, 1, {}])
+  findSub(8, [0, -1, 1, {}])
+  findSub(8, [0, 0, 1, {}])
+  findSub(8, [0, -1, 0, {}])
+  findSub(8, [-1, 0, 0, {}])
+  findSub(8, [0, 0, 0, {}])
   return `The target has ${targStep} ${targStep === 1 ? 'step' : 'steps'}`
 }
 
