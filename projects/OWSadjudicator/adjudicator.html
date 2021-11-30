@@ -13,11 +13,11 @@
     <main>
       <h1>OWS Adjudication Aid</h1>
       <hr>
-      <div id="surfaceStrike_div">
-        <h2>Surface Strikes</h2>
+      <div id="Strike_div">
+        <h2>Surface/Air Strikes</h2>
         <form id="surfaceStrike" action="">
           <p id="surfStrkDesc">
-            Utilize the following tool for adjudicated surface strikes. This
+            Utilize the following tool for adjudicated surface-to-surface and air-to-surface strikes. This
             tool was created utizliing the OWS 1.7 ruleset.
           </p>
           <fieldset>
@@ -173,12 +173,79 @@
         <div id="resultArea_torpedo"></div> 
       </div>
       <hr>
-      <div id="airStrike_div">
-        <h2>Air Strike</h2>
-        <form id="airStrike" action="">
-          <button id="airStrikeSubmit" type="button">Ajudicate</button>
+      <div id="surfToAir_div">
+        <h2>Surface-To-Air Attack</h2>
+        <form id="samStrike" action="">
+          <p id="samAttDesc">
+            Utilize the following tool for adjudicated Surface-To-Air Strikes.
+            This tool was created utilizing the OWS 1.7 ruleset.
+          </p>
+          <fieldset>
+            <label>SAM Assets:</label>
+            <br>
+            <label id="SAM_asset_one_label" for="SAM_asset_one">SAM Type 1</label>
+            <select id="SAM_asset_one">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+            <label id="SAM_asset_one_tot_label" for="SAM_asset_one_total">Total</label>
+            <input id="SAM_asset_one_total" type="number" min=0 max=10 placeholder=0>
+            <br>
+            <label id="SAM_asset_two_label" for="SAM_asset_two">SAM Type 2</label>
+            <select id="SAM_asset_two">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+            <label id="SAM_asset_two_tot_label" for="SAM_asset_two_total">Total</label>
+            <input id="SAM_asset_two_total" type="number" min=0 max=10 placeholder=0>
+            <br>
+            <label id="SAM_asset_three_label" for="SAM_asset_three">SAM Type 3</label>
+            <select id="SAM_asset_three">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+            <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
+            <input id="SAM_asset_three_total" type="number" min=0 max=10 placeholder=0>
+          </fieldset>
+          <fieldset>
+            <label>Aircraft:</label>
+            <br>
+            <label id="ac_asset_one_label" for="ac_asset_one">Aircraft Defense 1</label>
+            <input id="ac_asset_one" type="number" min=0 max=10 placeholder=0>
+            <label id="ac_asset_one_tot_label" for="ac_asset_one_total">Total</label>
+            <input id="ac_asset_one_total" type="number" min=0 max=10 placeholder=0>
+            <br>
+            <label id="ac_asset_two_label" for="ac_asset_two">Aircraft Defense 2</label>
+            <input id="ac_asset_two" type="number" min=0 max=10 placeholder=0>
+            <label id="ac_asset_two_tot_label" for="ac_asset_two_total">Total</label>
+            <input id="ac_asset_two_total" type="number" min=0 max=10 placeholder=0>
+            <br>
+            <label id="ac_asset_three_label" for="ac_asset_three">Aircraft Defense 3</label>
+            <input id="ac_asset_three" type="number" min=0 max=10 placeholder=0>
+            <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
+            <input id="SAM_asset_three_total" type="number" min=0 max=10 placeholder=0>
+          </fieldset>
+          <button id="samStrikeSubmit" type="button">Ajudicate</button>
         </form>
-        <div id="resultArea_airStrike"></div>
+        <div id="resultArea_samStrike"></div>
       </div>
       <hr>
       <div id="airToAir_div">

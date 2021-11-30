@@ -261,15 +261,31 @@ document.getElementById('torpedoSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_torpedo').innerText = subAttackResults();
 }, false);
 
-
 /* 
   Surface to Air
 
   Missiles vs Aircraft
 */
 
-document.getElementById('airStrikeSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_airStrike').innerText = 'Nothing here yet you fool!';
+function samAttackResults() {
+  const sam_assets = {}
+  const aircraft = {}
+  for (let user_input of ['SAM_asset_one', 'SAM_asset_two', 'SAM_asset_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
+      sam_assets[parseInt(document.getElementById(user_input).value)] = parseInt(document.getElementById(user_input + '_total').value);
+    }
+  }
+  for (let user_input of ['ac_asset_one', 'ac_asset_two', 'ac_asset_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
+      aircraft[parseInt(document.getElementById(user_input).value)] = parseInt(document.getElementById(user_input + '_total').value);
+    }
+  }
+  console.log(sam_assets, aircraft);
+  return 'Still Working';
+}
+
+document.getElementById('samStrikeSubmit').addEventListener('click', () => {
+  document.getElementById('resultArea_samStrike').innerText = samAttackResults();
 }, false);
 
 /*
