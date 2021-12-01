@@ -281,7 +281,13 @@ function samAttackResults() {
     }
   }
   console.log(sam_assets, aircraft);
-  return 'Still Working';
+  const all_results = [];
+  for (const [key, value] of Object.entries(sam_assets)) {
+    for (let i = 0; i < value; i++) {
+      all_results.push(dieRoller(key))
+    }
+  }
+  return all_results;
 }
 
 document.getElementById('samStrikeSubmit').addEventListener('click', () => {
