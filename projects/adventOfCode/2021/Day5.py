@@ -28,8 +28,8 @@ def build_map(x, y):
     main_map.append(row)
   return main_map
 
-with open('day5test.txt') as coords:
-# with open('day5.txt') as coords:
+# with open('day5test.txt') as coords:
+with open('day5.txt') as coords:
   lines = []
   for i in coords.readlines():
     lines.append(tuple_coord(i.strip().split(' -> ')))
@@ -44,15 +44,12 @@ for line in lines:
   if x_start != x_end and y_start != y_end:
     adjust_x = 1 if (line[0][0] - line[1][0]) < 0 else -1
     adjust_y = 1 if (line[0][1] - line[1][1]) < 0 else -1
-    xs = range(line[0][0], line[1][0], adjust_x)
-    ys = range(line[0][1], line[1][1], adjust_y)
-    print(line, xs, ys)
-
-
- # 8,0 .. 7,1 .. 6,2 .. 5,3 .. 4,4 .. 3,5 .. 2,6 .. 1,7 .. 0,8
- # 6,4 .. 5,3 .. 4,2 .. 3,1 .. 2,0
- # 0,0 .. 1,1 .. 2,2 .. 3,3 .. 4,4 .. 5,5 .. 6,6 .. 7,7 .. 8,8
- # 5,5 .. 6,4 .. 7,3 .. 8,2       
+    xs = [*range(line[0][0], line[1][0], adjust_x)]
+    ys = [*range(line[0][1], line[1][1], adjust_y)]
+    xs.append(line[1][0])
+    ys.append(line[1][1])
+    for i in range(0, len(xs)):
+      board[ys[i]][xs[i]] += 1
   elif x_start == x_end:
     for i in range(y_start, y_end + 1):
       board[i][x_start] += 1
@@ -62,7 +59,7 @@ for line in lines:
 
 # print(lines)
 # for row in board:
-#   print(row)
+  # print(row)
 
 danger_count = 0
 for row in board:
