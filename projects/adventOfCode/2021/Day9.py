@@ -1,52 +1,55 @@
 import numpy as np
 
+def get_low(row, col, ar):
+  cur_value = ar[row][col]
+  if cur_value == 9:
+    return False
+  else:
+    if cur_value > ar[row - 1][col] or cur_value > ar[row][col + 1] or cur_value > ar[row + 1][col] or cur_value > ar[row][col - 1]:
+      return False
+  return True
+
+def find_basin(row, col, ar):
+  cur_value = ar[row][col]
+  if cur_value == 9:
+    return 0
+  else:
+    to_check = []
+    orthog = [(-1, 0), (0, 1), (-1, 0), (0, -1)]
+    for dir in orthog:
+      if cur_value == 1 + ar[row + dir[0]][col + dir[1]]:
+        to_check.append((row + dir[0], col + dir[1]))
+    if len(to_check) == 0:
+      return 1
+    
+
 lines = '''
-2199943210
-3987894921
-9856789892
-8767896789
-9899965678
+921999432109
+939878949219
+998567898929
+987678967899
+998999656789
 '''.split()
+
+lines = list(map(lambda x: [int(char) for char in x], lines))
 
 # with open('day9.txt') as map:
 #   lines = []
 #   for i in map.readlines():
-#     lines.append(i.strip())
+#     lines.append([int(char) for char in ('9' + i.strip() + '9')])
 
-def check_low(row, col, height, width, ar):
-  cur_value = int(ar[row][col])
-  if col == width - 1:
-    if cur_value >= int(lines[row][col - 1]):
-      return False
-  elif col == 0:
-    if cur_value >= int(lines[row][col + 1]):
-      return False
-  else:
-    if cur_value >= int(lines[row][col - 1]) or cur_value >= int(lines[row][col + 1]):
-      return False
-  if row == 0:
-    if cur_value >= int(lines[row + 1][col]):
-      return False
-  elif row == height - 1:
-    if cur_value >= int(lines[row - 1][col]):
-      return False
-  else:
-    if cur_value >= int(lines[row - 1][col]) or cur_value >= int(lines[row + 1][col]):
-      return False
-  return True
-  
-map_height = len(lines)
-map_width = len(lines[0])
-low_points = []
+first_last = []
+for i in range(0, len(lines[0])):
+  first_last.append(9)
+lines.insert(0, first_last)
+lines.append(first_last)
+nparray = np.array(lines)
+new_lows = []
 
-for i in range(0,map_height):
-  for j in range(0,map_width):
-    cur_value = int(lines[i][j])
-    if check_low(i, j, map_height, map_width, lines):
-      low_points.append(cur_value)
+for i in range(0, len(nparray)):
+  for j in range(0, len(nparray[0])):
+    if get_low(i, j, nparray):
+      new_lows.append(nparray[i][j])
 
-print(f'The risk value is {sum(low_points) + len(low_points)}.')
+print(f'Their are {len(new_lows)} low points are for a risk value of {sum(new_lows) + len(new_lows)}.')
 
-nparray = np.array(list(map(lambda x: [char for char in x], lines)))
-
-print(nparray)
