@@ -11,3 +11,6 @@ for line in lines:
     print(f"There are {line.count('[')} ['s and {line.count(']')} ]'s ")
     print(f"There are {line.count('{')} left brackets and {line.count('}')} right brackets ")
     print(f"There are {line.count('<')} <'s and {line.count('>')} >'s ")
+  
+for char in lines[0]:
+  None

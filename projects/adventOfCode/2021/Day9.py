@@ -19,7 +19,7 @@ def find_basin(row, col, ar):
     to_check = []
     orthog = [(-1, 0), (0, 1), (1, 0), (0, -1)]
     for dir in orthog:
-      if (cur_value + 1) == ar[row + dir[0]][col + dir[1]] and (cur_value + 1) != 9:
+      if (cur_value) < ar[row + dir[0]][col + dir[1]] and ar[row + dir[0]][col + dir[1]] != 9:
         to_check.append((row + dir[0], col + dir[1]))
     if len(to_check) == 0:
       return (row,col)
@@ -71,8 +71,4 @@ print(f'Their are {len(new_lows)} low points are for a risk value of {sum(new_lo
 basin_sizes_sorted = sorted(basin_sizes, reverse=True)
 large_basin_product = basin_sizes_sorted[0] * basin_sizes_sorted[1] * basin_sizes_sorted[2]
 
-print(basin_sizes_sorted)
-
-print(large_basin_product)
-
-# 734096 is too low, the correct answer is 1235430 ... so figure that one out
+print(f'The product of the three largest basin sizes is {large_basin_product}')
