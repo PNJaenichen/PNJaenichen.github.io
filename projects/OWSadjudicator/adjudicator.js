@@ -1,3 +1,5 @@
+// Dice functions for all tools
+
 function demoteAll(missiles) {
   if (missiles['4']) {
     delete missiles['4'];
@@ -104,6 +106,8 @@ function dieRoller(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
 
+// Surface to Surface and Air to Surface Strikes
+
 function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   let missiles = incoming;
   let total_sm = 0;
@@ -194,6 +198,8 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_strike').innerText = getStrikeResults();
   }, false);
 
+// Torpedo Attack Tool
+
 function findSub(subDetect, ASW=[0, 0, 0, {}]) {
   let ASW_assets = ASW[3];
   let promo_demo = ASW.slice(0,-1).reduce((acc, a) => acc + a, 0);
@@ -261,11 +267,7 @@ document.getElementById('torpedoSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_torpedo').innerText = subAttackResults();
 }, false);
 
-/* 
-  Surface to Air
-
-  Missiles vs Aircraft
-*/
+// Surface to Air Attack Tool
 
 function samAttackResults() {
   const sam_assets = {}
@@ -304,14 +306,27 @@ document.getElementById('airToAirSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_airToAir').innerText = 'Still working on this one too!';
 }, false);
 
-/*
-  SOF Direct Action
+// SOF Direct Action Tool
 
-  Roll for detection, if not detected, roll for direct action
-*/
+function SOFDirectAction() {
+  const detection_roll = dieRoller(parseInt(document.getElementById('sofDA_detect_roll').value))
+  if (detection_roll >= parseInt(document.getElementById('sofDA_ISR_value').value)) {
+    return [`With a roll of ${detection_roll} the Unit was discovered`]
+  } else {
+    const attack_value = parseInt(document.getElementById('sofDA_att').value)
+    const attack_roll = dieRoller(attack_value)
+    if (attack_roll >= parseInt(document.getElementById('sofDA_def').value)) {
+      if (attack_roll === attack_value) {
+        return "Two hits were scored!"
+      } 
+      return "One hit was scored."
+    }
+  }
+  return "The attack was unsuccessful"
+}
 
 document.getElementById('sofDirectActionSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_sofDirectAction').innerText = 'Got you again, moron!';
+  document.getElementById('resultArea_sofDirectAction').innerText = SOFDirectAction();
 }, false);
 
 /*
@@ -320,6 +335,51 @@ document.getElementById('sofDirectActionSubmit').addEventListener('click', () =>
 
 */
 
+function getAttackerModifiers() {
+  let att_modi = 0
+  const att_axis = Array.from(document.getElementsByName('att_ax')).find(radio => radio.checked);
+  switch (att_axis.value) {
+    case 'ax2':
+      att_modi += 1
+      break;
+    case 'ax3':
+      att_modi += 2
+      break;
+    default:
+      break;
+  }
+  att_modi = document.getElementById('grndCom_att_CAS').value ? att_modi += parseInt(document.getElementById('grndCom_att_CAS').value) : att_modi;
+  att_modi = document.getElementById('grndCom_att_FS').value ? att_modi += parseInt(document.getElementById('grndCom_att_FS').value) : att_modi;
+  att_modi = document.getElementById('grndCom_att_defender').checked ? att_modi += 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_main_effort').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_SIGINTEMSO').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_disruptC2').checked ? att_modi -= 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_suppress').checked ? att_modi -= 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_rsoi').checked ? att_modi -= 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_rivCross').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_airAslt').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_ampAslt').checked ? att_modi -= 2 : att_modi;
+  return att_modi
+}
+
+function getDefenderModifiers() {
+  let def_modi = 0
+  def_modi = document.getElementById('grndCom_def_CAS').value ? def_modi += parseInt(document.getElementById('grndCom_def_CAS').value) : 0;
+  def_modi = document.getElementById('grndCom_def_FS').value ? def_modi += parseInt(document.getElementById('grndCom_def_FS').value) : 0;
+  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi += 2 : 0;
+  def_modi = document.getElementById('grndCom_def_suppress').checked ? def_modi += 1 : 0;
+  def_modi = document.getElementById('grndCom_att_rsoi').checked ? def_modi += 1 : 0;
+  def_modi = document.getElementById('grndCom_att_airAslt').checked ? def_modi += 2 : 0;
+  def_modi = document.getElementById('grndCom_att_ampAslt').checked ? def_modi += 2 : 0;
+  return def_modi
+}
+
+function groundPromoDemo() {
+  const att_mod = getAttackerModifiers();
+  const def_mod = getDefenderModifiers();
+  return att_mod - def_mod
+}
+
 document.getElementById('groundCombatSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_groundCombat').innerText = 'Certainly hope I remember to fix this.';
+  document.getElementById('resultArea_groundCombat').innerText = groundPromoDemo();
 }, false);
