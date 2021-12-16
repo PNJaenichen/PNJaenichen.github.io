@@ -102,6 +102,48 @@ function demoteOne(missiles) {
   return missiles
 }
 
+function promoteOne(missiles) {
+  let dice = Object.keys(missiles).map(x => parseInt(x));
+  let low_missile = dice[0];
+  if (missiles[low_missile] === 0) {
+    if (dice.length > 1) {
+      delete missiles[low_missile];
+      low_missile = dice[1];
+    } else if (dice.length === 1) {
+      missiles[low_missile] += 1;
+      return missiles;
+    }
+  }
+  switch (low_missile) {
+    case 20:
+      break;
+    case 16:
+      missiles.hasOwnProperty(20) ? missiles[20] += 1 : missiles[20] = 1;
+      missiles[16] === 1 ? delete missiles[16] : missiles[16] -= 1;
+      break;
+    case 12:
+      missiles.hasOwnProperty(16) ? missiles[16] += 1 : missiles[16] = 1;
+      missiles[12] === 1 ? delete missiles[12] : missiles[12] -= 1;
+      break;
+    case 10:
+      missiles.hasOwnProperty(12) ? missiles[12] += 1 : missiles[12] = 1;
+      missiles[10] === 1 ? delete missiles[10] : missiles[10] -= 1;
+      break;
+    case 8:
+      missiles.hasOwnProperty(10) ? missiles[10] += 1 : missiles[10] = 1;
+      missiles[8] === 1 ? delete missiles[8] : missiles[8] -= 1;
+      break;
+    case 6:
+      missiles.hasOwnProperty(8) ? missiles[8] += 1 : missiles[8] = 1;
+      missiles[6] === 1 ? delete missiles[6] : missiles[6] -= 1;
+      break;
+    default:
+      missiles.hasOwnProperty(6) ? missiles[6] += 1 : missiles[6] = 1;
+      missiles[4] === 1 ? delete missiles[4] : missiles[4] -= 1;
+  }
+  return missiles
+}
+
 function dieRoller(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
@@ -317,23 +359,19 @@ function SOFDirectAction() {
     const attack_roll = dieRoller(attack_value)
     if (attack_roll >= parseInt(document.getElementById('sofDA_def').value)) {
       if (attack_roll === attack_value) {
-        return "Two hits were scored!"
+        return [detection_roll, attack_roll, "Two hits were scored!"]
       } 
-      return "One hit was scored."
+      return [detection_roll, attack_roll, "One hit was scored."]
     }
+    return [detection_roll, attack_roll, "The attack was unsuccessful"]
   }
-  return "The attack was unsuccessful"
 }
 
 document.getElementById('sofDirectActionSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_sofDirectAction').innerText = SOFDirectAction();
 }, false);
 
-/*
-  Ground Combat
-
-
-*/
+// Ground Combat
 
 function getAttackerModifiers() {
   let att_modi = 0
@@ -364,22 +402,88 @@ function getAttackerModifiers() {
 
 function getDefenderModifiers() {
   let def_modi = 0
-  def_modi = document.getElementById('grndCom_def_CAS').value ? def_modi += parseInt(document.getElementById('grndCom_def_CAS').value) : 0;
-  def_modi = document.getElementById('grndCom_def_FS').value ? def_modi += parseInt(document.getElementById('grndCom_def_FS').value) : 0;
-  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi += 2 : 0;
-  def_modi = document.getElementById('grndCom_def_suppress').checked ? def_modi += 1 : 0;
-  def_modi = document.getElementById('grndCom_att_rsoi').checked ? def_modi += 1 : 0;
-  def_modi = document.getElementById('grndCom_att_airAslt').checked ? def_modi += 2 : 0;
-  def_modi = document.getElementById('grndCom_att_ampAslt').checked ? def_modi += 2 : 0;
+  def_modi = document.getElementById('grndCom_def_CAS').value ? def_modi += parseInt(document.getElementById('grndCom_def_CAS').value) : def_modi;
+  def_modi = document.getElementById('grndCom_def_FS').value ? def_modi += parseInt(document.getElementById('grndCom_def_FS').value) : def_modi;
+  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_suppress').checked ? def_modi += 1 : def_modi;
+  def_modi = document.getElementById('grndCom_att_rsoi').checked ? def_modi += 1 : def_modi;
+  def_modi = document.getElementById('grndCom_att_airAslt').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_att_ampAslt').checked ? def_modi += 2 : def_modi;
   return def_modi
 }
 
+const grnd_abacus = {
+  '5': {'open': 3, 'light': 2, 'urban': 1, 'durban': 1},
+  '4': {'open': 2, 'light': 1, 'urban': 1, 'durban': 0},
+  '3': {'open': 1, 'light': 1, 'urban': 0, 'durban': -1},
+  '2': {'open': 1, 'light': 0, 'urban': -1, 'durban': -1},
+  '1': {'open': 0, 'light': -1, 'urban': -1, 'durban': -2},
+  '0': {'open': -1, 'light': -2, 'urban': -2, 'durban': -3},
+  '-1/2': {'open': -1, 'light': -2, 'urban': -3, 'durban': -3},
+  '-3': {'open': -2, 'light': -3, 'urban': -4, 'durban': -4},
+}
+
 function groundPromoDemo() {
+  const terrain_type = document.getElementById('grndCom_terr').value;
   const att_mod = getAttackerModifiers();
   const def_mod = getDefenderModifiers();
-  return att_mod - def_mod
+  const advantage = att_mod - def_mod;
+  let adjustments = 0;
+  if (advantage >= 5) {
+    adjustments = grnd_abacus['5'][terrain_type]
+  } else if (advantage <= -3) {
+    adjustments = grnd_abacus['-3'][terrain_type]
+  } else {
+    switch (advantage) {
+      case 4:
+        adjustments = grnd_abacus['4'][terrain_type]
+        break;
+      case 3:
+        adjustments = grnd_abacus['3'][terrain_type]
+        break;
+      case 2:
+        adjustments = grnd_abacus['2'][terrain_type]
+        break;
+      case 1:
+        adjustments = grnd_abacus['1'][terrain_type]
+        break;
+      case -1:
+      case -2:
+        adjustments = grnd_abacus['-1/2'][terrain_type]
+        break;
+      default:
+        adjustments = grnd_abacus['-0'][terrain_type]
+        break;
+    }
+  }
+  return adjustments
+}
+
+function conductGroundAttack() {
+  let attk_dice = {};
+  let adj = groundPromoDemo();
+  const defense = document.getElementById('grndCom_def_val').value ? parseInt(document.getElementById('grndCom_def_val').value) : 0;
+  const attk_val = document.getElementById('grndCom_att_dice').value;
+  const attk_tot = parseInt(document.getElementById('grndCom_att_dice_tot').value);
+  attk_dice[attk_val] = attk_tot;
+  if (adj > 0) {
+    for (let i = 0; i < adj; i++) {
+      promoteAll(attk_dice); 
+    }
+  } else if (adj < 0) {
+    for (let i = adj; i < 0; i++) {
+      demoteAll(attk_dice);
+    }
+  }
+  let attk_rolls = []
+  for (const [key, value] of Object.entries(attk_dice)) {
+    for (let i = 0; i < value; i++) {
+      attk_rolls.push(dieRoller(key))
+    }
+  }
+  return attk_rolls.length > 0 ? attk_rolls.filter(x => x >= defense) : 'No Hits';
 }
 
 document.getElementById('groundCombatSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_groundCombat').innerText = groundPromoDemo();
+  document.getElementById('resultArea_groundCombat').innerText = conductGroundAttack();
 }, false);
