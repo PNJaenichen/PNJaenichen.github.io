@@ -101,7 +101,7 @@ function demoteOne(missiles) {
   }
   return missiles
 }
-
+/*
 function promoteOne(missiles) {
   let dice = Object.keys(missiles).map(x => parseInt(x));
   let low_missile = dice[0];
@@ -143,7 +143,7 @@ function promoteOne(missiles) {
   }
   return missiles
 }
-
+*/
 function dieRoller(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
@@ -344,8 +344,55 @@ document.getElementById('samStrikeSubmit').addEventListener('click', () => {
   Air vs. Air, simultaneous attacks
 */
 
+const dash_number = ['one', 'two', 'three', 'four', 'five'];
+
+function getAircraft(side) {
+  let flight = []
+  for (const number of dash_number) {
+    const atk_value = document.getElementById(`${side}_aaw_${number}_atk`).value;
+    const def_value = parseInt(document.getElementById(`${side}_aaw_${number}_def`).value);
+    const target = parseInt(document.getElementById(`${side}_aaw_${number}_targ`).value);
+    if (atk_value) {
+      flight.push([atk_value, def_value, target])
+    }
+  }
+  return flight
+}
+
+function furball() {
+  const blue_victories = []
+  const red_victories = []
+  const blue_aircraft = getAircraft('blue');
+  const red_aircraft = getAircraft('red');
+  for (const attacker of blue_aircraft) {
+    if (attacker[0] === 0) {
+      continue
+    } else {
+      const attk_roll = dieRoller(attacker[0])
+      if (attk_roll > red_aircraft[attacker[attacker[2] - 1]][1]) {
+        blue_victories.push(`Red A/C ${attacker[2]} was destroyed (${attk_roll})`)
+      } else {
+        blue_victories.push('Blue missed its target')
+      }
+    }
+  }
+  for (const attacker of red_aircraft) {
+    if (attacker[0] === 0) {
+      continue 
+    } else {
+      const attk_roll = dieRoller(attacker[0])
+      if (attk_roll > blue_aircraft[attacker[attacker[2] - 1]][1]) {
+        red_victories.push(`Blue A/C ${attacker[2]} was destroyed (${attk_roll})`)
+      } else {
+        red_victories.push('Red missed its target')
+      }
+    }
+  }
+  return `${blue_victories} vs. ${red_victories}`
+}
+
 document.getElementById('airToAirSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_airToAir').innerText = 'Still working on this one too!';
+  document.getElementById('resultArea_airToAir').innerText = furball();
 }, false);
 
 // SOF Direct Action Tool
@@ -372,6 +419,11 @@ document.getElementById('sofDirectActionSubmit').addEventListener('click', () =>
 }, false);
 
 // Ground Combat
+
+/* 
+  NEED TO ADD BRIGADE COMBAT RULE, remove a brigade die to upgrade another (3 D6 could be
+  a D6 and D8 or it could be a single D10 for example)
+*/ 
 
 function getAttackerModifiers() {
   let att_modi = 0
