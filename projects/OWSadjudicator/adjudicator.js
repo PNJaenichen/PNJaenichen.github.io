@@ -101,7 +101,7 @@ function demoteOne(missiles) {
   }
   return missiles
 }
-/*
+
 function promoteOne(missiles) {
   let dice = Object.keys(missiles).map(x => parseInt(x));
   let low_missile = dice[0];
@@ -114,6 +114,7 @@ function promoteOne(missiles) {
       return missiles;
     }
   }
+  console.log(low_missile)
   switch (low_missile) {
     case 20:
       break;
@@ -143,7 +144,7 @@ function promoteOne(missiles) {
   }
   return missiles
 }
-*/
+
 function dieRoller(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
@@ -369,7 +370,8 @@ function furball() {
       continue
     } else {
       const attk_roll = dieRoller(attacker[0])
-      if (attk_roll > red_aircraft[attacker[attacker[2] - 1]][1]) {
+      console.log(red_aircraft[attacker[2] - 1])
+      if (attk_roll > red_aircraft[attacker[2] - 1][1]) {
         blue_victories.push(`Red A/C ${attacker[2]} was destroyed (${attk_roll})`)
       } else {
         blue_victories.push('Blue missed its target')
@@ -381,7 +383,7 @@ function furball() {
       continue 
     } else {
       const attk_roll = dieRoller(attacker[0])
-      if (attk_roll > blue_aircraft[attacker[attacker[2] - 1]][1]) {
+      if (attk_roll > blue_aircraft[attacker[2] - 1][1]) {
         red_victories.push(`Blue A/C ${attacker[2]} was destroyed (${attk_roll})`)
       } else {
         red_victories.push('Red missed its target')
@@ -504,7 +506,7 @@ function groundPromoDemo() {
         adjustments = grnd_abacus['-1/2'][terrain_type]
         break;
       default:
-        adjustments = grnd_abacus['-0'][terrain_type]
+        adjustments = grnd_abacus['0'][terrain_type]
         break;
     }
   }
@@ -514,6 +516,7 @@ function groundPromoDemo() {
 function conductGroundAttack() {
   let attk_dice = {};
   let adj = groundPromoDemo();
+  const brg_tact = document.getElementById('grndCom_brg_tact').value ? parseInt(document.getElementById('grndCom_brg_tact').value) : 0;
   const defense = document.getElementById('grndCom_def_val').value ? parseInt(document.getElementById('grndCom_def_val').value) : 0;
   const attk_val = document.getElementById('grndCom_att_dice').value;
   const attk_tot = parseInt(document.getElementById('grndCom_att_dice_tot').value);
@@ -527,6 +530,12 @@ function conductGroundAttack() {
       demoteAll(attk_dice);
     }
   }
+  if (brg_tact > 0) {
+    for (let i = 0; i < brg_tact; i++) {
+      promoteOne(attk_dice);
+    }
+  }
+  console.log(attk_dice)
   let attk_rolls = []
   for (const [key, value] of Object.entries(attk_dice)) {
     for (let i = 0; i < value; i++) {
