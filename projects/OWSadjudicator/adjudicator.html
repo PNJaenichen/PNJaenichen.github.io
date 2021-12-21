@@ -16,6 +16,99 @@
     <main>
       <h1>OWS Adjudication Aid</h1>
       <hr>
+      <div id="general_roller_div">
+        <h2>General Dice Roller</h2>
+        <form id='general_roller' action=''>
+          <p id='general_roller_desc'>
+            Utilize the following tool for conducting any general dice rolls.
+          </p>
+          <fieldset>
+            <label>Die Value:</label>
+            <select id="general_value">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+            <br>
+            <label id="gen_total_label" for="gen_total">Number of Dice:</label>
+            <input id="gen_total" type="number" min=0 max=10 placeholder=0>
+          </fieldset>
+          <button id="generalSubmit" type="button">Ajudicate</button>
+          <div id='resultArea_general'></div>
+        </form>
+      </div>
+      <div id="theater_ISR_div">
+        <h2>Theater and Local ISR</h2>
+        <form id='theaterISR' action=''>
+          <p id='theatherISRDesc'>
+            Utilize the following tool for adjudicating Theater and Local level ISR. This tool was created 
+            utilizing the OWS 1.7 ruleset.
+          </p>
+          <fieldset>
+            <label>ISR Value:</label>
+            <select id="isr_value">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+            <br>
+            <label id="isr_detect_label" for="isr_detect">Detection Value</label>
+            <input id="isr_detect" type="number" min=0 max=10 placeholder=0>
+            <br>
+            <label><input id="isr_assuredC2" type="checkbox">Assured C2</label>
+            <label><input id="isr_disruptC2_d8" type="checkbox">Disrupt C2 (d8)</label>
+            <label><input id="isr_disruptC2_d10" type="checkbox">Disrupt C2 (d10)</label>
+            <label><input id="isr_SIGINT_EMSO" type="checkbox">SIGINT/EMSO</label>
+            <label><input id="isr_countermeasures" type="checkbox">Active/Passive CMs</label>
+          </fieldset>
+        <button id="isrSubmit" type="button">Ajudicate</button>
+        </form>
+        <div id='resultArea_theaterISR'></div>
+      </div>
+      <div id='ASW_div'>
+        <h2>ASW</h2>
+        <p>
+          Utilize the following tool for adjudicating ASW detections. This tool was created utilizing
+          the OWS 1.7 ruleset.
+        </p>
+        <form id='ASW' action=''>
+          <fieldset>
+            <label>ASW Value:</label>
+            <select id="asw_value">
+              <option value="">Die Value</option>
+              <option value=4>D4</option>
+              <option value=6>D6</option>
+              <option value=8>D8</option>
+              <option value=10>D10</option>
+              <option value=12>D12</option>
+              <option value=16>D16</option>
+              <option value=20>D20</option>
+            </select>
+            <br>
+            <label id="asw_detect_label" for="asw_detect">Detection Value</label>
+            <input id="asw_detect" type="number" min=0 max=10 placeholder=0>
+            <br>
+            <label><input id="asw_littoral" type="checkbox">Littoral Waters</label>
+            <label><input id="asw_runningSilent" type="checkbox">Running Silent</label>
+            <label><input id="asw_cavitation" type="checkbox">Cavitation</label>
+            <label><input id="asw_multiAssets" type="checkbox">Multiple ASW Assets</label>
+            <br>
+          </fieldset>
+          <button id="aswSubmit" type="button">Ajudicate</button>
+        </form>
+        <div id='resultArea_ASW'></div>
+      </div>
+      <hr>
       <div id="Strike_div">
         <h2>Surface/Air Strikes</h2>
         <form id="surfaceStrike" action="">
@@ -631,7 +724,6 @@
         <div id="resultArea_groundCombat"></div>
       </div>
     <footer>
-
     </footer>
   </body>
   <script src="adjudicator.js" defer></script>

@@ -46,7 +46,7 @@ function promoteAll(missiles) {
   }
   if (missiles['8']) {
     missiles['10'] = missiles['8'];
-    delete missiles['12'];
+    delete missiles['8'];
   }
   if (missiles['6']) {
     missiles['8'] = missiles['6'];
@@ -62,6 +62,9 @@ function promoteAll(missiles) {
 function demoteOne(missiles) {
   let dice = Object.keys(missiles).map(x => parseInt(x)).reverse();
   let high_missile = dice[0]
+  if (dice.length === 0) {
+    return missiles
+  }
   if (missiles[high_missile] === 0) {
     if (dice.length > 1) {
       delete missiles[high_missile];
@@ -114,7 +117,6 @@ function promoteOne(missiles) {
       return missiles;
     }
   }
-  console.log(low_missile)
   switch (low_missile) {
     case 20:
       break;
@@ -141,6 +143,28 @@ function promoteOne(missiles) {
     default:
       missiles.hasOwnProperty(6) ? missiles[6] += 1 : missiles[6] = 1;
       missiles[4] === 1 ? delete missiles[4] : missiles[4] -= 1;
+  }
+  return missiles
+}
+
+function removeLow(missiles) {
+  let dice = Object.keys(missiles).map(x => parseInt(x));
+  let low_missile = dice[0];
+  if (missiles[low_missile] === 0) {
+    if (dice.length > 1) {
+      delete missiles[low_missile];
+      low_missile = dice[1];
+    } else if (dice.length === 1) {
+      if (missiles[low_missile] === 1) {
+        delete missiles[low_missile];
+        low_missile = dice[1]
+      } else {
+        missiles[low_missile] -= 1;
+      }
+    }
+  }
+  if (missiles[low_missile] >= 1) {
+    missiles[low_missile] -= 1;
   }
   return missiles
 }
@@ -176,41 +200,43 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
   for (let i = 0; i < (total_sm - total_inbound); i++) {
     demoteOne(missiles)
   }
-  const missile_rolls = []
+  const missile_rolls = [];
   if (defense.length === 1) {
     for (const [key, value] of Object.entries(missiles)) {
       for (let i = 0; i < value; i++) {
         missile_rolls.push(dieRoller(key))
       }
     }
-    return missile_rolls.filter(x => x >= defense[0])
+    return [missiles, missile_rolls, missile_rolls.filter(x => x >= defense[0])]
   } else {
-      let def_sm = defense.slice(1);
-      let def_rolls = []
-      for (let [key, value] of [...def_sm]) {
-        for (let i = 0; i < value; i++) {
-          def_rolls.push(key)
-        }
+    let def_sm = defense.slice(1);
+    let def_rolls = []
+    for (let [key, value] of [...def_sm]) {
+      for (let i = 0; i < value; i++) {
+        def_rolls.push(key)
       }
-      const miss_diff = total_inbound - def_rolls.length
-      if (def_rolls.length < total_inbound) {
-        for (let i = 0; i < miss_diff; i++) {
-          def_rolls.push(defense[0])
-        }
+    }
+    const miss_diff = total_inbound - def_rolls.length
+    if (def_rolls.length < total_inbound) {
+      for (let i = 0; i < miss_diff; i++) {
+        def_rolls.push(defense[0])
       }
-      def_rolls.reverse()
-      let def_sm_track = 0;
-      for (const [key, value] of Object.entries(missiles)) {
-        for (let i = 0; i < value; i++) {
-          let in_result = (dieRoller(key))
-          if (in_result >= def_rolls[def_sm_track]) {
-            missile_rolls.push(in_result)
-          }
-          def_sm_track += 1;
+    }
+    def_rolls.reverse()
+    const all_rolls = []
+    let def_sm_track = 0;
+    for (const [key, value] of Object.entries(missiles)) {
+      for (let i = 0; i < value; i++) {
+        let in_result = (dieRoller(key));
+        all_rolls.push(in_result);
+        if (in_result >= def_rolls[def_sm_track]) {
+          missile_rolls.push(in_result)
         }
+        def_sm_track += 1;
       }
+    }
+    return [missiles, all_rolls, missile_rolls]
   }
-  return missile_rolls;
 }
 
 function getStrikeResults() {
@@ -234,11 +260,12 @@ function getStrikeResults() {
   if (defense.length > 1) {
     demos += document.getElementById("aew_input").checked ? 2 : 0;
   }
-  return surfaceStrike(inbound, defense, cap, promos, demos)
+  return surfaceStrike(inbound, defense, cap, promos, demos);
 }
 
 document.getElementById('strikeSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_strike').innerText = getStrikeResults();
+  const results = getStrikeResults()
+  document.getElementById('resultArea_strike').innerText = `The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
   }, false);
 
 // Torpedo Attack Tool
@@ -339,11 +366,7 @@ document.getElementById('samStrikeSubmit').addEventListener('click', () => {
   document.getElementById('resultArea_samStrike').innerText = samAttackResults();
 }, false);
 
-/*
-  Air to Air 
-
-  Air vs. Air, simultaneous attacks
-*/
+// Air to Air Combat Tool
 
 const dash_number = ['one', 'two', 'three', 'four', 'five'];
 
@@ -421,11 +444,6 @@ document.getElementById('sofDirectActionSubmit').addEventListener('click', () =>
 }, false);
 
 // Ground Combat
-
-/* 
-  NEED TO ADD BRIGADE COMBAT RULE, remove a brigade die to upgrade another (3 D6 could be
-  a D6 and D8 or it could be a single D10 for example)
-*/ 
 
 function getAttackerModifiers() {
   let att_modi = 0
@@ -532,10 +550,10 @@ function conductGroundAttack() {
   }
   if (brg_tact > 0) {
     for (let i = 0; i < brg_tact; i++) {
-      promoteOne(attk_dice);
+      removeLow(attk_dice)
+      promoteOne(attk_dice)
     }
   }
-  console.log(attk_dice)
   let attk_rolls = []
   for (const [key, value] of Object.entries(attk_dice)) {
     for (let i = 0; i < value; i++) {
