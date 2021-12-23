@@ -99,6 +99,7 @@ for fold in folds:
   if fold[0] == 'y':
     marks = foldHorz(fold[1], marks)
     for coord in marks:
+      print(coord)
       paper[coord[1]][coord[0]] = 1
     paper = np.delete(paper, list(range(fold[1], max_y + 1)), 0)
   if fold[0] == 'x':
