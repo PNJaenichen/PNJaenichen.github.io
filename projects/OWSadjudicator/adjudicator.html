@@ -25,7 +25,6 @@
           <fieldset>
             <label>Die Value:</label>
             <select id="general_value">
-              <option value="">Die Value</option>
               <option value=4>D4</option>
               <option value=6>D6</option>
               <option value=8>D8</option>
@@ -36,7 +35,7 @@
             </select>
             <br>
             <label id="gen_total_label" for="gen_total">Number of Dice:</label>
-            <input id="gen_total" type="number" min=0 max=10 placeholder=0>
+            <input id="gen_total" type="number" min=1 max=10 placeholder=1>
           </fieldset>
           <button id="generalSubmit" type="button">Ajudicate</button>
           <div id='resultArea_general'></div>
@@ -243,10 +242,10 @@
           <input id="torp_target_def" type="number" min=0 max=10 placeholder=0>
           <br>
           <label id="torp_sub_detect_label" for="torp_sub_detect">Sub Detection:</label>
-          <input id="torp_sub_detect" type="number" min=0 max=5 placeholder=0>
+          <input id="torp_sub_detect" type="number" min=0 max=10 placeholder=0>
           <br>
           <label id="torp_sub_def_label" for="torp_sub_def">Sub Defense:</label>
-          <input id="torp_sub_def" type="number" min=0 max=5 placeholder=0>
+          <input id="torp_sub_def" type="number" min=0 max=10 placeholder=0>
           <br>
           <label id="torp_str_label" for="torp_str">Torpedo Strength:</label>
             <select id="torp_str">

@@ -173,6 +173,49 @@ function dieRoller(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
 
+// General Dice Roller
+
+document.getElementById('generalSubmit').addEventListener('click', () => {
+  const die_value = document.getElementById('general_value').value ? document.getElementById('general_value').value : '4';
+  const die_total = document.getElementById('gen_total').value ? parseInt(document.getElementById('gen_total').value) : 1;
+  const die_results = []
+  if (die_value) {
+    for (let i = 0; i < die_total; i++) {
+      die_results.push(dieRoller(die_value))
+    }
+  }
+  document.getElementById('resultArea_general').innerText = `${die_total === 1 ? `One ${die_value}-sided die was` : `${die_total} ${die_value}-sided dice were`} rolled, with the following results: ${die_results}`;
+}, false)
+
+// ASW Tool
+
+function getASWUserInput() {
+  const ASW_value = document.getElementById('asw_value').value;
+  const subDetect = parseInt(document.getElementById('asw_detect').value);
+  const asw = [];
+  asw.push(document.getElementById("asw_runningSilent").checked ? -1 : 0);
+  asw.push(document.getElementById("asw_littoral").checked ? -1 : 0);
+  asw.push(document.getElementById("asw_cavitation").checked ? 1 : 0);
+  asw.push({});
+  asw[3][ASW_value] = 1;
+  return [subDetect, asw]
+}
+
+function singlePing() {
+  let [subDetect, ASW] = getASWUserInput();
+  let [ASW_rolls, subFound] = findSub(subDetect, ASW);
+  if (subFound) {
+    return `The sub was found with a roll of ${ASW_rolls}.`
+  } else {
+    return `The sub was went undetected with a roll of ${ASW_rolls}.`
+  }
+}
+
+document.getElementById('aswSubmit').addEventListener('click', () => {
+  document.getElementById('resultArea_ASW').innerText = singlePing();
+}, false)
+
+
 // Surface to Surface and Air to Surface Strikes
 
 function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
@@ -289,14 +332,14 @@ function findSub(subDetect, ASW=[0, 0, 0, {}]) {
     }
   }
   const checked_results = ASW_rolls.filter(x => x >= subDetect);
-    
-  return checked_results.length > 0
+  return [ ASW_rolls, checked_results.length > 0 ]
 }
 
 function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 8, {}]) {
   let checked_results = [];
-  if (findSub(subDetect, ASW)) {
-    const ASW_attacks = []
+  let [ASW_rolls, subFound] = findSub(subDetect, ASW);
+  const ASW_attacks = []
+  if (subFound) {
     for (const [key, value] of Object.entries(ASW[3])) {
       for (let i = 0; i < value; i++) {
         ASW_attacks.push(dieRoller(key))
@@ -304,13 +347,12 @@ function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 
     }
     checked_results = ASW_attacks.filter(x => x >= subDef);
   }
-  let torp_results =  [];
+  let torp_rolls =  [];
   for (let i = 0; i < targStep; i++) {
-    torp_results.push(dieRoller(torpStr))
+    torp_rolls.push(dieRoller(torpStr))
   }
-  torp_results = torp_results.filter(x => x >= targDef)
-  console.log(checked_results.length > 0 ? 'The sub was destroyed.' : 'The sub survived.')
-  return `${torp_results.length > 0 ? 'The target took ' + torp_results.length + ' hits' : 'The target was not hit'}. ${findSub(8, ASW) ? 'The sub was found.' : 'The sub was undetected.'}`
+  const torp_hits = torp_rolls.filter(x => x >= targDef)
+  return [ASW_rolls, subFound, ASW_attacks, checked_results, torp_rolls, torp_hits]
 }
 
 function subAttackResults() {
@@ -329,17 +371,19 @@ function subAttackResults() {
   const sub_detect = document.getElementById("torp_sub_detect").value ? parseInt(document.getElementById("torp_sub_detect").value) : 0;
   const sub_def = document.getElementById("torp_sub_def").value ? parseInt(document.getElementById("torp_sub_def").value) : 0;
   const torp_str = document.getElementById("torp_str").value ? parseInt(document.getElementById("torp_str").value) : 0;
-  console.log(target_steps, target_def, sub_detect, sub_def, torp_str, asw);
-  return subAttack(target_steps, target_def, sub_detect, sub_def, torp_str, asw);
+  return subAttack(target_steps, target_def, sub_detect, torp_str, sub_def, asw);
 }
 
 document.getElementById('torpedoSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_torpedo').innerText = subAttackResults();
+  let [ASW_rolls, subFound, ASW_attacks, checked_results, torp_rolls, torp_hits] = subAttackResults();
+  const ASW_result = `${subFound ? `The sub was found (${ASW_rolls}) and ${checked_results.length > 0 ? 'was destroyed' : 'survived'} (${ASW_attacks})` : `The sub was undetected (${ASW_rolls}).`}`
+  const torp_result = `${torp_hits.length === 0 ? 'The target survived.' : torp_hits.length === 1 ? 'The target took one hit' : `The target took ${torp_hits.length} hits`} (${torp_rolls}).`
+  document.getElementById('resultArea_torpedo').innerText = `${torp_result} ${ASW_result}`;
 }, false);
 
 // Surface to Air Attack Tool
 
-function samAttackResults() {
+function getSAMUserInputs() {
   const sam_assets = {}
   const aircraft = {}
   for (let user_input of ['SAM_asset_one', 'SAM_asset_two', 'SAM_asset_three']) {
@@ -352,18 +396,44 @@ function samAttackResults() {
       aircraft[parseInt(document.getElementById(user_input).value)] = parseInt(document.getElementById(user_input + '_total').value);
     }
   }
-  console.log(sam_assets, aircraft);
-  const all_results = [];
-  for (const [key, value] of Object.entries(sam_assets)) {
-    for (let i = 0; i < value; i++) {
-      all_results.push(dieRoller(key))
+  return [sam_assets, aircraft]
+}
+
+function samKills(rolls, defenses) {
+  const ac_dest = [];
+  for (let roll of rolls) {
+    if (defenses.length === 0) {
+      return ac_dest
+    } else if (roll >= defenses[0]) {
+      ac_dest.push(defenses.shift())
+    } else {
+      continue
     }
   }
-  return all_results;
+  return ac_dest
+}
+
+function samAttackResults() {
+  let [sam_assets, aircraft] = getSAMUserInputs();
+  const all_rolls = [];
+  const all_defs = [];
+  for (const [key, value] of Object.entries(sam_assets)) {
+    for (let i = 0; i < value; i++) {
+      all_rolls.push(dieRoller(key));
+    }
+  }
+  for (const [key, value] of Object.entries(aircraft)) {
+    for (let i = 0; i < value; i++) {
+      all_defs.push(parseInt(key));
+    }
+  }
+  const sam_results = samKills(all_rolls, all_defs)
+  return [JSON.stringify(sam_assets), JSON.stringify(aircraft), all_rolls, sam_results];
 }
 
 document.getElementById('samStrikeSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_samStrike').innerText = samAttackResults();
+  let [sam_assets, aircraft, all_rolls, sam_results] = samAttackResults();
+  document.getElementById('resultArea_samStrike').innerText = `The following weapons ${sam_assets} were fired at the following aircraft ${aircraft}. Rolls of ${all_rolls} resulted in the destruction of these aircraft: ${sam_results}`;
 }, false);
 
 // Air to Air Combat Tool
@@ -394,10 +464,10 @@ function furball() {
     } else {
       const attk_roll = dieRoller(attacker[0])
       console.log(red_aircraft[attacker[2] - 1])
-      if (attk_roll > red_aircraft[attacker[2] - 1][1]) {
-        blue_victories.push(`Red A/C ${attacker[2]} was destroyed (${attk_roll})`)
+      if (attk_roll >= red_aircraft[attacker[2] - 1][1]) {
+        blue_victories.push(`Red A/C ${attacker[2]} was destroyed (${attk_roll}).`)
       } else {
-        blue_victories.push('Blue missed its target')
+        blue_victories.push(`Blue A/C ${attacker[2]} missed its target (${attk_roll}).`)
       }
     }
   }
@@ -406,10 +476,10 @@ function furball() {
       continue 
     } else {
       const attk_roll = dieRoller(attacker[0])
-      if (attk_roll > blue_aircraft[attacker[2] - 1][1]) {
-        red_victories.push(`Blue A/C ${attacker[2]} was destroyed (${attk_roll})`)
+      if (attk_roll >= blue_aircraft[attacker[2] - 1][1]) {
+        red_victories.push(`Blue A/C ${attacker[2]} was destroyed (${attk_roll}).`)
       } else {
-        red_victories.push('Red missed its target')
+        red_victories.push(`Red A/C ${attacker[2]} missed its target (${attk_roll}).`)
       }
     }
   }
@@ -425,7 +495,7 @@ document.getElementById('airToAirSubmit').addEventListener('click', () => {
 function SOFDirectAction() {
   const detection_roll = dieRoller(parseInt(document.getElementById('sofDA_detect_roll').value))
   if (detection_roll >= parseInt(document.getElementById('sofDA_ISR_value').value)) {
-    return [`With a roll of ${detection_roll} the Unit was discovered`]
+    return [detection_roll, `The unit was discovered.`]
   } else {
     const attack_value = parseInt(document.getElementById('sofDA_att').value)
     const attack_roll = dieRoller(attack_value)
@@ -435,12 +505,21 @@ function SOFDirectAction() {
       } 
       return [detection_roll, attack_roll, "One hit was scored."]
     }
-    return [detection_roll, attack_roll, "The attack was unsuccessful"]
+    return [detection_roll, attack_roll, "The attack was unsuccessful."]
   }
 }
 
 document.getElementById('sofDirectActionSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_sofDirectAction').innerText = SOFDirectAction();
+  let results = SOFDirectAction();
+  let disp_message = '';
+  if (results.length !== 3) {
+    let [detection_roll, message] = results;
+    disp_message = `The detection roll was ${detection_roll}. ${message}`;
+  } else {
+    let [detection_roll, attack_roll, message] = results;
+    disp_message = `The detection roll was ${detection_roll}. The attack roll was ${attack_roll}. ${message}`;
+  }
+  document.getElementById('resultArea_sofDirectAction').innerText = disp_message;
 }, false);
 
 // Ground Combat
@@ -560,9 +639,10 @@ function conductGroundAttack() {
       attk_rolls.push(dieRoller(key))
     }
   }
-  return attk_rolls.length > 0 ? attk_rolls.filter(x => x >= defense) : 'No Hits';
+  return [JSON.stringify(attk_dice), attk_rolls, attk_rolls.filter(x => x >= defense)]
 }
 
 document.getElementById('groundCombatSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea_groundCombat').innerText = conductGroundAttack();
+  let [attk_dice, attk_rolls, hits] = conductGroundAttack();
+  document.getElementById('resultArea_groundCombat').innerText = `The following dice ${attk_dice} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
 }, false);
