@@ -13,66 +13,81 @@ def findMaxes(coords):
 def foldHorz(fold, coords):
   new_coords = []
   for coord in coords:
-    if coord[1] > fold:
+    if coord[1] >= fold:
       tot_diff = coord[1] - fold
       new_coords.append((coord[0], fold - tot_diff))
     else:
       new_coords.append(coord)
+  # folded_coords = []
+  # for coord in new_coords:
+  #   if coord[0] >= fold:
+  #     folded_coords.append((coord[0] - fold - 1, coord[1]))
+  #   else:
+  #     folded_coords.append(coord)
   return new_coords
 
 def foldVert(fold, coords):
   new_coords = []
   for coord in coords:
-    if coord[0] < fold:
+    if coord[0] <= fold:
       tot_diff = fold - coord[0]
       new_coords.append((fold + tot_diff, coord[1]))
     else:
       new_coords.append(coord)
-  return new_coords
+  folded_coords = []
+  for coord in new_coords:
+    if coord[0] >= fold:
+      folded_coords.append((coord[0] - fold - 1, coord[1]))
+    else:
+      folded_coords.append(coord)
+  return folded_coords
 
-# lines = '''6,10
-# 0,14
-# 9,10
-# 0,3
-# 10,4
-# 4,11
-# 6,0
-# 6,12
-# 4,1
-# 0,13
-# 10,12
-# 3,4
-# 3,0
-# 8,4
-# 1,10
-# 2,14
-# 8,10
-# 9,0
 
-# fold along y=7
-# fold along x=5
-# '''
+  
 
-with open('day13.txt') as transparency:
-  marks = []
-  folds = []
-  for i in transparency.readlines():
-    if not i.startswith('fold') and i != '\n':
-      x,y = i.strip().split(',')
-      marks.append((int(x),int(y)))
-    elif i.startswith('fold'):
-      axis, val = i.split()[2].split('=')
-      folds.append((axis, int(val)))
+lines = '''6,10
+0,14
+9,10
+0,3
+10,4
+4,11
+6,0
+6,12
+4,1
+0,13
+10,12
+3,4
+3,0
+8,4
+1,10
+2,14
+8,10
+9,0
 
-# marks = []
-# folds = []
-# for line in lines.split('\n'):
-#   if not line.startswith('fold') and line != '':
-#     x,y = line.strip().split(',')
-#     marks.append((int(x),int(y)))
-#   elif line.startswith('fold'):
-#     axis, val = line.split()[2].split('=')
-#     folds.append((axis, int(val)))
+fold along y=7
+fold along x=5
+'''
+
+# with open('day13.txt') as transparency:
+#   marks = []
+#   folds = []
+#   for i in transparency.readlines():
+#     if not i.startswith('fold') and i != '\n':
+#       x,y = i.strip().split(',')
+#       marks.append((int(x),int(y)))
+#     elif i.startswith('fold'):
+#       axis, val = i.split()[2].split('=')
+#       folds.append((axis, int(val)))
+
+marks = []
+folds = []
+for line in lines.split('\n'):
+  if not line.startswith('fold') and line != '':
+    x,y = line.strip().split(',')
+    marks.append((int(x),int(y)))
+  elif line.startswith('fold'):
+    axis, val = line.split()[2].split('=')
+    folds.append((axis, int(val)))
 
 max_x, max_y = findMaxes(marks)
 print(max_x, max_y)
@@ -99,13 +114,18 @@ for fold in folds:
   if fold[0] == 'y':
     marks = foldHorz(fold[1], marks)
     for coord in marks:
-      print(coord)
-      paper[coord[1]][coord[0]] = 1
+      try:
+        paper[coord[1]][coord[0]] = 1
+      except:
+        continue
     paper = np.delete(paper, list(range(fold[1], max_y + 1)), 0)
   if fold[0] == 'x':
     marks = foldVert(fold[1], marks)
     for coord in marks:
-      paper[coord[1]][coord[0]] = 1
+      try:
+        paper[coord[1]][coord[0]] = 1
+      except:
+        continue
     paper = np.delete(paper, list(range(0, fold[1] + 1)), 1)
   
 print(paper)
