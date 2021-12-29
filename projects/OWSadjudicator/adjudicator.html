@@ -60,15 +60,15 @@
               <option value=16>D16</option>
               <option value=20>D20</option>
             </select>
+            <label id='isr_value_num_label' for='isr_value_num'># of Assets:</label>
+            <input id="isr_value_num" type="number" min=0 max=10 placeholder=0>
             <br>
             <label id="isr_detect_label" for="isr_detect">Detection Value</label>
             <input id="isr_detect" type="number" min=0 max=10 placeholder=0>
             <br>
-            <label><input id="isr_assuredC2" type="checkbox">Assured C2</label>
-            <label><input id="isr_disruptC2_d8" type="checkbox">Disrupt C2 (d8)</label>
-            <label><input id="isr_disruptC2_d10" type="checkbox">Disrupt C2 (d10)</label>
             <label><input id="isr_SIGINT_EMSO" type="checkbox">SIGINT/EMSO</label>
             <label><input id="isr_countermeasures" type="checkbox">Active/Passive CMs</label>
+            <label><input id="isr_combined" type="checkbox">Combine Assets</label>
           </fieldset>
         <button id="isrSubmit" type="button">Ajudicate</button>
         </form>
@@ -93,6 +93,8 @@
               <option value=16>D16</option>
               <option value=20>D20</option>
             </select>
+            <label id='asw_value_num_label' for='asw_value_num'># of Assets:</label>
+            <input id="asw_value_num" type="number" min=0 max=10 placeholder=0>
             <br>
             <label id="asw_detect_label" for="asw_detect">Detection Value</label>
             <input id="asw_detect" type="number" min=0 max=10 placeholder=0>
@@ -262,6 +264,7 @@
           <label><input id="torp_run_silent" type="checkbox">Running Silent</label>
           <label><input id="torp_littorals" type="checkbox">Littorals</label>
           <label><input id="torp_cavitation" type="checkbox">Cavitation</label>
+          <label><input id='torp_multi_assets' type='checkbox'>Multiple ASW Assets</label>
           <br>
           <button id="torpedoSubmit" type="button">Ajudicate</button>
         </form>
