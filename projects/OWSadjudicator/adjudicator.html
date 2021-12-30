@@ -15,8 +15,18 @@
     </header>
     <main>
       <h1>OWS Adjudication Aid</h1>
-      <hr>
-      <div id="general_roller_div">
+      <div class='tab'>
+        <button class="tablinks" onclick="openTool(event, 'general_roller_div')" id="defaultOpen">General Dice Roller</button>
+        <button class="tablinks" onclick="openTool(event, 'theater_ISR_div')">Theater and Local ISR</button>
+        <button class="tablinks" onclick="openTool(event, 'ASW_div')">ASW</button>
+        <button class="tablinks" onclick="openTool(event, 'Strike_div')">Surface/Air Strikes</button>
+        <button class="tablinks" onclick="openTool(event, 'torpedoAttack_div')">Torpedo Attack</button>
+        <button class="tablinks" onclick="openTool(event, 'surfToAir_div')">Surface-to-Air Attack</button>
+        <button class="tablinks" onclick="openTool(event, 'airToAir_div')">Air-to-Air Combat</button>
+        <button class="tablinks" onclick="openTool(event, 'sofDirectAction_div')">SOF Direct Action</button>
+        <button class="tablinks" onclick="openTool(event, 'groundCombat_div')">Ground Combat</button>
+      </div>
+      <div id="general_roller_div" class="tabcontent">
         <h2>General Dice Roller</h2>
         <form id='general_roller' action=''>
           <p id='general_roller_desc'>
@@ -41,7 +51,7 @@
           <div id='resultArea_general'></div>
         </form>
       </div>
-      <div id="theater_ISR_div">
+      <div id="theater_ISR_div" class="tabcontent">
         <h2>Theater and Local ISR</h2>
         <form id='theaterISR' action=''>
           <p id='theatherISRDesc'>
@@ -74,7 +84,7 @@
         </form>
         <div id='resultArea_theaterISR'></div>
       </div>
-      <div id='ASW_div'>
+      <div id='ASW_div' class="tabcontent">
         <h2>ASW</h2>
         <p>
           Utilize the following tool for adjudicating ASW detections. This tool was created utilizing
@@ -109,8 +119,7 @@
         </form>
         <div id='resultArea_ASW'></div>
       </div>
-      <hr>
-      <div id="Strike_div">
+      <div id="Strike_div" class="tabcontent">
         <h2>Surface/Air Strikes</h2>
         <form id="surfaceStrike" action="">
           <p id="surfStrkDesc">
@@ -198,8 +207,7 @@
         </form>
         <div id="resultArea_strike"></div>
       </div>
-      <hr>
-      <div id="torpedoAttack_div">
+      <div id="torpedoAttack_div" class="tabcontent">
         <h2>Torpedo Attack</h2>
         <form id="torpedoAttack" action="">
           <p id="torpAttDesc">
@@ -270,8 +278,7 @@
         </form>
         <div id="resultArea_torpedo"></div> 
       </div>
-      <hr>
-      <div id="surfToAir_div">
+      <div id="surfToAir_div" class="tabcontent">
         <h2>Surface-To-Air Attack</h2>
         <form id="samStrike" action="">
           <p id="samAttDesc">
@@ -345,9 +352,8 @@
         </form>
         <div id="resultArea_samStrike"></div>
       </div>
-      <hr>
-      <div id="airToAir_div">
-        <h2>Air to Air Combat</h2>
+      <div id="airToAir_div" class="tabcontent">
+        <h2>Air-to-Air Combat</h2>
         <form id="airToAir" action="">
           <p>
             Utilize the following tool for adjudicated Air-to-Air Combat. The tool was created
@@ -613,8 +619,7 @@
         </form>
         <div id="resultArea_airToAir"></div>
       </div>
-      <hr>
-      <div id="sofDirectAction_div">
+      <div id="sofDirectAction_div" class="tabcontent">
         <h2>SOF Direct Action</h2>
         <form id="sofDirectAction" action="">
           <label id="sofDA_detect_roll_label" for="sofDA_detect_roll">Detection Roll</label>
@@ -651,8 +656,7 @@
         </form>
         <div id="resultArea_sofDirectAction"></div>
       </div>
-      <hr>
-      <div id="groundCombat_div">
+      <div id="groundCombat_div" class="tabcontent">
         <h2>Ground Combat</h2>
         <form id="groundCombat" action="">
           <p>
