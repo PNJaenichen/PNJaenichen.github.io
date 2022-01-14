@@ -15,6 +15,7 @@
     </header>
     <main>
       <h1>OWS Adjudication Aid</h1>
+      <p>All tools were created utilizing the OWS 1.7 ruleset.</p>
       <div class='tab'>
         <button class="tablinks" onclick="openTool(event, 'general_roller_div')" id="defaultOpen">General Dice Roller</button>
         <button class="tablinks" onclick="openTool(event, 'theater_ISR_div')">Theater and Local ISR</button>
@@ -26,140 +27,600 @@
         <button class="tablinks" onclick="openTool(event, 'sofDirectAction_div')">SOF Direct Action</button>
         <button class="tablinks" onclick="openTool(event, 'groundCombat_div')">Ground Combat</button>
       </div>
-      <div id="general_roller_div" class="tabcontent">
-        <h2>General Dice Roller</h2>
-        <form id='general_roller' action=''>
-          <p id='general_roller_desc'>
-            Utilize the following tool for conducting any general dice rolls.
-          </p>
-          <fieldset>
-            <label>Die Value:</label>
-            <select id="general_value">
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-            <br>
-            <label id="gen_total_label" for="gen_total">Number of Dice:</label>
-            <input id="gen_total" type="number" min=1 max=10 placeholder=1>
-          </fieldset>
-          <button id="generalSubmit" type="button">Ajudicate</button>
-          <div id='resultArea_general'></div>
-        </form>
-      </div>
-      <div id="theater_ISR_div" class="tabcontent">
-        <h2>Theater and Local ISR</h2>
-        <form id='theaterISR' action=''>
-          <p id='theatherISRDesc'>
-            Utilize the following tool for adjudicating Theater and Local level ISR. This tool was created 
-            utilizing the OWS 1.7 ruleset.
-          </p>
-          <fieldset>
-            <label>ISR Value:</label>
-            <select id="isr_value">
-              <option value="">Die Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-            <label id='isr_value_num_label' for='isr_value_num'># of Assets:</label>
-            <input id="isr_value_num" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="isr_detect_label" for="isr_detect">Detection Value</label>
-            <input id="isr_detect" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label><input id="isr_SIGINT_EMSO" type="checkbox">SIGINT/EMSO</label>
-            <label><input id="isr_countermeasures" type="checkbox">Active/Passive CMs</label>
-            <label><input id="isr_combined" type="checkbox">Combine Assets</label>
-          </fieldset>
-        <button id="isrSubmit" type="button">Ajudicate</button>
-        </form>
-        <div id='resultArea_theaterISR'></div>
-      </div>
-      <div id='ASW_div' class="tabcontent">
-        <h2>ASW</h2>
-        <p>
-          Utilize the following tool for adjudicating ASW detections. This tool was created utilizing
-          the OWS 1.7 ruleset.
-        </p>
-        <form id='ASW' action=''>
-          <fieldset>
-            <label>ASW Value:</label>
-            <select id="asw_value">
-              <option value="">Die Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-            <label id='asw_value_num_label' for='asw_value_num'># of Assets:</label>
-            <input id="asw_value_num" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="asw_detect_label" for="asw_detect">Detection Value</label>
-            <input id="asw_detect" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label><input id="asw_littoral" type="checkbox">Littoral Waters</label>
-            <label><input id="asw_runningSilent" type="checkbox">Running Silent</label>
-            <label><input id="asw_cavitation" type="checkbox">Cavitation</label>
-            <label><input id="asw_multiAssets" type="checkbox">Multiple ASW Assets</label>
-            <br>
-          </fieldset>
-          <button id="aswSubmit" type="button">Ajudicate</button>
-        </form>
-        <div id='resultArea_ASW'></div>
-      </div>
-      <div id="Strike_div" class="tabcontent">
-        <h2>Surface/Air Strikes</h2>
-        <form id="surfaceStrike" action="">
-          <p id="surfStrkDesc">
-            Utilize the following tool for adjudicated surface-to-surface and air-to-surface strikes. This
-            tool was created utizliing the OWS 1.7 ruleset.
-          </p>
-          <fieldset>
-            <label>Total Inbound Weapons:</label>
-            <br>
-              <label id="inbound_one_label" for="inbound_one">Weapon Type 1</label>
-              <select id="inbound_one">
-                <option value="">Die Value</option>
-                <option value=4>D4</option>
-                <option value=6>D6</option>
-                <option value=8>D8</option>
-                <option value=10>D10</option>
-                <option value=12>D12</option>
-                <option value=16>D16</option>
-                <option value=20>D20</option>
-              </select>
-              <label id="inbnd_one_tot_label" for="inbound_one_total">Total</label>
-              <input id="inbound_one_total" type="number" min=0 max=10 placeholder=0>
+      <div id='user_area'>
+        <div id='tool_section'>
+          <div id="general_roller_div" class="tabcontent tool_format">
+            <h2>General Dice Roller</h2>
+            <form id='general_roller' action=''>
+              <p id='general_roller_desc'>
+                Utilize the following tool for conducting any general dice rolls.
+              </p>
+              <fieldset>
+                <label>Die Value:</label>
+                <select id="general_value">
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <br>
+                <label id="gen_total_label" for="gen_total">Number of Dice:</label>
+                <input id="gen_total" type="number" min=1 max=10 placeholder=1>
+              </fieldset>
+              <button id="generalSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+          <div id="theater_ISR_div" class="tabcontent tool_format">
+            <h2>Theater and Local ISR</h2>
+            <form id='theaterISR' action=''>
+              <p id='theatherISRDesc'>
+                Utilize the following tool for adjudicating Theater and Local level ISR. This tool was created 
+                utilizing the OWS 1.7 ruleset.
+              </p>
+              <fieldset>
+                <label>ISR Value:</label>
+                <select id="isr_value">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id='isr_value_num_label' for='isr_value_num'># of Assets:</label>
+                <input id="isr_value_num" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="isr_detect_label" for="isr_detect">Detection Value</label>
+                <input id="isr_detect" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label><input id="isr_SIGINT_EMSO" type="checkbox">SIGINT/EMSO</label>
+                <label><input id="isr_countermeasures" type="checkbox">Active/Passive CMs</label>
+                <label><input id="isr_combined" type="checkbox">Combine Assets</label>
+              </fieldset>
+            <button id="isrSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+          <div id='ASW_div' class="tabcontent tool_format">
+            <h2>ASW</h2>
+            <p>
+              Utilize the following tool for adjudicating ASW detections. This tool was created utilizing
+              the OWS 1.7 ruleset.
+            </p>
+            <form id='ASW' action=''>
+              <fieldset>
+                <label>ASW Value:</label>
+                <select id="asw_value">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id='asw_value_num_label' for='asw_value_num'># of Assets:</label>
+                <input id="asw_value_num" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="asw_detect_label" for="asw_detect">Detection Value</label>
+                <input id="asw_detect" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label><input id="asw_littoral" type="checkbox">Littoral Waters</label>
+                <label><input id="asw_runningSilent" type="checkbox">Running Silent</label>
+                <label><input id="asw_cavitation" type="checkbox">Cavitation</label>
+                <label><input id="asw_multiAssets" type="checkbox">Multiple ASW Assets</label>
+                <br>
+              </fieldset>
+              <button id="aswSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+          <div id="Strike_div" class="tabcontent tool_format">
+            <h2>Surface/Air Strikes</h2>
+            <form id="surfaceStrike" action="">
+              <p id="surfStrkDesc">
+                Utilize the following tool for adjudicated surface-to-surface and air-to-surface strikes. This
+                tool was created utizliing the OWS 1.7 ruleset.
+              </p>
+              <fieldset>
+                <label>Total Inbound Weapons:</label>
+                <br>
+                  <label id="inbound_one_label" for="inbound_one">Weapon Type 1</label>
+                  <select id="inbound_one">
+                    <option value="">Die Value</option>
+                    <option value=4>D4</option>
+                    <option value=6>D6</option>
+                    <option value=8>D8</option>
+                    <option value=10>D10</option>
+                    <option value=12>D12</option>
+                    <option value=16>D16</option>
+                    <option value=20>D20</option>
+                  </select>
+                  <label id="inbnd_one_tot_label" for="inbound_one_total">Total</label>
+                  <input id="inbound_one_total" type="number" min=0 max=10 placeholder=0>
+                  <br>
+                  <label id="inbound_two_label" for="inbound_two">Weapon Type 2</label>
+                  <select id="inbound_two">
+                    <option value="">Die Value</option>
+                    <option value=4>D4</option>
+                    <option value=6>D6</option>
+                    <option value=8>D8</option>
+                    <option value=10>D10</option>
+                    <option value=12>D12</option>
+                    <option value=16>D16</option>
+                    <option value=20>D20</option>
+                  </select>
+                  <label id="inbnd_two_tot_label" for="inbound_two_total">Total</label>
+                  <input id="inbound_two_total" type="number" min=0 max=10 placeholder=0>
+                  <br>
+                  <label id="inbound_three_label" for="inbound_three">Weapon Type 3</label>
+                  <select id="inbound_three">
+                    <option value="">Die Value</option>
+                    <option value=4>D4</option>
+                    <option value=6>D6</option>
+                    <option value=8>D8</option>
+                    <option value=10>D10</option>
+                    <option value=12>D12</option>
+                    <option value=16>D16</option>
+                    <option value=20>D20</option>
+                  </select>
+                  <label id="inbnd_three_tot_label" for="inbound_three_total">Total</label>
+                  <input id="inbound_three_total" type="number" min=0 max=10 placeholder=0>
+              </fieldset>
+              <fieldset>
+                <label>Total Defensive Missiles:</label>
+                <br>
+                <label id="def_one_label" for="def_one">Weapon Type 1</label>
+                <input id="def_one" type="number" min=0 max=10 placeholder=6>
+                <label id="def_one_tot_label" for="def_one_total">Total</label>
+                <input id="def_one_total" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="def_two_label" for="def_two">Weapon Type 2</label>
+                <input id="def_two" type="number" min=0 max=10 placeholder=6>
+                <label id="def_two_tot_label" for="def_two_total">Total</label>
+                <input id="def_two_total" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="def_three_label" for="def_three">Weapon Type 3</label>
+                <input id="def_three" type="number" min=0 max=10 placeholder=6>
+                <label id="def_three_tot_label" for="def_three_total">Total</label>
+                <input id="def_three_total" type="number" min=0 max=10 placeholder=0>
+              </fieldset>
+              <label id="target_def_label" for="target_def">Target Defense:</label> 
+              <input id="target_def" type="number" min=1 max=10 placeholder=4>
               <br>
-              <label id="inbound_two_label" for="inbound_two">Weapon Type 2</label>
-              <select id="inbound_two">
-                <option value="">Die Value</option>
-                <option value=4>D4</option>
-                <option value=6>D6</option>
-                <option value=8>D8</option>
-                <option value=10>D10</option>
-                <option value=12>D12</option>
-                <option value=16>D16</option>
-                <option value=20>D20</option>
-              </select>
-              <label id="inbnd_two_tot_label" for="inbound_two_total">Total</label>
-              <input id="inbound_two_total" type="number" min=0 max=10 placeholder=0>
+              <label id="cap_input_label" for="cap_input">CAP Available:</label>
+              <input id="cap_input" type="number" min=0 max=10 placeholder=0>
               <br>
-              <label id="inbound_three_label" for="inbound_three">Weapon Type 3</label>
-              <select id="inbound_three">
-                <option value="">Die Value</option>
+              <label id="promo_label" for="promo_input">No. of Promotions:</label>
+              <input id="promo_input" type="number" min=0 max=5 placeholder=0>
+              <br>
+              <label id="demo_label" for="demo_input">No. of Demotions:</label>
+              <input id="demo_input" type="number" min=0 max=5 placeholder=0>
+              <br>
+              <label><input id="aew_input" type="checkbox">AEW Available (US Only)</label>
+              <br>
+              <button id="strikeSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+          <div id="torpedoAttack_div" class="tabcontent tool_format">
+            <h2>Torpedo Attack</h2>
+            <form id="torpedoAttack" action="">
+              <p id="torpAttDesc">
+                Utilize the following tool for adjudicated torpedo attacks. This
+                tool was created utilizing the OWS 1.7 ruleset.
+              </p>
+              <fieldset>
+                <label>ASW Assets:</label>
+                <br>
+                <label id="ASW_asset_one_label" for="ASW_asset_one">ASW Type 1</label>
+                <select id="ASW_asset_one">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="ASW_asset_one_tot_label" for="ASW_asset_one_total">Total</label>
+                <input id="ASW_asset_one_total" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="ASW_asset_two_label" for="ASW_asset_two">ASW Type 2</label>
+                <select id="ASW_asset_two">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="ASW_asset_two_tot_label" for="ASW_asset_two_total">Total</label>
+                <input id="ASW_asset_two_total" type="number" min=0 max=10 placeholder=0>
+              </fieldset>
+              <label id="torp_target_step_label" for="torp_target_step">Target Steps:</label> 
+              <input id="torp_target_step" type="number" min=1 max=10 placeholder=4>
+              <br>
+              <label id="torp_target_def_label" for="torp_target_def">Target Defense:</label>
+              <input id="torp_target_def" type="number" min=0 max=10 placeholder=0>
+              <br>
+              <label id="torp_sub_detect_label" for="torp_sub_detect">Sub Detection:</label>
+              <input id="torp_sub_detect" type="number" min=0 max=10 placeholder=0>
+              <br>
+              <label id="torp_sub_def_label" for="torp_sub_def">Sub Defense:</label>
+              <input id="torp_sub_def" type="number" min=0 max=10 placeholder=0>
+              <br>
+              <label id="torp_str_label" for="torp_str">Torpedo Strength:</label>
+                <select id="torp_str">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+              <br>
+              <label><input id="torp_run_silent" type="checkbox">Running Silent</label>
+              <label><input id="torp_littorals" type="checkbox">Littorals</label>
+              <label><input id="torp_cavitation" type="checkbox">Cavitation</label>
+              <label><input id='torp_multi_assets' type='checkbox'>Multiple ASW Assets</label>
+              <br>
+              <button id="torpedoSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+          <div id="surfToAir_div" class="tabcontent tool_format">
+            <h2>Surface-To-Air Attack</h2>
+            <form id="samStrike" action="">
+              <p id="samAttDesc">
+                Utilize the following tool for adjudicated Surface-To-Air Strikes.
+                This tool was created utilizing the OWS 1.7 ruleset.
+              </p>
+              <fieldset>
+                <label>SAM Assets:</label>
+                <br>
+                <label id="SAM_asset_one_label" for="SAM_asset_one">SAM Type 1</label>
+                <select id="SAM_asset_one">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="SAM_asset_one_tot_label" for="SAM_asset_one_total">Total</label>
+                <input id="SAM_asset_one_total" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="SAM_asset_two_label" for="SAM_asset_two">SAM Type 2</label>
+                <select id="SAM_asset_two">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="SAM_asset_two_tot_label" for="SAM_asset_two_total">Total</label>
+                <input id="SAM_asset_two_total" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="SAM_asset_three_label" for="SAM_asset_three">SAM Type 3</label>
+                <select id="SAM_asset_three">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
+                <input id="SAM_asset_three_total" type="number" min=0 max=10 placeholder=0>
+              </fieldset>
+              <fieldset>
+                <label>Aircraft:</label>
+                <br>
+                <label id="ac_asset_one_label" for="ac_asset_one">Aircraft Defense 1</label>
+                <input id="ac_asset_one" type="number" min=0 max=10 placeholder=0>
+                <label id="ac_asset_one_tot_label" for="ac_asset_one_total">Total</label>
+                <input id="ac_asset_one_total" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="ac_asset_two_label" for="ac_asset_two">Aircraft Defense 2</label>
+                <input id="ac_asset_two" type="number" min=0 max=10 placeholder=0>
+                <label id="ac_asset_two_tot_label" for="ac_asset_two_total">Total</label>
+                <input id="ac_asset_two_total" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label id="ac_asset_three_label" for="ac_asset_three">Aircraft Defense 3</label>
+                <input id="ac_asset_three" type="number" min=0 max=10 placeholder=0>
+                <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
+                <input id="SAM_asset_three_total" type="number" min=0 max=10 placeholder=0>
+              </fieldset>
+              <button id="samStrikeSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+          <div id="airToAir_div" class="tabcontent tool_format">
+            <h2>Air-to-Air Combat</h2>
+            <form id="airToAir" action="">
+              <p>
+                Utilize the following tool for adjudicated Air-to-Air Combat. The tool was created
+                utilizing the OWS 1.7 ruleset.
+              </p>
+              <fieldset>
+                <label>Blue Forces:</label>
+                <br>
+                <label id="blue_aaw_one_atk_label" for="blue_aaw_one_atk">A/C Type 1</label>
+                <select id="blue_aaw_one_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_one_def_label" for="blue_aaw_one_def">Defense:</label>
+                <input id="blue_aaw_one_def" type="number" min=0 max=10 placeholder=0>
+                <label id="blue_aaw_one_targ_label" for="blue_aaw_one_targ">Target:</label>
+                <select id="blue_aaw_one_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="blue_aaw_two_atk_label" for="blue_aaw_two_atk">A/C Type 2</label>
+                <select id="blue_aaw_two_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_two_def_label" for="blue_aaw_two_def">Defense:</label>
+                <input id="blue_aaw_two_def" type="number" min=0 max=10 placeholder=0>
+                <label id="blue_aaw_two_targ_label" for="blue_aaw_two_targ">Target:</label>
+                <select id="blue_aaw_two_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="blue_aaw_three_atk_label" for="blue_aaw_three_atk">A/C Type 3</label>
+                <select id="blue_aaw_three_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_three_def_label" for="blue_aaw_three_def">Defense:</label>
+                <input id="blue_aaw_three_def" type="number" min=0 max=10 placeholder=0>
+                <label id="blue_aaw_three_targ_label" for="blue_aaw_three_targ">Target:</label>
+                <select id="blue_aaw_three_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="blue_aaw_four_atk_label" for="blue_aaw_four_atk">A/C Type 4</label>
+                <select id="blue_aaw_four_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_four_def_label" for="blue_aaw_four_def">Defense:</label>
+                <input id="blue_aaw_four_def" type="number" min=0 max=10 placeholder=0>
+                <label id="blue_aaw_four_targ_label" for="blue_aaw_four_targ">Target:</label>
+                <select id="blue_aaw_four_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="blue_aaw_five_atk_label" for="blue_aaw_five_atk">A/C Type 5</label>
+                <select id="blue_aaw_five_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_five_def_label" for="blue_aaw_five_def">Defense:</label>
+                <input id="blue_aaw_five_def" type="number" min=0 max=10 placeholder=0>
+                <label id="blue_aaw_five_targ_label" for="blue_aaw_five_targ">Target:</label>
+                <select id="blue_aaw_five_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+              </fieldset>
+              <fieldset>
+                <label>Red Forces:</label>
+                <br>
+                <label id="red_aaw_one_atk_label" for="red_aaw_one_atk">A/C Type 1</label>
+                <select id="red_aaw_one_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_one_def_label" for="red_aaw_one_def">Defense:</label>
+                <input id="red_aaw_one_def" type="number" min=0 max=10 placeholder=0>
+                <label id="red_aaw_one_targ_label" for="red_aaw_one_targ">Target:</label>
+                <select id="red_aaw_one_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="red_aaw_two_atk_label" for="red_aaw_two_atk">A/C Type 2</label>
+                <select id="red_aaw_two_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_two_def_label" for="red_aaw_two_def">Defense:</label>
+                <input id="red_aaw_two_def" type="number" min=0 max=10 placeholder=0>
+                <label id="red_aaw_two_targ_label" for="red_aaw_two_targ">Target:</label>
+                <select id="red_aaw_two_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="red_aaw_three_atk_label" for="red_aaw_three_atk">A/C Type 3</label>
+                <select id="red_aaw_three_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_three_def_label" for="red_aaw_three_def">Defense:</label>
+                <input id="red_aaw_three_def" type="number" min=0 max=10 placeholder=0>
+                <label id="red_aaw_three_targ_label" for="red_aaw_three_targ">Target:</label>
+                <select id="red_aaw_three_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="red_aaw_four_atk_label" for="red_aaw_four_atk">A/C Type 4</label>
+                <select id="red_aaw_four_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_four_def_label" for="red_aaw_four_def">Defense:</label>
+                <input id="red_aaw_four_def" type="number" min=0 max=10 placeholder=0>
+                <label id="red_aaw_four_targ_label" for="red_aaw_four_targ">Target:</label>
+                <select id="red_aaw_four_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="red_aaw_five_atk_label" for="red_aaw_five_atk">A/C Type 5</label>
+                <select id="red_aaw_five_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_five_def_label" for="red_aaw_five_def">Defense:</label>
+                <input id="red_aaw_five_def" type="number" min=0 max=10 placeholder=0>
+                <label id="red_aaw_five_targ_label" for="red_aaw_five_targ">Target:</label>
+                <select id="red_aaw_five_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+              </fieldset>
+              <button id="airToAirSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+          <div id="sofDirectAction_div" class="tabcontent tool_format">
+            <h2>SOF Direct Action</h2>
+            <form id="sofDirectAction" action="">
+              <label id="sofDA_detect_roll_label" for="sofDA_detect_roll">Detection Roll</label>
+              <select id="sofDA_detect_roll">
+                <option value="">Detect Roll</option>
                 <option value=4>D4</option>
                 <option value=6>D6</option>
                 <option value=8>D8</option>
@@ -168,568 +629,130 @@
                 <option value=16>D16</option>
                 <option value=20>D20</option>
               </select>
-              <label id="inbnd_three_tot_label" for="inbound_three_total">Total</label>
-              <input id="inbound_three_total" type="number" min=0 max=10 placeholder=0>
-          </fieldset>
-          <fieldset>
-            <label>Total Defensive Missiles:</label>
-            <br>
-            <label id="def_one_label" for="def_one">Weapon Type 1</label>
-            <input id="def_one" type="number" min=0 max=10 placeholder=6>
-            <label id="def_one_tot_label" for="def_one_total">Total</label>
-            <input id="def_one_total" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="def_two_label" for="def_two">Weapon Type 2</label>
-            <input id="def_two" type="number" min=0 max=10 placeholder=6>
-            <label id="def_two_tot_label" for="def_two_total">Total</label>
-            <input id="def_two_total" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="def_three_label" for="def_three">Weapon Type 3</label>
-            <input id="def_three" type="number" min=0 max=10 placeholder=6>
-            <label id="def_three_tot_label" for="def_three_total">Total</label>
-            <input id="def_three_total" type="number" min=0 max=10 placeholder=0>
-          </fieldset>
-          <label id="target_def_label" for="target_def">Target Defense:</label> 
-          <input id="target_def" type="number" min=1 max=10 placeholder=4>
-          <br>
-          <label id="cap_input_label" for="cap_input">CAP Available:</label>
-          <input id="cap_input" type="number" min=0 max=10 placeholder=0>
-          <br>
-          <label id="promo_label" for="promo_input">No. of Promotions:</label>
-          <input id="promo_input" type="number" min=0 max=5 placeholder=0>
-          <br>
-          <label id="demo_label" for="demo_input">No. of Demotions:</label>
-          <input id="demo_input" type="number" min=0 max=5 placeholder=0>
-          <br>
-          <label><input id="aew_input" type="checkbox">AEW Available (US Only)</label>
-          <br>
-          <button id="strikeSubmit" type="button">Ajudicate</button>
-        </form>
-        <div id="resultArea_strike"></div>
+              <br>
+              <label id="sofDA_ISR_value_label" for="sofDA_ISR_value">ISR Value</label>
+              <input id="sofDA_ISR_value" type="number" min=0 max=10 placeholder=0>
+              <br>
+              <label id="sofDA_att_label" for="sofDA_att">Attack Value</label>
+              <select id="sofDA_att">
+                <option value="">Attack Value</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
+              <br>
+              <label id="sofDA_def_label" for="sofDA_def">Target Defense</label>
+              <input id="sofDA_def" type="number" min=0 max=10 placeholder=0>
+              <br>
+              <button id="sofDirectActionSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+          <div id="groundCombat_div" class="tabcontent tool_format">
+            <h2>Ground Combat</h2>
+            <form id="groundCombat" action="">
+              <p>
+                Utilize the following tool for adjudicated Ground Combat. The tool was created 
+                utilizing the OWS 1.7 ruleset.
+              </p>
+              <label id="grndCom_terr_label" for="grndCom_terr">Terrain Type</label>
+              <select id="grndCom_terr">
+                <option value="open">Open</option>
+                <option value="light">Forest/Hills</option>
+                <option value="urban">Urban</option>
+                <option value="durban">Dense Urban</option>
+              </select>
+              <br>
+              <label id="grndCom_att_dice_label" for="grndCom_att_dice">Attacker Dice Value:</label>
+              <select id="grndCom_att_dice">
+                <option value="">Attack Value</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
+              <br>
+              <label id="grndCom_att_dice_tot_label" for="grndCom_att_dice_tot">Attacker Dice Total:</label>
+              <input id="grndCom_att_dice_tot" type="number" min=0 max=20 placeholder=0>
+              <br>
+              <label id="grndCom_def_val_label" for="grndCom_def_val">Defender Value:</label>
+              <input id="grndCom_def_val" type="number" min=0 max=10 placeholder=0>
+              <br>
+              <fieldset>
+                <label>Attacker Modifiers</label>
+                <br>
+                <label><input id="grndCom_att_single_axis" type="radio" name="att_ax" value="ax1" checked>Single Axis Attack</label>
+                <label><input id="grndCom_att_two_axis" type="radio" name="att_ax" value="ax2">Two Axis Attack</label>
+                <label><input id="grndCom_att_three_axis" type="radio" name="att_ax" value="ax3">Three Axis Attack</label>
+                <br>
+                <label id="grndCom_att_CAS_label" for="grndCom_att_CAS">CAS Missions:</label>
+                <input id="grndCom_att_CAS" type="number" min=0 max=10 placeholder=0>
+                <label id="grndCom_att_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
+                <input id="grndCom_att_FS" type="number" min=0 max=10 placeholder=0>
+                <label id="grndCom_brg_tact_label" for="grndCom_brg_tact">Brigade Tactics:</label>
+                <input id="grndCom_brg_tact" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label><input id="grndCom_att_defender" type="checkbox">Defender</label>
+                <label><input id="grndCom_att_main_effort" type="checkbox">Main Effort</label>
+                <label><input id="grndCom_att_SIGINTEMSO" type="checkbox">SIGINT/EMSO</label>
+                <label><input id="grndCom_att_disruptC2" type="checkbox">Disrupted C2</label>
+                <label><input id="grndCom_att_suppress" type="checkbox">Suppressed</label>
+                <label><input id="grndCom_att_rsoi" type="checkbox">In RSO&I</label>
+                <label><input id="grndCom_att_rivCross" type="checkbox">River Crossing</label>
+                <label><input id="grndCom_att_airAslt" type="checkbox">Airborne Assault</label>
+                <label><input id="grndCom_att_ampAslt" type="checkbox">Amphibious Assault</label>
+              </fieldset>
+              <fieldset>
+                <label>Defender Modifiers</label>
+                <br>
+                <label id="grndCom_def_CAS_label" for="grndCom_att_CAS">CAS Missions:</label>
+                <input id="grndCom_def_CAS" type="number" min=0 max=10 placeholder=0>
+                <label id="grndCom_def_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
+                <input id="grndCom_def_FS" type="number" min=0 max=10 placeholder=0>
+                <br>
+                <label><input id="grndCom_def_fortified" type="checkbox">Fortified</label>
+                <label><input id="grndCom_def_suppress" type="checkbox">Suppressed</label>
+              </fieldset>
+              <br>
+              <button id="groundCombatSubmit" type="button">Ajudicate</button>
+            </form>
+          </div>
+        </div>
+        <div id='result_section'>
+          <div id='resultArea'></div>
+        </div>
       </div>
-      <div id="torpedoAttack_div" class="tabcontent">
-        <h2>Torpedo Attack</h2>
-        <form id="torpedoAttack" action="">
-          <p id="torpAttDesc">
-            Utilize the following tool for adjudicated torpedo attacks. This
-            tool was created utilizing the OWS 1.7 ruleset.
-          </p>
-          <fieldset>
-            <label>ASW Assets:</label>
-            <br>
-            <label id="ASW_asset_one_label" for="ASW_asset_one">ASW Type 1</label>
-            <select id="ASW_asset_one">
-              <option value="">Die Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-            <label id="ASW_asset_one_tot_label" for="ASW_asset_one_total">Total</label>
-            <input id="ASW_asset_one_total" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="ASW_asset_two_label" for="ASW_asset_two">ASW Type 2</label>
-            <select id="ASW_asset_two">
-              <option value="">Die Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-            <label id="ASW_asset_two_tot_label" for="ASW_asset_two_total">Total</label>
-            <input id="ASW_asset_two_total" type="number" min=0 max=10 placeholder=0>
-          </fieldset>
-          <label id="torp_target_step_label" for="torp_target_step">Target Steps:</label> 
-          <input id="torp_target_step" type="number" min=1 max=10 placeholder=4>
-          <br>
-          <label id="torp_target_def_label" for="torp_target_def">Target Defense:</label>
-          <input id="torp_target_def" type="number" min=0 max=10 placeholder=0>
-          <br>
-          <label id="torp_sub_detect_label" for="torp_sub_detect">Sub Detection:</label>
-          <input id="torp_sub_detect" type="number" min=0 max=10 placeholder=0>
-          <br>
-          <label id="torp_sub_def_label" for="torp_sub_def">Sub Defense:</label>
-          <input id="torp_sub_def" type="number" min=0 max=10 placeholder=0>
-          <br>
-          <label id="torp_str_label" for="torp_str">Torpedo Strength:</label>
-            <select id="torp_str">
-              <option value="">Die Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-          <br>
-          <label><input id="torp_run_silent" type="checkbox">Running Silent</label>
-          <label><input id="torp_littorals" type="checkbox">Littorals</label>
-          <label><input id="torp_cavitation" type="checkbox">Cavitation</label>
-          <label><input id='torp_multi_assets' type='checkbox'>Multiple ASW Assets</label>
-          <br>
-          <button id="torpedoSubmit" type="button">Ajudicate</button>
-        </form>
-        <div id="resultArea_torpedo"></div> 
-      </div>
-      <div id="surfToAir_div" class="tabcontent">
-        <h2>Surface-To-Air Attack</h2>
-        <form id="samStrike" action="">
-          <p id="samAttDesc">
-            Utilize the following tool for adjudicated Surface-To-Air Strikes.
-            This tool was created utilizing the OWS 1.7 ruleset.
-          </p>
-          <fieldset>
-            <label>SAM Assets:</label>
-            <br>
-            <label id="SAM_asset_one_label" for="SAM_asset_one">SAM Type 1</label>
-            <select id="SAM_asset_one">
-              <option value="">Die Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-            <label id="SAM_asset_one_tot_label" for="SAM_asset_one_total">Total</label>
-            <input id="SAM_asset_one_total" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="SAM_asset_two_label" for="SAM_asset_two">SAM Type 2</label>
-            <select id="SAM_asset_two">
-              <option value="">Die Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-            <label id="SAM_asset_two_tot_label" for="SAM_asset_two_total">Total</label>
-            <input id="SAM_asset_two_total" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="SAM_asset_three_label" for="SAM_asset_three">SAM Type 3</label>
-            <select id="SAM_asset_three">
-              <option value="">Die Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-            </select>
-            <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
-            <input id="SAM_asset_three_total" type="number" min=0 max=10 placeholder=0>
-          </fieldset>
-          <fieldset>
-            <label>Aircraft:</label>
-            <br>
-            <label id="ac_asset_one_label" for="ac_asset_one">Aircraft Defense 1</label>
-            <input id="ac_asset_one" type="number" min=0 max=10 placeholder=0>
-            <label id="ac_asset_one_tot_label" for="ac_asset_one_total">Total</label>
-            <input id="ac_asset_one_total" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="ac_asset_two_label" for="ac_asset_two">Aircraft Defense 2</label>
-            <input id="ac_asset_two" type="number" min=0 max=10 placeholder=0>
-            <label id="ac_asset_two_tot_label" for="ac_asset_two_total">Total</label>
-            <input id="ac_asset_two_total" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label id="ac_asset_three_label" for="ac_asset_three">Aircraft Defense 3</label>
-            <input id="ac_asset_three" type="number" min=0 max=10 placeholder=0>
-            <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
-            <input id="SAM_asset_three_total" type="number" min=0 max=10 placeholder=0>
-          </fieldset>
-          <button id="samStrikeSubmit" type="button">Ajudicate</button>
-        </form>
-        <div id="resultArea_samStrike"></div>
-      </div>
-      <div id="airToAir_div" class="tabcontent">
-        <h2>Air-to-Air Combat</h2>
-        <form id="airToAir" action="">
-          <p>
-            Utilize the following tool for adjudicated Air-to-Air Combat. The tool was created
-            utilizing the OWS 1.7 ruleset.
-          </p>
-          <fieldset>
-            <label>Blue Forces:</label>
-            <br>
-            <label id="blue_aaw_one_atk_label" for="blue_aaw_one_atk">A/C Type 1</label>
-            <select id="blue_aaw_one_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="blue_aaw_one_def_label" for="blue_aaw_one_def">Defense:</label>
-            <input id="blue_aaw_one_def" type="number" min=0 max=10 placeholder=0>
-            <label id="blue_aaw_one_targ_label" for="blue_aaw_one_targ">Target:</label>
-            <select id="blue_aaw_one_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-            <br>
-            <label id="blue_aaw_two_atk_label" for="blue_aaw_two_atk">A/C Type 2</label>
-            <select id="blue_aaw_two_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="blue_aaw_two_def_label" for="blue_aaw_two_def">Defense:</label>
-            <input id="blue_aaw_two_def" type="number" min=0 max=10 placeholder=0>
-            <label id="blue_aaw_two_targ_label" for="blue_aaw_two_targ">Target:</label>
-            <select id="blue_aaw_two_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-            <br>
-            <label id="blue_aaw_three_atk_label" for="blue_aaw_three_atk">A/C Type 3</label>
-            <select id="blue_aaw_three_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="blue_aaw_three_def_label" for="blue_aaw_three_def">Defense:</label>
-            <input id="blue_aaw_three_def" type="number" min=0 max=10 placeholder=0>
-            <label id="blue_aaw_three_targ_label" for="blue_aaw_three_targ">Target:</label>
-            <select id="blue_aaw_three_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-            <br>
-            <label id="blue_aaw_four_atk_label" for="blue_aaw_four_atk">A/C Type 4</label>
-            <select id="blue_aaw_four_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="blue_aaw_four_def_label" for="blue_aaw_four_def">Defense:</label>
-            <input id="blue_aaw_four_def" type="number" min=0 max=10 placeholder=0>
-            <label id="blue_aaw_four_targ_label" for="blue_aaw_four_targ">Target:</label>
-            <select id="blue_aaw_four_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-            <br>
-            <label id="blue_aaw_five_atk_label" for="blue_aaw_five_atk">A/C Type 5</label>
-            <select id="blue_aaw_five_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="blue_aaw_five_def_label" for="blue_aaw_five_def">Defense:</label>
-            <input id="blue_aaw_five_def" type="number" min=0 max=10 placeholder=0>
-            <label id="blue_aaw_five_targ_label" for="blue_aaw_five_targ">Target:</label>
-            <select id="blue_aaw_five_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-          </fieldset>
-          <fieldset>
-            <label>Red Forces:</label>
-            <br>
-            <label id="red_aaw_one_atk_label" for="red_aaw_one_atk">A/C Type 1</label>
-            <select id="red_aaw_one_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="red_aaw_one_def_label" for="red_aaw_one_def">Defense:</label>
-            <input id="red_aaw_one_def" type="number" min=0 max=10 placeholder=0>
-            <label id="red_aaw_one_targ_label" for="red_aaw_one_targ">Target:</label>
-            <select id="red_aaw_one_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-            <br>
-            <label id="red_aaw_two_atk_label" for="red_aaw_two_atk">A/C Type 2</label>
-            <select id="red_aaw_two_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="red_aaw_two_def_label" for="red_aaw_two_def">Defense:</label>
-            <input id="red_aaw_two_def" type="number" min=0 max=10 placeholder=0>
-            <label id="red_aaw_two_targ_label" for="red_aaw_two_targ">Target:</label>
-            <select id="red_aaw_two_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-            <br>
-            <label id="red_aaw_three_atk_label" for="red_aaw_three_atk">A/C Type 3</label>
-            <select id="red_aaw_three_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="red_aaw_three_def_label" for="red_aaw_three_def">Defense:</label>
-            <input id="red_aaw_three_def" type="number" min=0 max=10 placeholder=0>
-            <label id="red_aaw_three_targ_label" for="red_aaw_three_targ">Target:</label>
-            <select id="red_aaw_three_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-            <br>
-            <label id="red_aaw_four_atk_label" for="red_aaw_four_atk">A/C Type 4</label>
-            <select id="red_aaw_four_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="red_aaw_four_def_label" for="red_aaw_four_def">Defense:</label>
-            <input id="red_aaw_four_def" type="number" min=0 max=10 placeholder=0>
-            <label id="red_aaw_four_targ_label" for="red_aaw_four_targ">Target:</label>
-            <select id="red_aaw_four_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-            <br>
-            <label id="red_aaw_five_atk_label" for="red_aaw_five_atk">A/C Type 5</label>
-            <select id="red_aaw_five_atk">
-              <option value="">Attack Value</option>
-              <option value=4>D4</option>
-              <option value=6>D6</option>
-              <option value=8>D8</option>
-              <option value=10>D10</option>
-              <option value=12>D12</option>
-              <option value=16>D16</option>
-              <option value=20>D20</option>
-              <option value=0>No Offensive Cape</option>
-            </select>
-            <label id="red_aaw_five_def_label" for="red_aaw_five_def">Defense:</label>
-            <input id="red_aaw_five_def" type="number" min=0 max=10 placeholder=0>
-            <label id="red_aaw_five_targ_label" for="red_aaw_five_targ">Target:</label>
-            <select id="red_aaw_five_targ">
-              <option value="">Target</option>
-              <option value=1>A/C 1</option>
-              <option value=2>A/C 2</option>
-              <option value=3>A/C 3</option>
-              <option value=4>A/C 4</option>
-              <option value=5>A/C 5</option>
-              <option value=0>No Target</option>
-            </select>
-          </fieldset>
-          <button id="airToAirSubmit" type="button">Ajudicate</button>
-        </form>
-        <div id="resultArea_airToAir"></div>
-      </div>
-      <div id="sofDirectAction_div" class="tabcontent">
-        <h2>SOF Direct Action</h2>
-        <form id="sofDirectAction" action="">
-          <label id="sofDA_detect_roll_label" for="sofDA_detect_roll">Detection Roll</label>
-          <select id="sofDA_detect_roll">
-            <option value="">Detect Roll</option>
-            <option value=4>D4</option>
-            <option value=6>D6</option>
-            <option value=8>D8</option>
-            <option value=10>D10</option>
-            <option value=12>D12</option>
-            <option value=16>D16</option>
-            <option value=20>D20</option>
-          </select>
-          <br>
-          <label id="sofDA_ISR_value_label" for="sofDA_ISR_value">ISR Value</label>
-          <input id="sofDA_ISR_value" type="number" min=0 max=10 placeholder=0>
-          <br>
-          <label id="sofDA_att_label" for="sofDA_att">Attack Value</label>
-          <select id="sofDA_att">
-            <option value="">Attack Value</option>
-            <option value=4>D4</option>
-            <option value=6>D6</option>
-            <option value=8>D8</option>
-            <option value=10>D10</option>
-            <option value=12>D12</option>
-            <option value=16>D16</option>
-            <option value=20>D20</option>
-          </select>
-          <br>
-          <label id="sofDA_def_label" for="sofDA_def">Target Defense</label>
-          <input id="sofDA_def" type="number" min=0 max=10 placeholder=0>
-          <br>
-          <button id="sofDirectActionSubmit" type="button">Ajudicate</button>
-        </form>
-        <div id="resultArea_sofDirectAction"></div>
-      </div>
-      <div id="groundCombat_div" class="tabcontent">
-        <h2>Ground Combat</h2>
-        <form id="groundCombat" action="">
-          <p>
-            Utilize the following tool for adjudicated Ground Combat. The tool was created 
-            utilizing the OWS 1.7 ruleset.
-          </p>
-          <label id="grndCom_terr_label" for="grndCom_terr">Terrain Type</label>
-          <select id="grndCom_terr">
-            <option value="open">Open</option>
-            <option value="light">Forest/Hills</option>
-            <option value="urban">Urban</option>
-            <option value="durban">Dense Urban</option>
-          </select>
-          <br>
-          <label id="grndCom_att_dice_label" for="grndCom_att_dice">Attacker Dice Value:</label>
-          <select id="grndCom_att_dice">
-            <option value="">Attack Value</option>
-            <option value=4>D4</option>
-            <option value=6>D6</option>
-            <option value=8>D8</option>
-            <option value=10>D10</option>
-            <option value=12>D12</option>
-            <option value=16>D16</option>
-            <option value=20>D20</option>
-          </select>
-          <br>
-          <label id="grndCom_att_dice_tot_label" for="grndCom_att_dice_tot">Attacker Dice Total:</label>
-          <input id="grndCom_att_dice_tot" type="number" min=0 max=20 placeholder=0>
-          <br>
-          <label id="grndCom_def_val_label" for="grndCom_def_val">Defender Value:</label>
-          <input id="grndCom_def_val" type="number" min=0 max=10 placeholder=0>
-          <br>
-          <fieldset>
-            <label>Attacker Modifiers</label>
-            <br>
-            <label><input id="grndCom_att_single_axis" type="radio" name="att_ax" value="ax1" checked>Single Axis Attack</label>
-            <label><input id="grndCom_att_two_axis" type="radio" name="att_ax" value="ax2">Two Axis Attack</label>
-            <label><input id="grndCom_att_three_axis" type="radio" name="att_ax" value="ax3">Three Axis Attack</label>
-            <br>
-            <label id="grndCom_att_CAS_label" for="grndCom_att_CAS">CAS Missions:</label>
-            <input id="grndCom_att_CAS" type="number" min=0 max=10 placeholder=0>
-            <label id="grndCom_att_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
-            <input id="grndCom_att_FS" type="number" min=0 max=10 placeholder=0>
-            <label id="grndCom_brg_tact_label" for="grndCom_brg_tact">Brigade Tactics:</label>
-            <input id="grndCom_brg_tact" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label><input id="grndCom_att_defender" type="checkbox">Defender</label>
-            <label><input id="grndCom_att_main_effort" type="checkbox">Main Effort</label>
-            <label><input id="grndCom_att_SIGINTEMSO" type="checkbox">SIGINT/EMSO</label>
-            <label><input id="grndCom_att_disruptC2" type="checkbox">Disrupted C2</label>
-            <label><input id="grndCom_att_suppress" type="checkbox">Suppressed</label>
-            <label><input id="grndCom_att_rsoi" type="checkbox">In RSO&I</label>
-            <label><input id="grndCom_att_rivCross" type="checkbox">River Crossing</label>
-            <label><input id="grndCom_att_airAslt" type="checkbox">Airborne Assault</label>
-            <label><input id="grndCom_att_ampAslt" type="checkbox">Amphibious Assault</label>
-          </fieldset>
-          <fieldset>
-            <label>Defender Modifiers</label>
-            <br>
-            <label id="grndCom_def_CAS_label" for="grndCom_att_CAS">CAS Missions:</label>
-            <input id="grndCom_def_CAS" type="number" min=0 max=10 placeholder=0>
-            <label id="grndCom_def_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
-            <input id="grndCom_def_FS" type="number" min=0 max=10 placeholder=0>
-            <br>
-            <label><input id="grndCom_def_fortified" type="checkbox">Fortified</label>
-            <label><input id="grndCom_def_suppress" type="checkbox">Suppressed</label>
-          </fieldset>
-          <br>
-          <button id="groundCombatSubmit" type="button">Ajudicate</button>
-        </form>
-        <div id="resultArea_groundCombat"></div>
+      <div id='dice_area'>
+        <div class='dice4 die'>
+          <p>4</p>
+        </div>
+        <div class='dice6 die'>
+          <p>6</p>
+        </div>
+        <div class='dice8 die'>
+          <p>8</p>
+        </div>
+        <div class='dice10 die'>
+          <p>10</p>
+        </div>
+        <div class='dice12 die'>
+          <p>12</p>
+        </div>
+        <div class='dice16 die'>
+          <p>16</p>
+        </div>
+        <div class='dice20 die'>
+          <p>20</p>
+        </div>
       </div>
     <footer>
+      <p>&copy 2022 MSTP. A USMC Unit. All Rights Reserved.</p>
     </footer>
   </body>
   <script src="adjudicator.js" defer></script>

@@ -1,7 +1,7 @@
 /* Tabbing, code from https://www.w3schools.com/howto/howto_js_tabs.asp */
  
- /* Style the tab */
- .tab {
+/* Style the tab */
+.tab {
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
@@ -32,6 +32,167 @@
 .tabcontent {
   display: none;
   padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-} 
+}
+
+#user_area {
+  width: 1000px;
+  display: flex;
+}
+
+#tool_section {
+  width: 70%;
+}
+
+#result_section {
+  width: 30%;
+}
+
+.tool_format {
+  width: 100%;
+}
+
+/* clip-path border code from https://stackoverflow.com/questions/44331039/css-how-to-add-a-border-color-to-a-css-shape */
+
+.dice4 {
+  clip-path: polygon(50% 5%, 5% 95%, 95% 95%);
+  background-color: black;
+  color: lightgrey;
+}
+.dice4 p {
+  line-height: 60px;
+}
+
+.dice6 {
+  clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice6:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: red;
+  clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice8 {
+  clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%);
+  background: black;
+  color: black;
+  position: relative;
+}
+.dice8:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: yellow;
+  clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice10 {
+  clip-path: polygon(78% 0%, 100% 50%, 78% 100%, 22% 100%, 0% 50%, 22% 0%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice10:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: green;
+  clip-path: polygon(80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%, 20% 0%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice12 {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice12:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: blue;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice16 {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice16:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: purple;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice20 {
+  clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+  background: black;
+  color: black;
+  position: relative;
+}
+.dice20:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: lightgrey;
+  clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.die {
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 3px;
+}
+
+.die p {
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+
+#result_section, #dice_area {
+  display: flex;
+  margin: 10px;
+}
+
+footer {
+  text-align: center;
+  font-size: x-small;
+}
