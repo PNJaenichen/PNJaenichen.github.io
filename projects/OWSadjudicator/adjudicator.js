@@ -224,6 +224,25 @@ function dieRoller(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
 
+function createResults(diceTotal, diceResults, hits) {
+  let dice = Object.keys(diceTotal).map(x => x);
+  const allDice = document.createElement('div');
+  let resultTrack = 0;
+  for (let i = 0; i < dice.length; i++) {
+    for (let j = 0; j < diceTotal[dice[i]]; j++) {
+      const newDiv = document.createElement("div");
+      const resultP = document.createElement("p");
+      resultP.innerText = diceResults[resultTrack];
+      resultTrack += 1;
+      newDiv.classList.add('die');
+      newDiv.classList.add(`dice${dice[i]}`);
+      newDiv.appendChild(resultP);
+      allDice.appendChild(newDiv);
+    }
+  }
+  return allDice
+}
+
 // General Dice Roller
 
 document.getElementById('generalSubmit').addEventListener('click', () => {
@@ -395,8 +414,13 @@ function getStrikeResults() {
 }
 
 document.getElementById('strikeSubmit').addEventListener('click', () => {
-  const results = getStrikeResults()
-  document.getElementById('resultArea').innerText = `The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
+  const results = getStrikeResults();
+  const resultArea = document.getElementById('resultArea');
+  if (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  resultArea.appendChild(createResults(results[0], results[1], results[2]));
+  document.getElementById('resultArea2').innerText = `The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
   }, false);
 
 // Torpedo Attack Tool

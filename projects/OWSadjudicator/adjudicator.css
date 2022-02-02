@@ -97,7 +97,7 @@
   top: 1px;
   left: 1px;
 }
-
+ 
 .dice10 {
   clip-path: polygon(78% 0%, 100% 50%, 78% 100%, 22% 100%, 0% 50%, 22% 0%);
   background: black;
@@ -187,7 +187,7 @@
   position: relative;
 }
 
-#result_section, #dice_area {
+#result_section, .dice_area {
   display: flex;
   margin: 10px;
 }
