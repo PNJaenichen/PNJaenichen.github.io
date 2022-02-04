@@ -224,7 +224,7 @@ function dieRoller(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
 
-function createResults(diceTotal, diceResults, hits) {
+function createResults(diceTotal, diceResults) {
   let dice = Object.keys(diceTotal).map(x => x);
   const allDice = document.createElement('div');
   let resultTrack = 0;
@@ -246,6 +246,12 @@ function createResults(diceTotal, diceResults, hits) {
 // General Dice Roller
 
 document.getElementById('generalSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  if (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+    document.getElementById('resultArea2').innerText = '';
+  }
+  const dice_to_roll = {};
   const die_value = document.getElementById('general_value').value ? document.getElementById('general_value').value : '4';
   const die_total = document.getElementById('gen_total').value ? parseInt(document.getElementById('gen_total').value) : 1;
   const die_results = [];
@@ -254,7 +260,9 @@ document.getElementById('generalSubmit').addEventListener('click', () => {
       die_results.push(dieRoller(die_value))
     }
   }
-  document.getElementById('resultArea').innerText = `${die_total === 1 ? `One ${die_value}-sided die was` : `${die_total} ${die_value}-sided dice were`} rolled, with the following results: ${die_results}`;
+  dice_to_roll[die_value] = die_total;
+  resultArea.appendChild(createResults(dice_to_roll, die_results));
+  document.getElementById('resultArea2').innerText = `${die_total === 1 ? `One ${die_value}-sided die was` : `${die_total} ${die_value}-sided dice were`} rolled, with the following results: ${die_results}`;
 }, false)
 
 // Theater and Local ISR Tool
@@ -288,9 +296,15 @@ function getISRresults() {
 }
 
 document.getElementById('isrSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  if (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+    document.getElementById('resultArea2').innerText = '';
+  }
   const [ISR_assets, ISR_rolls, targFound] = getISRresults();
   const resultString = `The following ISR assets ${JSON.stringify(ISR_assets)} ${targFound ? 'found the target' : 'found nothing'} (${ISR_rolls}).`;
-  document.getElementById('resultArea').innerText = resultString;
+  document.getElementById('resultArea').appendChild(createResults(ISR_assets, ISR_rolls))
+  document.getElementById('resultArea2').innerText = resultString;
 }, false)
 
 // ASW Tool
@@ -307,7 +321,6 @@ function getASWUserInput() {
   const ASW_assets = {}
   ASW_assets[ASW_value] = ASW_value_num
   asw.push(ASW_assets)
-  console.log(ASW_assets)
   return [subDetect, asw]
 }
 
@@ -318,9 +331,15 @@ function singlePing() {
 }
 
 document.getElementById('aswSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  if (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+    document.getElementById('resultArea2').innerText = '';
+  }
   let [ASW_assets, ASW_rolls, subFound] = singlePing();
+  document.getElementById('resultArea').appendChild(createResults(ASW_assets, ASW_rolls))
   const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} ${subFound ? 'found a submarine' : 'found nothing'} (${ASW_rolls}).`
-  document.getElementById('resultArea').innerText = ASW_result;
+  document.getElementById('resultArea2').innerText = ASW_result;
 }, false)
 
 // Surface to Surface and Air to Surface Strikes
@@ -418,6 +437,7 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
   if (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
+    document.getElementById('resultArea2').innerText = '';
   }
   resultArea.appendChild(createResults(results[0], results[1], results[2]));
   document.getElementById('resultArea2').innerText = `The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
@@ -447,7 +467,6 @@ function findSub(subDetect, ASW=[0, 0, 0, false, {}]) {
     }
   }
   const checked_results = ASW_rolls.filter(x => x >= subDetect);
-  console.log(promo_demo, ASW_assets)
   return [ ASW_assets, ASW_rolls, checked_results.length > 0 ]
 }
 
@@ -580,7 +599,6 @@ function furball() {
       continue
     } else {
       const attk_roll = dieRoller(attacker[0])
-      console.log(red_aircraft[attacker[2] - 1])
       if (attk_roll >= red_aircraft[attacker[2] - 1][1]) {
         blue_victories.push(`Red A/C ${attacker[2]} was destroyed (${attk_roll}).`)
       } else {
