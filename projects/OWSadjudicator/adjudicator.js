@@ -224,9 +224,13 @@ function dieRoller(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
 
-function createResults(diceTotal, diceResults) {
+function createResults(diceTotal, diceResults, dice_title='') {
   let dice = Object.keys(diceTotal).map(x => x);
   const allDice = document.createElement('div');
+  const title_para = document.createElement('p');
+  title_para.innerHTML = dice_title
+  allDice.classList.add('dice_area');
+  allDice.appendChild(title_para);
   let resultTrack = 0;
   for (let i = 0; i < dice.length; i++) {
     for (let j = 0; j < diceTotal[dice[i]]; j++) {
@@ -249,7 +253,6 @@ document.getElementById('generalSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
   if (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
-    document.getElementById('resultArea2').innerText = '';
   }
   const dice_to_roll = {};
   const die_value = document.getElementById('general_value').value ? document.getElementById('general_value').value : '4';
@@ -262,7 +265,7 @@ document.getElementById('generalSubmit').addEventListener('click', () => {
   }
   dice_to_roll[die_value] = die_total;
   resultArea.appendChild(createResults(dice_to_roll, die_results));
-  document.getElementById('resultArea2').innerText = `${die_total === 1 ? `One ${die_value}-sided die was` : `${die_total} ${die_value}-sided dice were`} rolled, with the following results: ${die_results}`;
+  document.getElementById('result_log').innerHTML += `General Roll: ${die_total === 1 ? `One ${die_value}-sided die was` : `${die_total} ${die_value}-sided dice were`} rolled, with the following results: ${die_results}<br>`;
 }, false)
 
 // Theater and Local ISR Tool
@@ -299,12 +302,11 @@ document.getElementById('isrSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
   if (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
-    document.getElementById('resultArea2').innerText = '';
   }
   const [ISR_assets, ISR_rolls, targFound] = getISRresults();
-  const resultString = `The following ISR assets ${JSON.stringify(ISR_assets)} ${targFound ? 'found the target' : 'found nothing'} (${ISR_rolls}).`;
+  const resultString = `ISR: The following ISR assets ${JSON.stringify(ISR_assets)} ${targFound ? 'found the target' : 'found nothing'} (${ISR_rolls}).<br>`;
   document.getElementById('resultArea').appendChild(createResults(ISR_assets, ISR_rolls))
-  document.getElementById('resultArea2').innerText = resultString;
+  document.getElementById('result_log').innerHTML += resultString;
 }, false)
 
 // ASW Tool
@@ -334,12 +336,11 @@ document.getElementById('aswSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
   if (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
-    document.getElementById('resultArea2').innerText = '';
   }
   let [ASW_assets, ASW_rolls, subFound] = singlePing();
   document.getElementById('resultArea').appendChild(createResults(ASW_assets, ASW_rolls))
-  const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} ${subFound ? 'found a submarine' : 'found nothing'} (${ASW_rolls}).`
-  document.getElementById('resultArea2').innerText = ASW_result;
+  const ASW_result = `ASW: The following assets ${JSON.stringify(ASW_assets)} ${subFound ? 'found a submarine' : 'found nothing'} (${ASW_rolls}).<br>`
+  document.getElementById('result_log').innerHTML += ASW_result;
 }, false)
 
 // Surface to Surface and Air to Surface Strikes
@@ -437,10 +438,9 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
   if (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
-    document.getElementById('resultArea2').innerText = '';
   }
   resultArea.appendChild(createResults(results[0], results[1], results[2]));
-  document.getElementById('resultArea2').innerText = `The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
+  document.getElementById('result_log').innerHTML += `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).<br>`;
   }, false);
 
 // Torpedo Attack Tool
@@ -471,8 +471,8 @@ function findSub(subDetect, ASW=[0, 0, 0, false, {}]) {
 }
 
 function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 8, {}]) {
-  let checked_results = [];
   let [ASW_assets, ASW_rolls, subFound] = findSub(subDetect, ASW);
+  console.log(subFound);
   const ASW_attacks = []
   if (subFound) {
     for (const [key, value] of Object.entries(ASW[3])) {
@@ -480,14 +480,14 @@ function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 
         ASW_attacks.push(dieRoller(key))
       }
     }
-    checked_results = ASW_attacks.filter(x => x >= subDef);
   }
+  let sub_torps = {}
+  sub_torps[torpStr] = targStep;
   let torp_rolls =  [];
   for (let i = 0; i < targStep; i++) {
     torp_rolls.push(dieRoller(torpStr))
   }
-  const torp_hits = torp_rolls.filter(x => x >= targDef)
-  return [ASW_assets, ASW_rolls, subFound, ASW_attacks, checked_results, torp_rolls, torp_hits]
+  return [ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef]
 }
 
 function subAttackResults() {
@@ -511,10 +511,19 @@ function subAttackResults() {
 }
 
 document.getElementById('torpedoSubmit').addEventListener('click', () => {
-  let [ASW_assets, ASW_rolls, subFound, ASW_attacks, checked_results, torp_rolls, torp_hits] = subAttackResults();
-  const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. ${subFound ? `The sub was found (${ASW_rolls}) and ${checked_results.length > 0 ? 'was destroyed' : 'survived'} (${ASW_attacks})` : `The sub was undetected (${ASW_rolls}).`}`
+  let [ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef] = subAttackResults();
+  console.log(ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef);
+  const torp_hits = torp_rolls.filter(x => x >= targDef)
+  const asw_hits = ASW_rolls.filter(x => x >= subDef)
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  resultArea.appendChild(createResults(ASW_assets, ASW_rolls, 'ASW Results'));
+  resultArea.appendChild(createResults(sub_torps, torp_rolls, 'Torpedo Results'));
+  const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. ${subFound ? `The sub was found (${ASW_rolls}) and ${asw_hits.length > 0 ? 'was destroyed' : 'survived'} (${ASW_attacks})` : `The sub was undetected (${ASW_rolls}).`}`
   const torp_result = `${torp_hits.length === 0 ? 'The target survived.' : torp_hits.length === 1 ? 'The target took one hit' : `The target took ${torp_hits.length} hits`} (${torp_rolls}).`
-  document.getElementById('resultArea').innerText = `${torp_result} ${ASW_result}`;
+  document.getElementById('result_log').innerHTML += `Torpedo Attack: ${torp_result} ${ASW_result}<br>`;
 }, false);
 
 // Surface to Air Attack Tool
@@ -564,12 +573,18 @@ function samAttackResults() {
     }
   }
   const sam_results = samKills(all_rolls, all_defs)
-  return [JSON.stringify(sam_assets), JSON.stringify(aircraft), all_rolls, sam_results];
+  return [sam_assets, aircraft, all_rolls, sam_results];
 }
 
 document.getElementById('samStrikeSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  if (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
   let [sam_assets, aircraft, all_rolls, sam_results] = samAttackResults();
-  document.getElementById('resultArea').innerText = `The following weapons ${sam_assets} were fired at the following aircraft ${aircraft}. Rolls of ${all_rolls} resulted in the destruction of these aircraft: ${sam_results}`;
+  console.log(sam_assets, aircraft, all_rolls, sam_results)
+  resultArea.appendChild(createResults(sam_assets, all_rolls))
+  document.getElementById('result_log').innerText += `The following weapons ${JSON.stringify(sam_assets)} were fired at the following aircraft ${JSON.stringify(aircraft)}. Rolls of ${all_rolls} resulted in ${sam_results.length === 1 ? '1 hit' : sam_results.length + ' hits.'}`;
 }, false);
 
 // Air to Air Combat Tool
@@ -622,7 +637,7 @@ function furball() {
 }
 
 document.getElementById('airToAirSubmit').addEventListener('click', () => {
-  document.getElementById('resultArea').innerText = furball();
+  document.getElementById('result_log').innerText += furball();
 }, false);
 
 // SOF Direct Action Tool
@@ -654,7 +669,7 @@ document.getElementById('sofDirectActionSubmit').addEventListener('click', () =>
     let [detection_roll, attack_roll, message] = results;
     disp_message = `The detection roll was ${detection_roll}. The attack roll was ${attack_roll}. ${message}`;
   }
-  document.getElementById('resultArea').innerText = disp_message;
+  document.getElementById('result_log').innerText += disp_message;
 }, false);
 
 // Ground Combat
@@ -779,5 +794,5 @@ function conductGroundAttack() {
 
 document.getElementById('groundCombatSubmit').addEventListener('click', () => {
   let [attk_dice, attk_rolls, hits] = conductGroundAttack();
-  document.getElementById('resultArea').innerText = `The following dice ${attk_dice} were rolled (${attk_rolls}), resulting in ${hits.length = 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
+  document.getElementById('result_log').innerText += `The following dice ${attk_dice} were rolled (${attk_rolls}), resulting in ${hits.length = 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
 }, false);

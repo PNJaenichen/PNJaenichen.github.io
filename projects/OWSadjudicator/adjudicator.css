@@ -35,7 +35,7 @@
 }
 
 #user_area {
-  width: 1000px;
+  width: 100%;
   display: flex;
 }
 
@@ -45,6 +45,8 @@
 
 #result_section {
   width: 30%;
+  display: flex;
+  margin: 10px;
 }
 
 .tool_format {
@@ -187,9 +189,9 @@
   position: relative;
 }
 
-#result_section, .dice_area {
+.dice_area {
   display: flex;
-  margin: 10px;
+  
 }
 
 footer {
