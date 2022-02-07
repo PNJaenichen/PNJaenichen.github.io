@@ -227,9 +227,9 @@ function dieRoller(sides) {
 function createResults(diceTotal, diceResults, dice_title='') {
   let dice = Object.keys(diceTotal).map(x => x);
   const allDice = document.createElement('div');
-  const title_para = document.createElement('p');
-  title_para.innerHTML = dice_title
   allDice.classList.add('dice_area');
+  const title_para = document.createElement('p');
+  title_para.innerHTML = dice_title;
   allDice.appendChild(title_para);
   let resultTrack = 0;
   for (let i = 0; i < dice.length; i++) {
@@ -251,7 +251,7 @@ function createResults(diceTotal, diceResults, dice_title='') {
 
 document.getElementById('generalSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
-  if (resultArea.firstChild) {
+  while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
   const dice_to_roll = {};
@@ -300,7 +300,7 @@ function getISRresults() {
 
 document.getElementById('isrSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
-  if (resultArea.firstChild) {
+  while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
   const [ISR_assets, ISR_rolls, targFound] = getISRresults();
@@ -334,7 +334,7 @@ function singlePing() {
 
 document.getElementById('aswSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
-  if (resultArea.firstChild) {
+  while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
   let [ASW_assets, ASW_rolls, subFound] = singlePing();
@@ -436,10 +436,10 @@ function getStrikeResults() {
 document.getElementById('strikeSubmit').addEventListener('click', () => {
   const results = getStrikeResults();
   const resultArea = document.getElementById('resultArea');
-  if (resultArea.firstChild) {
+  while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
-  resultArea.appendChild(createResults(results[0], results[1], results[2]));
+  resultArea.appendChild(createResults(results[0], results[1]));
   document.getElementById('result_log').innerHTML += `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).<br>`;
   }, false);
 
@@ -578,13 +578,13 @@ function samAttackResults() {
 
 document.getElementById('samStrikeSubmit').addEventListener('click', () => {
   const resultArea = document.getElementById('resultArea');
-  if (resultArea.firstChild) {
+  while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
   let [sam_assets, aircraft, all_rolls, sam_results] = samAttackResults();
   console.log(sam_assets, aircraft, all_rolls, sam_results)
   resultArea.appendChild(createResults(sam_assets, all_rolls))
-  document.getElementById('result_log').innerText += `The following weapons ${JSON.stringify(sam_assets)} were fired at the following aircraft ${JSON.stringify(aircraft)}. Rolls of ${all_rolls} resulted in ${sam_results.length === 1 ? '1 hit' : sam_results.length + ' hits.'}`;
+  document.getElementById('result_log').innerHTML += `Surface-to-Air: The following weapons ${JSON.stringify(sam_assets)} were fired at the aircraft resulting in ${sam_results.length === 1 ? '1 hit' : sam_results.length + ' hits.'}<br>`;
 }, false);
 
 // Air to Air Combat Tool
@@ -609,6 +609,7 @@ function furball() {
   const red_victories = []
   const blue_aircraft = getAircraft('blue');
   const red_aircraft = getAircraft('red');
+  console.log(blue_aircraft, red_aircraft)
   for (const attacker of blue_aircraft) {
     if (attacker[0] === 0) {
       continue
@@ -633,11 +634,11 @@ function furball() {
       }
     }
   }
-  return `${blue_victories} vs. ${red_victories}`
+  return `Air-to-Air: ${blue_victories} vs. ${red_victories}<br>`
 }
 
 document.getElementById('airToAirSubmit').addEventListener('click', () => {
-  document.getElementById('result_log').innerText += furball();
+  document.getElementById('result_log').innerHTML += furball();
 }, false);
 
 // SOF Direct Action Tool
@@ -664,12 +665,12 @@ document.getElementById('sofDirectActionSubmit').addEventListener('click', () =>
   let disp_message = '';
   if (results.length !== 3) {
     let [detection_roll, message] = results;
-    disp_message = `The detection roll was ${detection_roll}. ${message}`;
+    disp_message = `SOF DA: The detection roll was ${detection_roll}. ${message}<br>`;
   } else {
     let [detection_roll, attack_roll, message] = results;
-    disp_message = `The detection roll was ${detection_roll}. The attack roll was ${attack_roll}. ${message}`;
+    disp_message = `SOF DA: The detection roll was ${detection_roll}. The attack roll was ${attack_roll}. ${message}<br>`;
   }
-  document.getElementById('result_log').innerText += disp_message;
+  document.getElementById('result_log').innerHTML += disp_message;
 }, false);
 
 // Ground Combat
@@ -794,5 +795,5 @@ function conductGroundAttack() {
 
 document.getElementById('groundCombatSubmit').addEventListener('click', () => {
   let [attk_dice, attk_rolls, hits] = conductGroundAttack();
-  document.getElementById('result_log').innerText += `The following dice ${attk_dice} were rolled (${attk_rolls}), resulting in ${hits.length = 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
+  document.getElementById('result_log').innerHTML += `Ground: The following dice ${attk_dice} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }<br>`;
 }, false);
