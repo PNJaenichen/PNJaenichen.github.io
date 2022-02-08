@@ -472,10 +472,9 @@ function findSub(subDetect, ASW=[0, 0, 0, false, {}]) {
 
 function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 8, {}]) {
   let [ASW_assets, ASW_rolls, subFound] = findSub(subDetect, ASW);
-  console.log(subFound);
   const ASW_attacks = []
   if (subFound) {
-    for (const [key, value] of Object.entries(ASW[3])) {
+    for (const [key, value] of Object.entries(ASW[4])) {
       for (let i = 0; i < value; i++) {
         ASW_attacks.push(dieRoller(key))
       }
@@ -512,14 +511,16 @@ function subAttackResults() {
 
 document.getElementById('torpedoSubmit').addEventListener('click', () => {
   let [ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef] = subAttackResults();
-  console.log(ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef);
   const torp_hits = torp_rolls.filter(x => x >= targDef)
-  const asw_hits = ASW_rolls.filter(x => x >= subDef)
+  const asw_hits = ASW_attacks.filter(x => x >= subDef)
   const resultArea = document.getElementById('resultArea');
   while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
-  resultArea.appendChild(createResults(ASW_assets, ASW_rolls, 'ASW Results'));
+  resultArea.appendChild(createResults(ASW_assets, ASW_rolls, 'ASW Search'));
+  if (ASW_attacks.length !== 0) {
+    resultArea.appendChild(createResults(ASW_assets, ASW_attacks, 'ASW Attack'));
+  }
   resultArea.appendChild(createResults(sub_torps, torp_rolls, 'Torpedo Results'));
   const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. ${subFound ? `The sub was found (${ASW_rolls}) and ${asw_hits.length > 0 ? 'was destroyed' : 'survived'} (${ASW_attacks})` : `The sub was undetected (${ASW_rolls}).`}`
   const torp_result = `${torp_hits.length === 0 ? 'The target survived.' : torp_hits.length === 1 ? 'The target took one hit' : `The target took ${torp_hits.length} hits`} (${torp_rolls}).`
@@ -573,7 +574,7 @@ function samAttackResults() {
     }
   }
   const sam_results = samKills(all_rolls, all_defs)
-  return [sam_assets, aircraft, all_rolls, sam_results];
+  return [sam_assets, all_rolls, sam_results];
 }
 
 document.getElementById('samStrikeSubmit').addEventListener('click', () => {
@@ -581,8 +582,7 @@ document.getElementById('samStrikeSubmit').addEventListener('click', () => {
   while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
-  let [sam_assets, aircraft, all_rolls, sam_results] = samAttackResults();
-  console.log(sam_assets, aircraft, all_rolls, sam_results)
+  let [sam_assets, all_rolls, sam_results] = samAttackResults();
   resultArea.appendChild(createResults(sam_assets, all_rolls))
   document.getElementById('result_log').innerHTML += `Surface-to-Air: The following weapons ${JSON.stringify(sam_assets)} were fired at the aircraft resulting in ${sam_results.length === 1 ? '1 hit' : sam_results.length + ' hits.'}<br>`;
 }, false);
@@ -609,7 +609,6 @@ function furball() {
   const red_victories = []
   const blue_aircraft = getAircraft('blue');
   const red_aircraft = getAircraft('red');
-  console.log(blue_aircraft, red_aircraft)
   for (const attacker of blue_aircraft) {
     if (attacker[0] === 0) {
       continue
@@ -644,30 +643,42 @@ document.getElementById('airToAirSubmit').addEventListener('click', () => {
 // SOF Direct Action Tool
 
 function SOFDirectAction() {
-  const detection_roll = dieRoller(parseInt(document.getElementById('sofDA_detect_roll').value))
+  const detection = {};
+  const directAction = {};
+  let attack_roll = 0;
+  const detection_die = document.getElementById('sofDA_detect_roll').value;
+  const detection_roll = dieRoller(parseInt(detection_die))
+  detection[detection_die] = 1;
+  let message = '';
   if (detection_roll >= parseInt(document.getElementById('sofDA_ISR_value').value)) {
-    return [detection_roll, `The unit was discovered.`]
+    message = `The unit was discovered.`;
   } else {
-    const attack_value = parseInt(document.getElementById('sofDA_att').value)
-    const attack_roll = dieRoller(attack_value)
+    const attack_die = document.getElementById('sofDA_att').value;
+    attack_roll = dieRoller(parseInt(attack_die))
+    directAction[attack_die] = 1;
+    message =  "The attack was unsuccessful.";
     if (attack_roll >= parseInt(document.getElementById('sofDA_def').value)) {
-      if (attack_roll === attack_value) {
-        return [detection_roll, attack_roll, "Two hits were scored!"]
+      message =  "One hit was scored.";
+      if (attack_roll === parseInt(attack_die)) {
+        message =  "Two hits were scored!";
       } 
-      return [detection_roll, attack_roll, "One hit was scored."]
     }
-    return [detection_roll, attack_roll, "The attack was unsuccessful."]
   }
+  return [detection, detection_roll, directAction, attack_roll, message]
 }
 
 document.getElementById('sofDirectActionSubmit').addEventListener('click', () => {
-  let results = SOFDirectAction();
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  let [detection, detection_roll, directAction, attack_roll, message] = SOFDirectAction();
   let disp_message = '';
-  if (results.length !== 3) {
-    let [detection_roll, message] = results;
+  resultArea.appendChild(createResults(detection, [detection_roll], 'Detection'));
+  if (Object.keys(directAction).length === 0) {
     disp_message = `SOF DA: The detection roll was ${detection_roll}. ${message}<br>`;
   } else {
-    let [detection_roll, attack_roll, message] = results;
+    resultArea.appendChild(createResults(directAction, [attack_roll], 'Attack'));
     disp_message = `SOF DA: The detection roll was ${detection_roll}. The attack roll was ${attack_roll}. ${message}<br>`;
   }
   document.getElementById('result_log').innerHTML += disp_message;
@@ -790,10 +801,15 @@ function conductGroundAttack() {
       attk_rolls.push(dieRoller(key))
     }
   }
-  return [JSON.stringify(attk_dice), attk_rolls, attk_rolls.filter(x => x >= defense)]
+  return [attk_dice, attk_rolls, attk_rolls.filter(x => x >= defense)]
 }
 
 document.getElementById('groundCombatSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
   let [attk_dice, attk_rolls, hits] = conductGroundAttack();
-  document.getElementById('result_log').innerHTML += `Ground: The following dice ${attk_dice} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }<br>`;
+  resultArea.appendChild(createResults(attk_dice, attk_rolls))
+  document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }<br>`;
 }, false);
