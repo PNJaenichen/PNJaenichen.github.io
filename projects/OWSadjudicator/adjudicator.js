@@ -274,11 +274,15 @@ function getISRUserInput() {
   let ISR_assets = {};
   ISR_assets[document.getElementById('isr_value').value] = parseInt(document.getElementById('isr_value_num').value);
   const detect_value = parseInt(document.getElementById('isr_detect').value) ? parseInt(document.getElementById('isr_detect').value) : 0;
-  if (document.getElementById('isr_SIGINT_EMSO').checked) {
-    ISR_assets = promoteAll(ISR_assets);
-  }
-  if (document.getElementById('isr_countermeasures').checked) {
-    ISR_assets = demoteAll(ISR_assets);
+  const promo_demo_diff = (document.getElementById('isr_SIGINT_EMSO').checked ? 1 : 0) - (document.getElementById('isr_countermeasures').checked ? 1 : 0);
+  if (promo_demo_diff > 0) {
+    for (let i = 0; i < promo_demo_diff; i++) {
+      promoteAll(ISR_assets);
+    }
+  } else if (promo_demo_diff < 0) {
+    for (let i = 0; i > promo_demo_diff; i--) {
+      demoteAll(ISR_assets);
+    }
   }
   if (document.getElementById('isr_combined').checked) {
     ISR_assets = allForOne(ISR_assets, false);
@@ -357,11 +361,15 @@ function surfaceStrike(incoming, defense=[], cap=0, promotions=0, demotions=0) {
       }
     }
   }
-  for (let i = 0; i < promotions; i++) {
-    promoteAll(missiles);
-  }
-  for (let i = 0; i < demotions; i++) {
-    demoteAll(missiles);
+  const promo_demo_diff = promotions - demotions;
+  if (promo_demo_diff > 0) {
+    for (let i = 0; i < promo_demo_diff; i++) {
+      promoteAll(missiles);
+    }
+  } else if (promo_demo_diff < 0) {
+    for (let i = 0; i > promo_demo_diff; i--) {
+      demoteAll(missiles);
+    }
   }
   for (let i = 0; i < cap; i++) {
     demoteOne(missiles);
