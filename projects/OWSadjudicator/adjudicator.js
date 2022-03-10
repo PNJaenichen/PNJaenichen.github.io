@@ -624,7 +624,7 @@ function furball() {
   const blue_aircraft = getAircraft('blue');
   const red_aircraft = getAircraft('red');
   for (const attacker of blue_aircraft) {
-    if (attacker[0] === 0) {
+    if (attacker[0] === "0") {
       continue
     } else {
       const attk_roll = dieRoller(attacker[0])
