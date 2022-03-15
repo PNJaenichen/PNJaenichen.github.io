@@ -1,5 +1,6 @@
 // Tabbing, code from https://www.w3schools.com/howto/howto_js_tabs.asp
 
+// eslint-disable-next-line no-unused-vars
 function openTool(evt, toolName) {
   // Declare all variables
   let i, tabcontent, tablinks;
@@ -482,11 +483,15 @@ function findSub(subDetect, ASW=[0, 0, 0, false, {}]) {
   return [ ASW_assets, ASW_rolls, checked_results.length > 0 ]
 }
 
-function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 8, {}]) {
+function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, false, {}]) {
   let [ASW_assets, ASW_rolls, subFound] = findSub(subDetect, ASW);
   const ASW_attacks = []
   if (subFound) {
-    for (const [key, value] of Object.entries(ASW[4])) {
+    let ASW_asset_attacks = ASW[4];
+    if (ASW[3]) {
+      ASW_asset_attacks = allForOne(ASW[4]);
+    }
+    for (const [key, value] of Object.entries(ASW_asset_attacks)) {
       for (let i = 0; i < value; i++) {
         ASW_attacks.push(dieRoller(key))
       }
@@ -603,16 +608,17 @@ document.getElementById('samStrikeSubmit').addEventListener('click', () => {
 
 // Air to Air Combat Tool
 
-const dash_number = ['one', 'two', 'three', 'four', 'five'];
+const dash_number = [['one', 1], ['two', 2], ['three', 3], ['four', 4], ['five', 5]];
 
 function getAircraft(side) {
   let flight = []
-  for (const number of dash_number) {
-    const atk_value = document.getElementById(`${side}_aaw_${number}_atk`).value;
-    const def_value = parseInt(document.getElementById(`${side}_aaw_${number}_def`).value);
-    const target = parseInt(document.getElementById(`${side}_aaw_${number}_targ`).value);
+  for (const dash_pair of dash_number) {
+    const [word_number, number] = dash_pair;
+    const atk_value = document.getElementById(`${side}_aaw_${word_number}_atk`).value;
+    const def_value = parseInt(document.getElementById(`${side}_aaw_${word_number}_def`).value);
+    const target = parseInt(document.getElementById(`${side}_aaw_${word_number}_targ`).value);
     if (atk_value) {
-      flight.push([atk_value, def_value, target])
+      flight.push([number, atk_value, def_value, target])
     }
   }
   return flight
@@ -624,36 +630,43 @@ function furball() {
   const blue_aircraft = getAircraft('blue');
   const red_aircraft = getAircraft('red');
   for (const attacker of blue_aircraft) {
-    if (attacker[0] === "0") {
-      continue
+    if (attacker[1] === "0") {
+      blue_victories.push([0, ...attacker, 0]);
     } else {
-      const attk_roll = dieRoller(attacker[0])
-      if (attk_roll >= red_aircraft[attacker[2] - 1][1]) {
-        blue_victories.push(`Red A/C ${attacker[2]} was destroyed (${attk_roll}).`)
-      } else {
-        blue_victories.push(`Blue A/C ${attacker[2]} missed its target (${attk_roll}).`)
-      }
+      const attk_roll = dieRoller(attacker[1]);
+      // return side (0 = Blue, 1 = Red), a/c number, attack value, def value, target, attack result
+      blue_victories.push([0, ...attacker, attk_roll]);
     }
   }
   for (const attacker of red_aircraft) {
-    if (attacker[0] === 0) {
-      continue 
+    if (attacker[1] === "0") {
+      red_victories.push([1, ...attacker, 0]);
     } else {
-      const attk_roll = dieRoller(attacker[0])
-      if (attk_roll >= blue_aircraft[attacker[2] - 1][1]) {
-        red_victories.push(`Blue A/C ${attacker[2]} was destroyed (${attk_roll}).`)
-      } else {
-        red_victories.push(`Red A/C ${attacker[2]} missed its target (${attk_roll}).`)
-      }
+      const attk_roll = dieRoller(attacker[1]);
+      // return side (0 = Blue, 1 = Red), a/c number, attack value, def value, target, attack result
+      red_victories.push([1, ...attacker, attk_roll]);
     }
   }
-  return `Air-to-Air: ${blue_victories} vs. ${red_victories}<br>`
+  return [blue_victories, red_victories]
 }
 
 document.getElementById('airToAirSubmit').addEventListener('click', () => {
   const air_results = furball()
-  document.getElementById('resultWords').innerHTML = furball();
-  document.getElementById('result_log').innerHTML += air_results;
+  document.getElementById('resultWords').innerHTML = '';
+  console.log(air_results);
+  for (let i = 0; i < 2; i++) {
+    for (let j = 0; j < air_results[i].length; j++) {
+      if (j !== air_results[i].length - 1) {
+        document.getElementById('resultWords').innerHTML += air_results[i][j] + '-';
+        document.getElementById('result_log').innerHTML += air_results[i][j] + '-';
+      } else {
+        document.getElementById('resultWords').innerHTML += air_results[i][j];
+        document.getElementById('result_log').innerHTML += air_results[i][j];
+      }      
+    }
+    document.getElementById('resultWords').innerHTML += '<br>';
+    document.getElementById('result_log').innerHTML += '<br>';
+  }
 }, false);
 
 // SOF Direct Action Tool
@@ -718,6 +731,7 @@ function getAttackerModifiers() {
   }
   att_modi = document.getElementById('grndCom_att_CAS').value ? att_modi += parseInt(document.getElementById('grndCom_att_CAS').value) : att_modi;
   att_modi = document.getElementById('grndCom_att_FS').value ? att_modi += parseInt(document.getElementById('grndCom_att_FS').value) : att_modi;
+  att_modi = document.getElementById('grndCom_troop_quality').value ? att_modi += parseInt(document.getElementById('grndCom_troop_quality').value) : att_modi;
   att_modi = document.getElementById('grndCom_att_defender').checked ? att_modi += 2 : att_modi;
   att_modi = document.getElementById('grndCom_att_main_effort').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_SIGINTEMSO').checked ? att_modi += 1 : att_modi;
@@ -732,13 +746,13 @@ function getAttackerModifiers() {
 
 function getDefenderModifiers() {
   let def_modi = 0
-  def_modi = document.getElementById('grndCom_def_CAS').value ? def_modi += parseInt(document.getElementById('grndCom_def_CAS').value) : def_modi;
-  def_modi = document.getElementById('grndCom_def_FS').value ? def_modi += parseInt(document.getElementById('grndCom_def_FS').value) : def_modi;
-  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_CAS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_CAS').value) : def_modi;
+  def_modi = document.getElementById('grndCom_def_FS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_FS').value) : def_modi;
+  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi -= 1 : def_modi;
   def_modi = document.getElementById('grndCom_def_suppress').checked ? def_modi += 1 : def_modi;
-  def_modi = document.getElementById('grndCom_att_rsoi').checked ? def_modi += 1 : def_modi;
-  def_modi = document.getElementById('grndCom_att_airAslt').checked ? def_modi += 2 : def_modi;
-  def_modi = document.getElementById('grndCom_att_ampAslt').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_rsoi').checked ? def_modi += 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_airAslt').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_ampAslt').checked ? def_modi += 2 : def_modi;
   return def_modi
 }
 
@@ -757,7 +771,8 @@ function groundPromoDemo() {
   const terrain_type = document.getElementById('grndCom_terr').value;
   const att_mod = getAttackerModifiers();
   const def_mod = getDefenderModifiers();
-  const advantage = att_mod - def_mod;
+  const advantage = att_mod + def_mod;
+  console.log(advantage);
   let adjustments = 0;
   if (advantage >= 5) {
     adjustments = grnd_abacus['5'][terrain_type]
@@ -828,6 +843,12 @@ document.getElementById('groundCombatSubmit').addEventListener('click', () => {
   }
   let [attk_dice, attk_rolls, hits] = conductGroundAttack();
   resultArea.appendChild(createResults(attk_dice, attk_rolls))
-  document.getElementById('resultWords').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
-  document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }<br>`;
+  console.log(JSON.stringify(attk_dice), JSON.stringify(attk_dice).search("null"));
+  if (JSON.stringify(attk_dice).search("null") !== -1 || JSON.stringify(attk_dice) === "{}") {
+    document.getElementById('resultWords').innerHTML = 'Ground: No dice were rolled.';
+    document.getElementById('result_log').innerHTML += 'Ground: No dice were rolled.<br>';
+  } else {
+    document.getElementById('resultWords').innerHTML = `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
+    document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }<br>`;
+  }
 }, false);
