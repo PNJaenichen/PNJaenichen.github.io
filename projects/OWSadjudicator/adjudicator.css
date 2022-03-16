@@ -253,6 +253,17 @@ not to see them */
   flex-wrap: wrap;
 }
 
+.mergeResult {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 10px;
+}
+
+.AAFighters {
+  text-align: center;
+}
+
 footer {
   text-align: center;
   font-size: x-small;

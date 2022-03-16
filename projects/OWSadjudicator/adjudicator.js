@@ -653,20 +653,43 @@ function furball() {
 document.getElementById('airToAirSubmit').addEventListener('click', () => {
   const air_results = furball()
   document.getElementById('resultWords').innerHTML = '';
-  console.log(air_results);
+  document.getElementById('resultArea').innerHTML = '';
+  document.getElementById('result_log').innerHTML += 'Air-to-Air: '
+  // side, a/c #, att val, def val, target, att res
+  // let first_one = [0,1,8,5,1,7];
+  // object = diceTotal, array = diceResults, dice_title=''
   for (let i = 0; i < 2; i++) {
     for (let j = 0; j < air_results[i].length; j++) {
-      if (j !== air_results[i].length - 1) {
-        document.getElementById('resultWords').innerHTML += air_results[i][j] + '-';
-        document.getElementById('result_log').innerHTML += air_results[i][j] + '-';
-      } else {
-        document.getElementById('resultWords').innerHTML += air_results[i][j];
-        document.getElementById('result_log').innerHTML += air_results[i][j];
-      }      
-    }
-    document.getElementById('resultWords').innerHTML += '<br>';
-    document.getElementById('result_log').innerHTML += '<br>';
+      if (air_results[i][j][5] !== 0) {
+        let asset_obj = {};
+        asset_obj[air_results[i][j][2].toString()] = 1;
+        let shooter = `${air_results[i][j][0] === 0 ? 'Blue' : 'Red'} A/C ${air_results[i][j][1]}`;
+        let defender = `${air_results[i][j][0] === 0 ? 'Red' : 'Blue'} A/C ${air_results[i][j][4]}`;
+        const theMergeDiv = document.createElement('div');
+        const shootDefDiv = document.createElement('div');
+        const shooterP = document.createElement('p');
+        const versesP = document.createElement('p');
+        const defenderP = document.createElement('p');
+        const mergeResult = document.createElement('p');
+        shooterP.innerText = shooter;
+        defenderP.innerText = defender;
+        versesP.innerText = 'vs';
+        mergeResult.innerText = air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS';
+        shootDefDiv.appendChild(shooterP);
+        shootDefDiv.appendChild(versesP);
+        shootDefDiv.appendChild(defenderP);
+        theMergeDiv.appendChild(shootDefDiv);
+        theMergeDiv.appendChild(createResults(asset_obj, [air_results[i][j][5]]));
+        theMergeDiv.appendChild(mergeResult);
+        shootDefDiv.classList.add('AAFighters');
+        theMergeDiv.classList.add('mergeResult');
+        document.getElementById('resultArea').appendChild(theMergeDiv);
+        document.getElementById('resultWords').innerHTML += `${shooter} rolled ${air_results[i][j][5]} on ${JSON.stringify(asset_obj)} against ${defender} resulting in a ${air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS'}.<br>`
+        document.getElementById('result_log').innerHTML += `${shooter} rolled ${air_results[i][j][5]} on ${JSON.stringify(asset_obj)} against ${defender} resulting in a ${air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS'}. `
+      }
+    }      
   }
+    document.getElementById('result_log').innerHTML += '<br>';
 }, false);
 
 // SOF Direct Action Tool

@@ -8,266 +8,277 @@
     <title>OWS Adjudication Aid</title>
     <link rel="icon" href="data:;base64,=">
     <style>
-      /* CSS Reset from Piccalilli at https://piccalil.li/a-modern-css-reset */
-      /* Box sizing rules */
-      *, *::before, *::after {
-        box-sizing: border-box;
-      }
+/* CSS Reset from Piccalilli at https://piccalil.li/a-modern-css-reset */
+/* Box sizing rules */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
-      /* Remove default margin */
-      body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
-        margin: 0;
-      }
+/* Remove default margin */
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+  margin: 0;
+}
 
-      /* remove list styles on ul, ol elements with a list role, which suggests 
-      default styling will be removed */
-      ul[role='list'], ol[role='list'] {
-        list-style: none;
-      }
+/* remove list styles on ul, ol elements with a list role, which suggests 
+default styling will be removed */
+ul[role='list'], ol[role='list'] {
+  list-style: none;
+}
 
-      /* Set core root defaults */
-      html:focus-within {
-        scroll-behavior: smooth;
-      }
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
 
-      /* Set core body defaults */
-      body {
-        min-height: 100vh;
-        text-rendering: optimizeSpeed;
-        line-height: 1.5;
-      }
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
 
-      /* <a> elements that don't have a class get default styles */
-      a:not([class]) {
-        text-decoration-skip-ink: auto;
-      }
+/* <a> elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
 
-      /* Make images easier to work with */
-      img, picture {
-        max-width: 100%;
-        display: block;
-      }
+/* Make images easier to work with */
+img, picture {
+  max-width: 100%;
+  display: block;
+}
 
-      /* Inherit fonts for inputs and buttons */
-      input, button, textarea, select {
-        font: inherit;
-      }
+/* Inherit fonts for inputs and buttons */
+input, button, textarea, select {
+  font: inherit;
+}
 
-      /* Remove all animations, transitions, and smooth scroll for people that prefer
-      not to see them */
-      @media (prefers-reduced-motion: reduce) {
-        html:focus-within {
-          scroll-behavior: auto;
-        }
+/* Remove all animations, transitions, and smooth scroll for people that prefer
+not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
 
-        *, *::before, *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-          scroll-behavior: auto !important;
-        }
-      }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
-      /* Tabbing, code from https://www.w3schools.com/howto/howto_js_tabs.asp */
-      
-      /* Style the tab */
-      .tab {
-        overflow: hidden;
-        border: 1px solid #ccc;
-        background-color: #f1f1f1;
-      }
+/* Tabbing, code from https://www.w3schools.com/howto/howto_js_tabs.asp */
+ 
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
 
-      /* Style the buttons that are used to open the tab content */
-      .tab button {
-        background-color: inherit;
-        float: left;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        padding: 14px 16px;
-        transition: 0.3s;
-      }
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
 
-      /* Change background color of buttons on hover */
-      .tab button:hover {
-        background-color: #ddd;
-      }
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
 
-      /* Create an active/current tablink class */
-      .tab button.active {
-        background-color: #ccc;
-      }
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
 
-      /* Style the tab content */
-      .tabcontent {
-        display: none;
-        padding: 6px 12px;
-      }
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+}
 
-      #user_area {
-        width: 100%;
-        display: flex;
-      }
+#user_area {
+  width: 100%;
+  display: flex;
+}
 
-      #tool_section {
-        width: 70%;
-      }
+#tool_section {
+  width: 70%;
+}
 
-      #result_section {
-        width: 30%;
-        margin: 10px;
-      }
+#result_section {
+  width: 30%;
+  margin: 10px;
+}
 
-      .tool_format {
-        width: 100%;
-      }
+.tool_format {
+  width: 100%;
+}
 
-      /* clip-path border code from https://stackoverflow.com/questions/44331039/css-how-to-add-a-border-color-to-a-css-shape */
+/* clip-path border code from https://stackoverflow.com/questions/44331039/css-how-to-add-a-border-color-to-a-css-shape */
 
-      .dice4 {
-        clip-path: polygon(50% 5%, 5% 95%, 95% 95%);
-        background-color: black;
-        color: lightgrey;
-      }
-      .dice4 p {
-        line-height: 60px;
-      }
+.dice4 {
+  clip-path: polygon(50% 5%, 5% 95%, 95% 95%);
+  background-color: black;
+  color: lightgrey;
+}
+.dice4 p {
+  line-height: 60px;
+}
 
-      .dice6 {
-        clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
-        background: black;
-        color: lightgrey;
-        position: relative;
-      }
-      .dice6:before {
-        content: '';
-        width: 48px;
-        height: 48px;
-        background: red;
-        clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
-        display: block;
-        position: absolute;
-        top: 1px;
-        left: 1px;
-      }
+.dice6 {
+  clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice6:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: red;
+  clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
 
-      .dice8 {
-        clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%);
-        background: black;
-        color: black;
-        position: relative;
-      }
-      .dice8:before {
-        content: '';
-        width: 48px;
-        height: 48px;
-        background: yellow;
-        clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%);
-        display: block;
-        position: absolute;
-        top: 1px;
-        left: 1px;
-      }
-      
-      .dice10 {
-        clip-path: polygon(78% 0%, 100% 50%, 78% 100%, 22% 100%, 0% 50%, 22% 0%);
-        background: black;
-        color: lightgrey;
-        position: relative;
-      }
-      .dice10:before {
-        content: '';
-        width: 48px;
-        height: 48px;
-        background: green;
-        clip-path: polygon(80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%, 20% 0%);
-        display: block;
-        position: absolute;
-        top: 1px;
-        left: 1px;
-      }
+.dice8 {
+  clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%);
+  background: black;
+  color: black;
+  position: relative;
+}
+.dice8:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: yellow;
+  clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+ 
+.dice10 {
+  clip-path: polygon(78% 0%, 100% 50%, 78% 100%, 22% 100%, 0% 50%, 22% 0%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice10:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: green;
+  clip-path: polygon(80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%, 20% 0%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
 
-      .dice12 {
-        clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-        background: black;
-        color: lightgrey;
-        position: relative;
-      }
-      .dice12:before {
-        content: '';
-        width: 48px;
-        height: 48px;
-        background: blue;
-        clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-        display: block;
-        position: absolute;
-        top: 1px;
-        left: 1px;
-      }
+.dice12 {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice12:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: blue;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
 
-      .dice16 {
-        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        background: black;
-        color: lightgrey;
-        position: relative;
-      }
-      .dice16:before {
-        content: '';
-        width: 48px;
-        height: 48px;
-        background: purple;
-        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        display: block;
-        position: absolute;
-        top: 1px;
-        left: 1px;
-      }
+.dice16 {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice16:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: purple;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
 
-      .dice20 {
-        clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
-        background: black;
-        color: black;
-        position: relative;
-      }
-      .dice20:before {
-        content: '';
-        width: 48px;
-        height: 48px;
-        background: lightgrey;
-        clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
-        display: block;
-        position: absolute;
-        top: 1px;
-        left: 1px;
-      }
+.dice20 {
+  clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+  background: black;
+  color: black;
+  position: relative;
+}
+.dice20:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: lightgrey;
+  clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
 
-      .die {
-        height: 50px;
-        width: 50px;
-        text-align: center;
-        line-height: 50px;
-        font-size: 25px;
-        font-weight: bold;
-        padding: 0px;
-        margin: 3px;
-      }
+.die {
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 3px;
+}
 
-      .die p {
-        margin: 0px;
-        padding: 0px;
-        position: relative;
-      }
+.die p {
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
 
-      .dice_area {
-        display: flex;
-        flex-wrap: wrap;
-      }
+.dice_area {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-      footer {
-        text-align: center;
-        font-size: x-small;
-      }
-    </style>>
+.mergeResult {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 10px;
+}
+
+.AAFighters {
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  font-size: x-small;
+}
+    </style>
   </head>
   <body>
     <header>
@@ -991,6 +1002,7 @@
         </div> 
         <div id='result_section'>
           <div id='resultArea'></div>
+          <br>
           <div id='resultWords'></div>
         </div>
       </div>
@@ -1026,7 +1038,7 @@
     </footer>
   </body>
   <script defer>
-    // Tabbing, code from https://www.w3schools.com/howto/howto_js_tabs.asp
+// Tabbing, code from https://www.w3schools.com/howto/howto_js_tabs.asp
 
 // eslint-disable-next-line no-unused-vars
 function openTool(evt, toolName) {
@@ -1681,20 +1693,43 @@ function furball() {
 document.getElementById('airToAirSubmit').addEventListener('click', () => {
   const air_results = furball()
   document.getElementById('resultWords').innerHTML = '';
-  console.log(air_results);
+  document.getElementById('resultArea').innerHTML = '';
+  document.getElementById('result_log').innerHTML += 'Air-to-Air: '
+  // side, a/c #, att val, def val, target, att res
+  // let first_one = [0,1,8,5,1,7];
+  // object = diceTotal, array = diceResults, dice_title=''
   for (let i = 0; i < 2; i++) {
     for (let j = 0; j < air_results[i].length; j++) {
-      if (j !== air_results[i].length - 1) {
-        document.getElementById('resultWords').innerHTML += air_results[i][j] + '-';
-        document.getElementById('result_log').innerHTML += air_results[i][j] + '-';
-      } else {
-        document.getElementById('resultWords').innerHTML += air_results[i][j];
-        document.getElementById('result_log').innerHTML += air_results[i][j];
-      }      
-    }
-    document.getElementById('resultWords').innerHTML += '<br>';
-    document.getElementById('result_log').innerHTML += '<br>';
+      if (air_results[i][j][5] !== 0) {
+        let asset_obj = {};
+        asset_obj[air_results[i][j][2].toString()] = 1;
+        let shooter = `${air_results[i][j][0] === 0 ? 'Blue' : 'Red'} A/C ${air_results[i][j][1]}`;
+        let defender = `${air_results[i][j][0] === 0 ? 'Red' : 'Blue'} A/C ${air_results[i][j][4]}`;
+        const theMergeDiv = document.createElement('div');
+        const shootDefDiv = document.createElement('div');
+        const shooterP = document.createElement('p');
+        const versesP = document.createElement('p');
+        const defenderP = document.createElement('p');
+        const mergeResult = document.createElement('p');
+        shooterP.innerText = shooter;
+        defenderP.innerText = defender;
+        versesP.innerText = 'vs';
+        mergeResult.innerText = air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS';
+        shootDefDiv.appendChild(shooterP);
+        shootDefDiv.appendChild(versesP);
+        shootDefDiv.appendChild(defenderP);
+        theMergeDiv.appendChild(shootDefDiv);
+        theMergeDiv.appendChild(createResults(asset_obj, [air_results[i][j][5]]));
+        theMergeDiv.appendChild(mergeResult);
+        shootDefDiv.classList.add('AAFighters');
+        theMergeDiv.classList.add('mergeResult');
+        document.getElementById('resultArea').appendChild(theMergeDiv);
+        document.getElementById('resultWords').innerHTML += `${shooter} rolled ${air_results[i][j][5]} on ${JSON.stringify(asset_obj)} against ${defender} resulting in a ${air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS'}.<br>`
+        document.getElementById('result_log').innerHTML += `${shooter} rolled ${air_results[i][j][5]} on ${JSON.stringify(asset_obj)} against ${defender} resulting in a ${air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS'}. `
+      }
+    }      
   }
+    document.getElementById('result_log').innerHTML += '<br>';
 }, false);
 
 // SOF Direct Action Tool
