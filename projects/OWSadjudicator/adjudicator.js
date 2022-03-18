@@ -451,9 +451,19 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
   while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
-  resultArea.appendChild(createResults(results[0], results[1]));
-  document.getElementById('resultWords').innerText = `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
-  document.getElementById('result_log').innerHTML += `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).<br>`;
+  resultArea.appendChild(createResults(results[0], results[1], "Results: "));
+  if (document.getElementById("hyper_bmd").checked && results[2].length > 0) {
+    const extra_dmg = [];
+    for (let i = 0; i < results[2].length; i++) {
+      extra_dmg.push(dieRoller(4));
+    }
+    resultArea.appendChild(createResults({"4": results[2].length}, extra_dmg, "Add'l Damage: <br>"))
+    document.getElementById('resultWords').innerText = `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}). Hypersonic/BMD did a total of ${extra_dmg.reduce((previousValue, currentValue) => previousValue + currentValue, 0)} damage (${extra_dmg}).`;
+    document.getElementById('result_log').innerHTML += `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}). Hypersonic/BMD did a total of ${extra_dmg.reduce((previousValue, currentValue) => previousValue + currentValue, 0)} damage (${extra_dmg}).<br>`;
+  } else {
+    document.getElementById('resultWords').innerText = `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
+    document.getElementById('result_log').innerHTML += `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).<br>`;
+  }
   }, false);
 
 // Torpedo Attack Tool
@@ -674,7 +684,21 @@ document.getElementById('airToAirSubmit').addEventListener('click', () => {
         shooterP.innerText = shooter;
         defenderP.innerText = defender;
         versesP.innerText = 'vs';
-        mergeResult.innerText = air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS';
+        let targ_def = 0;
+        if (i === 0) {
+          for (let k = 0; k < air_results[1].length; k++) {
+            if (air_results[1][k][1] === air_results[0][j][4]) {
+              targ_def = air_results[1][k][3];
+            } 
+          }
+        } else {
+          for (let k = 0; k < air_results[0].length; k++) {
+            if (air_results[0][k][1] === air_results[0][j][4]) {
+              targ_def = air_results[0][k][3];
+            }
+          }
+        }
+        mergeResult.innerText = air_results[i][j][5] >= targ_def ? 'HIT' : 'MISS';
         shootDefDiv.appendChild(shooterP);
         shootDefDiv.appendChild(versesP);
         shootDefDiv.appendChild(defenderP);

@@ -319,7 +319,7 @@ footer {
                 </select>
                 <br>
                 <label id="gen_total_label" for="gen_total">Number of Dice:</label>
-                <input id="gen_total" type="number" min=1 max=40 placeholder=1>
+                <input id="gen_total" type="number" min=1 max=40>
               </fieldset>
               <button id="generalSubmit" type="button">Ajudicate</button>
             </form>
@@ -344,10 +344,10 @@ footer {
                   <option value=20>D20</option>
                 </select>
                 <label id='isr_value_num_label' for='isr_value_num'># of Assets:</label>
-                <input id="isr_value_num" type="number" min=0 max=40 placeholder=0>
+                <input id="isr_value_num" type="number" min=0 max=40>
                 <br>
                 <label id="isr_detect_label" for="isr_detect">Detection Value</label>
-                <input id="isr_detect" type="number" min=0 max=20 placeholder=0>
+                <input id="isr_detect" type="number" min=0 max=20>
                 <br>
                 <label><input id="isr_SIGINT_EMSO" type="checkbox">SIGINT/EMSO</label>
                 <label><input id="isr_countermeasures" type="checkbox">Active/Passive CMs</label>
@@ -376,10 +376,10 @@ footer {
                   <option value=20>D20</option>
                 </select>
                 <label id='asw_value_num_label' for='asw_value_num'># of Assets:</label>
-                <input id="asw_value_num" type="number" min=0 max=40 placeholder=0>
+                <input id="asw_value_num" type="number" min=0 max=40>
                 <br>
                 <label id="asw_detect_label" for="asw_detect">Defense/Detection Value</label>
-                <input id="asw_detect" type="number" min=0 max=20 placeholder=0>
+                <input id="asw_detect" type="number" min=0 max=20>
                 <br>
                 <label><input id="asw_littoral" type="checkbox">Littoral Waters</label>
                 <label><input id="asw_runningSilent" type="checkbox">Running Silent</label>
@@ -412,7 +412,7 @@ footer {
                     <option value=20>D20</option>
                   </select>
                   <label id="inbnd_one_tot_label" for="inbound_one_total">Total</label>
-                  <input id="inbound_one_total" type="number" min=0 max=40 placeholder=0>
+                  <input id="inbound_one_total" type="number" min=0 max=40>
                   <br>
                   <label id="inbound_two_label" for="inbound_two">Weapon Type 2</label>
                   <select id="inbound_two">
@@ -426,7 +426,7 @@ footer {
                     <option value=20>D20</option>
                   </select>
                   <label id="inbnd_two_tot_label" for="inbound_two_total">Total</label>
-                  <input id="inbound_two_total" type="number" min=0 max=40 placeholder=0>
+                  <input id="inbound_two_total" type="number" min=0 max=40>
                   <br>
                   <label id="inbound_three_label" for="inbound_three">Weapon Type 3</label>
                   <select id="inbound_three">
@@ -440,37 +440,39 @@ footer {
                     <option value=20>D20</option>
                   </select>
                   <label id="inbnd_three_tot_label" for="inbound_three_total">Total</label>
-                  <input id="inbound_three_total" type="number" min=0 max=40 placeholder=0>
+                  <input id="inbound_three_total" type="number" min=0 max=40>
+                  <br>
+                  <label><input id="hyper_bmd" type="checkbox">Hypersonic / BMD</label>
               </fieldset>
               <fieldset>
                 <label>Total Defensive Missiles:</label>
                 <br>
                 <label id="def_one_label" for="def_one">Weapon Type 1</label>
-                <input id="def_one" type="number" min=0 max=20 placeholder=6>
+                <input id="def_one" type="number" min=0 max=20>
                 <label id="def_one_tot_label" for="def_one_total">Total</label>
-                <input id="def_one_total" type="number" min=0 max=40 placeholder=0>
+                <input id="def_one_total" type="number" min=0 max=40>
                 <br>
                 <label id="def_two_label" for="def_two">Weapon Type 2</label>
-                <input id="def_two" type="number" min=0 max=20 placeholder=6>
+                <input id="def_two" type="number" min=0 max=20>
                 <label id="def_two_tot_label" for="def_two_total">Total</label>
-                <input id="def_two_total" type="number" min=0 max=40 placeholder=0>
+                <input id="def_two_total" type="number" min=0 max=40>
                 <br>
                 <label id="def_three_label" for="def_three">Weapon Type 3</label>
-                <input id="def_three" type="number" min=0 max=20 placeholder=6>
+                <input id="def_three" type="number" min=0 max=20>
                 <label id="def_three_tot_label" for="def_three_total">Total</label>
-                <input id="def_three_total" type="number" min=0 max=40 placeholder=0>
+                <input id="def_three_total" type="number" min=0 max=40>
               </fieldset>
               <label id="target_def_label" for="target_def">Target Defense:</label> 
-              <input id="target_def" type="number" min=1 max=20 placeholder=4>
+              <input id="target_def" type="number" min=1 max=20>
               <br>
               <label id="cap_input_label" for="cap_input">CAP Available:</label>
-              <input id="cap_input" type="number" min=0 max=40 placeholder=0>
+              <input id="cap_input" type="number" min=0 max=40>
               <br>
               <label id="promo_label" for="promo_input">No. of Promotions:</label>
-              <input id="promo_input" type="number" min=0 max=20 placeholder=0>
+              <input id="promo_input" type="number" min=0 max=20>
               <br>
               <label id="demo_label" for="demo_input">No. of Demotions:</label>
-              <input id="demo_input" type="number" min=0 max=20 placeholder=0>
+              <input id="demo_input" type="number" min=0 max=20>
               <br>
               <label><input id="aew_input" type="checkbox">AEW Available (US Only)</label>
               <br>
@@ -499,7 +501,7 @@ footer {
                   <option value=20>D20</option>
                 </select>
                 <label id="ASW_asset_one_tot_label" for="ASW_asset_one_total">Total</label>
-                <input id="ASW_asset_one_total" type="number" min=0 max=40 placeholder=0>
+                <input id="ASW_asset_one_total" type="number" min=0 max=40>
                 <br>
                 <label id="ASW_asset_two_label" for="ASW_asset_two">ASW Type 2</label>
                 <select id="ASW_asset_two">
@@ -513,19 +515,19 @@ footer {
                   <option value=20>D20</option>
                 </select>
                 <label id="ASW_asset_two_tot_label" for="ASW_asset_two_total">Total</label>
-                <input id="ASW_asset_two_total" type="number" min=0 max=40 placeholder=0>
+                <input id="ASW_asset_two_total" type="number" min=0 max=40>
               </fieldset>
               <label id="torp_target_step_label" for="torp_target_step">Target Steps:</label> 
-              <input id="torp_target_step" type="number" min=1 max=20 placeholder=4>
+              <input id="torp_target_step" type="number" min=1 max=20>
               <br>
               <label id="torp_target_def_label" for="torp_target_def">Target Defense:</label>
-              <input id="torp_target_def" type="number" min=0 max=40 placeholder=0>
+              <input id="torp_target_def" type="number" min=0 max=40>
               <br>
               <label id="torp_sub_detect_label" for="torp_sub_detect">Sub Detection:</label>
-              <input id="torp_sub_detect" type="number" min=0 max=40 placeholder=0>
+              <input id="torp_sub_detect" type="number" min=0 max=40>
               <br>
               <label id="torp_sub_def_label" for="torp_sub_def">Sub Defense:</label>
-              <input id="torp_sub_def" type="number" min=0 max=40 placeholder=0>
+              <input id="torp_sub_def" type="number" min=0 max=40>
               <br>
               <label id="torp_str_label" for="torp_str">Torpedo Strength:</label>
                 <select id="torp_str">
@@ -569,7 +571,7 @@ footer {
                   <option value=20>D20</option>
                 </select>
                 <label id="SAM_asset_one_tot_label" for="SAM_asset_one_total">Total</label>
-                <input id="SAM_asset_one_total" type="number" min=0 max=40 placeholder=0>
+                <input id="SAM_asset_one_total" type="number" min=0 max=40>
                 <br>
                 <label id="SAM_asset_two_label" for="SAM_asset_two">SAM Type 2</label>
                 <select id="SAM_asset_two">
@@ -583,7 +585,7 @@ footer {
                   <option value=20>D20</option>
                 </select>
                 <label id="SAM_asset_two_tot_label" for="SAM_asset_two_total">Total</label>
-                <input id="SAM_asset_two_total" type="number" min=0 max=40 placeholder=0>
+                <input id="SAM_asset_two_total" type="number" min=0 max=40>
                 <br>
                 <label id="SAM_asset_three_label" for="SAM_asset_three">SAM Type 3</label>
                 <select id="SAM_asset_three">
@@ -597,25 +599,25 @@ footer {
                   <option value=20>D20</option>
                 </select>
                 <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
-                <input id="SAM_asset_three_total" type="number" min=0 max=40 placeholder=0>
+                <input id="SAM_asset_three_total" type="number" min=0 max=40>
               </fieldset>
               <fieldset>
                 <label>Aircraft:</label>
                 <br>
                 <label id="ac_asset_one_label" for="ac_asset_one">Aircraft Defense 1</label>
-                <input id="ac_asset_one" type="number" min=0 max=40 placeholder=0>
+                <input id="ac_asset_one" type="number" min=0 max=40>
                 <label id="ac_asset_one_tot_label" for="ac_asset_one_total">Total</label>
-                <input id="ac_asset_one_total" type="number" min=0 max=40 placeholder=0>
+                <input id="ac_asset_one_total" type="number" min=0 max=40>
                 <br>
                 <label id="ac_asset_two_label" for="ac_asset_two">Aircraft Defense 2</label>
-                <input id="ac_asset_two" type="number" min=0 max=40 placeholder=0>
+                <input id="ac_asset_two" type="number" min=0 max=40>
                 <label id="ac_asset_two_tot_label" for="ac_asset_two_total">Total</label>
-                <input id="ac_asset_two_total" type="number" min=0 max=40 placeholder=0>
+                <input id="ac_asset_two_total" type="number" min=0 max=40>
                 <br>
                 <label id="ac_asset_three_label" for="ac_asset_three">Aircraft Defense 3</label>
-                <input id="ac_asset_three" type="number" min=0 max=40 placeholder=0>
+                <input id="ac_asset_three" type="number" min=0 max=40>
                 <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
-                <input id="SAM_asset_three_total" type="number" min=0 max=40 placeholder=0>
+                <input id="SAM_asset_three_total" type="number" min=0 max=40>
               </fieldset>
               <button id="samStrikeSubmit" type="button">Ajudicate</button>
             </form>
@@ -643,7 +645,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="blue_aaw_one_def_label" for="blue_aaw_one_def">Defense:</label>
-                <input id="blue_aaw_one_def" type="number" min=0 max=20 placeholder=0>
+                <input id="blue_aaw_one_def" type="number" min=0 max=20>
                 <label id="blue_aaw_one_targ_label" for="blue_aaw_one_targ">Target:</label>
                 <select id="blue_aaw_one_targ">
                   <option value="">Target</option>
@@ -668,7 +670,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="blue_aaw_two_def_label" for="blue_aaw_two_def">Defense:</label>
-                <input id="blue_aaw_two_def" type="number" min=0 max=20 placeholder=0>
+                <input id="blue_aaw_two_def" type="number" min=0 max=20>
                 <label id="blue_aaw_two_targ_label" for="blue_aaw_two_targ">Target:</label>
                 <select id="blue_aaw_two_targ">
                   <option value="">Target</option>
@@ -693,7 +695,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="blue_aaw_three_def_label" for="blue_aaw_three_def">Defense:</label>
-                <input id="blue_aaw_three_def" type="number" min=0 max=20 placeholder=0>
+                <input id="blue_aaw_three_def" type="number" min=0 max=20>
                 <label id="blue_aaw_three_targ_label" for="blue_aaw_three_targ">Target:</label>
                 <select id="blue_aaw_three_targ">
                   <option value="">Target</option>
@@ -718,7 +720,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="blue_aaw_four_def_label" for="blue_aaw_four_def">Defense:</label>
-                <input id="blue_aaw_four_def" type="number" min=0 max=20 placeholder=0>
+                <input id="blue_aaw_four_def" type="number" min=0 max=20>
                 <label id="blue_aaw_four_targ_label" for="blue_aaw_four_targ">Target:</label>
                 <select id="blue_aaw_four_targ">
                   <option value="">Target</option>
@@ -743,7 +745,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="blue_aaw_five_def_label" for="blue_aaw_five_def">Defense:</label>
-                <input id="blue_aaw_five_def" type="number" min=0 max=20 placeholder=0>
+                <input id="blue_aaw_five_def" type="number" min=0 max=20>
                 <label id="blue_aaw_five_targ_label" for="blue_aaw_five_targ">Target:</label>
                 <select id="blue_aaw_five_targ">
                   <option value="">Target</option>
@@ -771,7 +773,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="red_aaw_one_def_label" for="red_aaw_one_def">Defense:</label>
-                <input id="red_aaw_one_def" type="number" min=0 max=20 placeholder=0>
+                <input id="red_aaw_one_def" type="number" min=0 max=20>
                 <label id="red_aaw_one_targ_label" for="red_aaw_one_targ">Target:</label>
                 <select id="red_aaw_one_targ">
                   <option value="">Target</option>
@@ -796,7 +798,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="red_aaw_two_def_label" for="red_aaw_two_def">Defense:</label>
-                <input id="red_aaw_two_def" type="number" min=0 max=20 placeholder=0>
+                <input id="red_aaw_two_def" type="number" min=0 max=20>
                 <label id="red_aaw_two_targ_label" for="red_aaw_two_targ">Target:</label>
                 <select id="red_aaw_two_targ">
                   <option value="">Target</option>
@@ -821,7 +823,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="red_aaw_three_def_label" for="red_aaw_three_def">Defense:</label>
-                <input id="red_aaw_three_def" type="number" min=0 max=20 placeholder=0>
+                <input id="red_aaw_three_def" type="number" min=0 max=20>
                 <label id="red_aaw_three_targ_label" for="red_aaw_three_targ">Target:</label>
                 <select id="red_aaw_three_targ">
                   <option value="">Target</option>
@@ -846,7 +848,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="red_aaw_four_def_label" for="red_aaw_four_def">Defense:</label>
-                <input id="red_aaw_four_def" type="number" min=0 max=20 placeholder=0>
+                <input id="red_aaw_four_def" type="number" min=0 max=20>
                 <label id="red_aaw_four_targ_label" for="red_aaw_four_targ">Target:</label>
                 <select id="red_aaw_four_targ">
                   <option value="">Target</option>
@@ -871,7 +873,7 @@ footer {
                   <option value=0>No Offensive Cape</option>
                 </select>
                 <label id="red_aaw_five_def_label" for="red_aaw_five_def">Defense:</label>
-                <input id="red_aaw_five_def" type="number" min=0 max=20 placeholder=0>
+                <input id="red_aaw_five_def" type="number" min=0 max=20>
                 <label id="red_aaw_five_targ_label" for="red_aaw_five_targ">Target:</label>
                 <select id="red_aaw_five_targ">
                   <option value="">Target</option>
@@ -902,7 +904,7 @@ footer {
               </select>
               <br>
               <label id="sofDA_ISR_value_label" for="sofDA_ISR_value">ISR Value</label>
-              <input id="sofDA_ISR_value" type="number" min=0 max=40 placeholder=0>
+              <input id="sofDA_ISR_value" type="number" min=0 max=40>
               <br>
               <label id="sofDA_att_label" for="sofDA_att">Attack Value</label>
               <select id="sofDA_att">
@@ -917,7 +919,7 @@ footer {
               </select>
               <br>
               <label id="sofDA_def_label" for="sofDA_def">Target Defense</label>
-              <input id="sofDA_def" type="number" min=0 max=40 placeholder=0>
+              <input id="sofDA_def" type="number" min=0 max=40>
               <br>
               <button id="sofDirectActionSubmit" type="button">Ajudicate</button>
             </form>
@@ -950,10 +952,10 @@ footer {
               </select>
               <br>
               <label id="grndCom_att_dice_tot_label" for="grndCom_att_dice_tot">Attacker Dice Total:</label>
-              <input id="grndCom_att_dice_tot" type="number" min=0 max=40 placeholder=0>
+              <input id="grndCom_att_dice_tot" type="number" min=0 max=40>
               <br>
               <label id="grndCom_def_val_label" for="grndCom_def_val">Defender Value:</label>
-              <input id="grndCom_def_val" type="number" min=0 max=40 placeholder=0>
+              <input id="grndCom_def_val" type="number" min=0 max=40>
               <br>
               <fieldset>
                 <label>Attacker Modifiers</label>
@@ -963,13 +965,13 @@ footer {
                 <label><input id="grndCom_att_three_axis" type="radio" name="att_ax" value="ax3">Three Axis Attack</label>
                 <br>
                 <label id="grndCom_att_CAS_label" for="grndCom_att_CAS">CAS Missions:</label>
-                <input id="grndCom_att_CAS" type="number" min=0 max=40 placeholder=0>
+                <input id="grndCom_att_CAS" type="number" min=0 max=40>
                 <label id="grndCom_att_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
-                <input id="grndCom_att_FS" type="number" min=0 max=40 placeholder=0>
+                <input id="grndCom_att_FS" type="number" min=0 max=40>
                 <label id="grndCom_brg_tact_label" for="grndCom_brg_tact">Brigade Tactics:</label>
-                <input id="grndCom_brg_tact" type="number" min=0 max=40 placeholder=0>
+                <input id="grndCom_brg_tact" type="number" min=0 max=40>
                 <label id="grndCom_troop_quality_label" for="grndCom_troop_quality">Troop Quality:</label>
-                <input id="grndCom_troop_quality" type="number"  min=-40 max=40 placeholder=0>
+                <input id="grndCom_troop_quality" type="number"  min=-40 max=40>
                 <br>
                 <label><input id="grndCom_att_defender" type="checkbox">Defender</label>
                 <label><input id="grndCom_att_main_effort" type="checkbox">Main Effort</label>
@@ -985,9 +987,9 @@ footer {
                 <label>Defender Modifiers</label>
                 <br>
                 <label id="grndCom_def_CAS_label" for="grndCom_att_CAS">CAS Missions:</label>
-                <input id="grndCom_def_CAS" type="number" min=0 max=40 placeholder=0>
+                <input id="grndCom_def_CAS" type="number" min=0 max=40>
                 <label id="grndCom_def_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
-                <input id="grndCom_def_FS" type="number" min=0 max=40 placeholder=0>
+                <input id="grndCom_def_FS" type="number" min=0 max=40>
                 <br>
                 <label><input id="grndCom_def_fortified" type="checkbox">Fortified</label>
                 <label><input id="grndCom_def_suppress" type="checkbox">Suppressed</label>
@@ -1491,9 +1493,19 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
   while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
-  resultArea.appendChild(createResults(results[0], results[1]));
-  document.getElementById('resultWords').innerText = `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
-  document.getElementById('result_log').innerHTML += `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).<br>`;
+  resultArea.appendChild(createResults(results[0], results[1], "Results: "));
+  if (document.getElementById("hyper_bmd").checked && results[2].length > 0) {
+    const extra_dmg = [];
+    for (let i = 0; i < results[2].length; i++) {
+      extra_dmg.push(dieRoller(4));
+    }
+    resultArea.appendChild(createResults({"4": results[2].length}, extra_dmg, "Add'l Damage: <br>"))
+    document.getElementById('resultWords').innerText = `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}). Hypersonic/BMD did a total of ${extra_dmg.reduce((previousValue, currentValue) => previousValue + currentValue, 0)} damage (${extra_dmg}).`;
+    document.getElementById('result_log').innerHTML += `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}). Hypersonic/BMD did a total of ${extra_dmg.reduce((previousValue, currentValue) => previousValue + currentValue, 0)} damage (${extra_dmg}).<br>`;
+  } else {
+    document.getElementById('resultWords').innerText = `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).`;
+    document.getElementById('result_log').innerHTML += `Strike: The following dice ${JSON.stringify(results[0])} rolled the following: ${results[1]}. This resulted in ${results[2].length === 1 ? 'one hit' : results[2].length + ' hits'} (${results[2]}).<br>`;
+  }
   }, false);
 
 // Torpedo Attack Tool
@@ -1714,7 +1726,21 @@ document.getElementById('airToAirSubmit').addEventListener('click', () => {
         shooterP.innerText = shooter;
         defenderP.innerText = defender;
         versesP.innerText = 'vs';
-        mergeResult.innerText = air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS';
+        let targ_def = 0;
+        if (i === 0) {
+          for (let k = 0; k < air_results[1].length; k++) {
+            if (air_results[1][k][1] === air_results[0][j][4]) {
+              targ_def = air_results[1][k][3];
+            } 
+          }
+        } else {
+          for (let k = 0; k < air_results[0].length; k++) {
+            if (air_results[0][k][1] === air_results[0][j][4]) {
+              targ_def = air_results[0][k][3];
+            }
+          }
+        }
+        mergeResult.innerText = air_results[i][j][5] >= targ_def ? 'HIT' : 'MISS';
         shootDefDiv.appendChild(shooterP);
         shootDefDiv.appendChild(versesP);
         shootDefDiv.appendChild(defenderP);
