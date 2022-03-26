@@ -20,14 +20,13 @@
 
 int main() {
   std::vector<std::string> player_picks = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+  std::string current_player = "X";
   print_board(player_picks);
-  int x_choice;
-  std::cout << "Where would X like to play? ";
-  std::cin >> x_choice;
-  player_picks[x_choice - 1] = "X";
-  for (int i = 0; i < 9; i++) {
-    std::cout << player_picks[i];
-  }
   std::cout << "\n";
+  while (check_win(player_picks) != 1) {
+    player_choice(current_player, player_picks);
+    print_board(player_picks);
+    std::cout << "\n";
+  }
   return 0;
 }
