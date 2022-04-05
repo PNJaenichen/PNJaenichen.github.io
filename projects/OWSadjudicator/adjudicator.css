@@ -257,3 +257,60 @@ footer {
   text-align: center;
   font-size: x-small;
 }
+
+/* Diamond for possible defense shield */
+#diamond-cut {
+  border-style:solid;
+  border-color:transparent transparent blue transparent;
+  border-width:0 25px 25px 25px;
+  height:0;
+  width:50px;
+  position:relative;
+  margin:20px 0 50px 0;
+  }
+
+  #diamond-cut:after {
+  content:"";
+  position:absolute;
+  top:25px;
+  left:-25px;
+  width:0;
+  height:0;
+  border-style:solid;
+  border-color:blue transparent transparent transparent;
+  border-width:70px 50px 0 50px;
+  }
+
+  /* shield for possible defense shield */
+  .gg-shield {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 14px;
+    height: 4px;
+    background: currentColor;
+    border-radius: 100px;
+    margin-top: -6px
+}
+.gg-shield::after,
+.gg-shield::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 8px;
+    height: 16px;
+    border: 2px solid
+}
+.gg-shield::before {
+    border-bottom-left-radius: 40px;
+    border-right: 0;
+    left: 0
+}
+.gg-shield::after {
+    border-bottom-right-radius: 40px;
+    border-left: 0;
+    right: 0
+}
