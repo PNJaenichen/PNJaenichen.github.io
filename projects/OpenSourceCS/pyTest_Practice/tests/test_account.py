@@ -1,22 +1,12 @@
 import pytest
 
 from bank.bank import Bank
+from bank.bank import AccountException
 
-@pytest.fixture(
-  name="account"
-)
-
-def make_account():
-  bank = Bank()
-  
-  return bank.open_account("Richard")
-  
 def test_open_account(account):
   assert account.name == "Richard"
 
 def test_make_deposit(account):
-  bank = Bank()
-  
   account.make_deposit(100)
   assert account.balance == 100
   
@@ -33,5 +23,26 @@ def test_make_bad_withdrawal(account):
   
 def test_overdraft_limit(account):
   account.overdraft_limit = 10
-  account.make_withdrawal(10)
-  assert account.balance == -10
+  assert account.available_funds == 10
+
+@pytest.mark.parametrize(
+  "limit, withdrawal, balance, funds",
+  [(10, 10, -10, 0), (10, 5, -5, 5), (20, 5, -5, 15)]
+)
+
+def test_withdrawal(account, limit, withdrawal, balance, funds):
+  account.overdraft_limit = limit
+  account.make_withdrawal(withdrawal)
+  assert account.balance == balance
+  assert account.available_funds == funds
+
+def test_set_balance(account):
+  with pytest.raises(AccountException):
+    account.balance = -10
+    
+def test_deposit_below_limit(account):
+  account._balance = -10
+  account.make_deposit(5)
+  assert account.balance == -5
+
+
