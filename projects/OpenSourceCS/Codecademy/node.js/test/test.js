@@ -61,11 +61,104 @@ describe('Dice Promotion', () => {
     })
   });
   describe('of one die', () => {
-    it('and promotes properly', () => {
+    it('and promotes a single die pool properly', () => {
       const startPool = {'4': 1};
       const promoPool = Adjudicate.promoteOne(startPool);
       const expectPool = {'6': 1};
       assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('and promotes a multiple dice pool properly', () => {
+      const startPool = {'10': 2, '12': 1};
+      const promoPool = Adjudicate.promoteOne(startPool);
+      const expectPool = {'10': 1, '12': 2};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('and it does not promote a d20', () => {
+      const startPool = {'20': 1};
+      const promoPool = Adjudicate.promoteOne(startPool);
+      const expectPool = {'20': 1};
+      assert.deepStrictEqual(promoPool, expectPool);
     })
   });
+  describe('combines all dice', () => {
+    it('into one of the next highest die', () => {
+      const startPool = {'8': 1, '10': 2};
+      const promoPool = Adjudicate.allForOne(startPool);
+      const expectPool = {'12': 1};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('into a single die but ignores d20s', () => {
+      const startPool = {'8': 1, '10': 2, '20': 1};
+      const promoPool = Adjudicate.allForOne(startPool);
+      const expectPool = {'20': 2};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('but only if more than one die is in the pool', () => {
+      const startPool = {'6': 1};
+      const promoPool = Adjudicate.allForOne(startPool);
+      const expectPool = {'6': 1};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('but never returns more than a d16 for ASW', () => {
+      const startPool = {'8': 1, '10': 2, '16': 1};
+      const promoPool = Adjudicate.allForOne(startPool, true);
+      const expectPool = {'16': 2}
+      assert.deepStrictEqual(promoPool, expectPool);
+    })
+  })
 });
+
+describe('Dice Demotion', () => {
+  describe('of all dice', () => {
+    it('that are the same and not a d4', () => {
+      const startPool = {'8': 3};
+      const promoPool = Adjudicate.demoteAll(startPool);
+      const expectPool = {'6': 3};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('and removes d4s', () => {
+      const startPool = {'4': 3};
+      const promoPool = Adjudicate.demoteAll(startPool);
+      const expectPool = {};
+      assert.deepStrictEqual(promoPool, expectPool)
+    });
+    it('that are different and not a d4', () => {
+      const startPool = {'8': 3, '10': 1, '20': 2};
+      const promoPool = Adjudicate.demoteAll(startPool);
+      const expectPool = {'6': 3, '8': 1, '16': 2};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('that are dfifferent and removes d4s', () => {
+      const startPool = {'4': 3, '10': 1, '20': 2};
+      const promoPool = Adjudicate.demoteAll(startPool);
+      const expectPool = {'8': 1, '16': 2};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+  });
+  describe('of one die', () => {
+    it('and demotes a single die pool properly', () => {
+      const startPool = {'8': 1};
+      const promoPool = Adjudicate.demoteOne(startPool);
+      const expectPool = {'6': 1};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('and demotes a multiple dice pool properly', () => {
+      const startPool = {'10': 2, '12': 1};
+      const promoPool = Adjudicate.demoteOne(startPool);
+      const expectPool = {'10': 3};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('and it removes a d4 if it is the only one', () => {
+      const startPool = {'4': 1};
+      const promoPool = Adjudicate.demoteOne(startPool);
+      const expectPool = {};
+      assert.deepStrictEqual(promoPool, expectPool);
+    });
+    it('and it removes only a single d4 if more than one', () => {
+      const startPool = {'4': 2};
+      const promoPool = Adjudicate.demoteOne(startPool);
+      const expectPool = {'4': 1};
+      assert.deepStrictEqual(promoPool, expectPool);
+    })
+  });
+})
