@@ -119,8 +119,34 @@ const Adjudicate = {
   },
 
   allForOne(dice, ASW = false) {
-    const total_dice = Object.values(dice).reduce()
-    return dice;
+    const total_dice = Object.values(dice).reduce((prev, curr) => prev + curr, 0);
+    const die_sides = Object.keys(dice).map(die => parseInt(die));
+    const high_side = Math.max(...die_sides);
+    let new_dice = {};
+    if (total_dice > 1) {
+      if (high_side === 20 && total_dice > 2) {
+        new_dice['20'] = dice['20'] + 1;
+      } else {
+        switch (high_side) {
+          case 16:
+            if (ASW) {
+              new_dice['16'] = dice['16'] + 1;
+            } else {
+              new_dice['20'] = 1;
+            }
+            break;
+          case 12:
+            new_dice['16'] = 1;
+            break;
+          default:
+            new_dice[(high_side + 2).toString()] = 1;
+            break;
+        }
+      }
+    } else {
+      new_dice = dice;
+    }
+    return new_dice;
   }
 };
 
