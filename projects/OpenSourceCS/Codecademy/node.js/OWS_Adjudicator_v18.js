@@ -1,12 +1,12 @@
-const Adjudicate = {
-  dieRoller(sides) {
-    if ([4, 6, 8, 10, 12, 16, 20].includes(sides)) {
-      return Math.floor(Math.random() * sides) + 1;
-    } else {
-      throw new TypeError('No die with that number of sides');
-    }
-  },
-  
+function dieRoller(sides) {
+  if ([4, 6, 8, 10, 12, 16, 20].includes(sides)) {
+    return Math.floor(Math.random() * sides) + 1;
+  } else {
+    throw new TypeError('No die with that number of sides');
+  }
+};
+
+const pool_adjuster = {
   promoteAll(dice) {
     if (dice['16']) {
       if(dice['20']) {
@@ -148,6 +148,31 @@ const Adjudicate = {
     }
     return new_dice;
   }
+       
+};
+
+const missile_attack = {
+  pool_adjust(incoming, singles, promotions, demotions) {
+    let missiles = incoming;
+    const all_diff = promotions - demotions;
+    if (all_diff > 0) {
+      for (let i = 0; i < all_diff; i++) {
+        pool_adjuster.promoteAll(missiles);
+      }
+    } else if (all_diff < 0) {
+      for (let i = 0; i > all_diff; i--) {
+        pool_adjuster.demoteAll(missiles);
+      }
+    } 
+    for (let i = 0; i < singles; i++) {
+      pool_adjuster.demoteOne(missiles);
+    }
+    return missiles
+   }
+}
+
+module.exports = { dieRoller, pool_adjuster, missile_attack };
+
 
   /*
   Missile Strikes
@@ -258,22 +283,19 @@ const Adjudicate = {
   Crowded Atk           -1
   Over Crowded Atk      -2
 
-
-  Lvl of Supp    Open    Forest/Mtn    Urban     Dense Urban
-     >= +7       3 P        3 P         3 P           2 P
-       +6        3 P        2 P         2 P           2 P
-       +5        2 P        2 P         2 P           1 P
-       +4        2 P        2 P         1 P            -
-       +3        1 P        1 P         1 P            -
-       +2        1 P         -           -            1 D
-       +1         -          -          1 D           1 D
-       0         1 D        1 D         1 D           2 D
-       -1        1 D        1 D         2 D           3 D
-       -2        2 D        2 D         3 D           3 D
-       -3        3 D        3 D         3 D           3 D<
-     <= -4       3 D        3 D         4 D           4 D
-     
-  */        
-};
-
-module.exports = Adjudicate;
+  const grnd_abacus = {
+  '7': {'open': 3, 'forest/mtn': 3, 'urban': 3, 'durban': 2},
+  '6': {'open': 3, 'forest/mtn': 2, 'urban': 2, 'durban': 2},
+  '5': {'open': 2, 'forest/mtn': 2, 'urban': 2, 'durban': 1},
+  '4': {'open': 2, 'forest/mtn': 2, 'urban': 1, 'durban': 0},
+  '3': {'open': 1, 'forest/mtn': 1, 'urban': 1, 'durban': 0},
+  '2': {'open': 1, 'forest/mtn': 0, 'urban': 0, 'durban': -1},
+  '1': {'open': 0, 'forest/mtn': 0, 'urban': -1, 'durban': -1},
+  '0': {'open': -1, 'forest/mtn': -1, 'urban': -1, 'durban': -2},
+  '-1': {'open': -1, 'forest/mtn': -1, 'urban': -2, 'durban': -3},
+  '-2': {'open': -2, 'forest/mtn': -2, 'urban': -3, 'durban': -3},
+  '-3': {'open': -3, 'forest/mtn': -3, 'urban': -3, 'durban': -3},
+  '-4': {'open': -3, 'forest/mtn': -3, 'urban': -4, 'durban': -4},
+}                
+ 
+  */ 
