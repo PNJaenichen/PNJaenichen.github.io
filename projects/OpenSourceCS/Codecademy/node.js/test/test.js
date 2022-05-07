@@ -1,5 +1,5 @@
 var assert = require("assert");
-var { dieRoller, promoteAll, demoteAll, promoteOne, demoteOne, allForOne } = require('..\\OWS_Adjudicator_v18');
+var { dieRoller, promoteAll, demoteAll, promoteOne, demoteOne, allForOne, poolAdjust } = require('..\\OWS_Adjudicator_v18');
 
 describe('Dice Roller creates random numbers', () => {
   describe('that stay within 1', () => {
@@ -123,5 +123,105 @@ describe('Dice Pool Adjustments', () => {
       assert.deepStrictEqual(adjPool, expectedPool);
     })
   });
-
-})
+  describe('adjusts based on different combinations of promos/demos', () => {
+    it('outputs properly with only promotions', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = 0;
+      const promotions = 2;
+      const demotions = 0;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'12': 2, '16': 3, '20': 2};
+      assert.deepStrictEqual(adjPool, expectedPool)
+    });
+    it('outputs properly with only demotions', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = 0;
+      const promotions = 0;
+      const demotions = 2;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'4': 2, '6': 3, '8': 2};
+      assert.deepStrictEqual(adjPool, expectedPool)
+    });
+    it('outputs properly with demotions but more promotions', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = 0;
+      const promotions = 2;
+      const demotions = 1;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'10': 2, '12': 3, '16': 2};
+      assert.deepStrictEqual(adjPool, expectedPool);
+    });
+    it('outputs properly with promotions but more demotions', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = 0;
+      const promotions = 1;
+      const demotions = 2;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'6': 2, '8': 3, '10': 2};
+      assert.deepStrictEqual(adjPool, expectedPool);
+    });
+    it('outputs properly if same number of promotions and demotions', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = 0;
+      const promotions = 2;
+      const demotions = 2;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'8': 2, '10': 3, '12': 2};
+      assert.deepStrictEqual(adjPool, expectedPool);
+    });
+    it('outputs properly if only single demotions', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = -2;
+      const promotions = 0;
+      const demotions = 0;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'8': 2, '10': 5};
+      assert.deepStrictEqual(adjPool, expectedPool); 
+    });
+    it('outputs properly if only single promotions', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = 2;
+      const promotions = 0;
+      const demotions = 0;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'8': 2, '10': 3, '12': 1, '20': 1};
+      assert.deepStrictEqual(adjPool, expectedPool);
+    });
+    it('outputs properly if positive promo/demo and singles', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = 2;
+      const promotions = 2;
+      const demotions = 0;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'12': 2, '16': 1, '20': 4};
+      assert.deepStrictEqual(adjPool, expectedPool);
+    });
+    it('outputs properly if positive promo/demo and negative singles', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = -2;
+      const promotions = 2;
+      const demotions = 0;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'12': 2, '16': 5};
+      assert.deepStrictEqual(adjPool, expectedPool);
+    });
+    it('outputs properly if negative promo/demo and singles', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = -2;
+      const promotions = 0;
+      const demotions = 2;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'4': 2, '6': 5};
+      assert.deepStrictEqual(adjPool, expectedPool);
+    });
+    it('outputs properly if negative promo/demo and positive singles', () => {
+      const inbound_missiles = {'8': 2, '10': 3, '12': 2};
+      const singles = 2;
+      const promotions = 0;
+      const demotions = 2;
+      const adjPool = poolAdjust(inbound_missiles, singles, promotions, demotions)
+      const expectedPool = {'4': 2, '6': 3, '8': 1, '12': 1};
+      assert.deepStrictEqual(adjPool, expectedPool);
+    });
+  });
+});

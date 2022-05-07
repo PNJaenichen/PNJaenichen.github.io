@@ -95,9 +95,51 @@ function demoteOne(dice) {
 }
 
 function allForOne(dice) {
-  return dice
+  const diceTypes = Object.keys(dice).map(x => parseInt(x));
+  const poolSize = Object.values(dice).reduce((previousValue, currentValue) => previousValue + currentValue, 0)
+  const high_die = Math.max(...diceTypes);
+  const new_pool = {}
+  if (high_die === 20 || poolSize < 2) {
+    if ((poolSize - dice['20']) > 1) {
+      new_pool['20'] = dice['20'] + 1;
+    } else {
+      return dice;
+    }
+  } else if (high_die === 16 || high_die === 12) {
+    new_pool[(high_die + 4).toString()] = 1;
+  } else {
+    new_pool[(high_die + 2).toString()] = 1;
+  }
+  return new_pool;
 }
-module.exports = { dieRoller, promoteAll, promoteOne, demoteAll, demoteOne, allForOne };
+
+function poolAdjust(incoming, singles, promotions, demotions) {
+  let missiles = {...incoming};
+  const pro_demo_diff = promotions - demotions;
+  if (pro_demo_diff > 0) {
+    for (let i = 0; i < pro_demo_diff; i++) {
+      missiles = {...promoteAll(missiles)};
+    }
+  }  
+  if (pro_demo_diff < 0) {
+    for (let i = 0; i > pro_demo_diff; i--) {
+      missiles = {...demoteAll(missiles)};
+    }
+  }
+  if (singles > 0) {
+    for (let i = 0; i < singles; i++) {
+      missiles = {...promoteOne(missiles)};
+    }
+  }
+  if (singles < 0) {
+    for (let i = 0; i > singles; i--) {
+      missiles = {...demoteOne(missiles)};
+    }
+  }
+  return missiles;
+}
+
+module.exports = { dieRoller, promoteAll, promoteOne, demoteAll, demoteOne, allForOne, poolAdjust };
 
 
   /*
