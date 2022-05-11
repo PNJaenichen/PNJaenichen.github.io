@@ -1,5 +1,5 @@
 var assert = require("assert");
-var { dieRoller, promoteAll, demoteAll, promoteOne, demoteOne, allForOne, poolAdjust } = require('..\\OWS_Adjudicator_v18');
+var { dieRoller, promoteAll, demoteAll, promoteOne, demoteOne, allForOne, poolAdjust, surfaceStrike } = require('..\\OWS_Adjudicator_v18');
 
 describe('Dice Roller creates random numbers', () => {
   describe('that stay within 1', () => {
@@ -224,4 +224,30 @@ describe('Dice Pool Adjustments', () => {
       assert.deepStrictEqual(adjPool, expectedPool);
     });
   });
+});
+
+describe('surfaceStrike creates results results', () => {
+  describe('that are correct for,', () => {
+    const inbound_missiles = [12, 12, 10, 10, 10, 8, 8];
+    it('more inbound missiles than defensive missiles', () => {
+      const defensive_missiles = [6, 6, 6, 5]
+      const results = surfaceStrike(inbound_missiles, 4, defensive_missiles);
+      assert.ok(results.length === 7);
+    });
+    it('equal number of inbound missiles and defensive missiles', () => {
+      const defensive_missiles = [6, 6, 6, 6, 5, 5, 5];
+      const results = surfaceStrike(inbound_missiles, 4, defensive_missiles);
+      assert.ok(results.length === 7);
+    });
+    it('less inbound missiles than defensive missiles', () => {
+      const defensive_missiles = [6, 6, 6, 6, 6, 5, 5, 5, 5];
+      const results = surfaceStrike(inbound_missiles, 4, defensive_missiles);
+      assert.ok(results.length === 7);
+    });
+    it('with no inbound missiles', () => {
+      const defensive_missiles = [];
+      const results = surfaceStrike(inbound_missiles, 4, defensive_missiles);
+      assert.ok(results.length === 7);
+    })
+  })
 });

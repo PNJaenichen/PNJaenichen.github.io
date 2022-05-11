@@ -139,7 +139,27 @@ function poolAdjust(incoming, singles, promotions, demotions) {
   return missiles;
 }
 
-module.exports = { dieRoller, promoteAll, promoteOne, demoteAll, demoteOne, allForOne, poolAdjust };
+function surfaceStrike(incoming, base_def, miss_def) {
+  const results = [];
+  if (incoming.length > miss_def.length) {
+    for (let i = 0; i < miss_def.length; i++) {
+      const result = dieRoller(incoming[i]);
+      results.push([incoming[i], miss_def[i], result, (result > miss_def[i] ? dieRoller(incoming[i]) : 0), base_def])
+    }
+    for (let i = miss_def.length; i < incoming.length; i++) {
+      const result = dieRoller(incoming[i]);
+      results.push([incoming[i], 0, 0, result, base_def])
+    }
+  } else {
+    for (let i = 0; i < incoming.length; i++) {
+      const result = dieRoller(incoming[i]);
+      results.push([incoming[i], miss_def[i], result, (result > miss_def[i] ? dieRoller(incoming[i]) : 0), base_def])
+    }
+  }
+  return results;
+}
+
+module.exports = { dieRoller, promoteAll, promoteOne, demoteAll, demoteOne, allForOne, poolAdjust, surfaceStrike };
 
 
   /*
