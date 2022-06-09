@@ -1,5 +1,6 @@
 import unicodedata
 import requests
+import numpy as np
 import re
 from bs4 import BeautifulSoup
 
@@ -45,7 +46,7 @@ def get_game_info(gameID):
 
   Returns JSON 
   """
-  web_request = requests.get(API_URL + f"game/{str(gameID)}/feed/live")
+  web_request = requests.get(API_URL + f"game/{gameID}/feed/live")
   data_json = web_request.json()
   if len(data_json) == 2:
     return None
@@ -72,11 +73,11 @@ def get_player_on_ice_info(gameID):
   web_request = requests.get(f"http://www.nhl.com/scores/htmlreports/{season}/PL{gameID[4:]}.HTM")
   soup = BeautifulSoup(web_request.content, 'html.parser')
 
-  plays = get_game_info('2021020001')['liveData']['plays']['allPlays']
+  plays = get_game_info(gameID)['liveData']['plays']['allPlays']
 
   main_plays = clean_play_by_play(soup.select('.page'))
 
-  return combine_play_information(main_plays, plays)
+  return (combine_play_information(main_plays, plays), main_plays, plays)
 
 def clean_play_by_play(pages):
   """
@@ -127,7 +128,6 @@ def clean_play_by_play(pages):
           play[6] = homePlayers
           play[7] = visitPlayers
         allPlays.append(play)
-
   return allPlays
 
 def combine_play_information(main_info, player_info):
