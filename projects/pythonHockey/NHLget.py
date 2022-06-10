@@ -73,7 +73,7 @@ def get_player_on_ice_info(gameID):
   web_request = requests.get(f"http://www.nhl.com/scores/htmlreports/{season}/PL{gameID[4:]}.HTM")
   soup = BeautifulSoup(web_request.content, 'html.parser')
 
-  plays = get_game_info(gameID)['liveData']['plays']['allPlays']
+  plays = get_game_info(gameID)
 
   main_plays = clean_play_by_play(soup.select('.page'))
 
