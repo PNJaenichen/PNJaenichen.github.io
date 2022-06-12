@@ -2,7 +2,7 @@
   "name": "node",
   "version": "1.0.0",
   "description": "",
-  "main": "hello_world.js",
+  "main": "OWS_Adjudicator_v18.js",
   "scripts": {
     "test": "mocha"
   },

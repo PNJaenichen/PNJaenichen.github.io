@@ -2,7 +2,7 @@
 function dieRoller(sides) {
   return Math.ceil(Math.random() * sides)
 }
-
+ 
 function promoteAll(dice) {
   if (dice['16']) {
     dice['20'] ? dice['20'] += dice['16'] : dice['20'] = dice['16'];
@@ -159,7 +159,19 @@ function surfaceStrike(incoming, base_def, miss_def) {
   return results;
 }
 
-module.exports = { dieRoller, promoteAll, promoteOne, demoteAll, demoteOne, allForOne, poolAdjust, surfaceStrike };
+// eslint-disable-next-line no-unused-vars
+function randomRoll() {
+  const die_size = parseInt(document.getElementById("randRollSize").value);
+  const die_count = parseInt(document.getElementById("randDiceCount").value);
+  console.log(die_size, die_count);
+  const dieResults = [];
+  for (let i = 0; i < die_count; i++) {
+    dieResults.push(dieRoller(die_size));
+  }
+  console.log(dieResults);
+}
+
+// module.exports = { dieRoller, promoteAll, promoteOne, demoteAll, demoteOne, allForOne, poolAdjust, surfaceStrike };
 
 
   /*

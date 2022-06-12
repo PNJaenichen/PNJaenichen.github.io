@@ -15,7 +15,7 @@ describe('Dice Roller creates random numbers', () => {
     })
   })
 });
-
+ 
 describe('Dice Pool Adjustments', () => {
   describe('promotes all dice appropriately', () => {
     it('when the dice are all the same value', () => {
