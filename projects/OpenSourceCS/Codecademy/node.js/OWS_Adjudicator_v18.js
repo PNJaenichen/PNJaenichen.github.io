@@ -1,4 +1,3 @@
-
 function dieRoller(sides) {
   return Math.ceil(Math.random() * sides)
 }
@@ -163,12 +162,13 @@ function surfaceStrike(incoming, base_def, miss_def) {
 function randomRoll() {
   const die_size = parseInt(document.getElementById("randRollSize").value);
   const die_count = parseInt(document.getElementById("randDiceCount").value);
-  console.log(die_size, die_count);
   const dieResults = [];
   for (let i = 0; i < die_count; i++) {
     dieResults.push(dieRoller(die_size));
   }
-  console.log(dieResults);
+  const resultArea = document.getElementById("resultsArea");
+  console.log(dieResults.join(' '))
+  resultArea.innerText = dieResults.join(' ');
 }
 
 // module.exports = { dieRoller, promoteAll, promoteOne, demoteAll, demoteOne, allForOne, poolAdjust, surfaceStrike };

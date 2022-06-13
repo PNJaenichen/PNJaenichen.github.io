@@ -1,0 +1,18 @@
+html {
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.right-side {
+  width: 30%;
+}
+
+.left-side {
+  width: 70%;
+}
+
+.left-side form {
+  display: flex;
+  flex-direction: column;
+}

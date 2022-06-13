@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OWS Adjudication Aid v1.8</title>
     <link rel="icon" href="data:;base64,=">
+    <link rel="stylesheet" text="text/css" href="adjudicator.css">
   </head>
   <style>
     
@@ -18,6 +19,9 @@
     <main>
       <h1>OWS Adjudication Aid v1.8</h1>
       <p>All tools were created utilizing the OWS 1.8 ruleset.</p>
+      <div class="right-side">
+        <p id="resultsArea"></p>
+      </div>
       <div class="left-side">
         <section id="generalRoll">
           <form id="randomForm" onSubmit="randomRoll()">
@@ -41,64 +45,77 @@
             Utilize the following tool for adjudicated surface-to-surface 
             strikes. This tool was created utilizing the OWS 1.8 ruleset.
           </p> 
-          <form id="strikeForm">
+          <form id="strikeForm" onSubmit="surfaceStrike()">
             <fieldset>
-              <label for="strikeMissOneType">Weapon Type 1</label>
-              <select id="strikeMissOneType">
-                <option value="">Select Dice</option>
-                <option value="4">d4</option>
-                <option value="6">d6</option>
-                <option value="8">d8</option>
-                <option value="10">d10</option>
-                <option value="12">d12</option>
-                <option value="16">d16</option>
-                <option value="20">d20</option>
-              </select>
-              <label for="strikeMissOneTot">Total</label>
-              <input type="number" id="strikeMissOneTot" placeholder=0>
-              <label for="strikeMissTwoType">Weapon Type 2</label>
-              <select id="strikeMissTwoType">
-                <option value="">Select Dice</option>
-                <option value="4">d4</option>
-                <option value="6">d6</option>
-                <option value="8">d8</option>
-                <option value="10">d10</option>
-                <option value="12">d12</option>
-                <option value="16">d16</option>
-                <option value="20">d20</option>
-              </select>
-              <label for="strikeMissTwoTot">Total</label>
-              <input type="number" id="strikeMissTwoTot" placeholder=0>
-              <label for="strikeMissThreeType">Weapon Type 3</label>
-              <select id="strikeMissThreeType">
-                <option value="">Select Dice</option>
-                <option value="4">d4</option>
-                <option value="6">d6</option>
-                <option value="8">d8</option>
-                <option value="10">d10</option>
-                <option value="12">d12</option>
-                <option value="16">d16</option>
-                <option value="20">d20</option>
-              </select>
-              <label for="strikeMissThreeTot">Total</label>
-              <input type="number" id="strikeMissThreeTot" placeholder=0>
-              <input type="checkbox" id="strikeHyperBMD">
-              <label for="strikeHyperBMD">Hypersonic / BMD</label>
+              <legend>Offensive Weapons Inbound</legend>
+              <div>
+                <label for="strikeMissOneType">Weapon Type 1
+                  <select id="strikeMissOneType">
+                    <option value="">Select Dice</option>
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                    <option value="16">d16</option>
+                    <option value="20">d20</option>
+                  </select>
+                </label>
+                <label for="strikeMissOneTot">Total <input type="number" id="strikeMissOneTot" placeholder=0></label>
+              </div>
+              <div>
+                <label for="strikeMissTwoType">Weapon Type 2
+                  <select id="strikeMissTwoType">
+                    <option value="">Select Dice</option>
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                    <option value="16">d16</option>
+                    <option value="20">d20</option>
+                  </select>
+                </label>
+                <label for="strikeMissTwoTot">Total <input type="number" id="strikeMissTwoTot" placeholder=0></label>
+              </div>
+              <div>
+                <label for="strikeMissThreeType">Weapon Type 3
+                  <select id="strikeMissThreeType">
+                    <option value="">Select Dice</option>
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                    <option value="16">d16</option>
+                    <option value="20">d20</option>
+                  </select>
+                </label>
+                <label for="strikeMissThreeTot">Total <input type="number" id="strikeMissThreeTot" placeholder=0></label>
+              </div>
+              <label for="strikeHyperBMD"><input type="checkbox" id="strikeHyperBMD"> Hypersonic / BMD</label>
             </fieldset>
             <fieldset>
-              <label for="strikeDefOneType">Defense Type 1</label>
-              <input type="number" id="strikeDefOneType" placeholder=0>
-              <label for="strikeDefOneTot">Total</label>
-              <input type="number" id="strikeDefOneTot">
-              <label for="strikeDefTwoType">Defense Type 2</label>
-              <input type="number" id="strikeDefTwoType" placeholder=0>
-              <label for="strikeDefTwoTot">Total</label>
-              <input type="number" id="strikeDefTwoTot">
-              <label for="strikeDefThreeType">Defense Type 3</label>
-              <input type="number" id="strikeDefThreeType" placeholder=0>
-              <label for="strikeDefThreeTot">Total</label>
-              <input type="number" id="strikeDefThreeTot">
+              <legend>Defensive Missiles</legend>
+              <div>
+                <label for="strikeDefOneType">Defense Type 1 <input type="number" id="strikeDefOneType" placeholder=0></label>
+                <label for="strikeDefOneTot">Total <input type="number" id="strikeDefOneTot"></label>
+              </div>
+              <div>
+                <label for="strikeDefTwoType">Defense Type 2 <input type="number" id="strikeDefTwoType" placeholder=0></label>
+                <label for="strikeDefTwoTot">Total <input type="number" id="strikeDefTwoTot"></label>
+              </div>
+              <div>
+                <label for="strikeDefThreeType">Defense Type 3 <input type="number" id="strikeDefThreeType" placeholder=0></label>
+                <label for="strikeDefThreeTot">Total <input type="number" id="strikeDefThreeTot"></label>
+              </div>
             </fieldset>
+            <label for="surfStrike_targDef">Target Defense <input type="number" id="surfStrike_targDef"></label>
+            <label for="surfStrike_CAP">CAP Available <input type="number" id="surfStrike_CAP"></label>
+            <label for="surfStrike_promo">Total Promotions <input type="number" id="surfStrike_promo"></label>
+            <label for="surfStrike_demo">Total Demotions <input type="number" id="surfStrike_demo"></label>
+            <label for="surfStrike_AEW"><input type="checkbox" id="surfStrikeAEW"> AEW Available (US Only)</label>
+            <input type="submit">
           </form>
         </section>
       </div>
