@@ -17,14 +17,17 @@
       <nav></nav>
     </header>
     <main>
-      <h1>OWS Adjudication Aid v1.8</h1>
-      <p>All tools were created utilizing the OWS 1.8 ruleset.</p>
+      <div id="ovrall_desc">
+        <h1>OWS Adjudication Aid v1.8</h1>
+        <p>All tools were created utilizing the OWS 1.8 ruleset.</p>
+      </div>
+      
       <div class="right-side">
         <p id="resultsArea"></p>
       </div>
       <div class="left-side">
         <section id="generalRoll">
-          <form id="randomForm" onSubmit="randomRoll()">
+          <form id="randomForm">
             <select id="randRollSize">
               <option value="">Select Dice</option>
               <option value="4">d4</option>
@@ -36,7 +39,7 @@
               <option value="20">d20</option>
             </select>
             <input type="number" id="randDiceCount" placeholder=0>
-            <input type="submit">
+            <button type="button" onClick="randomRoll()">Submit</button>
           </form>
         </section>
         <section id="surfaceStrike">
@@ -45,7 +48,7 @@
             Utilize the following tool for adjudicated surface-to-surface 
             strikes. This tool was created utilizing the OWS 1.8 ruleset.
           </p> 
-          <form id="strikeForm" onSubmit="surfaceStrike()">
+          <form id="strikeForm">
             <fieldset>
               <legend>Offensive Weapons Inbound</legend>
               <div>
@@ -115,12 +118,12 @@
             <label for="surfStrike_promo">Total Promotions <input type="number" id="surfStrike_promo"></label>
             <label for="surfStrike_demo">Total Demotions <input type="number" id="surfStrike_demo"></label>
             <label for="surfStrike_AEW"><input type="checkbox" id="surfStrikeAEW"> AEW Available (US Only)</label>
-            <input type="submit">
+            <button type="button" onClick="surfaceStrike()">Submit</button>
           </form>
         </section>
       </div>
       <div class="right-side">
-        <p id="results"></p>
+        <p id="results">test here</p>
       </div>      
     </main>
     <footer>

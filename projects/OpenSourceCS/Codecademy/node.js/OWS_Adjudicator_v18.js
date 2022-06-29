@@ -138,11 +138,68 @@ function poolAdjust(incoming, singles, promotions, demotions) {
   return missiles;
 }
 
-function surfaceStrike(incoming, base_def, miss_def) {
+// eslint-disable-next-line no-unused-vars
+function randomRoll() {
+  const die_size = parseInt(document.getElementById("randRollSize").value);
+  const die_count = parseInt(document.getElementById("randDiceCount").value);
+  const dieResults = [];
+  for (let i = 0; i < die_count; i++) {
+    dieResults.push(dieRoller(die_size));
+  }
+  const resultArea = document.getElementById("results");
+  console.log(resultArea.innerText);
+  console.log(dieResults.join(' '));
+  resultArea.innerText = dieResults.join(' ');
+}
+
+/*
+
+1. Get user inputs
+   a. get inbound missiles
+   b. get defending missiles 
+   c. get base defense
+   
+2. Determine Promotions and Demotions
+3. Determine possible defenses
+4. Get missile results
+5. Figure out hits
+6. Display results
+
+*/
+
+function getSurfStrkInfo() {
+  const incMiss = ["strikeMissOne", "strikeMissTwo", "strikeMissThree"];
+  const defMiss = ["strikeDefOne", "strikeDefTwo", "strikeDefThree"]
+  const incoming = {};
+  const defenders = [];
+  incMiss.forEach(x => {
+    const missVal = document.getElementById(`${x}Type`).value;
+    const missTot = document.getElementById(`${x}Tot`).value;
+    if (missVal && missTot) {
+      incoming[missVal] = missTot;
+    }
+  });
+  defMiss.forEach(x => {
+    const defVal = document.getElementById(`${x}Type`).value;
+    const defTot = document.getElementById(`${x}Tot`).value;
+    if (defVal && defTot) {
+      defenders[defVal] = defTot;
+    }
+  })
+  return [incoming, defenders]
+}
+
+function surfaceStrike() {
+  const [incoming, miss_def] = getSurfStrkInfo();
+  const base_def = document.getElementById("surfStrike_targDef").value;
   const results = [];
-  if (incoming.length > miss_def.length) {
-    for (let i = 0; i < miss_def.length; i++) {
+  const total_inbound = Object.values(incoming).reduce((a, b) => a + b);
+  const total_defense = Object.values(miss_def).reduce((a, b) => a + b)
+  console.log(base_def, total_inbound > total_defense);
+  if (total_inbound > total_defense) {
+    for (let i = 0; i < total_defense; i++) {
       const result = dieRoller(incoming[i]);
+      console.log(result);
       results.push([incoming[i], miss_def[i], result, (result > miss_def[i] ? dieRoller(incoming[i]) : 0), base_def])
     }
     for (let i = miss_def.length; i < incoming.length; i++) {
@@ -155,21 +212,11 @@ function surfaceStrike(incoming, base_def, miss_def) {
       results.push([incoming[i], miss_def[i], result, (result > miss_def[i] ? dieRoller(incoming[i]) : 0), base_def])
     }
   }
+  console.log(results);
   return results;
 }
 
-// eslint-disable-next-line no-unused-vars
-function randomRoll() {
-  const die_size = parseInt(document.getElementById("randRollSize").value);
-  const die_count = parseInt(document.getElementById("randDiceCount").value);
-  const dieResults = [];
-  for (let i = 0; i < die_count; i++) {
-    dieResults.push(dieRoller(die_size));
-  }
-  const resultArea = document.getElementById("resultsArea");
-  console.log(dieResults.join(' '))
-  resultArea.innerText = dieResults.join(' ');
-}
+
 
 // module.exports = { dieRoller, promoteAll, promoteOne, demoteAll, demoteOne, allForOne, poolAdjust, surfaceStrike };
 
@@ -205,7 +252,7 @@ function randomRoll() {
   Against Fuel Points or ASPs each hit does D6 damage
 
   */
-
+ 
   /*
   ISR Detections
 
