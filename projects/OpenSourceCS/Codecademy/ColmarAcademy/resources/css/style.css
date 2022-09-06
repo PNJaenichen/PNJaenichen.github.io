@@ -1,0 +1,441 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(97, 97, 97);
+}
+
+html {
+  width: 100%
+}
+
+#header_title {
+  display: flex;
+  padding-left: 24px;
+}
+
+header {
+  height: 64px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header_menu {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 16px;
+  margin-right: 24px;
+}
+
+#header_menu a {
+  text-decoration: none;
+  justify-content: right;
+}
+
+#colmar_logo {
+  height: 40px;
+  width: auto;
+}
+
+h1 {
+  font-size: 32px;
+  text-transform: uppercase;
+  color: lightgray;
+  word-spacing: -6px;
+  font-weight: normal;
+}
+
+h1 span {
+  color: rgb(97, 97, 97);
+  font-weight: bold;
+}
+
+#hero_banner {
+  display: flex;
+  background-color: lightgray;
+  width: 100%;
+}
+
+#hero_img {
+  margin: 32px 24px;
+  width: 60%;
+}
+
+#banner_info {
+  width: 40%;
+}
+
+#banner_link {
+  background-color: rgb(97, 97, 97);
+  color: white;
+  width: 60%;
+  padding: 8px 0px;
+  text-decoration: none;
+  text-align: center;
+}
+
+#banner_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 32px 24px;
+}
+
+#banner_text h2 {
+  font-size: 32px;
+  font-weight: 900;
+}
+
+#info_section {
+  display: flex;
+}
+
+#info_right {
+  width: 60%;
+  padding: 32px 24px;
+}
+
+#info_right h2 {
+  padding-bottom: 24px;
+}
+
+#info_right p {
+  padding-bottom: 32px;
+}
+
+#info_right_img {
+  width: 100%;
+  padding-bottom: 32px;
+}
+
+#info_left {
+  width: 40%;
+  padding: 32px 16px;
+}
+
+.info_card {
+  display: flex;
+  padding-left: 16px;
+  padding-bottom: 16px;
+}
+
+.info_card img {
+  width: 35%;
+  height: auto;
+}
+
+.info_desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: auto;
+  width: 65%;
+  padding-left: 16px;
+}
+
+.info_desc a {
+  color: teal;
+  text-decoration: none;
+}
+
+#course_section {
+  max-width: 100%;
+  padding: 32px 72px;
+  background-color: lightgrey;
+}
+
+#course_section h2 {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 32px;
+  font-weight: bolder;
+}
+
+#courses {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  width: 100%
+}
+
+.course_card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.course_card img {
+  width: 100%;
+  height: auto;
+}
+
+#thesis_section {
+  display: block;
+  max-width: 100%;
+  padding: 32px 24px;
+}
+
+#thesis_section h2 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bolder;
+}
+
+#theses {
+  display: flex;
+  max-width: 100%;
+  padding: 32px 24px;
+}
+
+#thesis_video {
+  width: 60%;
+}
+
+#thesis_video h3 {
+  padding-bottom: 8px;
+}
+
+video {
+  width: 100%;
+  padding-bottom: 24px;
+}
+
+#thesis_cards {
+  width: 40%;
+  padding-left: 12px;
+}
+
+.thesis_card {
+  display: flex;
+  padding: 16px; 
+  width: 100%;
+}
+
+.thesis_desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 65%;
+  padding: 16px;
+
+}
+
+.thesis_card img {
+  width: 35%;
+  height: auto;
+}
+
+footer {
+  height: 64px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer p {
+  padding: 16px 24px;
+}
+
+#footer_nav {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 16px;
+  margin-right: 24px;
+}
+
+#footer_nav a {
+  text-decoration: none;
+  justify-content: right;
+}
+
+hr {
+  color: lightgrey;
+  width: 98%;
+  border-style: groove;
+  border-width: 1px;
+  margin: auto;
+}
+
+@media screen and (min-width: 451px) {
+  #on_campus_desktop, 
+  #online_desktop, 
+  #for_companies_desktop, 
+  #sign_in_desktop, h1 {
+    display: block;
+  }
+
+  #on_campus_mobile, 
+  #online_mobile, 
+  #sign_in_mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #on_campus_desktop, 
+  #online_desktop, 
+  #for_companies_desktop, 
+  #sign_in_desktop, h1 {
+    display: none;
+  }
+
+  #on_campus_mobile img, 
+  #online_mobile img, 
+  #sign_in_mobile img{
+    display: inline;
+    width: auto;
+    height: 30px;
+  }
+
+  #colmar_logo {
+    height: 30px;
+    width: auto;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    gap: 0px;
+    width: 100%;
+    text-align: center;
+  }
+
+  #header_menu {
+    margin: 0;
+  }
+
+  #header_title {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+
+  #hero_banner {
+    display: block;
+    text-align: center;
+  }
+
+  #hero_img {
+    margin: 0;
+    width: 99%;
+    height: auto;
+  }
+
+  #banner_text {
+    padding: 32px 16px;
+    text-align: left;
+  }
+
+  #banner_text h2 {
+    font-size: 35px;
+    font-weight: bolder;
+  }
+
+  #banner_text p {
+    margin-top: 32px;
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  #banner_link {
+    margin: 0px auto;
+  }
+
+  #info_right {
+    display: none;
+  }
+
+  #info_left {
+    width: 100%;
+    padding: 16px 16px 0px 16px;
+  }
+
+  .info_card {
+    display: block;
+    padding: 0;
+  }
+
+  .info_card img {
+    height: 175px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .info_desc {
+    row-gap: 16px;
+    padding-top: 16px;
+    padding-bottom: 64px;
+  }
+
+  #info_left:nth-last-child(1) .info_desc{
+    padding-bottom: 32px;
+  }
+
+  #course_section {
+    padding: 32px 16px 24px 16px;
+    background-color: white;
+  }
+
+  #courses {
+    display: block;
+  }
+
+  #course_section h2 {
+    margin-bottom: 16px;
+  }
+
+  .course_card>img, .course_card>p {
+    display: none;
+  }
+
+  .course_card h3 {
+    padding: 16px 16px 24px 16px;
+    margin-bottom: 8px;
+    background-color: lightgray;
+  }
+
+  #thesis_section {
+    display: block;
+    text-align: center;
+    padding: 0;
+  }
+
+  #thesis_section h2 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  #theses {
+    padding: 0px;
+  }
+
+  #thesis_video {
+    width: 100%;
+  }
+
+  #thesis_video>h3, #thesis_video>p {
+    display: none;
+  }
+
+  #thesis_cards {
+    display: none;
+  }
+
+  hr {
+    display: none;
+  }
+
+  footer {
+    margin: 16px 0px;
+    padding: 0px;
+  }
+
+  #footer_nav {
+    display: none;
+  }
+}

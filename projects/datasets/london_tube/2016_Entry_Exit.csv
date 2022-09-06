@@ -1,0 +1,269 @@
+nlc,Station,Borough,Note,Entry_Week,Entry_Saturday,Entry_Sunday,Exit_Week,Exit_Saturday,Exit_Sunday,AnnualEntryExit_Mill
+500,Acton Town                         ,Ealing, ,9994,7082,4955,9581,6878,5151,6.27
+501,Barbican                           ,City of London, ,21154,7092,4662,21000,7336,4794,11.97
+502,Aldgate                            ,City of London, ,14212,4102,3058,13745,5728,4149,8.01
+503,Aldgate East                       ,Tower Hamlets, ,21468,15292,13287,20132,13170,10947,13.43
+505,Alperton                           ,Brent, ,4821,3453,2312,5188,3585,2376,3.17
+506,Amersham                           ,Chiltern, ,3899,1880,1235,4134,1801,1086,2.36
+507,Angel                              ,Islington, ,31595,23831,15549,30872,24712,14492,20.10
+508,Archway                            ,Islington, ,16473,11386,7879,14991,9580,7212,9.94
+509,Arnos Grove                        ,Enfield, ,7274,6110,4274,6773,5470,4028,4.65
+510,Arsenal                            ,Islington, ,4789,4116,2890,4250,3400,2785,3.01
+511,Baker Street                       ,City of Westminster, ,48437,31877,22950,46181,29931,21160,29.75
+512,Balham                             ,Wandsworth, ,23274,17403,10833,22722,15852,10722,14.64
+524,Bond Street                        ,City of Westminster, ,60985,50730,31059,60624,48683,29824,39.53
+514,Barking                            ,Barking and Dagenham, ,26367,18680,13014,23392,16133,11749,15.86
+515,Barkingside                        ,Redbridge, ,2766,1493,921,2655,1445,926,1.63
+516,Barons Court                       ,Hammersmith and Fulham, ,12371,7252,5086,11097,5924,4827,7.21
+517,Bayswater                          ,City of Westminster, ,6997,7356,6097,6293,6658,5173,4.76
+518,Becontree                          ,Barking and Dagenham, ,5803,3830,2540,5542,3538,2411,3.55
+519,Belsize Park                       ,Camden, ,11259,6292,4816,9708,5839,4462,6.48
+520,Bethnal Green                      ,Tower Hamlets, ,24762,22402,15849,23222,21549,15455,16.27
+521,Blackfriars                        ,City of London,C,27957,10164,8185,25634,9187,6808,15.45
+522,Blackhorse Road                    ,Waltham Forest, ,13721,10405,7292,12478,8789,6710,8.45
+513,Bank & Monument                    ,City of London,B,117640,37573,16651,114435,35176,13252,64.26
+525,Borough                            ,Southwark, ,9554,5937,3833,9341,6277,3935,5.87
+526,Boston Manor                       ,Ealing, ,3916,2478,1755,3504,2161,1706,2.32
+527,Bounds Green                       ,Haringey, ,10750,8360,5633,9618,7199,5439,6.62
+528,Bow Road                           ,Tower Hamlets, ,9203,6115,4432,8675,5264,4563,5.65
+529,Brent Cross                        ,Barnet, ,4063,2828,2208,3702,2517,2045,2.49
+530,Bromley-by-Bow                     ,Tower Hamlets, ,6325,3782,2507,6009,3414,2482,3.79
+531,Buckhurst Hill                     ,Epping Forest, ,3631,2371,1226,3537,2077,1217,2.19
+532,Burnt Oak                          ,Barnet, ,7466,4704,3206,7074,4338,3085,4.52
+534,Caledonian Road                    ,Islington, ,9285,6794,4776,8608,5709,4520,5.73
+535,Camden Town                        ,Camden, ,30847,37672,16762,31154,45299,32122,22.88
+536,Cannon Street                      ,City of London,,17881,5788,2270,14523,4413,2045,8.98
+537,Canons Park                        ,Harrow, ,4802,3281,1965,4560,3024,1917,2.93
+539,Chalfont & Latimer                 ,Chiltern, ,2543,1219,617,2647,932,460,1.49
+540,Chalk Farm                         ,Camden, ,8714,8754,7618,7428,6662,4637,5.61
+541,Chancery Lane                      ,City of London, ,32922,8631,4444,33394,8536,4353,18.19
+542,Embankment                         ,City of Westminster, ,44143,35844,21722,39337,29692,17539,26.84
+543,Chesham                            ,Chiltern, ,1897,961,523,1730,828,482,1.07
+544,Chigwell                           ,Epping Forest, ,1095,388,174,780,326,170,0.53
+545,Chiswick Park                      ,Ealing, ,3480,2116,1350,4067,2049,1477,2.29
+546,Chorleywood                        ,Three Rivers, ,1967,809,487,1705,802,487,1.07
+547,Clapham Common                     ,Lambeth, ,14268,13092,8753,15686,13963,9181,10.04
+548,Clapham North                      ,Lambeth, ,9445,9484,5955,11120,9502,6137,6.90
+549,Clapham South                      ,Wandsworth, ,13890,10276,6888,13628,9178,7068,8.80
+550,Cockfosters                        ,Enfield, ,2921,3023,2300,2899,2787,2200,2.04
+551,Colindale                          ,Barnet, ,10257,7193,4673,9552,5910,4382,6.23
+552,Colliers Wood                      ,Merton, ,10690,8356,5675,9974,7538,5523,6.72
+553,Covent Garden                      ,City of Westminster, ,22091,27328,18627,23248,37277,21349,17.19
+554,Croxley                            ,Three Rivers, ,1984,796,467,1753,705,457,1.08
+555,Dagenham East                      ,Barking and Dagenham, ,5010,3464,2035,4566,2900,1741,2.98
+556,Dagenham Heathway                  ,Barking and Dagenham, ,9921,6423,4158,9428,6327,4069,6.04
+557,Debden                             ,Epping Forest, ,4351,2004,1077,4132,1828,1033,2.47
+558,Dollis Hill                        ,Brent, ,6908,4983,3829,6042,4114,3471,4.18
+560,Ealing Broadway                    ,Ealing, ,30028,21190,14273,28365,20352,14052,18.60
+561,Ealing Common                      ,Ealing, ,5064,3073,2462,5141,2840,2425,3.18
+562,Earl's Court                       ,Kensington and Chelsea, ,30499,24776,20476,29206,24835,18727,20.00
+563,East Acton                         ,Hammersmith and Fulham, ,6522,4511,3353,6466,4031,3302,4.12
+564,Eastcote                           ,Hillingdon, ,5033,2852,1633,4717,2625,1615,2.94
+565,East Finchley                      ,Barnet, ,12289,8178,5161,11615,7341,5273,7.47
+566,East Ham                           ,Newham, ,23332,17062,12169,22651,15639,11775,14.75
+567,East Putney                        ,Wandsworth, ,10471,6914,4811,9813,6202,4603,6.37
+568,Edgware                            ,Barnet, ,8380,5519,3938,8137,5124,3801,5.19
+569,Edgware Road (Cir)                 ,City of Westminster, ,11643,6695,4787,11109,6247,4266,6.96
+570,Elephant & Castle                  ,Southwark, ,38415,25384,18655,35392,23638,16483,23.30
+571,Elm Park                           ,Havering, ,5233,3051,1706,5017,2751,1707,3.10
+572,Epping                             ,Epping Forest, ,5915,4436,2876,6056,3639,2579,3.77
+574,Euston                             ,Camden, ,64470,56493,44744,62956,54847,41200,43.10
+575,Euston Square                      ,Camden, ,25060,8362,6563,25428,8448,6112,14.40
+576,Fairlop                            ,Redbridge, ,2012,1415,879,1787,1200,819,1.20
+577,Farringdon                         ,Islington, ,31421,6357,4148,27179,5749,2962,15.87
+578,Finchley Central                   ,Barnet, ,11499,7134,3946,11334,6309,4090,6.95
+579,Finchley Road                      ,Camden, ,16169,11436,8423,15049,10416,7915,10.00
+580,Finsbury Park                      ,Islington,D,49239,45233,27149,50881,37328,25655,32.74
+581,Fulham Broadway                    ,Hammersmith and Fulham, ,16294,11388,7361,15976,10670,6918,10.15
+582,Gants Hill                         ,Redbridge, ,11316,8198,6433,10671,7841,6218,7.14
+583,Gloucester Road                    ,Kensington and Chelsea, ,21801,17053,13462,20710,16247,11761,13.98
+584,Golders Green                      ,Barnet, ,13553,9376,7427,13068,8404,7008,8.51
+585,Goldhawk Road                      ,Hammersmith and Fulham, ,3477,2367,1425,3326,2052,1502,2.12
+586,Goodge Street                      ,Camden, ,14701,6880,3999,14226,6565,3559,8.46
+587,Grange Hill                        ,Redbridge, ,1212,486,309,1077,448,294,0.66
+588,Great Portland Street              ,City of Westminster, ,15667,4882,3439,15162,4525,2816,8.66
+589,Greenford                          ,Ealing, ,7651,5463,3460,7585,5098,3370,4.81
+590,Green Park                         ,City of Westminster, ,60106,45131,28657,68477,52416,32991,41.24
+591,Gunnersbury                        ,Hounslow, ,10410,4247,2755,9593,3730,2487,5.78
+592,Hainault                           ,Redbridge, ,6177,4002,2532,5839,3769,2449,3.74
+593,Hammersmith (Dis)                  ,Hammersmith and Fulham, ,47416,30519,21578,46634,29653,20695,29.42
+594,Hampstead                          ,Camden, ,6908,5561,4414,6933,5769,4843,4.64
+595,Hanger Lane                        ,Ealing, ,6809,4287,2905,6400,3763,2774,4.10
+596,Harlesden                          ,Brent, ,5201,2887,1880,5046,2694,1791,3.10
+597,Harrow & Wealdstone                ,Harrow, ,8354,5185,3064,7864,4403,3068,4.96
+598,Harrow-on-the-Hill                 ,Harrow, ,16276,11470,7826,17444,11487,8113,10.67
+599,Wood Lane                          ,Hammersmith and Fulham, ,5448,4742,2447,6004,4492,2659,3.68
+601,Hendon Central                     ,Barnet, ,13794,7752,5635,12862,6648,5170,8.13
+602,High Barnet                        ,Barnet, ,6162,3377,2187,5951,3046,2026,3.65
+603,Highbury & Islington               ,Islington, ,30917,25091,15872,31014,26109,16184,20.22
+604,Highgate                           ,Haringey, ,9505,6362,4042,8887,5795,4160,5.77
+605,High Street Kensington             ,Kensington and Chelsea, ,20518,15014,10755,20240,15006,10099,13.10
+606,Hillingdon                         ,Hillingdon, ,3066,1930,1140,2685,1653,1075,1.77
+607,Holborn                            ,Camden, ,51831,32417,19490,59067,35682,20480,33.96
+608,Holland Park                       ,Kensington and Chelsea, ,5080,3846,2718,4869,3657,2674,3.23
+609,Holloway Road                      ,Islington, ,10612,7819,5007,10561,6996,5041,6.72
+610,Hornchurch                         ,Havering, ,3454,2017,1150,3454,2182,1264,2.11
+611,Hounslow Central                   ,Hounslow, ,5977,4029,3037,6109,3979,2925,3.83
+612,Hounslow East                      ,Hounslow, ,5775,4586,3360,6113,4456,3295,3.87
+613,Hounslow West                      ,Hounslow, ,5468,4440,3472,5194,4194,3291,3.55
+614,Hyde Park Corner                   ,City of Westminster, ,8691,7952,9350,8647,7625,9535,6.31
+615,Ickenham                           ,Hillingdon, ,1912,1156,627,1935,1123,646,1.17
+616,Kennington                         ,Southwark, ,9022,6830,4769,8145,6269,4866,5.59
+617,Kensal Green                       ,Brent, ,4485,3402,2423,3889,2888,2303,2.72
+618,Kensington (Olympia)               ,Kensington and Chelsea, ,1645,7079,4258,1635,6588,4327,2.05
+784,Southwark                          ,Southwark, ,30630,13134,8609,30484,13792,8338,17.86
+620,Kenton                             ,Brent, ,3329,2087,1420,3369,2091,1406,2.08
+621,Kew Gardens                        ,Richmond, ,5831,5992,4913,6142,5565,4353,4.18
+622,Kilburn                            ,Brent, ,13380,10371,7946,12852,9500,7515,8.58
+623,Kilburn Park                       ,Brent, ,5235,4514,3221,5072,4143,3056,3.43
+624,Kingsbury                          ,Brent, ,8332,5436,3782,8008,5189,3608,5.12
+625,King's Cross St. Pancras           ,Camden, ,145725,121899,94241,139469,112113,87252,95.03
+626,Knightsbridge                      ,Kensington and Chelsea, ,27425,32730,22135,25665,30011,18403,19.09
+627,Ladbroke Grove                     ,Kensington and Chelsea, ,9029,10350,4696,8283,7283,3864,5.80
+628,Lambeth North                      ,Lambeth,C,0,0,0,0,0,0,0.00
+629,Lancaster Gate                     ,City of Westminster, ,10932,8394,7053,10429,8254,6353,7.06
+630,Latimer Road                       ,Kensington and Chelsea, ,4437,2288,1644,4288,2024,1676,2.63
+631,Leicester Square                   ,City of Westminster, ,51298,74930,44066,47806,73228,41801,37.84
+632,Leyton                             ,Waltham Forest, ,21677,19172,13270,21591,16313,12816,14.33
+633,Leytonstone                        ,Waltham Forest, ,17792,13416,9116,17335,12471,8980,11.30
+634,Liverpool Street                   ,City of London, ,114113,67091,56846,112637,67532,65969,71.61
+747,Waterloo                           ,Lambeth,T,160473,95875,55203,170206,99029,56076,100.36
+636,Loughton                           ,Epping Forest, ,5599,3725,1969,5616,3510,2019,3.45
+637,Maida Vale                         ,City of Westminster, ,5565,4086,2836,5047,3546,2713,3.41
+638,Manor House                        ,Hackney, ,14187,11711,8699,13377,10228,8388,9.12
+639,Mansion House                      ,City of London, ,11296,2948,2168,11059,2088,1540,6.14
+640,Marble Arch                        ,City of Westminster, ,21527,20307,15300,19912,17638,12690,14.11
+641,Marylebone                         ,City of Westminster, ,20117,13736,9991,20840,14159,9257,12.95
+642,Mile End                           ,Tower Hamlets, ,24922,18644,13509,23761,16902,13300,15.75
+643,Mill Hill East                     ,Barnet,A,2310,1210,759,2073,1413,863,1.34
+645,Moorgate                           ,City of London, ,48408,6427,4236,55430,7866,5115,27.57
+646,Moor Park                          ,Three Rivers, ,1669,668,367,1513,629,351,0.91
+647,Morden                             ,Merton, ,16388,11368,7863,15308,10335,7536,10.06
+648,Mornington Crescent                ,Camden, ,7736,5535,13068,6736,3605,2235,5.04
+649,Neasden                            ,Brent, ,6243,4180,2878,5593,3874,2819,3.75
+650,Newbury Park                       ,Redbridge, ,8721,7329,4614,7799,6155,4688,5.43
+653,North Acton                        ,Ealing, ,10781,6501,4563,10362,6058,4397,6.53
+654,North Ealing                       ,Ealing, ,1581,959,602,1361,827,554,0.91
+655,Northfields                        ,Ealing, ,6280,4449,2941,6052,4034,3028,3.91
+656,North Harrow                       ,Harrow, ,3359,1816,1113,3212,1598,1060,1.97
+657,Northolt                           ,Ealing, ,8334,5875,4000,7967,5202,3746,5.16
+659,North Wembley                      ,Brent, ,2919,2078,1424,2727,1833,1279,1.79
+660,Northwick Park                     ,Brent, ,7811,3843,2771,7809,3453,2662,4.65
+661,Northwood                          ,Hillingdon, ,4224,2316,1390,4066,2118,1337,2.49
+662,Northwood Hills                    ,Hillingdon, ,3241,1859,1147,3061,1661,1115,1.91
+663,Notting Hill Gate                  ,Kensington and Chelsea, ,24568,27814,15583,23745,31214,16485,17.18
+664,Oakwood                            ,Enfield, ,4385,3783,2503,4244,3730,2603,2.88
+665,Old Street                         ,Islington, ,41764,27248,17856,40790,31067,16856,25.97
+667,Osterley                           ,Hounslow, ,3666,2591,1855,3637,2291,1773,2.32
+668,Oval                               ,Lambeth, ,10460,7375,4860,9951,6511,4662,6.45
+619,Kentish Town                       ,Camden, ,13810,9529,6337,12750,8428,5606,8.36
+670,Paddington                         ,City of Westminster, ,79481,51774,42179,76499,50877,37137,49.48
+671,Park Royal                         ,Ealing, ,3330,1879,1189,3331,1833,1134,2.02
+672,Parsons Green                      ,Hammersmith and Fulham, ,11340,6892,4062,10788,6075,3975,6.75
+673,Perivale                           ,Ealing, ,4010,2719,1693,3865,2479,1654,2.46
+674,Piccadilly Circus                  ,City of Westminster, ,57625,71464,46400,55857,71399,40917,41.29
+675,Pinner                             ,Harrow, ,5455,2877,1707,5263,2660,1668,3.20
+676,Plaistow                           ,Newham, ,9231,4566,4222,8657,4401,4230,5.49
+677,Preston Road                       ,Brent, ,5435,3539,2534,5084,3277,2426,3.31
+678,Putney Bridge                      ,Hammersmith and Fulham, ,8409,6709,3983,8612,5778,3831,5.42
+679,Queensbury                         ,Brent, ,7578,4958,3275,7415,4687,3170,4.68
+680,Queen's Park                       ,Brent, ,9329,6278,4839,8337,5434,4622,5.64
+681,Queensway                          ,City of Westminster, ,11813,12841,10444,12450,13002,10315,8.71
+682,Ravenscourt Park                   ,Hammersmith and Fulham, ,5288,3131,2088,5059,2931,2069,3.18
+683,Rayners Lane                       ,Harrow, ,7289,4310,2841,7303,4099,2785,4.46
+684,Redbridge                          ,Redbridge, ,4883,3962,2814,4442,3388,2488,3.05
+685,Regent's Park                      ,City of Westminster, ,5149,2712,1961,5782,3598,2316,3.35
+686,Richmond                           ,Richmond,A,11429,14095,7188,11791,12862,6977,8.11
+687,Rickmansworth                      ,Three Rivers, ,4314,1985,1124,4121,1794,998,2.46
+688,Roding Valley                      ,Epping Forest,A,617,216,115,701,178,112,0.37
+690,Royal Oak                          ,City of Westminster, ,4328,2177,1717,4077,2023,1685,2.55
+691,Ruislip                            ,Hillingdon, ,3151,2124,1275,3110,2045,1236,1.95
+692,Ruislip Gardens                    ,Hillingdon, ,1929,1115,633,1601,949,584,1.07
+693,Ruislip Manor                      ,Hillingdon, ,3359,2035,1116,3208,1826,1115,1.99
+694,Russell Square                     ,Camden, ,19880,13919,10732,18367,13963,9927,12.35
+695,St. James's Park                   ,City of Westminster, ,26817,7916,5842,26318,7545,5809,14.93
+696,St. John's Wood                    ,City of Westminster, ,12186,8455,5670,12393,8705,5875,7.79
+697,St. Paul's                         ,City of London, ,30318,16453,11127,30954,15510,10203,18.42
+698,Seven Sisters                      ,Haringey, ,28604,24150,17752,27066,23175,17169,18.61
+700,Shepherd's Bush (Cen)              ,Hammersmith and Fulham, ,34334,34518,23165,31853,32131,21535,22.85
+702,Sloane Square                      ,Kensington and Chelsea, ,27563,20340,12178,26584,19415,11237,17.15
+703,Snaresbrook                        ,Redbridge, ,4829,2882,1784,3889,2505,1749,2.69
+704,South Ealing                       ,Ealing, ,5700,4486,3023,5522,3767,2890,3.62
+705,Southfields                        ,Wandsworth, ,10518,7256,4494,9505,6065,4270,6.28
+706,Southgate                          ,Enfield, ,8797,6349,4168,8965,6200,4332,5.65
+707,South Harrow                       ,Harrow, ,3884,2657,1764,4040,2598,1731,2.48
+708,South Kensington                   ,Kensington and Chelsea, ,49893,42615,34752,49350,43150,33636,33.60
+709,South Kenton                       ,Brent,A,1795,1201,689,2025,1083,756,1.17
+710,South Ruislip                      ,Hillingdon, ,2978,1953,1211,2654,1811,1119,1.76
+711,South Wimbledon                    ,Merton, ,8026,5152,3356,7172,4868,3310,4.76
+712,South Woodford                     ,Redbridge, ,7609,5257,2906,9271,6084,3652,5.25
+713,Stamford Brook                     ,Hammersmith and Fulham, ,4478,2975,2029,4159,2544,1833,2.70
+714,Stanmore                           ,Harrow, ,6290,4596,3205,6353,4240,3277,4.04
+715,Stepney Green                      ,Tower Hamlets, ,10854,6506,4870,9810,5588,4535,6.41
+716,Stockwell                          ,Lambeth, ,19858,14091,10099,15283,12266,9600,11.42
+717,Stonebridge Park                   ,Brent, ,4248,2694,1745,3927,2452,1546,2.53
+718,Charing Cross                      ,City of Westminster,T,12597,13419,9267,11147,9951,6057,8.13
+719,Stratford                          ,Newham, ,98387,100920,74689,92017,97318,70509,67.05
+720,Sudbury Hill                       ,Ealing, ,3122,2044,1291,3269,1949,1285,1.98
+721,Sudbury Town                       ,Brent, ,3400,2329,1594,2909,1987,1388,2.00
+723,Swiss Cottage                      ,Camden, ,12245,8461,5850,11663,7965,5603,7.58
+724,Temple                             ,City of Westminster, ,14537,5300,3233,14339,5319,2973,8.22
+725,Theydon Bois                       ,Epping Forest, ,1348,1120,598,1307,1005,552,0.85
+726,Tooting Bec                        ,Wandsworth, ,13007,9448,6163,11824,8079,6197,7.92
+727,Tooting Broadway                   ,Wandsworth, ,25099,19387,12889,24266,17633,12665,15.92
+635,London Bridge                      ,Southwark, ,119133,82638,47882,105904,78190,44292,70.74
+729,Tottenham Hale                     ,Haringey, ,21075,16947,12225,19233,15211,10549,13.21
+730,Totteridge & Whetstone             ,Barnet, ,3838,2212,1387,3511,1931,1280,2.23
+741,Victoria                           ,City of Westminster, ,122688,99988,79669,129114,98315,81069,83.50
+733,Tufnell Park                       ,Islington, ,5927,4785,3381,5502,3740,2930,3.71
+734,Turnham Green                      ,Hounslow, ,8766,6201,4253,9041,6085,4327,5.65
+735,Turnpike Lane                      ,Haringey, ,16169,14084,10071,16476,12961,10125,10.86
+736,Upminster                          ,Havering,A,8451,5605,2526,9280,5003,2589,5.34
+737,Upminster Bridge                   ,Havering, ,2104,718,363,2031,639,360,1.16
+738,Upney                              ,Barking and Dagenham, ,4708,2739,1779,4215,2355,1570,2.72
+739,Upton Park                         ,Newham, ,16454,11844,8165,15263,10744,7812,10.14
+740,Uxbridge                           ,Hillingdon, ,13861,8659,5331,13619,7934,5468,8.45
+731,Tower Hill                         ,Tower Hamlets, ,33616,30185,19236,32173,27530,17859,21.83
+742,Walthamstow Central                ,Waltham Forest, ,29421,32106,17137,37650,38834,18600,22.77
+743,Wanstead                           ,Redbridge, ,4642,3574,2310,4587,3277,2257,2.96
+745,Warren Street                      ,Camden, ,36181,14138,9587,34429,13029,8542,20.35
+746,Warwick Avenue                     ,City of Westminster, ,7314,5205,3698,6704,4798,3752,4.51
+669,Oxford Circus                      ,City of Westminster, ,126188,116404,71281,123305,112699,68107,83.26
+748,Watford                            ,Watford, ,3233,1600,1072,2889,1551,1027,1.84
+751,Wembley Central                    ,Brent, ,8553,7221,4625,9098,7483,4518,5.77
+752,Wembley Park                       ,Brent, ,23116,18819,14112,22587,18005,13446,15.10
+753,West Acton                         ,Ealing, ,2818,2382,1586,2704,2234,1529,1.82
+754,Westbourne Park                    ,City of Westminster, ,6769,4303,2649,6171,3425,2479,3.98
+755,West Brompton                      ,Kensington and Chelsea, ,9819,4869,3109,10737,5271,3166,6.10
+756,West Finchley                      ,Barnet, ,2848,1658,982,2661,1349,968,1.67
+757,West Ham                           ,Newham, ,4429,3921,2663,5883,5379,3559,3.46
+758,West Hampstead                     ,Camden, ,18415,12417,7976,16932,10666,7222,11.04
+759,West Harrow                        ,Harrow, ,2244,1631,960,2496,1705,1020,1.49
+760,West Kensington                    ,Hammersmith and Fulham, ,8033,5930,4194,7739,5199,4139,5.06
+761,Westminster                        ,City of Westminster, ,41969,39110,28706,41695,37011,26432,28.38
+762,West Ruislip                       ,Hillingdon, ,2694,2069,1137,2552,1967,1062,1.67
+763,Whitechapel                        ,Tower Hamlets, ,23765,12976,8910,23464,13043,9180,14.37
+764,White City                         ,Hammersmith and Fulham, ,15617,7293,4661,14678,7057,4533,8.95
+765,Willesden Green                    ,Brent, ,14180,11126,7864,13449,9742,7345,8.97
+766,Willesden Junction                 ,Brent,A,7581,5250,2980,7609,4884,3091,4.73
+767,Wimbledon                          ,Merton,,19014,17724,10816,21308,18732,11183,13.40
+768,Wimbledon Park                     ,Merton, ,3231,2206,1257,2832,1903,1223,1.89
+769,Woodford                           ,Redbridge, ,9178,6813,4016,8862,6012,3807,5.69
+770,Wood Green                         ,Haringey, ,20404,17684,12537,19093,16331,11914,13.20
+771,Woodside Park                      ,Barnet, ,4842,2922,1810,4382,3033,2031,2.87
+773,Hammersmith (H&C)                  ,Hammersmith and Fulham, ,17965,11010,6068,16681,10618,5416,10.57
+774,Edgware Road (Bak)                 ,City of Westminster,,8014,5281,3464,8012,5322,3328,5.01
+775,Shepherd's Bush (H&C)              ,Hammersmith and Fulham, ,5512,4664,3011,5344,4248,3079,3.57
+776,Pimlico                            ,City of Westminster, ,19328,11227,8402,17755,10504,8090,11.49
+777,Vauxhall                           ,Lambeth, ,52040,36661,27633,48461,32900,26444,32.23
+778,Brixton                            ,Lambeth, ,52499,42516,29758,48573,41908,29559,33.46
+779,Hatton Cross                       ,Hillingdon, ,5069,3993,3168,4808,3615,2835,3.25
+780,Heathrow Terminals 123             ,Hillingdon, ,11046,11922,12713,9588,9955,10559,7.73
+781,Heathrow Terminal 4                ,Hillingdon, ,3200,3663,3903,2730,3424,3045,2.28
+783,Heathrow Terminal 5                ,Hillingdon, ,6482,6453,7710,5489,5305,6054,4.45
+728,Tottenham Court Road               ,City of Westminster, ,60293,52911,34533,57854,52098,33172,39.35
+787,Bermondsey                         ,Southwark, ,17334,13564,9216,16584,13145,9395,11.07
+788,Canada Water                       ,Southwark, ,20736,19810,14071,21528,19967,14360,14.44
+789,North Greenwich                    ,Greenwich, ,38592,36290,24531,39497,37460,23954,26.45
+852,Canary Wharf                       ,Tower Hamlets, ,93297,35247,25111,96171,37211,27135,54.79
+884,Canning Town                       ,Newham, ,18634,15102,10578,17731,13752,9974,11.91

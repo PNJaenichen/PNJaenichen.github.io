@@ -518,7 +518,7 @@ function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 
 
 function subAttackResults() {
   const asw = [];
-  asw.push(document.getElementById("torp_run_silent").checked ? -1 : 0);
+  asw.push(0); //This used to be a run silent check, but that doesn't happen for a torpedo attack so in order to maintain other code, this is just a 0. It has no affect.
   asw.push(document.getElementById("torp_littorals").checked ? -1 : 0);
   asw.push(document.getElementById("torp_cavitation").checked ? 1 : 0);
   asw.push(document.getElementById('torp_multi_assets').checked)
