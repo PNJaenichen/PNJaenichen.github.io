@@ -112,6 +112,10 @@ not to see them */
   width: 100%;
 }
 
+.warning {
+  color: red;
+}
+
 /* clip-path border code from https://stackoverflow.com/questions/44331039/css-how-to-add-a-border-color-to-a-css-shape */
 
 .dice4 {

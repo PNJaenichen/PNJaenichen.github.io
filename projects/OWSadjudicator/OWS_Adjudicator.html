@@ -122,6 +122,10 @@ not to see them */
   width: 100%;
 }
 
+.warning {
+  color: red;
+}
+
 /* clip-path border code from https://stackoverflow.com/questions/44331039/css-how-to-add-a-border-color-to-a-css-shape */
 
 .dice4 {
@@ -278,6 +282,63 @@ footer {
   text-align: center;
   font-size: x-small;
 }
+
+/* Diamond for possible defense shield */
+#diamond-cut {
+  border-style:solid;
+  border-color:transparent transparent blue transparent;
+  border-width:0 25px 25px 25px;
+  height:0;
+  width:50px;
+  position:relative;
+  margin:20px 0 50px 0;
+  }
+
+  #diamond-cut:after {
+  content:"";
+  position:absolute;
+  top:25px;
+  left:-25px;
+  width:0;
+  height:0;
+  border-style:solid;
+  border-color:blue transparent transparent transparent;
+  border-width:70px 50px 0 50px;
+  }
+
+  /* shield for possible defense shield */
+  .gg-shield {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 14px;
+    height: 4px;
+    background: currentColor;
+    border-radius: 100px;
+    margin-top: -6px
+}
+.gg-shield::after,
+.gg-shield::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 8px;
+    height: 16px;
+    border: 2px solid
+}
+.gg-shield::before {
+    border-bottom-left-radius: 40px;
+    border-right: 0;
+    left: 0
+}
+.gg-shield::after {
+    border-bottom-right-radius: 40px;
+    border-left: 0;
+    right: 0
+}
     </style>
   </head>
   <body>
@@ -286,7 +347,7 @@ footer {
     </header>
     <main>
       <h1>OWS Adjudication Aid</h1>
-      <p>All tools were created utilizing the OWS 1.7 ruleset.</p>
+      <p>Unless otherwise noted, all tools were created utilizing the OWS 1.8 ruleset.</p>
       <div class='tab'>
         <button class="tablinks" onclick="openTool(event, 'general_roller_div')" id="defaultOpen">General Dice Roller</button>
         <button class="tablinks" onclick="openTool(event, 'theater_ISR_div')">Theater and Local ISR</button>
@@ -321,7 +382,7 @@ footer {
                 <label id="gen_total_label" for="gen_total">Number of Dice:</label>
                 <input id="gen_total" type="number" min=1 max=40>
               </fieldset>
-              <button id="generalSubmit" type="button">Ajudicate</button>
+              <button id="generalSubmit" type="button">Adjudicate</button>
             </form>
           </div>
           <div id="theater_ISR_div" class="tabcontent tool_format">
@@ -329,7 +390,7 @@ footer {
             <form id='theaterISR' action=''>
               <p id='theatherISRDesc'>
                 Utilize the following tool for adjudicating Theater and Local level ISR. This tool was created 
-                utilizing the OWS 1.7 ruleset.
+                utilizing the OWS 1.8 ruleset.
               </p>
               <fieldset>
                 <label>ISR Value:</label>
@@ -353,14 +414,14 @@ footer {
                 <label><input id="isr_countermeasures" type="checkbox">Active/Passive CMs</label>
                 <label><input id="isr_combined" type="checkbox">Combine Assets</label>
               </fieldset>
-            <button id="isrSubmit" type="button">Ajudicate</button>
+            <button id="isrSubmit" type="button">Adjudicate</button>
             </form>
           </div>
           <div id='ASW_div' class="tabcontent tool_format">
             <h2>ASW</h2>
             <p>
               Utilize the following tool for adjudicating ASW detections and/or attacks. This tool was created utilizing
-              the OWS 1.7 ruleset.
+              the OWS 1.8 ruleset.
             </p>
             <form id='ASW' action=''>
               <fieldset>
@@ -387,7 +448,7 @@ footer {
                 <label><input id="asw_multiAssets" type="checkbox">Multiple ASW Assets</label>
                 <br>
               </fieldset>
-              <button id="aswSubmit" type="button">Ajudicate</button>
+              <button id="aswSubmit" type="button">Adjudicate</button>
             </form>
           </div>
           <div id="Strike_div" class="tabcontent tool_format">
@@ -396,6 +457,11 @@ footer {
               <p id="surfStrkDesc">
                 Utilize the following tool for adjudicated surface-to-surface and air-to-surface strikes. This
                 tool was created utizliing the OWS 1.7 ruleset.
+              </p>
+              <p class="warning">
+                **WARNING**
+                This tool will provide the correct type of dice to roll but will not provide the correct HIT number
+                **WARNING**
               </p>
               <fieldset>
                 <label>Total Inbound Weapons:</label>
@@ -476,7 +542,7 @@ footer {
               <br>
               <label><input id="aew_input" type="checkbox">AEW Available (US Only)</label>
               <br>
-              <button id="strikeSubmit" type="button">Ajudicate</button>
+              <button id="strikeSubmit" type="button">Adjudicate</button>
             </form>
           </div>
           <div id="torpedoAttack_div" class="tabcontent tool_format">
@@ -486,6 +552,7 @@ footer {
                 Utilize the following tool for adjudicated torpedo attacks. This
                 tool was created utilizing the OWS 1.7 ruleset.
               </p>
+              <p class="warning">**WARNING**This tool does not account for critical hits**WARNING**</p>
               <fieldset>
                 <label>ASW Assets:</label>
                 <br>
@@ -541,12 +608,11 @@ footer {
                   <option value=20>D20</option>
                 </select>
               <br>
-              <label><input id="torp_run_silent" type="checkbox">Running Silent</label>
               <label><input id="torp_littorals" type="checkbox">Littorals</label>
               <label><input id="torp_cavitation" type="checkbox">Cavitation</label>
               <label><input id='torp_multi_assets' type='checkbox'>Multiple ASW Assets</label>
               <br>
-              <button id="torpedoSubmit" type="button">Ajudicate</button>
+              <button id="torpedoSubmit" type="button">Adjudicate</button>
             </form>
           </div>
           <div id="surfToAir_div" class="tabcontent tool_format">
@@ -554,7 +620,7 @@ footer {
             <form id="samStrike" action="">
               <p id="samAttDesc">
                 Utilize the following tool for adjudicated Surface-To-Air Strikes.
-                This tool was created utilizing the OWS 1.7 ruleset.
+                This tool was created utilizing the OWS 1.8 ruleset.
               </p>
               <fieldset>
                 <label>SAM Assets:</label>
@@ -616,10 +682,10 @@ footer {
                 <br>
                 <label id="ac_asset_three_label" for="ac_asset_three">Aircraft Defense 3</label>
                 <input id="ac_asset_three" type="number" min=0 max=40>
-                <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
-                <input id="SAM_asset_three_total" type="number" min=0 max=40>
+                <label id="ac_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
+                <input id="ac_asset_three_total" type="number" min=0 max=40>
               </fieldset>
-              <button id="samStrikeSubmit" type="button">Ajudicate</button>
+              <button id="samStrikeSubmit" type="button">Adjudicate</button>
             </form>
           </div>
           <div id="airToAir_div" class="tabcontent tool_format">
@@ -627,7 +693,11 @@ footer {
             <form id="airToAir" action="">
               <p>
                 Utilize the following tool for adjudicated Air-to-Air Combat. The tool was created
-                utilizing the OWS 1.7 ruleset.
+                utilizing the OWS 1.8 ruleset. 
+              </p>
+              <p>
+                This tool provides simultaneous results but does not account for the individual 
+                steps of Air-to-Air combat.
               </p>
               <fieldset>
                 <label>Blue Forces:</label>
@@ -885,12 +955,16 @@ footer {
                   <option value=0>No Target</option>
                 </select>
               </fieldset>
-              <button id="airToAirSubmit" type="button">Ajudicate</button>
+              <button id="airToAirSubmit" type="button">Adjudicate</button>
             </form>
           </div>
           <div id="sofDirectAction_div" class="tabcontent tool_format">
             <h2>SOF Direct Action</h2>
             <form id="sofDirectAction" action="">
+              <p>
+                Utilize the following tool for adjudicated Air-to-Air Combat. The tool was created
+                utilizing the OWS 1.8 ruleset. 
+              </p>
               <label id="sofDA_detect_roll_label" for="sofDA_detect_roll">Detection Roll</label>
               <select id="sofDA_detect_roll">
                 <option value="">Detect Roll</option>
@@ -921,7 +995,7 @@ footer {
               <label id="sofDA_def_label" for="sofDA_def">Target Defense</label>
               <input id="sofDA_def" type="number" min=0 max=40>
               <br>
-              <button id="sofDirectActionSubmit" type="button">Ajudicate</button>
+              <button id="sofDirectActionSubmit" type="button">Adjudicate</button>
             </form>
           </div>
           <div id="groundCombat_div" class="tabcontent tool_format">
@@ -929,7 +1003,7 @@ footer {
             <form id="groundCombat" action="">
               <p>
                 Utilize the following tool for adjudicated Ground Combat. The tool was created 
-                utilizing the OWS 1.7 ruleset.
+                utilizing the <span class="warning">OWS 1.7 ruleset</span>.
               </p>
               <label id="grndCom_terr_label" for="grndCom_terr">Terrain Type</label>
               <select id="grndCom_terr">
@@ -998,7 +1072,7 @@ footer {
                 <label><input id="grndCom_def_ampAslt" type="checkbox">Amphibious Assault</label>
               </fieldset>
               <br>
-              <button id="groundCombatSubmit" type="button">Ajudicate</button>
+              <button id="groundCombatSubmit" type="button">Adjudicate</button>
             </form>
           </div>
         </div> 
@@ -1560,7 +1634,7 @@ function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, 
 
 function subAttackResults() {
   const asw = [];
-  asw.push(document.getElementById("torp_run_silent").checked ? -1 : 0);
+  asw.push(0); //This used to be a run silent check, but that doesn't happen for a torpedo attack so in order to maintain other code, this is just a 0. It has no affect.
   asw.push(document.getElementById("torp_littorals").checked ? -1 : 0);
   asw.push(document.getElementById("torp_cavitation").checked ? 1 : 0);
   asw.push(document.getElementById('torp_multi_assets').checked)
