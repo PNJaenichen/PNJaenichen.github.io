@@ -290,7 +290,7 @@ footer {
 .def-result {
   display: flex;
   justify-content: space-evenly;
-  width: 87px;
+  width: max-content;
 }
 
 .defsalvo {

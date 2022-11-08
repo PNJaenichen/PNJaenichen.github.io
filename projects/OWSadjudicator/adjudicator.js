@@ -258,7 +258,7 @@ function createDie(dieSides, dieResult) {
   return newDiv;
 }
 
-function createDefResult(dieSides, dieResult, defValue, hitRes, typeDef='base') {
+function createDefResult(dieSides, dieResult, defValue, hitRes, d4_hits, typeDef='base') {
   const finalResult = document.createElement('div');
   finalResult.classList.add('def-result');
   finalResult.appendChild(createDie(dieSides, dieResult));
@@ -291,6 +291,12 @@ function createDefResult(dieSides, dieResult, defValue, hitRes, typeDef='base') 
   hit_result.appendChild(salvoValue);
   hit_result.appendChild(hitResult);
   finalResult.appendChild(hit_result);
+  if (d4_hits > 0) {
+    const d4result = document.createElement('div');
+    d4result.classList.add('def-result');
+    d4result.appendChild(createDie(4, d4_hits));
+    finalResult.appendChild(d4result);
+  }
   return finalResult;
 }
 
@@ -402,7 +408,12 @@ document.getElementById('aswSubmit').addEventListener('click', () => {
 function getStrikeInputs() {
   const promos = document.getElementById('promo_input').value ? parseInt(document.getElementById('promo_input').value) : 0;
   let demos = document.getElementById('demo_input').value ? parseInt(document.getElementById('demo_input').value) : 0;
-  const cap = document.getElementById('cap_input').value ? parseInt(document.getElementById('cap_input').value) : 0;
+  const hyper_inbound = document.getElementById('hyper').checked;
+  const bm_inbound = document.getElementById('ballistic').checked;
+  let cap = 0;
+  if (!hyper_inbound && !bm_inbound) {
+    cap = document.getElementById('cap_input').value ? parseInt(document.getElementById('cap_input').value) : 0;
+  }
   const base_def = document.getElementById('target_def').value ? parseInt(document.getElementById('target_def').value) : 0;
   const inbound = {};
   const defense = {};
@@ -423,22 +434,24 @@ function getStrikeInputs() {
     if (document.getElementById(user_input).value && document.getElementById(user_input + '_total')) {
       const defenseValue = parseInt(document.getElementById(user_input).value);
       const defenseTotal = parseInt(document.getElementById(user_input + '_total').value);
-      if (defenseValue === 0 || defenseTotal === 0) {
-        continue;
-      } else if (defenseValue in defense) {
-        defense[defenseValue] += defenseTotal;
-      } else {
-        defense[defenseValue] = defenseTotal;
+      if ((!hyper_inbound && !bm_inbound) || (bm_inbound && document.getElementById(user_input + '_bmd').checked)) {
+        if (defenseValue === 0 || defenseTotal === 0) {
+          continue;
+        } else if (defenseValue in defense) {
+          defense[defenseValue] += defenseTotal;
+        } else {
+          defense[defenseValue] = defenseTotal;
+        }
       }
     }
   }
   if (Object.keys(defense).length > 0) {
     demos += document.getElementById("aew_input").checked ? 2 : 0;
   }
-  return {inbound, defense, base_def, cap, promos, demos};
+  return {inbound, defense, base_def, cap, promos, demos, hyper_inbound, bm_inbound};
 }
 
-function strikeBaseAttack(inbound, base_def) {
+function strikeBaseAttack(inbound, base_def, d4_hits) {
   const dieRolls = {};
   for (const x of Object.keys(inbound)) {
     for (let i = 0; i < inbound[x]; i++) {
@@ -452,22 +465,26 @@ function strikeBaseAttack(inbound, base_def) {
   let results = [];
   for (const x of Object.keys(inbound).reverse()) {
     for (let i = 0; i < inbound[x]; i++) {
-      const result = dieRolls[x][i] >= base_def ? 'HIT' : 'MISS'
-      results.push([x, dieRolls[x][i], base_def, result]);
+      const result = dieRolls[x][i] >= base_def ? 'HIT' : 'MISS';
+      results.push([x, dieRolls[x][i], base_def, result, (d4_hits && result === 'HIT') ? dieRoller(4) : 0]);
     }
   }
   let hit_count = 0;
   for (const result of results) {
-    if (result[1] >= (base_def * 2)) {
-      hit_count += 2;
-    } else if (result[1] >= base_def) {
+    if (result[4] === 0) {
+      if (result[1] >= (base_def * 2)) {
+        hit_count += 2;
+      } else if (result[1] >= base_def) {
+        hit_count += 1;
+      }
+      if (result[1] === parseInt(result[0]) && parseInt(result[0]) >= 12) {
       hit_count += 1;
+      }
+    } else {
+      hit_count += result[4]
     }
-    if (result[1] === parseInt(result[0]) && parseInt(result[0]) >= 12) {
-      hit_count += 1;
-    }
+    
   }
-
   return {results, hit_count}
 }
 
@@ -529,7 +546,7 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
     resultArea.removeChild(resultArea.firstChild);
     document.getElementById('resultWords').innerText = '';
   }
-  const { inbound, defense, base_def, cap, promos, demos } = getStrikeInputs();
+  const { inbound, defense, base_def, cap, promos, demos, hyper_inbound, bm_inbound } = getStrikeInputs();
   let finalResult;
   let salvoResult;
   const totalInbound = Object.values(inbound).reduce(
@@ -539,7 +556,7 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
   const salvoDelta = totalInbound - totalDefense;
   const adjInbound = inboundAdjustments(inbound, salvoDelta, cap, promos - demos)
   if (totalDefense === 0) {
-    finalResult = strikeBaseAttack(adjInbound, base_def);
+    finalResult = strikeBaseAttack(adjInbound, base_def, hyper_inbound || bm_inbound);
   } else if (totalInbound <= totalDefense) {
     salvoResult = strikeDefSalvoAttack(adjInbound, defense);
     const closeInbound = {};
@@ -552,7 +569,7 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
         }
       }
     }
-    finalResult = strikeBaseAttack(closeInbound, base_def);
+    finalResult = strikeBaseAttack(closeInbound, base_def, bm_inbound);
   } else {
     const allOffensiveSalvos = [];
     for (const x of Object.keys(adjInbound)) {
@@ -586,23 +603,25 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
           undefendedSalvoObj[salvo[0]] = 1;
         }
       }
-    }
-    finalResult = strikeBaseAttack(undefendedSalvoObj, base_def);
+    } 
+    finalResult = strikeBaseAttack(undefendedSalvoObj, base_def, bm_inbound);
   }
-  const salvoHeader = document.createElement('p');
-  salvoHeader.innerText = 'Defensive Salvo Results:';
-  document.getElementById('resultArea').appendChild(salvoHeader);
   let successfulSalvo = 0;
-  for (const result of salvoResult) {
-    document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 'salvo'));
-    result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+  if (salvoResult) {
+    const salvoHeader = document.createElement('p');
+    salvoHeader.innerText = 'Defensive Salvo Results:';
+    document.getElementById('resultArea').appendChild(salvoHeader);
+    for (const result of salvoResult) {
+      document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+      result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+    }
   }
   const baseHeader = document.createElement('p');
   baseHeader.innerText = 'Final Results:';
   document.getElementById('resultArea').appendChild(baseHeader);
   let successfulFinal = 0;
   for (const result of finalResult.results) {
-    document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT'));
+    document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
     result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
   }
   document.getElementById('result_log').innerHTML += 'Missile Strike: ';
@@ -689,7 +708,19 @@ function subAttackResults() {
 
 document.getElementById('torpedoSubmit').addEventListener('click', () => {
   let [ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef] = subAttackResults();
-  const torp_hits = torp_rolls.filter(x => x >= targDef)
+  const torp_results = torp_rolls.filter(x => x >= targDef)
+  let torp_hits = torp_results.length
+  console.log(torp_hits);
+  for (const hit of torp_rolls) {
+    if (hit >= (targDef * 2)) {
+      console.log("double def");
+      torp_hits += 1;
+    }
+    if (hit === parseInt(Object.keys(sub_torps)[0]) && parseInt(Object.keys(sub_torps)[0]) >= 12) {
+      console.log("rolled max");
+      torp_hits += 1;
+    }     
+  }
   const asw_hits = ASW_attacks.filter(x => x >= subDef)
   const resultArea = document.getElementById('resultArea');
   while (resultArea.firstChild) {
@@ -701,7 +732,7 @@ document.getElementById('torpedoSubmit').addEventListener('click', () => {
   }
   resultArea.appendChild(createResults(sub_torps, torp_rolls, 'Torpedo Results'));
   const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. ${subFound ? `The sub was found (${ASW_rolls}) and ${asw_hits.length > 0 ? 'was destroyed' : 'survived'} (${ASW_attacks})` : `The sub was undetected (${ASW_rolls}).`}`
-  const torp_result = `${torp_hits.length === 0 ? 'The target survived.' : torp_hits.length === 1 ? 'The target took one hit' : `The target took ${torp_hits.length} hits`} (${torp_rolls}).`
+  const torp_result = `${torp_hits === 0 ? 'The target survived.' : torp_hits === 1 ? 'The target took one hit' : `The target took ${torp_hits} hits`} (${torp_rolls}).`
   document.getElementById('resultWords').innerText = `Torpedo Attack: ${torp_result} ${ASW_result}`;
   document.getElementById('result_log').innerHTML += `Torpedo Attack: ${torp_result} ${ASW_result}<br>`;
 }, false);
@@ -970,7 +1001,6 @@ function groundPromoDemo() {
   const att_mod = getAttackerModifiers();
   const def_mod = getDefenderModifiers();
   const advantage = att_mod + def_mod;
-  console.log(advantage);
   let adjustments = 0;
   if (advantage >= 5) {
     adjustments = grnd_abacus['5'][terrain_type]
@@ -1041,7 +1071,6 @@ document.getElementById('groundCombatSubmit').addEventListener('click', () => {
   }
   let [attk_dice, attk_rolls, hits] = conductGroundAttack();
   resultArea.appendChild(createResults(attk_dice, attk_rolls))
-  console.log(JSON.stringify(attk_dice), JSON.stringify(attk_dice).search("null"));
   if (JSON.stringify(attk_dice).search("null") !== -1 || JSON.stringify(attk_dice) === "{}") {
     document.getElementById('resultWords').innerHTML = 'Ground: No dice were rolled.';
     document.getElementById('result_log').innerHTML += 'Ground: No dice were rolled.<br>';
