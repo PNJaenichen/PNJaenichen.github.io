@@ -823,79 +823,106 @@ function furball() {
   const red_aircraft = getAircraft('red');
   for (const attacker of blue_aircraft) {
     if (attacker[1] === "0") {
-      blue_victories.push([0, ...attacker, 0]);
+      blue_victories.push(['blue', ...attacker, 0]);
     } else {
       const attk_roll = dieRoller(attacker[1]);
-      // return side (0 = Blue, 1 = Red), a/c number, attack value, def value, target, attack result
-      blue_victories.push([0, ...attacker, attk_roll]);
+      // return side, a/c number, attack value, def value, target, attack result
+      blue_victories.push(['blue', ...attacker, attk_roll]);
     }
   }
   for (const attacker of red_aircraft) {
     if (attacker[1] === "0") {
-      red_victories.push([1, ...attacker, 0]);
+      red_victories.push(['red', ...attacker, 0]);
     } else {
       const attk_roll = dieRoller(attacker[1]);
-      // return side (0 = Blue, 1 = Red), a/c number, attack value, def value, target, attack result
-      red_victories.push([1, ...attacker, attk_roll]);
+      // return side, a/c number, attack value, def value, target, attack result
+      red_victories.push(['red', ...attacker, attk_roll]);
     }
   }
-  return [blue_victories, red_victories]
+  return {blue_victories, red_victories}
 }
 
 document.getElementById('airToAirSubmit').addEventListener('click', () => {
-  const air_results = furball()
+  const {blue_victories, red_victories} = furball();
+  const blue_death = new Set();
+  const red_death = new Set();
+  let word_result = '';
   document.getElementById('resultWords').innerHTML = '';
   document.getElementById('resultArea').innerHTML = '';
-  document.getElementById('result_log').innerHTML += 'Air-to-Air: '
-  // side, a/c #, att val, def val, target, att res
-  // let first_one = [0,1,8,5,1,7];
-  // object = diceTotal, array = diceResults, dice_title=''
-  for (let i = 0; i < 2; i++) {
-    for (let j = 0; j < air_results[i].length; j++) {
-      if (air_results[i][j][5] !== 0) {
-        let asset_obj = {};
-        asset_obj[air_results[i][j][2].toString()] = 1;
-        let shooter = `${air_results[i][j][0] === 0 ? 'Blue' : 'Red'} A/C ${air_results[i][j][1]}`;
-        let defender = `${air_results[i][j][0] === 0 ? 'Red' : 'Blue'} A/C ${air_results[i][j][4]}`;
-        const theMergeDiv = document.createElement('div');
-        const shootDefDiv = document.createElement('div');
-        const shooterP = document.createElement('p');
-        const versesP = document.createElement('p');
-        const defenderP = document.createElement('p');
-        const mergeResult = document.createElement('p');
-        shooterP.innerText = shooter;
-        defenderP.innerText = defender;
-        versesP.innerText = 'vs';
-        let targ_def = 0;
-        if (i === 0) {
-          for (let k = 0; k < air_results[1].length; k++) {
-            if (air_results[1][k][1] === air_results[0][j][4]) {
-              targ_def = air_results[1][k][3];
-            } 
-          }
-        } else {
-          for (let k = 0; k < air_results[0].length; k++) {
-            if (air_results[0][k][1] === air_results[0][j][4]) {
-              targ_def = air_results[0][k][3];
-            }
-          }
-        }
-        mergeResult.innerText = air_results[i][j][5] >= targ_def ? 'HIT' : 'MISS';
-        shootDefDiv.appendChild(shooterP);
-        shootDefDiv.appendChild(versesP);
-        shootDefDiv.appendChild(defenderP);
-        theMergeDiv.appendChild(shootDefDiv);
-        theMergeDiv.appendChild(createResults(asset_obj, [air_results[i][j][5]]));
-        theMergeDiv.appendChild(mergeResult);
-        shootDefDiv.classList.add('AAFighters');
-        theMergeDiv.classList.add('mergeResult');
-        document.getElementById('resultArea').appendChild(theMergeDiv);
-        document.getElementById('resultWords').innerHTML += `${shooter} rolled ${air_results[i][j][5]} on ${JSON.stringify(asset_obj)} against ${defender} resulting in a ${air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS'}.<br>`
-        document.getElementById('result_log').innerHTML += `${shooter} rolled ${air_results[i][j][5]} on ${JSON.stringify(asset_obj)} against ${defender} resulting in a ${air_results[i][j][5] >= air_results[i][j][3] ? 'HIT' : 'MISS'}. `
+  for (let shooter of blue_victories) {
+    const theMergeDiv = document.createElement('div')
+    theMergeDiv.classList.add('mergeResult');
+    const shooterP = document.createElement('p');
+    shooterP.classList.add('AAFighters');
+    const defenderP = document.createElement('p');
+    defenderP.classList.add('AAFighters');
+    try {
+      const hit_or_miss = shooter[5] >= red_victories[shooter[4] - 1][3];
+      if (hit_or_miss) {
+        red_death.add(shooter[4])
       }
-    }      
+      shooterP.innerHTML = `Blue A/C ${shooter[1]}`
+      defenderP.innerHTML = `Red A/C ${shooter[4]}`
+      theMergeDiv.appendChild(createDefResult(shooter[2], shooter[5], red_victories[shooter[4] - 1][3], hit_or_miss, 0))
+      word_result += `Blue A/C ${shooter[1]} rolled ${shooter[5]} on d${shooter[2]} against Red A/C ${shooter[4]} resulting in a ${hit_or_miss ? 'hit' : 'miss'}. `;
+    }
+    catch(e) {
+      shooterP.innerHTML = `Blue A/C ${shooter[1]} had no target.`
+    }
+    theMergeDiv.insertBefore(shooterP, theMergeDiv.lastChild);
+    theMergeDiv.appendChild(defenderP);
+    document.getElementById('resultArea').appendChild(theMergeDiv);
+    
   }
-    document.getElementById('result_log').innerHTML += '<br>';
+  for (let shooter of red_victories) {
+    const theMergeDiv = document.createElement('div')
+    theMergeDiv.classList.add('mergeResult');
+    const shooterP = document.createElement('p');
+    shooterP.classList.add('AAFighters');
+    const defenderP = document.createElement('p');
+    defenderP.classList.add('AAFighters');
+    try {
+      const hit_or_miss = shooter[5] >= blue_victories[shooter[4] - 1][3];
+      if (hit_or_miss) {
+        blue_death.add(shooter[4])
+      }
+      shooterP.innerHTML = `Red A/C ${shooter[1]}`
+      defenderP.innerHTML = `Blue A/C ${shooter[4]}`
+      theMergeDiv.appendChild(createDefResult(shooter[2], shooter[5], blue_victories[shooter[4] - 1][3], hit_or_miss, 0))
+      word_result += ` Red A/C ${shooter[1]} rolled ${shooter[5]} on d${shooter[2]} against Blue A/C ${shooter[4]} resulting in a ${hit_or_miss ? 'hit' : 'miss'}. `;
+    } 
+    catch(e) {
+      shooterP.innerHTML = `Red A/C ${shooter[1]} had no target.`
+    }
+    theMergeDiv.insertBefore(shooterP, theMergeDiv.lastChild);
+    theMergeDiv.appendChild(defenderP);
+    document.getElementById('resultArea').appendChild(theMergeDiv);
+  }
+  let death_result = (blue_death.size === 0 && red_death.size === 0) ? 'BLUF: No aircraft destroyed' : 'BLUF - The following aircraft were destroyed: ';
+  let blueDeath_result = '';
+  let redDeath_result = '';
+  if (blue_death.size > 0) {
+    const set_array = Array.from(blue_death);
+    if (set_array.length === 1) {
+      blueDeath_result += `Blue ${set_array}`;
+    } else if (set_array.length === 2) {
+      blueDeath_result += `Blue ${set_array.join(' and ')}`
+    } else {
+      blueDeath_result += `Blue ${set_array.slice(0,-1).join(', ')} and ${set_array[-1]}`
+    }
+  }
+  if (red_death.size > 0) {
+    const set_array = Array.from(red_death);
+    if (set_array.length === 1) {
+      redDeath_result += `Red ${set_array}`;
+    } else if (set_array.length === 2) {
+      redDeath_result += `Red ${set_array.join(' and ')}`
+    } else {
+      redDeath_result += `Red ${set_array.slice(0,-1).join(', ')} and ${set_array[-1]}`
+    }
+  }
+  document.getElementById('resultWords').innerHTML = `${death_result}${blueDeath_result ? blueDeath_result : ''}${(blue_death.size > 0 && red_death.size > 0) ? ' and ' : ''}${redDeath_result ? redDeath_result : ''}.<br><br>${word_result}`;
+  document.getElementById('result_log').innerHTML += `Air-to-Air: ${word_result} <br>`;
 }, false);
 
 // SOF Direct Action Tool
@@ -917,7 +944,7 @@ function SOFDirectAction() {
     message =  "The attack was unsuccessful.";
     if (attack_roll >= parseInt(document.getElementById('sofDA_def').value)) {
       message =  "One hit was scored.";
-      if (attack_roll === parseInt(attack_die)) {
+      if (attack_roll >= parseInt(attack_die) * 2) {
         message =  "Two hits were scored!";
       } 
     }
@@ -986,14 +1013,18 @@ function getDefenderModifiers() {
 }
 
 const grnd_abacus = {
-  '5': {'open': 3, 'light': 2, 'urban': 1, 'durban': 1},
-  '4': {'open': 2, 'light': 1, 'urban': 1, 'durban': 0},
-  '3': {'open': 1, 'light': 1, 'urban': 0, 'durban': -1},
-  '2': {'open': 1, 'light': 0, 'urban': -1, 'durban': -1},
-  '1': {'open': 0, 'light': -1, 'urban': -1, 'durban': -2},
-  '0': {'open': -1, 'light': -2, 'urban': -2, 'durban': -3},
-  '-1/2': {'open': -1, 'light': -2, 'urban': -3, 'durban': -3},
-  '-3': {'open': -2, 'light': -3, 'urban': -4, 'durban': -4},
+  '7': {'open': 3, 'for/mtn': 3, 'urban': 3, 'durban': 2},
+  '6': {'open': 3, 'for/mtn': 2, 'urban': 2, 'durban': 2},
+  '5': {'open': 2, 'for/mtn': 2, 'urban': 2, 'durban': 1},
+  '4': {'open': 2, 'for/mtn': 2, 'urban': 1, 'durban': 0},
+  '3': {'open': 1, 'for/mtn': 1, 'urban': 1, 'durban': 0},
+  '2': {'open': 1, 'for/mtn': 0, 'urban': 0, 'durban': -1},
+  '1': {'open': 0, 'for/mtn': 0, 'urban': -1, 'durban': -1},
+  '0': {'open': -1, 'for/mtn': -1, 'urban': -1, 'durban': -2},
+  '-1': {'open': -1, 'for/mtn': -1, 'urban': -2, 'durban': -3},
+  '-2': {'open': -2, 'for/mtn': -2, 'urban': -3, 'durban': -3},
+  '-3': {'open': -3, 'for/mtn': -3, 'urban': -3, 'durban': -3},
+  '-4': {'open': -3, 'for/mtn': -3, 'urban': -4, 'durban': -4}
 }
 
 function groundPromoDemo() {
