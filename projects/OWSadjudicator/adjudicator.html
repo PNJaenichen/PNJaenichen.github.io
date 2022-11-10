@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-app-version="1.8.0">
   <head>
     <meta charset="utf-8">
     <meta name="description" content="Adjudication Tools for OWS">
@@ -57,8 +57,7 @@
             <h2>Theater and Local ISR</h2>
             <form id='theaterISR' action=''>
               <p id='theatherISRDesc'>
-                Utilize the following tool for adjudicating Theater and Local level ISR. This tool was created 
-                utilizing the OWS 1.8 ruleset.
+                Utilize the following tool for adjudicating Theater and Local level ISR.
               </p>
               <fieldset>
                 <label>ISR Value:</label>
@@ -88,8 +87,7 @@
           <div id='ASW_div' class="tabcontent tool_format">
             <h2>ASW</h2>
             <p>
-              Utilize the following tool for adjudicating ASW detections and/or attacks. This tool was created utilizing
-              the OWS 1.8 ruleset.
+              Utilize the following tool for adjudicating ASW detections and/or attacks.
             </p>
             <form id='ASW' action=''>
               <fieldset>
@@ -123,10 +121,9 @@
             <h2>Surface/Air Strikes</h2>
             <form id="surfaceStrike" action="">
               <p id="surfStrkDesc">
-                Utilize the following tool for adjudicated surface-to-surface and air-to-surface strikes. This
-                tool was created utizliing the OWS 1.8 ruleset.
+                Utilize the following tool for adjudicated surface-to-surface and air-to-surface strikes.
               </p>
-              <p>
+              <p class="warning">
                 NOTE: Hypersonic and Ballistic Missiles must be run as their own entries in order to work properly.
               </p>
               <fieldset>
@@ -219,8 +216,7 @@
             <h2>Torpedo Attack</h2>
             <form id="torpedoAttack" action="">
               <p id="torpAttDesc">
-                Utilize the following tool for adjudicated torpedo attacks. This
-                tool was created utilizing the OWS 1.8 ruleset.
+                Utilize the following tool for adjudicated torpedo attacks. 
               </p>
               <fieldset>
                 <label>ASW Assets:</label>
@@ -289,7 +285,6 @@
             <form id="samStrike" action="">
               <p id="samAttDesc">
                 Utilize the following tool for adjudicated Surface-To-Air Strikes.
-                This tool was created utilizing the OWS 1.8 ruleset.
               </p>
               <fieldset>
                 <label>SAM Assets:</label>
@@ -361,8 +356,7 @@
             <h2>Air-to-Air Combat</h2>
             <form id="airToAir" action="">
               <p>
-                Utilize the following tool for adjudicated Air-to-Air Combat. The tool was created
-                utilizing the OWS 1.8 ruleset. This tool provides simultaneous results but does not account for the individual 
+                Utilize the following tool for adjudicated Air-to-Air Combat. This tool provides simultaneous results but does not account for the individual 
                 steps of Air-to-Air combat.
               </p>
               <fieldset>
@@ -628,8 +622,7 @@
             <h2>SOF Direct Action</h2>
             <form id="sofDirectAction" action="">
               <p>
-                Utilize the following tool for adjudicated Air-to-Air Combat. The tool was created
-                utilizing the OWS 1.8 ruleset. 
+                Utilize the following tool for adjudicated Air-to-Air Combat. 
               </p>
               <label id="sofDA_detect_roll_label" for="sofDA_detect_roll">Detection Roll</label>
               <select id="sofDA_detect_roll">
@@ -668,8 +661,7 @@
             <h2>Ground Combat</h2>
             <form id="groundCombat" action="">
               <p>
-                Utilize the following tool for adjudicated Ground Combat. The tool was created 
-                utilizing the <span class="warning">OWS 1.7 ruleset</span>.
+                Utilize the following tool for adjudicated Ground Combat. 
               </p>
               <label id="grndCom_terr_label" for="grndCom_terr">Terrain Type</label>
               <select id="grndCom_terr">
@@ -679,8 +671,16 @@
                 <option value="durban">Dense Urban</option>
               </select>
               <br>
-              <label id="grndCom_att_dice_label" for="grndCom_att_dice">Attacker Dice Value:</label>
-              <select id="grndCom_att_dice">
+              <label id="grndCom_weather_label" for="grndCom_weather">Weather</label>
+              <select id="grndCom_weather">
+                <option value="clear">Clear</option>
+                <option value="light">Lt Rain / Lt Snow</option>
+                <option value="heavy">Storm</option>
+              </select>
+              <br>
+              <br>
+              <label id="grndCom_att1_dice_label" for="grndCom_att1_dice">Attacker Bn 1 Dice Value:</label>
+              <select id="grndCom_att1_dice">
                 <option value="">Attack Value</option>
                 <option value=4>D4</option>
                 <option value=6>D6</option>
@@ -691,11 +691,34 @@
                 <option value=20>D20</option>
               </select>
               <br>
-              <label id="grndCom_att_dice_tot_label" for="grndCom_att_dice_tot">Attacker Dice Total:</label>
-              <input id="grndCom_att_dice_tot" type="number" min=0 max=40>
+              <label id="grndCom_att2_dice_label" for="grndCom_att2_dice">Attacker Bn 2 Dice Value:</label>
+              <select id="grndCom_att2_dice">
+                <option value="">Attack Value</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
               <br>
-              <label id="grndCom_def_val_label" for="grndCom_def_val">Defender Value:</label>
-              <input id="grndCom_def_val" type="number" min=0 max=40>
+              <label id="grndCom_att3_dice_label" for="grndCom_att3_dice">Attacker Bn 3 Dice Value:</label>
+              <select id="grndCom_att3_dice">
+                <option value="">Attack Value</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
+              <br>
+              <br>
+              <label id="grndCom_def_val_label" for="grndCom_def_val">Defender Defense Value:</label>
+              <input id="grndCom_def_val" type="number" min=0 max=20>
+              <br>
               <br>
               <fieldset>
                 <label>Attacker Modifiers</label>
@@ -712,16 +735,22 @@
                 <input id="grndCom_brg_tact" type="number" min=0 max=40>
                 <label id="grndCom_troop_quality_label" for="grndCom_troop_quality">Troop Quality:</label>
                 <input id="grndCom_troop_quality" type="number"  min=-40 max=40>
+                <label id="grndCom_att_disrupted_label" for="grndCom_att_disrupted">Disrupted C2 / PNT</label>
+                <input id="grndCom_att_disrupted" type="number" min=0 max=40>
                 <br>
                 <label><input id="grndCom_att_defender" type="checkbox">Defender</label>
                 <label><input id="grndCom_att_main_effort" type="checkbox">Main Effort</label>
                 <label><input id="grndCom_att_SIGINTEMSO" type="checkbox">SIGINT/EMSO</label>
-                <label><input id="grndCom_att_disruptC2" type="checkbox">Disrupted C2</label>
+                <label><input id="grndCom_att_tankvsinfOpen" type="checkbox">Tank vs Lt Inf in the Open</label>
+                <label><input id="grndCom_att_infvstankNotOpen" type="checkbox">Lt Inf vs Tank not in the Open</label>
+                <label><input id="grndCom_att_SOFenabled" type="checkbox">SOF Enabled</label>
                 <label><input id="grndCom_att_suppress" type="checkbox">Suppressed</label>
                 <label><input id="grndCom_att_rsoi" type="checkbox">In RSO&I</label>
-                <label><input id="grndCom_att_rivCross" type="checkbox">River Crossing</label>
-                <label><input id="grndCom_att_airAslt" type="checkbox">Airborne Assault</label>
-                <label><input id="grndCom_att_ampAslt" type="checkbox">Amphibious Assault</label>
+                <label><input id="grndCom_att_extended" type="checkbox">Extended Supply</label>
+                <label><input id="grndCom_att_iso" type="checkbox">Isolated (out of supply)</label>
+                <label><input id="grndCom_att_assault" type="checkbox">River / Abn / Amphib Assault</label>
+                <label><input id="grndCom_att_crowded" type="checkbox">Crowded Attack</label>
+                <label><input id="grndCom_att_overcrowd" type="checkbox">Over-Crowded Attack</label>
               </fieldset>
               <fieldset>
                 <label>Defender Modifiers</label>
@@ -731,11 +760,14 @@
                 <label id="grndCom_def_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
                 <input id="grndCom_def_FS" type="number" min=0 max=40>
                 <br>
+                <label><input id="grndCom_def_defense" type="checkbox">Defense</label>
                 <label><input id="grndCom_def_fortified" type="checkbox">Fortified</label>
+                <label><input id="grndCom_def_actPassCM" type="checkbox">Active/Passive CM</label>
                 <label><input id="grndCom_def_suppress" type="checkbox">Suppressed</label>
                 <label><input id="grndCom_def_rsoi" type="checkbox">In RSO&I</label>
-                <label><input id="grndCom_def_airAslt" type="checkbox">Airborne Assault</label>
-                <label><input id="grndCom_def_ampAslt" type="checkbox">Amphibious Assault</label>
+                <label><input id="grndCom_def_assault" type="checkbox">River / Abn / Amphib Assault</label>
+                <label><input id="grndCom_def_crowded" type="checkbox">Crowded Attack</label>
+                <label><input id="grndCom_def_overcrowd" type="checkbox">Over-Crowded Attack</label>
               </fieldset>
               <br>
               <button id="groundCombatSubmit" type="button">Adjudicate</button>

@@ -975,28 +975,31 @@ document.getElementById('sofDirectActionSubmit').addEventListener('click', () =>
 function getAttackerModifiers() {
   let att_modi = 0
   const att_axis = Array.from(document.getElementsByName('att_ax')).find(radio => radio.checked);
-  switch (att_axis.value) {
-    case 'ax2':
-      att_modi += 1
-      break;
-    case 'ax3':
-      att_modi += 2
-      break;
-    default:
-      break;
+  if (att_axis.value !== 'ax1') {
+    att_axis.value === 'ax2' ? att_modi += 1 : att_modi += 2;
+  }
+  const terrain_type = document.getElementById('grndCom_weather').value;
+  if (terrain_type !== 'clear') {
+    terrain_type === 'light' ? att_modi -= 1 : att_modi -= 2;
   }
   att_modi = document.getElementById('grndCom_att_CAS').value ? att_modi += parseInt(document.getElementById('grndCom_att_CAS').value) : att_modi;
   att_modi = document.getElementById('grndCom_att_FS').value ? att_modi += parseInt(document.getElementById('grndCom_att_FS').value) : att_modi;
   att_modi = document.getElementById('grndCom_troop_quality').value ? att_modi += parseInt(document.getElementById('grndCom_troop_quality').value) : att_modi;
+  att_modi = document.getElementById('grndCom_att_disrupted').value ? att_modi -= parseInt(document.getElementById('grndCom_att_disrupted').value) : att_modi;
   att_modi = document.getElementById('grndCom_att_defender').checked ? att_modi += 2 : att_modi;
   att_modi = document.getElementById('grndCom_att_main_effort').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_SIGINTEMSO').checked ? att_modi += 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_disruptC2').checked ? att_modi -= 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_tankvsinfOpen').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_infvstankNotOpen').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_SOFenabled').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_overcrowd').checked ? att_modi -= 2 : att_modi;
   att_modi = document.getElementById('grndCom_att_suppress').checked ? att_modi -= 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_rsoi').checked ? att_modi -= 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_rivCross').checked ? att_modi -= 2 : att_modi;
-  att_modi = document.getElementById('grndCom_att_airAslt').checked ? att_modi -= 2 : att_modi;
-  att_modi = document.getElementById('grndCom_att_ampAslt').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_extended').checked ? att_modi -= 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_iso').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_assault').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_crowded').checked ? att_modi -= 1 : att_modi;
+  console.log(`The attacker's support is ${att_modi}.`)
   return att_modi
 }
 
@@ -1004,11 +1007,15 @@ function getDefenderModifiers() {
   let def_modi = 0
   def_modi = document.getElementById('grndCom_def_CAS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_CAS').value) : def_modi;
   def_modi = document.getElementById('grndCom_def_FS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_FS').value) : def_modi;
-  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi -= 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_defense').checked ? def_modi -= 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi -= 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_actPassCM').checked ? def_modi -= 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_crowded').checked ? def_modi += 1 : def_modi;
   def_modi = document.getElementById('grndCom_def_suppress').checked ? def_modi += 1 : def_modi;
   def_modi = document.getElementById('grndCom_def_rsoi').checked ? def_modi += 1 : def_modi;
-  def_modi = document.getElementById('grndCom_def_airAslt').checked ? def_modi += 2 : def_modi;
-  def_modi = document.getElementById('grndCom_def_ampAslt').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_assault').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_overcrowd').checked ? def_modi += 2 : def_modi;
+  console.log(`The defender's support is ${def_modi}.`)
   return def_modi
 }
 
@@ -1032,13 +1039,20 @@ function groundPromoDemo() {
   const att_mod = getAttackerModifiers();
   const def_mod = getDefenderModifiers();
   const advantage = att_mod + def_mod;
+  console.log(`The final support is ${advantage} in ${terrain_type} terrain.`)
   let adjustments = 0;
-  if (advantage >= 5) {
-    adjustments = grnd_abacus['5'][terrain_type]
-  } else if (advantage <= -3) {
-    adjustments = grnd_abacus['-3'][terrain_type]
+  if (advantage >= 7) {
+    adjustments = grnd_abacus['7'][terrain_type]
+  } else if (advantage <= -4) {
+    adjustments = grnd_abacus['-4'][terrain_type]
   } else {
     switch (advantage) {
+      case 6:
+        adjustments = grnd_abacus['6'][terrain_type]
+        break;
+      case 5:
+        adjustments = grnd_abacus['5'][terrain_type]
+        break;
       case 4:
         adjustments = grnd_abacus['4'][terrain_type]
         break;
@@ -1052,14 +1066,20 @@ function groundPromoDemo() {
         adjustments = grnd_abacus['1'][terrain_type]
         break;
       case -1:
+        adjustments = grnd_abacus['-1'][terrain_type]
+        break;
       case -2:
-        adjustments = grnd_abacus['-1/2'][terrain_type]
+        adjustments = grnd_abacus['-2'][terrain_type]
+        break;
+      case -3:
+        adjustments = grnd_abacus['-3'][terrain_type]
         break;
       default:
         adjustments = grnd_abacus['0'][terrain_type]
         break;
     }
   }
+  console.log(`This accounts for a ${adjustments} adjustment on the abacus.`)
   return adjustments
 }
 
@@ -1068,9 +1088,15 @@ function conductGroundAttack() {
   let adj = groundPromoDemo();
   const brg_tact = document.getElementById('grndCom_brg_tact').value ? parseInt(document.getElementById('grndCom_brg_tact').value) : 0;
   const defense = document.getElementById('grndCom_def_val').value ? parseInt(document.getElementById('grndCom_def_val').value) : 0;
-  const attk_val = document.getElementById('grndCom_att_dice').value;
-  const attk_tot = parseInt(document.getElementById('grndCom_att_dice_tot').value);
-  attk_dice[attk_val] = attk_tot;
+  for (let i = 1; i <= 3; i++) {
+    const attk_val = document.getElementById(`grndCom_att${i}_dice`).value;
+    if (attk_dice[attk_val]) {
+      attk_dice[attk_val] += 1;
+    } else {
+      attk_dice[attk_val] = 1;
+    }
+  }
+  console.log(`The attacker's initial dice are ${JSON.stringify(attk_dice)}.`)
   if (adj > 0) {
     for (let i = 0; i < adj; i++) {
       promoteAll(attk_dice); 
@@ -1086,12 +1112,14 @@ function conductGroundAttack() {
       promoteOne(attk_dice)
     }
   }
+  console.log(`The attacker's modified dice are ${JSON.stringify(attk_dice)}.`)
   let attk_rolls = []
   for (const [key, value] of Object.entries(attk_dice)) {
     for (let i = 0; i < value; i++) {
       attk_rolls.push(dieRoller(key))
     }
   }
+  console.log(`The dice rolls are ${attk_rolls}`)
   return [attk_dice, attk_rolls, attk_rolls.filter(x => x >= defense)]
 }
 
