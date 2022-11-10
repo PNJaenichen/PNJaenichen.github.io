@@ -1090,10 +1090,12 @@ function conductGroundAttack() {
   const defense = document.getElementById('grndCom_def_val').value ? parseInt(document.getElementById('grndCom_def_val').value) : 0;
   for (let i = 1; i <= 3; i++) {
     const attk_val = document.getElementById(`grndCom_att${i}_dice`).value;
-    if (attk_dice[attk_val]) {
-      attk_dice[attk_val] += 1;
-    } else {
-      attk_dice[attk_val] = 1;
+    if (attk_val) {
+      if (attk_dice[attk_val]) {
+        attk_dice[attk_val] += 1;
+      } else {
+        attk_dice[attk_val] = 1;
+      }
     }
   }
   console.log(`The attacker's initial dice are ${JSON.stringify(attk_dice)}.`)
