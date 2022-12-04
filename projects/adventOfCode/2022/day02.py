@@ -10,7 +10,7 @@ ply_winnings = {'C': 'X', 'A': 'Y', 'B': 'Z'}
 draw = {'A': 'X', 'B': 'Y', 'C': 'Z' }
 play_total = 0
 
-with open('PNJaenichen.github.io\\projects\\adventOfCode\\2022\\day2input.txt') as bigList:
+with open('PNJaenichen.github.io\\projects\\adventOfCode\\2022\\day02input.txt') as bigList:
   games = bigList.read()
 
 for line in games.splitlines():

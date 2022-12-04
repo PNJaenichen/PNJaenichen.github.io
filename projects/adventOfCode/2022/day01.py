@@ -23,7 +23,7 @@ def splitElves(allCals):
   replaceLines = allCals.replace("\n\n", ";").split(";")
   return list(map(lambda x: x.splitlines(), replaceLines))
 
-with open('PNJaenichen.github.io\\projects\\adventOfCode\\2022\\day1input.txt') as bigList:
+with open('PNJaenichen.github.io\\projects\\adventOfCode\\2022\\day01input.txt') as bigList:
   elves = splitElves(bigList.read())
 
 # elves = splitElves(testInput)
