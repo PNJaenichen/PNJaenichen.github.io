@@ -273,59 +273,53 @@ footer {
   font-size: x-small;
 }
 
-/* Diamond for possible defense shield */
-#diamond-cut {
-  border-style:solid;
-  border-color:transparent transparent blue transparent;
-  border-width:0 25px 25px 25px;
-  height:0;
-  width:50px;
-  position:relative;
-  margin:20px 0 50px 0;
-  }
-
-  #diamond-cut:after {
-  content:"";
-  position:absolute;
-  top:25px;
-  left:-25px;
-  width:0;
-  height:0;
-  border-style:solid;
-  border-color:blue transparent transparent transparent;
-  border-width:70px 50px 0 50px;
-  }
-
   /* shield for possible defense shield */
-  .gg-shield {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    transform: scale(var(--ggs,1));
-    width: 14px;
-    height: 4px;
-    background: currentColor;
-    border-radius: 100px;
-    margin-top: -6px
+.gg-shield {
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 3px;
+  border: 1px solid black;
+  border-radius: 50% 50% 50% 50% / 12% 12% 88% 88%;
 }
-.gg-shield::after,
-.gg-shield::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    border-radius: 3px;
-    width: 8px;
-    height: 16px;
-    border: 2px solid
+
+.def-result {
+  display: flex;
+  justify-content: space-evenly;
+  width: max-content;
 }
-.gg-shield::before {
-    border-bottom-left-radius: 40px;
-    border-right: 0;
-    left: 0
+
+.defsalvo {
+  color: white;
+  background-color: gray;
 }
-.gg-shield::after {
-    border-bottom-right-radius: 40px;
-    border-left: 0;
-    right: 0
+
+.defbase {
+  color: white;
+  background-color: red;
+}
+
+.hit-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hit_or_miss{
+  text-align: center;
+  height: 25px;
+  width: 25px;
+  font-size: 20px;
+}
+
+.miss {
+  color: red;
+}
+
+.hit { 
+  color: green;
 }
