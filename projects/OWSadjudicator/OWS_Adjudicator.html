@@ -333,9 +333,9 @@ footer {
 .hit { 
   color: green;
 }
-    </style>>
+    </style>
   </head>
-  <body>
+  <body> 
     <header>
       <nav></nav>
     </header>
@@ -512,7 +512,7 @@ footer {
                 <label id="def_two_label" for="def_two">Weapon Type 2</label>
                 <input id="def_two" type="number" min=0 max=20>
                 <label id="def_two_tot_label" for="def_two_total">Total</label>
-                <input id="v" type="number" min=0 max=40>
+                <input id="def_two_total" type="number" min=0 max=40>
                 <label><input id="def_two_bmd" type="checkbox">BMD</label>
                 <br>
                 <label id="def_three_label" for="def_three">Weapon Type 3</label>
@@ -1660,13 +1660,14 @@ function strikeDefSalvoAttack(inbound, defense) {
 
 function inboundAdjustments(inbound, defSalvoDelta, cap, totPromDemo) {
   const adjInbound = {...inbound}
-  if (defSalvoDelta > 0) {
-    for (let i = 0; i < defSalvoDelta; i++) {
+  if (defSalvoDelta < 0) {
+    for (let i = defSalvoDelta; i < 0; i++) {
       demoteOne(adjInbound)
     }
   }
   for (let i = 0; i < cap; i++) {
     demoteOne(adjInbound)
+
   }
   if (totPromDemo > 0) {
     for (let i = 0; i < totPromDemo; i++) {
@@ -1711,13 +1712,17 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
     }
     finalResult = strikeBaseAttack(closeInbound, base_def, bm_inbound);
   } else {
+    console.log(adjInbound)
     const allOffensiveSalvos = [];
     for (const x of Object.keys(adjInbound)) {
-      for (let i = 0; i < adjInbound[x]; i++) 
-      allOffensiveSalvos.push(x);
+      for (let i = 0; i < adjInbound[x]; i++) {
+        allOffensiveSalvos.push(x);
+      } 
     }
-    const defendedSalvoList = allOffensiveSalvos.reverse().slice(0, salvoDelta);
-    const undefendedSalvoList = allOffensiveSalvos.reverse().slice(salvoDelta);
+    console.log(allOffensiveSalvos, salvoDelta)
+    const defendedSalvoList = allOffensiveSalvos.reverse().slice(0, totalDefense);
+    const undefendedSalvoList = allOffensiveSalvos.slice(totalDefense);
+    console.log(defendedSalvoList, undefendedSalvoList)
     const defendedSalvoObj = {};
     const undefendedSalvoObj = {};
     defendedSalvoList.forEach(x => {
@@ -2139,6 +2144,7 @@ function getAttackerModifiers() {
   att_modi = document.getElementById('grndCom_att_iso').checked ? att_modi -= 2 : att_modi;
   att_modi = document.getElementById('grndCom_att_assault').checked ? att_modi -= 2 : att_modi;
   att_modi = document.getElementById('grndCom_att_crowded').checked ? att_modi -= 1 : att_modi;
+  console.log(`The attacker's support is ${att_modi}.`)
   return att_modi
 }
 
@@ -2154,6 +2160,7 @@ function getDefenderModifiers() {
   def_modi = document.getElementById('grndCom_def_rsoi').checked ? def_modi += 1 : def_modi;
   def_modi = document.getElementById('grndCom_def_assault').checked ? def_modi += 2 : def_modi;
   def_modi = document.getElementById('grndCom_def_overcrowd').checked ? def_modi += 2 : def_modi;
+  console.log(`The defender's support is ${def_modi}.`)
   return def_modi
 }
 
@@ -2177,6 +2184,7 @@ function groundPromoDemo() {
   const att_mod = getAttackerModifiers();
   const def_mod = getDefenderModifiers();
   const advantage = att_mod + def_mod;
+  console.log(`The final support is ${advantage} in ${terrain_type} terrain.`)
   let adjustments = 0;
   if (advantage >= 7) {
     adjustments = grnd_abacus['7'][terrain_type]
@@ -2216,6 +2224,7 @@ function groundPromoDemo() {
         break;
     }
   }
+  console.log(`This accounts for a ${adjustments} adjustment on the abacus.`)
   return adjustments
 }
 
@@ -2234,6 +2243,7 @@ function conductGroundAttack() {
       }
     }
   }
+  console.log(`The attacker's initial dice are ${JSON.stringify(attk_dice)}.`)
   if (adj > 0) {
     for (let i = 0; i < adj; i++) {
       promoteAll(attk_dice); 
@@ -2249,12 +2259,14 @@ function conductGroundAttack() {
       promoteOne(attk_dice)
     }
   }
+  console.log(`The attacker's modified dice are ${JSON.stringify(attk_dice)}.`)
   let attk_rolls = []
   for (const [key, value] of Object.entries(attk_dice)) {
     for (let i = 0; i < value; i++) {
       attk_rolls.push(dieRoller(key))
     }
   }
+  console.log(`The dice rolls are ${attk_rolls}`)
   return [attk_dice, attk_rolls, attk_rolls.filter(x => x >= defense)]
 }
 
@@ -2269,8 +2281,8 @@ document.getElementById('groundCombatSubmit').addEventListener('click', () => {
     document.getElementById('resultWords').innerHTML = 'Ground: No dice were rolled.';
     document.getElementById('result_log').innerHTML += 'Ground: No dice were rolled.<br>';
   } else {
-    document.getElementById('resultWords').innerHTML = `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit.' : `${hits.length} hits (${hits}).` }`;
-    document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit.' : `${hits.length} hits (${hits}).` }<br>`;
+    document.getElementById('resultWords').innerHTML = `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
+    document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }<br>`;
   }
 }, false);
   </script>

@@ -520,13 +520,14 @@ function strikeDefSalvoAttack(inbound, defense) {
 
 function inboundAdjustments(inbound, defSalvoDelta, cap, totPromDemo) {
   const adjInbound = {...inbound}
-  if (defSalvoDelta > 0) {
-    for (let i = 0; i < defSalvoDelta; i++) {
+  if (defSalvoDelta < 0) {
+    for (let i = defSalvoDelta; i < 0; i++) {
       demoteOne(adjInbound)
     }
   }
   for (let i = 0; i < cap; i++) {
     demoteOne(adjInbound)
+
   }
   if (totPromDemo > 0) {
     for (let i = 0; i < totPromDemo; i++) {
@@ -571,13 +572,17 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
     }
     finalResult = strikeBaseAttack(closeInbound, base_def, bm_inbound);
   } else {
+    console.log(adjInbound)
     const allOffensiveSalvos = [];
     for (const x of Object.keys(adjInbound)) {
-      for (let i = 0; i < adjInbound[x]; i++) 
-      allOffensiveSalvos.push(x);
+      for (let i = 0; i < adjInbound[x]; i++) {
+        allOffensiveSalvos.push(x);
+      } 
     }
-    const defendedSalvoList = allOffensiveSalvos.reverse().slice(0, salvoDelta);
-    const undefendedSalvoList = allOffensiveSalvos.reverse().slice(salvoDelta);
+    console.log(allOffensiveSalvos, salvoDelta)
+    const defendedSalvoList = allOffensiveSalvos.reverse().slice(0, totalDefense);
+    const undefendedSalvoList = allOffensiveSalvos.slice(totalDefense);
+    console.log(defendedSalvoList, undefendedSalvoList)
     const defendedSalvoObj = {};
     const undefendedSalvoObj = {};
     defendedSalvoList.forEach(x => {
