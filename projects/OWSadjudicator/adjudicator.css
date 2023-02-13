@@ -323,3 +323,8 @@ footer {
 .hit { 
   color: green;
 }
+
+.radioWeapon {
+  display: inline-flex;
+  align-items: center;
+}
