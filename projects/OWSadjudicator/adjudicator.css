@@ -323,3 +323,17 @@ footer {
 .hit { 
   color: green;
 }
+
+.radioWeapon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nice_field {
+  display: flex;
+  flex-direction: column;
+}
+
+ul li {
+  list-style: none;
+}

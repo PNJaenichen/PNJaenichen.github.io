@@ -1,0 +1,2596 @@
+<!DOCTYPE html>
+<html lang="en" data-app-version="1.8">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Adjudication Tools for OWS">
+    <meta name="author" content="Nate 'Kiwi' Jaenichen">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWS Adjudication Aid</title>
+    <link rel="icon" href="data:;base64,=">
+    <style>
+/* CSS Reset from Piccalilli at https://piccalil.li/a-modern-css-reset */
+/* Box sizing rules */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+/* remove list styles on ul, ol elements with a list role, which suggests 
+default styling will be removed */
+ul[role='list'], ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* <a> elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img, picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions, and smooth scroll for people that prefer
+not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Tabbing, code from https://www.w3schools.com/howto/howto_js_tabs.asp */
+ 
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+}
+
+#user_area {
+  width: 100%;
+  display: flex;
+}
+
+#tool_section {
+  width: 70%;
+}
+
+#result_section {
+  width: 30%;
+  margin: 10px;
+}
+
+.tool_format {
+  width: 100%;
+}
+
+.warning {
+  color: red;
+}
+
+/* clip-path border code from https://stackoverflow.com/questions/44331039/css-how-to-add-a-border-color-to-a-css-shape */
+
+.dice4 {
+  clip-path: polygon(50% 5%, 5% 95%, 95% 95%);
+  background-color: black;
+  color: lightgrey;
+}
+.dice4 p {
+  line-height: 60px;
+}
+
+.dice6 {
+  clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice6:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: red;
+  clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice8 {
+  clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%);
+  background: black;
+  color: black;
+  position: relative;
+}
+.dice8:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: yellow;
+  clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+ 
+.dice10 {
+  clip-path: polygon(78% 0%, 100% 50%, 78% 100%, 22% 100%, 0% 50%, 22% 0%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice10:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: green;
+  clip-path: polygon(80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%, 20% 0%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice12 {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice12:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: blue;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice16 {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  background: black;
+  color: lightgrey;
+  position: relative;
+}
+.dice16:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: purple;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.dice20 {
+  clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+  background: black;
+  color: black;
+  position: relative;
+}
+.dice20:before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: lightgrey;
+  clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.die {
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 3px;
+}
+
+.die p {
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+
+.dice_area {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mergeResult {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 10px;
+}
+
+.AAFighters {
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  font-size: x-small;
+}
+
+  /* shield for possible defense shield */
+.gg-shield {
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 3px;
+  border: 1px solid black;
+  border-radius: 50% 50% 50% 50% / 12% 12% 88% 88%;
+}
+
+.def-result {
+  display: flex;
+  justify-content: space-evenly;
+  width: max-content;
+}
+
+.defsalvo {
+  color: white;
+  background-color: gray;
+}
+
+.defbase {
+  color: white;
+  background-color: red;
+}
+
+.hit-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hit_or_miss{
+  text-align: center;
+  height: 25px;
+  width: 25px;
+  font-size: 20px;
+}
+
+.miss {
+  color: red;
+}
+
+.hit { 
+  color: green;
+}
+
+.radioWeapon {
+  display: inline-flex;
+  align-items: center;
+}
+    </style>
+  </head>
+  <body> 
+    <header>
+      <nav></nav>
+    </header>
+    <main>
+      <h1>OWS Adjudication Aid</h1>
+      <p>Unless otherwise noted, all tools were created utilizing the OWS 1.8 ruleset.</p>
+      <div class='tab'>
+        <button class="tablinks" onclick="openTool(event, 'general_roller_div')" id="defaultOpen">General Dice Roller</button>
+        <button class="tablinks" onclick="openTool(event, 'theater_ISR_div')">Theater and Local ISR</button>
+        <button class="tablinks" onclick="openTool(event, 'ASW_div')">ASW</button>
+        <button class="tablinks" onclick="openTool(event, 'Strike_div')">Surface/Air Strikes</button>
+        <button class="tablinks" onclick="openTool(event, 'torpedoAttack_div')">Torpedo Attack</button>
+        <button class="tablinks" onclick="openTool(event, 'surfToAir_div')">Surface-to-Air Attack</button>
+        <button class="tablinks" onclick="openTool(event, 'airToAir_div')">Air-to-Air Combat</button>
+        <button class="tablinks" onclick="openTool(event, 'sofDirectAction_div')">SOF Direct Action</button>
+        <button class="tablinks" onclick="openTool(event, 'groundCombat_div')">Ground Combat</button>
+      </div>
+      <div id='user_area'>
+        <div id='tool_section'>
+          <div id="general_roller_div" class="tabcontent tool_format">
+            <h2>General Dice Roller</h2>
+            <form id='general_roller' action=''>
+              <p id='general_roller_desc'>
+                Utilize the following tool for conducting any general dice rolls.
+              </p>
+              <fieldset>
+                <label>Die One Value:</label>
+                <select id="general_value_one">
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="gen_total_label" for="gen_total_one">Number of Dice:</label>
+                <input id="gen_total_one" type="number" min=1 max=40>
+                <br>
+                <label>Die Two Value:</label>
+                <select id="general_value_two">
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="gen_total_label" for="gen_total_two">Number of Dice:</label>
+                <input id="gen_total_two" type="number" min=1 max=40>
+                <br>
+                <label>Die Three Value:</label>
+                <select id="general_value_three">
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="gen_total_label" for="gen_total_three">Number of Dice:</label>
+                <input id="gen_total_three" type="number" min=1 max=40>
+                <br>
+              </fieldset>
+              <button id="generalSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+          <div id="theater_ISR_div" class="tabcontent tool_format">
+            <h2>Theater and Local ISR</h2>
+            <form id='theaterISR' action=''>
+              <p id='theatherISRDesc'>
+                Utilize the following tool for adjudicating Theater and Local level ISR.
+              </p>
+              <fieldset>
+                <label>ISR Value:</label>
+                <select id="isr_value">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id='isr_value_num_label' for='isr_value_num'># of Assets:</label>
+                <input id="isr_value_num" type="number" min=0 max=40>
+                <br>
+                <label id="isr_detect_label" for="isr_detect">Detection Value</label>
+                <input id="isr_detect" type="number" min=0 max=20>
+                <br>
+                <label><input id="isr_SIGINT_EMSO" type="checkbox">SIGINT/EMSO</label>
+                <label><input id="isr_countermeasures" type="checkbox">Active/Passive CMs</label>
+                <label><input id="isr_combined" type="checkbox">Combine Assets</label>
+              </fieldset>
+            <button id="isrSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+          <div id='ASW_div' class="tabcontent tool_format">
+            <h2>ASW</h2>
+            <p>
+              Utilize the following tool for adjudicating ASW detections and/or attacks.
+            </p>
+            <form id='ASW' action=''>
+              <fieldset>
+                <label>ASW Value:</label>
+                <select id="asw_value">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id='asw_value_num_label' for='asw_value_num'># of Assets:</label>
+                <input id="asw_value_num" type="number" min=0 max=40>
+                <br>
+                <label id="asw_detect_label" for="asw_detect">Defense/Detection Value</label>
+                <input id="asw_detect" type="number" min=0 max=20>
+                <br>
+                <label><input id="asw_littoral" type="checkbox">Littoral Waters</label>
+                <label><input id="asw_runningSilent" type="checkbox">Running Silent</label>
+                <label><input id="asw_cavitation" type="checkbox">Cavitation</label>
+                <label><input id="asw_multiAssets" type="checkbox">Multiple ASW Assets</label>
+                <br>
+              </fieldset>
+              <button id="aswSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+          <div id="Strike_div" class="tabcontent tool_format">
+            <h2>Surface/Air Strikes</h2>
+            <form id="surfaceStrike" action="">
+              <p id="surfStrkDesc">
+                Utilize the following tool for adjudicated surface-to-surface and air-to-surface strikes.
+              </p>
+              <fieldset>
+                <label>Total Inbound Weapons:</label>
+                <br>
+                  <label id="inbound_one_label" for="inbound_one">Weapon Type 1</label>
+                  <select id="inbound_one">
+                    <option value="">Die Value</option>
+                    <option value=4>D4</option>
+                    <option value=6>D6</option>
+                    <option value=8>D8</option>
+                    <option value=10>D10</option>
+                    <option value=12>D12</option>
+                    <option value=16>D16</option>
+                    <option value=20>D20</option>
+                  </select>
+                  <label id="inbnd_one_tot_label" for="inbound_one_total">Total</label>
+                  <input id="inbound_one_total" type="number" min=0 max=40>
+                  <div id="inbound_one_type" class="radioWeapon">
+                    <input type="radio" id="inbound_one_other" name="inbound_one_type" value="other" checked>
+                    <label for="inbound_one_other">Other</label><br>
+                    <input type="radio" id="inbound_one_ballistic" name="inbound_one_type" value="ballistic">
+                    <label for="inbound_one_ballistic">Ballistic</label><br>
+                    <input type="radio" id="inbound_one_hyper" name="inbound_one_type" value="hyper">
+                    <label for="inbound_one_hyper">Hypersonic</label> 
+                  </div>
+                  <br>
+                  <label id="inbound_two_label" for="inbound_two">Weapon Type 2</label>
+                  <select id="inbound_two">
+                    <option value="">Die Value</option>
+                    <option value=4>D4</option>
+                    <option value=6>D6</option>
+                    <option value=8>D8</option>
+                    <option value=10>D10</option>
+                    <option value=12>D12</option>
+                    <option value=16>D16</option>
+                    <option value=20>D20</option>
+                  </select>
+                  <label id="inbnd_two_tot_label" for="inbound_two_total">Total</label>
+                  <input id="inbound_two_total" type="number" min=0 max=40>
+                  <div id="inbound_two_type" class="radioWeapon">
+                    <input type="radio" id="inbound_two_other" name="inbound_two_type" value="other" checked>
+                    <label for="inbound_two_other">Other</label><br>
+                    <input type="radio" id="inbound_two_ballistic" name="inbound_two_type" value="ballistic">
+                    <label for="inbound_two_ballistic">Ballistic</label><br>
+                    <input type="radio" id="inbound_two_hyper" name="inbound_two_type" value="hyper">
+                    <label for="inbound_two_hyper">Hypersonic</label> 
+                  </div>
+                  <br>
+                  <label id="inbound_three_label" for="inbound_three">Weapon Type 3</label>
+                  <select id="inbound_three">
+                    <option value="">Die Value</option>
+                    <option value=4>D4</option>
+                    <option value=6>D6</option>
+                    <option value=8>D8</option>
+                    <option value=10>D10</option>
+                    <option value=12>D12</option>
+                    <option value=16>D16</option>
+                    <option value=20>D20</option>
+                  </select>
+                  <label id="inbnd_three_tot_label" for="inbound_three_total">Total</label>
+                  <input id="inbound_three_total" type="number" min=0 max=40>
+                  <div id="inbound_three_type" class="radioWeapon">
+                    <input type="radio" id="inbound_three_other" name="inbound_three_type" value="other" checked>
+                    <label for="inbound_three_other">Other</label><br>
+                    <input type="radio" id="inbound_three_ballistic" name="inbound_three_type" value="ballistic">
+                    <label for="inbound_three_ballistic">Ballistic</label><br>
+                    <input type="radio" id="inbound_three_hyper" name="inbound_three_type" value="hyper">
+                    <label for="inbound_three_hyper">Hypersonic</label> 
+                  </div>
+                  <br>
+              </fieldset>
+              <fieldset>
+                <label>Total Defensive Missiles:</label>
+                <br>
+                <label id="def_one_label" for="def_one">Weapon Type 1</label>
+                <input id="def_one" type="number" min=0 max=20>
+                <label id="def_one_tot_label" for="def_one_total">Total</label>
+                <input id="def_one_total" type="number" min=0 max=40>
+                <label><input id="def_one_bmd" type="checkbox">BMD</label>
+                <br>
+                <label id="def_two_label" for="def_two">Weapon Type 2</label>
+                <input id="def_two" type="number" min=0 max=20>
+                <label id="def_two_tot_label" for="def_two_total">Total</label>
+                <input id="def_two_total" type="number" min=0 max=40>
+                <label><input id="def_two_bmd" type="checkbox">BMD</label>
+                <br>
+                <label id="def_three_label" for="def_three">Weapon Type 3</label>
+                <input id="def_three" type="number" min=0 max=20>
+                <label id="def_three_tot_label" for="def_three_total">Total</label>
+                <input id="def_three_total" type="number" min=0 max=40>
+                <label><input id="def_three_bmd" type="checkbox">BMD</label>
+              </fieldset>
+              <label id="target_def_label" for="target_def">Target Defense:</label> 
+              <input id="target_def" type="number" min=1 max=20>
+              <br>
+              <label id="cap_input_label" for="cap_input">CAP Available:</label>
+              <input id="cap_input" type="number" min=0 max=40>
+              <br>
+              <label id="promo_label" for="promo_input">No. of Promotions:</label>
+              <input id="promo_input" type="number" min=0 max=20>
+              <br>
+              <label id="demo_label" for="demo_input">No. of Demotions:</label>
+              <input id="demo_input" type="number" min=0 max=20>
+              <br>
+              <label><input id="aew_input" type="checkbox">AEW Available (US Only)</label>
+              <br>
+              <button id="strikeSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+          <div id="torpedoAttack_div" class="tabcontent tool_format">
+            <h2>Torpedo Attack</h2>
+            <form id="torpedoAttack" action="">
+              <p id="torpAttDesc">
+                Utilize the following tool for adjudicated torpedo attacks. 
+              </p>
+              <fieldset>
+                <label>ASW Assets:</label>
+                <br>
+                <label id="ASW_asset_one_label" for="ASW_asset_one">ASW Type 1</label>
+                <select id="ASW_asset_one">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="ASW_asset_one_tot_label" for="ASW_asset_one_total">Total</label>
+                <input id="ASW_asset_one_total" type="number" min=0 max=40>
+                <br>
+                <label id="ASW_asset_two_label" for="ASW_asset_two">ASW Type 2</label>
+                <select id="ASW_asset_two">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="ASW_asset_two_tot_label" for="ASW_asset_two_total">Total</label>
+                <input id="ASW_asset_two_total" type="number" min=0 max=40>
+              </fieldset>
+              <label id="torp_target_step_label" for="torp_target_step">Target Steps:</label> 
+              <input id="torp_target_step" type="number" min=1 max=20>
+              <br>
+              <label id="torp_target_def_label" for="torp_target_def">Target Defense:</label>
+              <input id="torp_target_def" type="number" min=0 max=40>
+              <br>
+              <label id="torp_sub_detect_label" for="torp_sub_detect">Sub Detection:</label>
+              <input id="torp_sub_detect" type="number" min=0 max=40>
+              <br>
+              <label id="torp_sub_def_label" for="torp_sub_def">Sub Defense:</label>
+              <input id="torp_sub_def" type="number" min=0 max=40>
+              <br>
+              <label id="torp_str_label" for="torp_str">Torpedo Strength:</label>
+                <select id="torp_str">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+              <br>
+              <label><input id="torp_littorals" type="checkbox">Littorals</label>
+              <label><input id="torp_cavitation" type="checkbox">Cavitation</label>
+              <label><input id='torp_multi_assets' type='checkbox'>Multiple ASW Assets</label>
+              <br>
+              <button id="torpedoSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+          <div id="surfToAir_div" class="tabcontent tool_format">
+            <h2>Surface-To-Air Attack</h2>
+            <form id="samStrike" action="">
+              <p id="samAttDesc">
+                Utilize the following tool for adjudicated Surface-To-Air Strikes.
+              </p>
+              <fieldset>
+                <label>SAM Assets:</label>
+                <br>
+                <label id="SAM_asset_one_label" for="SAM_asset_one">SAM Type 1</label>
+                <select id="SAM_asset_one">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="SAM_asset_one_tot_label" for="SAM_asset_one_total">Total</label>
+                <input id="SAM_asset_one_total" type="number" min=0 max=40>
+                <br>
+                <label id="SAM_asset_two_label" for="SAM_asset_two">SAM Type 2</label>
+                <select id="SAM_asset_two">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="SAM_asset_two_tot_label" for="SAM_asset_two_total">Total</label>
+                <input id="SAM_asset_two_total" type="number" min=0 max=40>
+                <br>
+                <label id="SAM_asset_three_label" for="SAM_asset_three">SAM Type 3</label>
+                <select id="SAM_asset_three">
+                  <option value="">Die Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                </select>
+                <label id="SAM_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
+                <input id="SAM_asset_three_total" type="number" min=0 max=40>
+              </fieldset>
+              <fieldset>
+                <label>Aircraft:</label>
+                <br>
+                <label id="ac_asset_one_label" for="ac_asset_one">Aircraft Defense 1</label>
+                <input id="ac_asset_one" type="number" min=0 max=40>
+                <label id="ac_asset_one_tot_label" for="ac_asset_one_total">Total</label>
+                <input id="ac_asset_one_total" type="number" min=0 max=40>
+                <br>
+                <label id="ac_asset_two_label" for="ac_asset_two">Aircraft Defense 2</label>
+                <input id="ac_asset_two" type="number" min=0 max=40>
+                <label id="ac_asset_two_tot_label" for="ac_asset_two_total">Total</label>
+                <input id="ac_asset_two_total" type="number" min=0 max=40>
+                <br>
+                <label id="ac_asset_three_label" for="ac_asset_three">Aircraft Defense 3</label>
+                <input id="ac_asset_three" type="number" min=0 max=40>
+                <label id="ac_asset_three_tot_label" for="SAM_asset_three_total">Total</label>
+                <input id="ac_asset_three_total" type="number" min=0 max=40>
+              </fieldset>
+              <button id="samStrikeSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+          <div id="airToAir_div" class="tabcontent tool_format">
+            <h2>Air-to-Air Combat</h2>
+            <form id="airToAir" action="">
+              <p>
+                Utilize the following tool for adjudicated Air-to-Air Combat. This tool provides simultaneous results but does not account for the individual 
+                steps of Air-to-Air combat.
+              </p>
+              <fieldset>
+                <label>Blue Forces:</label>
+                <br>
+                <label id="blue_aaw_one_atk_label" for="blue_aaw_one_atk">A/C Type 1</label>
+                <select id="blue_aaw_one_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_one_def_label" for="blue_aaw_one_def">Defense:</label>
+                <input id="blue_aaw_one_def" type="number" min=0 max=20>
+                <label id="blue_aaw_one_targ_label" for="blue_aaw_one_targ">Target:</label>
+                <select id="blue_aaw_one_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="blue_aaw_two_atk_label" for="blue_aaw_two_atk">A/C Type 2</label>
+                <select id="blue_aaw_two_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_two_def_label" for="blue_aaw_two_def">Defense:</label>
+                <input id="blue_aaw_two_def" type="number" min=0 max=20>
+                <label id="blue_aaw_two_targ_label" for="blue_aaw_two_targ">Target:</label>
+                <select id="blue_aaw_two_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="blue_aaw_three_atk_label" for="blue_aaw_three_atk">A/C Type 3</label>
+                <select id="blue_aaw_three_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_three_def_label" for="blue_aaw_three_def">Defense:</label>
+                <input id="blue_aaw_three_def" type="number" min=0 max=20>
+                <label id="blue_aaw_three_targ_label" for="blue_aaw_three_targ">Target:</label>
+                <select id="blue_aaw_three_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="blue_aaw_four_atk_label" for="blue_aaw_four_atk">A/C Type 4</label>
+                <select id="blue_aaw_four_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_four_def_label" for="blue_aaw_four_def">Defense:</label>
+                <input id="blue_aaw_four_def" type="number" min=0 max=20>
+                <label id="blue_aaw_four_targ_label" for="blue_aaw_four_targ">Target:</label>
+                <select id="blue_aaw_four_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="blue_aaw_five_atk_label" for="blue_aaw_five_atk">A/C Type 5</label>
+                <select id="blue_aaw_five_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="blue_aaw_five_def_label" for="blue_aaw_five_def">Defense:</label>
+                <input id="blue_aaw_five_def" type="number" min=0 max=20>
+                <label id="blue_aaw_five_targ_label" for="blue_aaw_five_targ">Target:</label>
+                <select id="blue_aaw_five_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+              </fieldset>
+              <fieldset>
+                <label>Red Forces:</label>
+                <br>
+                <label id="red_aaw_one_atk_label" for="red_aaw_one_atk">A/C Type 1</label>
+                <select id="red_aaw_one_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_one_def_label" for="red_aaw_one_def">Defense:</label>
+                <input id="red_aaw_one_def" type="number" min=0 max=20>
+                <label id="red_aaw_one_targ_label" for="red_aaw_one_targ">Target:</label>
+                <select id="red_aaw_one_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="red_aaw_two_atk_label" for="red_aaw_two_atk">A/C Type 2</label>
+                <select id="red_aaw_two_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_two_def_label" for="red_aaw_two_def">Defense:</label>
+                <input id="red_aaw_two_def" type="number" min=0 max=20>
+                <label id="red_aaw_two_targ_label" for="red_aaw_two_targ">Target:</label>
+                <select id="red_aaw_two_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="red_aaw_three_atk_label" for="red_aaw_three_atk">A/C Type 3</label>
+                <select id="red_aaw_three_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_three_def_label" for="red_aaw_three_def">Defense:</label>
+                <input id="red_aaw_three_def" type="number" min=0 max=20>
+                <label id="red_aaw_three_targ_label" for="red_aaw_three_targ">Target:</label>
+                <select id="red_aaw_three_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="red_aaw_four_atk_label" for="red_aaw_four_atk">A/C Type 4</label>
+                <select id="red_aaw_four_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_four_def_label" for="red_aaw_four_def">Defense:</label>
+                <input id="red_aaw_four_def" type="number" min=0 max=20>
+                <label id="red_aaw_four_targ_label" for="red_aaw_four_targ">Target:</label>
+                <select id="red_aaw_four_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+                <br>
+                <label id="red_aaw_five_atk_label" for="red_aaw_five_atk">A/C Type 5</label>
+                <select id="red_aaw_five_atk">
+                  <option value="">Attack Value</option>
+                  <option value=4>D4</option>
+                  <option value=6>D6</option>
+                  <option value=8>D8</option>
+                  <option value=10>D10</option>
+                  <option value=12>D12</option>
+                  <option value=16>D16</option>
+                  <option value=20>D20</option>
+                  <option value=0>No Offensive Cape</option>
+                </select>
+                <label id="red_aaw_five_def_label" for="red_aaw_five_def">Defense:</label>
+                <input id="red_aaw_five_def" type="number" min=0 max=20>
+                <label id="red_aaw_five_targ_label" for="red_aaw_five_targ">Target:</label>
+                <select id="red_aaw_five_targ">
+                  <option value="">Target</option>
+                  <option value=1>A/C 1</option>
+                  <option value=2>A/C 2</option>
+                  <option value=3>A/C 3</option>
+                  <option value=4>A/C 4</option>
+                  <option value=5>A/C 5</option>
+                  <option value=0>No Target</option>
+                </select>
+              </fieldset>
+              <button id="airToAirSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+          <div id="sofDirectAction_div" class="tabcontent tool_format">
+            <h2>SOF Direct Action</h2>
+            <form id="sofDirectAction" action="">
+              <p>
+                Utilize the following tool for adjudicated SOF Direct Action. 
+              </p>
+              <label id="sofDA_detect_roll_label" for="sofDA_detect_roll">Detection Roll</label>
+              <select id="sofDA_detect_roll">
+                <option value="">Detect Roll</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
+              <br>
+              <label id="sofDA_ISR_value_label" for="sofDA_ISR_value">ISR Value</label>
+              <input id="sofDA_ISR_value" type="number" min=0 max=40>
+              <br>
+              <label id="sofDA_att_label" for="sofDA_att">Attack Value</label>
+              <select id="sofDA_att">
+                <option value="">Attack Value</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
+              <br>
+              <label id="sofDA_def_label" for="sofDA_def">Target Defense</label>
+              <input id="sofDA_def" type="number" min=0 max=40>
+              <br>
+              <button id="sofDirectActionSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+          <div id="groundCombat_div" class="tabcontent tool_format">
+            <h2>Ground Combat</h2>
+            <form id="groundCombat" action="">
+              <p>
+                Utilize the following tool for adjudicated Ground Combat. 
+              </p>
+              <label id="grndCom_terr_label" for="grndCom_terr">Terrain Type</label>
+              <select id="grndCom_terr">
+                <option value="open">Open</option>
+                <option value="for/mtn">Forest/Mountain</option>
+                <option value="urban">Urban</option>
+                <option value="durban">Dense Urban</option>
+              </select>
+              <br>
+              <label id="grndCom_weather_label" for="grndCom_weather">Weather</label>
+              <select id="grndCom_weather">
+                <option value="clear">Clear</option>
+                <option value="light">Lt Rain / Lt Snow</option>
+                <option value="heavy">Storm</option>
+              </select>
+              <br>
+              <br>
+              <label id="grndCom_att1_dice_label" for="grndCom_att1_dice">Attacker Bn 1 Dice Value:</label>
+              <select id="grndCom_att1_dice">
+                <option value="">Attack Value</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
+              <br>
+              <label id="grndCom_att2_dice_label" for="grndCom_att2_dice">Attacker Bn 2 Dice Value:</label>
+              <select id="grndCom_att2_dice">
+                <option value="">Attack Value</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
+              <br>
+              <label id="grndCom_att3_dice_label" for="grndCom_att3_dice">Attacker Bn 3 Dice Value:</label>
+              <select id="grndCom_att3_dice">
+                <option value="">Attack Value</option>
+                <option value=4>D4</option>
+                <option value=6>D6</option>
+                <option value=8>D8</option>
+                <option value=10>D10</option>
+                <option value=12>D12</option>
+                <option value=16>D16</option>
+                <option value=20>D20</option>
+              </select>
+              <br>
+              <br>
+              <label id="grndCom_def_val_label" for="grndCom_def_val">Defender Defense Value:</label>
+              <input id="grndCom_def_val" type="number" min=0 max=20>
+              <br>
+              <br>
+              <fieldset>
+                <label>Attacker Modifiers</label>
+                <br>
+                <label><input id="grndCom_att_single_axis" type="radio" name="att_ax" value="ax1" checked>Single Axis Attack</label>
+                <label><input id="grndCom_att_two_axis" type="radio" name="att_ax" value="ax2">Two Axis Attack</label>
+                <label><input id="grndCom_att_three_axis" type="radio" name="att_ax" value="ax3">Three Axis Attack</label>
+                <br>
+                <label id="grndCom_att_CAS_label" for="grndCom_att_CAS">CAS Missions:</label>
+                <input id="grndCom_att_CAS" type="number" min=0 max=40>
+                <label id="grndCom_att_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
+                <input id="grndCom_att_FS" type="number" min=0 max=40>
+                <label id="grndCom_brg_tact_label" for="grndCom_brg_tact">Brigade Tactics:</label>
+                <input id="grndCom_brg_tact" type="number" min=0 max=40>
+                <label id="grndCom_troop_quality_label" for="grndCom_troop_quality">Troop Quality:</label>
+                <input id="grndCom_troop_quality" type="number"  min=-40 max=40>
+                <label id="grndCom_att_disrupted_label" for="grndCom_att_disrupted">Disrupted C2 / PNT</label>
+                <input id="grndCom_att_disrupted" type="number" min=0 max=40>
+                <br>
+                <label><input id="grndCom_att_defender" type="checkbox">Defender</label>
+                <label><input id="grndCom_att_main_effort" type="checkbox">Main Effort</label>
+                <label><input id="grndCom_att_SIGINTEMSO" type="checkbox">SIGINT/EMSO</label>
+                <label><input id="grndCom_att_tankvsinfOpen" type="checkbox">Tank vs Lt Inf in the Open</label>
+                <label><input id="grndCom_att_infvstankNotOpen" type="checkbox">Lt Inf vs Tank not in the Open</label>
+                <label><input id="grndCom_att_SOFenabled" type="checkbox">SOF Enabled</label>
+                <label><input id="grndCom_att_suppress" type="checkbox">Suppressed</label>
+                <label><input id="grndCom_att_rsoi" type="checkbox">In RSO&I</label>
+                <label><input id="grndCom_att_extended" type="checkbox">Extended Supply</label>
+                <label><input id="grndCom_att_iso" type="checkbox">Isolated (out of supply)</label>
+                <label><input id="grndCom_att_assault" type="checkbox">River / Abn / Amphib Assault</label>
+                <label><input id="grndCom_att_crowded" type="checkbox">Crowded Attack</label>
+                <label><input id="grndCom_att_overcrowd" type="checkbox">Over-Crowded Attack</label>
+              </fieldset>
+              <fieldset>
+                <label>Defender Modifiers</label>
+                <br>
+                <label id="grndCom_def_CAS_label" for="grndCom_att_CAS">CAS Missions:</label>
+                <input id="grndCom_def_CAS" type="number" min=0 max=40>
+                <label id="grndCom_def_FS_label" for="grndCom_att_FS">Fire Support Missions:</label>
+                <input id="grndCom_def_FS" type="number" min=0 max=40>
+                <br>
+                <label><input id="grndCom_def_defense" type="checkbox">Defense</label>
+                <label><input id="grndCom_def_fortified" type="checkbox">Fortified</label>
+                <label><input id="grndCom_def_actPassCM" type="checkbox">Active/Passive CM</label>
+                <label><input id="grndCom_def_suppress" type="checkbox">Suppressed</label>
+                <label><input id="grndCom_def_rsoi" type="checkbox">In RSO&I</label>
+                <label><input id="grndCom_def_assault" type="checkbox">River / Abn / Amphib Assault</label>
+                <label><input id="grndCom_def_crowded" type="checkbox">Crowded Attack</label>
+                <label><input id="grndCom_def_overcrowd" type="checkbox">Over-Crowded Attack</label>
+              </fieldset>
+              <br>
+              <button id="groundCombatSubmit" type="button">Adjudicate</button>
+            </form>
+          </div>
+        </div> 
+        <div id='result_section'>
+          <div id='resultArea'></div>
+          <br>
+          <div id='resultWords'></div>
+        </div>
+      </div>
+      <div class='dice_area'>
+        <div class='dice4 die'>
+          <p>4</p>
+        </div>
+        <div class='dice6 die'>
+          <p>6</p>
+        </div>
+        <div class='dice8 die'>
+          <p>8</p>
+        </div>
+        <div class='dice10 die'>
+          <p>10</p>
+        </div>
+        <div class='dice12 die'>
+          <p>12</p>
+        </div>
+        <div class='dice16 die'>
+          <p>16</p>
+        </div>
+        <div class='dice20 die'>
+          <p>20</p>
+        </div>
+      </div>
+      <div id="adjudication_log">
+        <h3>Output Log:</h3>
+        <p id="result_log"></p>
+      </div>
+    <footer>
+      <p>&copy 2023 Flypterx Designs. A Flying Kiwi Production. All Rights Reserved.</p>
+    </footer>
+  </body>
+  <script defer>
+    // Tabbing, code from https://www.w3schools.com/howto/howto_js_tabs.asp
+
+// eslint-disable-next-line no-unused-vars
+function openTool(evt, toolName) {
+  // Declare all variables
+  let i, tabcontent, tablinks;
+  
+  // Get all elements with class 'tabcontent' and hide them
+  tabcontent = document.getElementsByClassName('tabcontent');
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = 'none';
+  }
+
+  // Get all elements with class 'tabcontent' and remove the class 'active'
+  tablinks = document.getElementsByClassName('tablinks');
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(' active', '');
+  }
+
+  // Show the current tab, and add an 'active' class to the bottom that opened the tab
+  document.getElementById(toolName).style.display = 'block';
+  evt.currentTarget.className += ' active';
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+
+// Dice functions for all tools
+
+function demoteAll(missiles) {
+  if (missiles['4']) {
+    delete missiles['4'];
+  }
+  if (missiles['6']) {
+    missiles['4'] = missiles['6'];
+    delete missiles['6'];
+  }
+  if (missiles['8']) {
+    missiles['6'] = missiles['8'];
+    delete missiles['8'];
+  }
+  if (missiles['10']) {
+    missiles['8'] = missiles['10'];
+    delete missiles['10'];
+  }
+  if (missiles['12']) {
+    missiles['10'] = missiles['12'];
+    delete missiles['12'];
+  }
+  if (missiles['16']) {
+    missiles['12'] = missiles['16'];
+    delete missiles['16'];
+  }
+  if (missiles['20']) {
+    missiles['16'] = missiles['20'];
+    delete missiles['20'];
+  }
+  return missiles;
+}
+
+function promoteAll(missiles, ASW=false) {
+  if (missiles['16']) {
+    if (!ASW) {
+      missiles['20'] = missiles['16'];
+    delete missiles['16'];
+    }
+    
+  }
+  if (missiles['12']) {
+    if (missiles.hasOwnProperty('16')) {
+      missiles['16'] += missiles['12'];
+    } else {
+      missiles['16'] = missiles['12'];
+    }    
+    delete missiles['12'];
+  }
+  if (missiles['10']) {
+    missiles['12'] = missiles['10'];
+    delete missiles['10'];
+  }
+  if (missiles['8']) {
+    missiles['10'] = missiles['8'];
+    delete missiles['8'];
+  }
+  if (missiles['6']) {
+    missiles['8'] = missiles['6'];
+    delete missiles['6'];
+  }
+  if (missiles['4']) {
+    missiles['6'] = missiles['4'];
+    delete missiles['4'];
+  }
+  return missiles;
+}
+
+function demoteOne(missiles) {
+  let dice = Object.keys(missiles).map(x => parseInt(x)).reverse();
+  let high_missile = dice[0]
+  if (dice.length === 0) {
+    return missiles
+  }
+  if (missiles[high_missile] === 0) {
+    if (dice.length > 1) {
+      delete missiles[high_missile];
+      high_missile = dice[1];
+    } else if (dice.length === 1) {
+      delete missiles[high_missile];
+      return missiles;
+    }
+  }
+  switch (high_missile) {
+    case 4:
+      missiles[4] === 1 ? delete missiles[4] : missiles[4] -= 1;
+      break;
+    case 6:
+      missiles.hasOwnProperty(4) ? missiles[4] += 1 : missiles[4] = 1;
+      missiles[6] === 1 ? delete missiles[6] : missiles[6] -= 1;
+      break;
+    case 8:
+      missiles.hasOwnProperty(6) ? missiles[6] += 1 : missiles[6] = 1;
+      missiles[8] === 1 ? delete missiles[8] : missiles[8] -= 1;
+      break;
+    case 10:
+      missiles.hasOwnProperty(8) ? missiles[8] += 1 : missiles[8] = 1;
+      missiles[10] === 1 ? delete missiles[10] : missiles[10] -= 1;
+      break;
+    case 12:
+      missiles.hasOwnProperty(10) ? missiles[10] += 1 : missiles[10] = 1;
+      missiles[12] === 1 ? delete missiles[12] : missiles[12] -= 1;
+      break;
+    case 16:
+      missiles.hasOwnProperty(12) ? missiles[12] += 1 : missiles[12] = 1;
+      missiles[16] === 1 ? delete missiles[16] : missiles[16] -= 1;
+      break;
+    default:
+      missiles.hasOwnProperty(16) ? missiles[16] += 1 : missiles[16] = 1;
+      missiles[20] === 1 ? delete missiles[20] : missiles[20] -= 1;
+  }
+  return missiles
+}
+
+function promoteOne(missiles) {
+  let dice = Object.keys(missiles).map(x => parseInt(x));
+  let low_missile = dice[0];
+  if (missiles[low_missile] === 0) {
+    if (dice.length > 1) {
+      delete missiles[low_missile];
+      low_missile = dice[1];
+    } else if (dice.length === 1) {
+      missiles[low_missile] += 1;
+      return missiles;
+    }
+  }
+  switch (low_missile) {
+    case 20:
+      break;
+    case 16:
+      missiles.hasOwnProperty(20) ? missiles[20] += 1 : missiles[20] = 1;
+      missiles[16] === 1 ? delete missiles[16] : missiles[16] -= 1;
+      break;
+    case 12:
+      missiles.hasOwnProperty(16) ? missiles[16] += 1 : missiles[16] = 1;
+      missiles[12] === 1 ? delete missiles[12] : missiles[12] -= 1;
+      break;
+    case 10:
+      missiles.hasOwnProperty(12) ? missiles[12] += 1 : missiles[12] = 1;
+      missiles[10] === 1 ? delete missiles[10] : missiles[10] -= 1;
+      break;
+    case 8:
+      missiles.hasOwnProperty(10) ? missiles[10] += 1 : missiles[10] = 1;
+      missiles[8] === 1 ? delete missiles[8] : missiles[8] -= 1;
+      break;
+    case 6:
+      missiles.hasOwnProperty(8) ? missiles[8] += 1 : missiles[8] = 1;
+      missiles[6] === 1 ? delete missiles[6] : missiles[6] -= 1;
+      break;
+    default:
+      missiles.hasOwnProperty(6) ? missiles[6] += 1 : missiles[6] = 1;
+      missiles[4] === 1 ? delete missiles[4] : missiles[4] -= 1;
+  }
+  return missiles
+}
+
+function removeLow(missiles) {
+  let dice = Object.keys(missiles).map(x => parseInt(x));
+  let low_missile = dice[0];
+  if (missiles[low_missile] === 0) {
+    if (dice.length > 1) {
+      delete missiles[low_missile];
+      low_missile = dice[1];
+    } else if (dice.length === 1) {
+      if (missiles[low_missile] === 1) {
+        delete missiles[low_missile];
+        low_missile = dice[1]
+      } else {
+        missiles[low_missile] -= 1;
+      }
+    }
+  }
+  if (missiles[low_missile] >= 1) {
+    missiles[low_missile] -= 1;
+  }
+  return missiles
+}
+
+function allForOne(missiles, ASW = true) {
+  let dice = Object.keys(missiles).map(x => parseInt(x)).reverse();
+  let high_missile = dice[0];
+  if ((dice.length == 1) && (missiles[high_missile.toString()] == 1)) {
+    return missiles;
+  }
+  switch (high_missile) {
+    case 4:
+      return {'6': 1};
+    case 6:
+      return {'8': 1};
+    case 8:
+      return {'10': 1};
+    case 10:
+      return {'12': 1};
+    case 12:
+      return {'16': 1};
+    case 16:
+      if (ASW) {
+        return missiles
+      } else {
+        return {'20': 1}
+      }
+    default:
+      return missiles;
+  }
+}
+
+function dieRoller(sides) {
+  return Math.floor(Math.random() * sides) + 1;
+}
+
+function createResults(diceTotal, diceResults, dice_title='') {
+  let dice = Object.keys(diceTotal).map(x => x);
+  const allDice = document.createElement('div');
+  allDice.classList.add('dice_area');
+  const title_para = document.createElement('p');
+  title_para.innerHTML = dice_title;
+  allDice.appendChild(title_para);
+  let resultTrack = 0;
+  for (let i = 0; i < dice.length; i++) {
+    for (let j = 0; j < diceTotal[dice[i]]; j++) {
+      const newDiv = document.createElement("div");
+      const resultP = document.createElement("p");
+      resultP.innerText = diceResults[resultTrack];
+      resultTrack += 1;
+      newDiv.classList.add('die');
+      newDiv.classList.add(`dice${dice[i]}`);
+      newDiv.appendChild(resultP);
+      allDice.appendChild(newDiv);
+    }
+  }
+  return allDice
+}
+
+function createDie(dieSides, dieResult) {
+  const newDiv = document.createElement("div");
+  const resultP = document.createElement("p");
+  resultP.innerText = dieResult;
+  newDiv.classList.add('die');
+  newDiv.classList.add(`dice${dieSides}`);
+  newDiv.appendChild(resultP);
+  return newDiv;
+}
+
+function createDefResult(dieSides, dieResult, defValue, hitRes, d4_hits, typeDef='base') {
+  const finalResult = document.createElement('div');
+  finalResult.classList.add('def-result');
+  finalResult.appendChild(createDie(dieSides, dieResult));
+  
+  const hit_result = document.createElement('div');
+  hit_result.classList.add('hit_result');
+
+  const salvoValue = document.createElement('div');
+  salvoValue.classList.add('gg-shield');
+  if (typeDef === 'base') {
+    salvoValue.classList.add('defbase');
+  } else {
+    salvoValue.classList.add('defsalvo');
+  }
+  const salvoPara = document.createElement('p');
+  salvoPara.innerText = defValue;
+  salvoValue.appendChild(salvoPara);
+
+  const hitResult = document.createElement('div');
+  hitResult.classList.add('hit_or_miss');
+  const checkX = document.createElement('p');
+  if (hitRes) {
+    hitResult.classList.add('hit');
+    checkX.innerText = `${String.fromCodePoint(10004)}`;
+  } else {
+    hitResult.classList.add('miss');
+    checkX.innerText = `${String.fromCodePoint(10006)}`;
+  }
+  hitResult.appendChild(checkX);
+  hit_result.appendChild(salvoValue);
+  hit_result.appendChild(hitResult);
+  finalResult.appendChild(hit_result);
+  if (d4_hits > 0) {
+    const d4result = document.createElement('div');
+    d4result.classList.add('def-result');
+    d4result.appendChild(createDie(4, d4_hits));
+    finalResult.appendChild(d4result);
+  }
+  return finalResult;
+}
+
+// General Dice Roller
+
+document.getElementById('generalSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  const dice_to_roll = {};
+  for (let user_input of ['one', 'two', 'three']) {
+    let die_value = document.getElementById(`general_value_${user_input}`).value ? document.getElementById(`general_value_${user_input}`).value : '4';
+    let die_amount = document.getElementById(`gen_total_${user_input}`).value ? parseInt(document.getElementById(`gen_total_${user_input}`).value) : 1;
+    dice_to_roll[die_value] = die_amount;
+  }
+  console.log(dice_to_roll);
+  const die_results = [];
+  for (let [key,value] of Object.entries(dice_to_roll)) {
+    console.log(key, value);
+    for (let i = 0; i < value; i++) {
+      roll_result = dieRoller(key);
+      console.log(`a d${key} was rolled and the result was ${roll_result}`)
+      die_results.push(roll_result)
+    }
+  }
+  console.log(die_results);
+  resultArea.appendChild(createResults(dice_to_roll, die_results));
+  let final_textResult = '';
+  let last_index = 0;
+  for (let [key, value] of Object.entries(dice_to_roll)) {
+    final_textResult += `${value === 1 ? `One ${key}-sided die was` : `${value} ${key}-sided dice were`} rolled, with the following results: ${die_results.slice(last_index,last_index+value)}. `;
+    last_index += value;
+  }
+  document.getElementById('resultWords').innerText = `General Roll: ${final_textResult}`;
+  document.getElementById('result_log').innerHTML += `General Roll: ${final_textResult}<br>`;
+}, false)
+
+// Theater and Local ISR Tool
+
+function getISRUserInput() {
+  let ISR_assets = {};
+  ISR_assets[document.getElementById('isr_value').value] = parseInt(document.getElementById('isr_value_num').value);
+  const detect_value = parseInt(document.getElementById('isr_detect').value) ? parseInt(document.getElementById('isr_detect').value) : 0;
+  const promo_demo_diff = (document.getElementById('isr_SIGINT_EMSO').checked ? 1 : 0) - (document.getElementById('isr_countermeasures').checked ? 1 : 0);
+  if (promo_demo_diff > 0) {
+    for (let i = 0; i < promo_demo_diff; i++) {
+      promoteAll(ISR_assets);
+    }
+  } else if (promo_demo_diff < 0) {
+    for (let i = 0; i > promo_demo_diff; i--) {
+      demoteAll(ISR_assets);
+    }
+  }
+  if (document.getElementById('isr_combined').checked) {
+    ISR_assets = allForOne(ISR_assets, false);
+  }
+  return [ISR_assets, detect_value]
+}
+
+function getISRresults() {
+  const [ISR_assets, detect_value] = getISRUserInput();
+  let ISR_rolls = [];
+  for (let [key, value] of Object.entries(ISR_assets)) {
+    for (let i = 0; i < value; i++) {
+      ISR_rolls.push(dieRoller(key))
+    }
+  }
+  const filtered_rolls = ISR_rolls.filter(x => x >= detect_value);
+  return [ISR_assets, ISR_rolls, filtered_rolls.length > 0]
+}
+
+document.getElementById('isrSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  const [ISR_assets, ISR_rolls, targFound] = getISRresults();
+  const resultString = `ISR: The following ISR assets ${JSON.stringify(ISR_assets)} ${targFound ? 'found the target' : 'found nothing'} (${ISR_rolls}).<br>`;
+  document.getElementById('resultArea').appendChild(createResults(ISR_assets, ISR_rolls))
+  document.getElementById('resultWords').innerText = `ISR: The following ISR assets ${JSON.stringify(ISR_assets)} ${targFound ? 'found the target' : 'found nothing'} (${ISR_rolls}).`;
+  document.getElementById('result_log').innerHTML += resultString;
+}, false)
+
+// ASW Tool
+
+function getASWUserInput() {
+  const ASW_value = document.getElementById('asw_value').value;
+  const ASW_value_num = parseInt(document.getElementById('asw_value_num').value)
+  const subDetect = parseInt(document.getElementById('asw_detect').value);
+  const asw = [];
+  asw.push(document.getElementById("asw_runningSilent").checked ? -1 : 0);
+  asw.push(document.getElementById("asw_littoral").checked ? -1 : 0);
+  asw.push(document.getElementById("asw_cavitation").checked ? 1 : 0);
+  asw.push(document.getElementById('asw_multiAssets').checked)
+  const ASW_assets = {}
+  ASW_assets[ASW_value] = ASW_value_num
+  asw.push(ASW_assets)
+  return [subDetect, asw]
+}
+
+function singlePing() {
+  let [subDetect, ASW] = getASWUserInput();
+  let [ASW_assets, ASW_rolls, subFound] = findSub(subDetect, ASW);
+  return [ASW_assets, ASW_rolls, subFound]
+}
+
+document.getElementById('aswSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  let [ASW_assets, ASW_rolls, subFound] = singlePing();
+  document.getElementById('resultArea').appendChild(createResults(ASW_assets, ASW_rolls))
+  const ASW_result = `ASW: The following assets ${JSON.stringify(ASW_assets)} ${subFound ? 'found a submarine' : 'found nothing'} (${ASW_rolls}).<br>`;
+  document.getElementById('resultWords').innerText = `ASW: The following assets ${JSON.stringify(ASW_assets)} ${subFound ? 'found a submarine' : 'found nothing'} (${ASW_rolls}).`;
+  document.getElementById('result_log').innerHTML += ASW_result;
+}, false)
+
+// Surface to Surface and Air to Surface Strikes
+
+function getStrikeInputs() {
+  const hyper_inbound = {};
+  const bm_inbound = {}; 
+  const cruise_inbound = {};
+  for (let user_input of ['inbound_one', 'inbound_two', 'inbound_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
+      const weaponValue = parseInt(document.getElementById(user_input).value);
+      const weaponTotal = parseInt(document.getElementById(user_input + '_total').value);
+      const weaponType = document.querySelector(`input[name="${user_input}_type"]:checked`).value
+      if (weaponType == 'hyper') {
+        if (weaponTotal === 0) {
+          continue;
+        } else if (weaponValue in hyper_inbound) {
+          hyper_inbound[weaponValue] += weaponTotal
+        } else {;
+          hyper_inbound[weaponValue] = weaponTotal;
+        }
+      } else if (weaponType == 'ballistic') {
+        if (weaponTotal === 0) {
+          continue;
+        } else if (weaponValue in bm_inbound) {
+          bm_inbound[weaponValue] += weaponTotal
+        } else {;
+          bm_inbound[weaponValue] = weaponTotal;
+        }
+      } else {
+        if (weaponTotal === 0) {
+          continue;
+        } else if (weaponValue in cruise_inbound) {
+          cruise_inbound[weaponValue] += weaponTotal
+        } else {;
+          cruise_inbound[weaponValue] = weaponTotal;
+        }
+      }
+    }
+  }
+  const bm_defense = {};
+  const cruise_defense = {};
+  for (let user_input of ['def_one', 'def_two', 'def_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total')) {
+      const defenseValue = parseInt(document.getElementById(user_input).value);
+      const defenseTotal = parseInt(document.getElementById(user_input + '_total').value);
+      if (document.getElementById(user_input + '_bmd').checked && Object.keys(bm_inbound).length !== 0) {
+        if (defenseValue === 0 || defenseTotal === 0) {
+          continue;
+        } else if (defenseValue in bm_defense) {
+          bm_defense[defenseValue] += defenseTotal;
+        } else {
+          bm_defense[defenseValue] = defenseTotal;
+        }
+      } else {
+        if (defenseValue === 0 || defenseTotal === 0) {
+          continue;
+        } else if (defenseValue in cruise_defense) {
+          cruise_defense[defenseValue] += defenseTotal;
+        } else {
+          cruise_defense[defenseValue] = defenseTotal;
+        }
+      }
+    }
+  }
+  const base_def = document.getElementById('target_def').value ? parseInt(document.getElementById('target_def').value) : 0;
+  const cap = document.getElementById('cap_input').value ? parseInt(document.getElementById('cap_input').value) : 0;
+  const promos = document.getElementById('promo_input').value ? parseInt(document.getElementById('promo_input').value) : 0;
+  const demos = document.getElementById('demo_input').value ? parseInt(document.getElementById('demo_input').value) : 0;
+  const us_cec = document.getElementById("aew_input").checked;
+
+  return {hyper_inbound, bm_inbound, cruise_inbound, bm_defense, cruise_defense, base_def, cap, promos, demos, us_cec};
+}
+
+function strikeBaseAttack(inbound, base_def, d4_hits) {
+  const dieRolls = {};
+  for (const x of Object.keys(inbound)) {
+    for (let i = 0; i < inbound[x]; i++) {
+      if (x.toString() in dieRolls) {
+        dieRolls[x].push(dieRoller(x));
+      } else {
+        dieRolls[x] = [dieRoller(x)];
+      }  
+    }
+  }
+  let results = [];
+  for (const x of Object.keys(inbound).reverse()) {
+    for (let i = 0; i < inbound[x]; i++) {
+      const result = dieRolls[x][i] >= base_def ? 'HIT' : 'MISS';
+      results.push([x, dieRolls[x][i], base_def, result, (d4_hits && result === 'HIT') ? dieRoller(4) : 0]);
+    }
+  }
+  let hit_count = 0;
+  for (const result of results) {
+    if (result[4] === 0) {
+      if (result[1] >= (base_def * 2)) {
+        hit_count += 2;
+      } else if (result[1] >= base_def) {
+        hit_count += 1;
+      }
+      if (result[1] === parseInt(result[0]) && parseInt(result[0]) >= 12) {
+      hit_count += 1;
+      }
+    } else {
+      hit_count += result[4]
+    }
+    
+  }
+  return {results, hit_count}
+}
+
+function strikeDefSalvoAttack(inbound, defense) {
+  const defSalvos = [];
+  const inboundStr = Object.keys(inbound).reverse().map(x => parseInt(x));
+  const dieRolls = {};
+  for (const x of Object.keys(defense).reverse()) {
+    for (let i = 0; i < defense[x]; i++) {
+      defSalvos.push(x);
+    }
+  }
+  for (const x of inboundStr) {
+    for (let i = 0; i < inbound[x]; i++) {
+      if (x.toString() in dieRolls) {
+        dieRolls[x].push(dieRoller(x));
+      } else {
+        dieRolls[x] = [dieRoller(x)];
+      }  
+    }
+  }
+  let defIndex = 0;
+  let results = [];
+  for (const x of inboundStr) {
+    for (let i = 0; i < inbound[x]; i++) {
+      const result = dieRolls[x][i] >= defSalvos[defIndex] ? 'HIT' : 'MISS'
+      results.push([x, dieRolls[x][i], defSalvos[defIndex], result]);
+      defIndex += 1;
+    }
+  }
+  return results;
+}
+
+function inboundAdjustments(inbound, defSalvoDelta, cap, totPromDemo) {
+  const adjInbound = {...inbound}
+  if (defSalvoDelta < 0) {
+    for (let i = defSalvoDelta; i < 0; i++) {
+      demoteOne(adjInbound)
+    }
+  }
+  for (let i = 0; i < cap; i++) {
+    demoteOne(adjInbound)
+
+  }
+  if (totPromDemo > 0) {
+    for (let i = 0; i < totPromDemo; i++) {
+      promoteAll(adjInbound)
+    }
+  } else if (totPromDemo < 0) {
+    for (let i = 0; i > totPromDemo; i--) {
+      demoteAll(adjInbound)
+    }
+  }
+  return adjInbound
+}
+
+document.getElementById('strikeSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+    document.getElementById('resultWords').innerText = '';
+  }
+  document.getElementById('result_log').innerHTML += 'Surface Strike: ';
+  const { hyper_inbound, bm_inbound, cruise_inbound, bm_defense, cruise_defense, base_def, cap, promos, demos, us_cec } = getStrikeInputs();
+  let modifier_adjust = promos - demos;
+  if (modifier_adjust < 0) {
+    for (let i = 0; i > modifier_adjust; i--) {
+      demoteAll(hyper_inbound);
+      demoteAll(bm_inbound);
+      demoteAll(cruise_inbound);
+    } 
+  } else {
+    for (let i = 0; i < modifier_adjust; i++) {
+      promoteAll(hyper_inbound);
+      promoteAll(bm_inbound);
+      promoteAll(cruise_inbound);
+    } 
+  }
+  const total_hyper = Object.values(hyper_inbound).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  const total_bm = Object.values(bm_inbound).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  const total_cruise = Object.values(cruise_inbound).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  const total_defense = Object.values(cruise_defense).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  const total_bmDefense = Object.values(bm_defense).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  if (us_cec && (total_bmDefense > 0 || total_defense > 0)) {
+    for (let i = 0; i < 2; i++) {
+      demoteAll(bm_inbound)
+      demoteAll(cruise_inbound)
+    }
+  }
+  let finalResult;
+  let salvoResult;
+  let total_stepsLost = 0;
+  if (total_hyper > 0) {
+    finalResult = strikeBaseAttack(hyper_inbound, base_def, true);
+    const baseHeader = document.createElement('p');
+    baseHeader.innerText = 'Hypersonic Results:';
+    document.getElementById('resultArea').appendChild(baseHeader);
+    let successfulFinal = 0;
+    for (const result of finalResult.results) {
+      document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+      result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+    }
+    total_stepsLost += finalResult.hit_count
+    const finalText = `Hypersonic Results: ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+    document.getElementById('resultWords').innerText += `${finalText}\n`;
+    document.getElementById('result_log').innerHTML += finalText;
+  }
+  if (total_bm > 0) {
+    if (total_bmDefense === 0) {
+      finalResult = strikeBaseAttack(bm_inbound, base_def, true);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Ballistic Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = `Ballistic Results: ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    } else if (total_bmDefense >= total_bm) {
+      for (let i = 0; i < (total_bmDefense - total_bm); i++) {
+        demoteOne(bm_inbound);
+      }
+      salvoResult = strikeDefSalvoAttack(bm_inbound, bm_defense);
+      if (salvoResult) {
+        const salvoHeader = document.createElement('p');
+        salvoHeader.innerText = 'BMD Salvo Results:';
+        document.getElementById('resultArea').appendChild(salvoHeader);
+        let successfulSalvo = 0;
+        for (const result of salvoResult) {
+          document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+          result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+        }
+        if (salvoResult) {
+          const salvoText = `Ballistic Results: ${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
+          document.getElementById('resultWords').innerText += salvoText;
+          document.getElementById('result_log').innerHTML += salvoText; 
+        }
+      }
+      const closeInbound = {};
+      for (const salvo of salvoResult) {
+        if (salvo[3] === 'HIT') {
+          if (salvo[0] in closeInbound) {
+            closeInbound[salvo[0]] += 1;
+          } else {
+            closeInbound[salvo[0]] = 1;
+          }
+        }
+      }
+      finalResult = strikeBaseAttack(closeInbound, base_def, true);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Ballistic Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    } else {
+      const allSalvos = [];
+      for (const x of Object.keys(bm_inbound)) {
+        for (let i = 0; i < bm_inbound[x]; i++) {
+          allSalvos.push(x);
+        }
+      }
+      const defendedSalvos = allSalvos.reverse().slice(0, total_bmDefense);
+      const undefendedSalvos = allSalvos.slice(total_bmDefense);
+      const defendedSalvoObj = {};
+      const undefendedSalvoObj = {};
+      defendedSalvos.forEach(x => {
+        if (x in defendedSalvoObj) {
+          defendedSalvoObj[x] += 1;
+        } else {
+          defendedSalvoObj[x] = 1;
+        }
+      });
+      undefendedSalvos.forEach(x => {
+        if (x in undefendedSalvoObj) {
+          undefendedSalvoObj[x] += 1;
+        } else {
+          undefendedSalvoObj[x] = 1;
+        }
+      });
+      salvoResult = strikeDefSalvoAttack(defendedSalvoObj, total_bmDefense);
+      if (salvoResult) {
+        const salvoHeader = document.createElement('p');
+        salvoHeader.innerText = 'BMD Salvo Results:';
+        document.getElementById('resultArea').appendChild(salvoHeader);
+        let successfulSalvo = 0;
+        for (const result of salvoResult) {
+          document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+          result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+        }
+        if (salvoResult) {
+          const salvoText = `Ballistic Results: ${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
+          document.getElementById('resultWords').innerText += salvoText;
+          document.getElementById('result_log').innerHTML += salvoText; 
+        }
+      }
+      for (const salvo of salvoResult) {
+        if (salvo[3] === 'HIT') {
+          if (salvo[0] in undefendedSalvoObj) {
+            undefendedSalvoObj[salvo[0]] += 1;
+          } else {
+            undefendedSalvoObj[salvo[0]] = 1;
+          }
+        }
+      }
+      finalResult = strikeBaseAttack(undefendedSalvoObj, base_def, true);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Ballistic Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    }
+  }
+  if (total_cruise > 0) {
+    console.log(cruise_inbound, cruise_defense);
+    if (cap > 0) {
+      for (let i = 0; i < cap; i++) {
+        demoteOne(cruise_inbound);
+      }
+    }
+    if (total_defense === 0) {
+      finalResult = strikeBaseAttack(cruise_inbound, base_def, false);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Cruise Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+    } else if (total_defense >= total_cruise) {
+      for (let i = 0; i < (total_defense - total_cruise); i++) {
+        demoteOne(cruise_inbound);
+      }
+      salvoResult = strikeDefSalvoAttack(cruise_inbound, cruise_defense);
+      if (salvoResult) {
+        const salvoHeader = document.createElement('p');
+        salvoHeader.innerText = 'Defensive Salvo Results:';
+        document.getElementById('resultArea').appendChild(salvoHeader);
+        let successfulSalvo = 0;
+        for (const result of salvoResult) {
+          document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+          result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+        }
+        if (salvoResult) {
+          const salvoText = `Other Results: ${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
+          document.getElementById('resultWords').innerText += salvoText;
+          document.getElementById('result_log').innerHTML += salvoText; 
+        }
+      }
+      const closeInbound = {};
+      for (const salvo of salvoResult) {
+        if (salvo[3] === 'HIT') {
+          if (salvo[0] in closeInbound) {
+            closeInbound[salvo[0]] += 1;
+          } else {
+            closeInbound[salvo[0]] = 1;
+          }
+        }
+      }
+      finalResult = strikeBaseAttack(closeInbound, base_def, false);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Other Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    } else {
+      const allSalvos = [];
+      for (const x of Object.keys(cruise_inbound)) {
+        for (let i = 0; i < cruise_inbound[x]; i++) {
+          allSalvos.push(x);
+        }
+      }
+      const defendedSalvos = allSalvos.reverse().slice(0, total_defense);
+      const undefendedSalvos = allSalvos.slice(total_defense);
+      const defendedSalvoObj = {};
+      const undefendedSalvoObj = {};
+      defendedSalvos.forEach(x => {
+        if (x in defendedSalvoObj) {
+          defendedSalvoObj[x] += 1;
+        } else {
+          defendedSalvoObj[x] = 1;
+        }
+      });
+      undefendedSalvos.forEach(x => {
+        if (x in undefendedSalvoObj) {
+          undefendedSalvoObj[x] += 1;
+        } else {
+          undefendedSalvoObj[x] = 1;
+        }
+      });
+      salvoResult = strikeDefSalvoAttack(defendedSalvoObj, cruise_defense);
+      console.log(salvoResult);
+      if (salvoResult) {
+        const salvoHeader = document.createElement('p');
+        salvoHeader.innerText = 'Defensive Salvo Results:';
+        document.getElementById('resultArea').appendChild(salvoHeader);
+        let successfulSalvo = 0;
+        for (const result of salvoResult) {
+          document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+          result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+        }
+        if (salvoResult) {
+          const salvoText = `Other Results: ${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
+          document.getElementById('resultWords').innerText += salvoText;
+          document.getElementById('result_log').innerHTML += salvoText; 
+        }
+      }
+      for (const salvo of salvoResult) {
+        if (salvo[3] === 'HIT') {
+          if (salvo[0] in undefendedSalvoObj) {
+            undefendedSalvoObj[salvo[0]] += 1;
+          } else {
+            undefendedSalvoObj[salvo[0]] = 1;
+          }
+        }
+      }
+      finalResult = strikeBaseAttack(undefendedSalvoObj, base_def, false);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Cruise Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    }
+  }
+  document.getElementById('resultWords').innerText += `Total Steps Lost: ${total_stepsLost}.`
+  document.getElementById('result_log').innerHTML += `Total Steps Lost: ${total_stepsLost}<br>`;
+}, false);
+
+// Torpedo Attack Tool
+
+function findSub(subDetect, ASW=[0, 0, 0, false, {}]) {
+  let ASW_assets = ASW[4];
+  let promo_demo = ASW.slice(0,-2).reduce((acc, a) => acc + a, 0);
+  if (promo_demo > 0) {
+    for (let i = 0; i < promo_demo; i++) {
+      ASW_assets = promoteAll(ASW_assets, true)
+    }
+  } else {
+    for (let i = 0; i > promo_demo; i--) {
+      ASW_assets = demoteAll(ASW_assets)
+    }
+  }
+  if (ASW[3]) {
+    ASW_assets = allForOne(ASW_assets)
+  }
+  const ASW_rolls = []
+  for (const [key, value] of Object.entries(ASW_assets)) {
+    for (let i = 0; i < value; i++) {
+      ASW_rolls.push(dieRoller(key))
+    }
+  }
+  const checked_results = ASW_rolls.filter(x => x >= subDetect);
+  return [ ASW_assets, ASW_rolls, checked_results.length > 0 ]
+}
+
+function subAttack(targStep, targDef, subDetect, torpStr, subDef, ASW=[0, 0, 0, false, {}]) {
+  let [ASW_assets, ASW_rolls, subFound] = findSub(subDetect, ASW);
+  const ASW_attacks = []
+  if (subFound) {
+    let ASW_asset_attacks = ASW[4];
+    if (ASW[3]) {
+      ASW_asset_attacks = allForOne(ASW[4]);
+    }
+    for (const [key, value] of Object.entries(ASW_asset_attacks)) {
+      for (let i = 0; i < value; i++) {
+        ASW_attacks.push(dieRoller(key))
+      }
+    }
+  }
+  let sub_torps = {}
+  sub_torps[torpStr] = targStep;
+  let torp_rolls =  [];
+  for (let i = 0; i < targStep; i++) {
+    torp_rolls.push(dieRoller(torpStr))
+  }
+  return [ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef]
+}
+
+function subAttackResults() {
+  const asw = [];
+  asw.push(0); //This used to be a run silent check, but that doesn't happen for a torpedo attack so in order to maintain other code, this is just a 0. It has no affect.
+  asw.push(document.getElementById("torp_littorals").checked ? -1 : 0);
+  asw.push(document.getElementById("torp_cavitation").checked ? 1 : 0);
+  asw.push(document.getElementById('torp_multi_assets').checked)
+  asw.push({});
+  for (let user_input of ['ASW_asset_one', 'ASW_asset_two']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
+      asw[4][parseInt(document.getElementById(user_input).value)] = parseInt(document.getElementById(user_input + '_total').value);
+    }
+  }
+  const target_steps = document.getElementById("torp_target_step").value ? parseInt(document.getElementById("torp_target_step").value) : 0;
+  const target_def = document.getElementById("torp_target_def").value ? parseInt(document.getElementById("torp_target_def").value) : 0;
+  const sub_detect = document.getElementById("torp_sub_detect").value ? parseInt(document.getElementById("torp_sub_detect").value) : 0;
+  const sub_def = document.getElementById("torp_sub_def").value ? parseInt(document.getElementById("torp_sub_def").value) : 0;
+  const torp_str = document.getElementById("torp_str").value ? parseInt(document.getElementById("torp_str").value) : 0;
+  return subAttack(target_steps, target_def, sub_detect, torp_str, sub_def, asw);
+}
+
+document.getElementById('torpedoSubmit').addEventListener('click', () => {
+  let [ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef] = subAttackResults();
+  const torp_results = torp_rolls.filter(x => x >= targDef)
+  let torp_hits = torp_results.length
+  console.log(torp_hits);
+  for (const hit of torp_rolls) {
+    if (hit >= (targDef * 2)) {
+      console.log("double def");
+      torp_hits += 1;
+    }
+    if (hit === parseInt(Object.keys(sub_torps)[0]) && parseInt(Object.keys(sub_torps)[0]) >= 12) {
+      console.log("rolled max");
+      torp_hits += 1;
+    }     
+  }
+  const asw_hits = ASW_attacks.filter(x => x >= subDef)
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  resultArea.appendChild(createResults(ASW_assets, ASW_rolls, 'ASW Search'));
+  if (ASW_attacks.length !== 0) {
+    resultArea.appendChild(createResults(ASW_assets, ASW_attacks, 'ASW Attack'));
+  }
+  resultArea.appendChild(createResults(sub_torps, torp_rolls, 'Torpedo Results'));
+  const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. ${subFound ? `The sub was found (${ASW_rolls}) and ${asw_hits.length > 0 ? 'was destroyed' : 'survived'} (${ASW_attacks})` : `The sub was undetected (${ASW_rolls}).`}`
+  const torp_result = `${torp_hits === 0 ? 'The target survived.' : torp_hits === 1 ? 'The target took one hit' : `The target took ${torp_hits} hits`} (${torp_rolls}).`
+  document.getElementById('resultWords').innerText = `Torpedo Attack: ${torp_result} ${ASW_result}`;
+  document.getElementById('result_log').innerHTML += `Torpedo Attack: ${torp_result} ${ASW_result}<br>`;
+}, false);
+
+// Surface to Air Attack Tool
+
+function getSAMUserInputs() {
+  const sam_assets = {}
+  const aircraft = {}
+  for (let user_input of ['SAM_asset_one', 'SAM_asset_two', 'SAM_asset_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
+      sam_assets[parseInt(document.getElementById(user_input).value)] = parseInt(document.getElementById(user_input + '_total').value);
+    }
+  }
+  for (let user_input of ['ac_asset_one', 'ac_asset_two', 'ac_asset_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
+      aircraft[parseInt(document.getElementById(user_input).value)] = parseInt(document.getElementById(user_input + '_total').value);
+    }
+  }
+  return [sam_assets, aircraft]
+}
+
+function samKills(rolls, defenses) {
+  const ac_dest = [];
+  for (let roll of rolls) {
+    if (defenses.length === 0) {
+      return ac_dest
+    } else if (roll >= defenses[0]) {
+      ac_dest.push(defenses.shift())
+    } else {
+      continue
+    }
+  }
+  return ac_dest
+}
+
+function samAttackResults() {
+  let [sam_assets, aircraft] = getSAMUserInputs();
+  const all_rolls = [];
+  const all_defs = [];
+  for (const [key, value] of Object.entries(sam_assets)) {
+    for (let i = 0; i < value; i++) {
+      all_rolls.push(dieRoller(key));
+    }
+  }
+  for (const [key, value] of Object.entries(aircraft)) {
+    for (let i = 0; i < value; i++) {
+      all_defs.push(parseInt(key));
+    }
+  }
+  const sam_results = samKills(all_rolls, all_defs)
+  return [sam_assets, all_rolls, sam_results];
+}
+
+document.getElementById('samStrikeSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  let [sam_assets, all_rolls, sam_results] = samAttackResults();
+  resultArea.appendChild(createResults(sam_assets, all_rolls))
+  document.getElementById('resultWords').innerText = `Surface-to-Air: The following weapons ${JSON.stringify(sam_assets)} were fired at the aircraft resulting in ${sam_results.length === 1 ? '1 hit' : sam_results.length + ' hits.'}`;
+  document.getElementById('result_log').innerHTML += `Surface-to-Air: The following weapons ${JSON.stringify(sam_assets)} were fired at the aircraft resulting in ${sam_results.length === 1 ? '1 hit' : sam_results.length + ' hits.'}<br>`;
+}, false);
+
+// Air to Air Combat Tool
+
+const dash_number = [['one', 1], ['two', 2], ['three', 3], ['four', 4], ['five', 5]];
+
+function getAircraft(side) {
+  let flight = []
+  for (const dash_pair of dash_number) {
+    const [word_number, number] = dash_pair;
+    const atk_value = document.getElementById(`${side}_aaw_${word_number}_atk`).value;
+    const def_value = parseInt(document.getElementById(`${side}_aaw_${word_number}_def`).value);
+    const target = parseInt(document.getElementById(`${side}_aaw_${word_number}_targ`).value);
+    if (atk_value) {
+      flight.push([number, atk_value, def_value, target])
+    }
+  }
+  return flight
+}
+
+function furball() {
+  const blue_victories = []
+  const red_victories = []
+  const blue_aircraft = getAircraft('blue');
+  const red_aircraft = getAircraft('red');
+  for (const attacker of blue_aircraft) {
+    if (attacker[1] === "0") {
+      blue_victories.push(['blue', ...attacker, 0]);
+    } else {
+      const attk_roll = dieRoller(attacker[1]);
+      // return side, a/c number, attack value, def value, target, attack result
+      blue_victories.push(['blue', ...attacker, attk_roll]);
+    }
+  }
+  for (const attacker of red_aircraft) {
+    if (attacker[1] === "0") {
+      red_victories.push(['red', ...attacker, 0]);
+    } else {
+      const attk_roll = dieRoller(attacker[1]);
+      // return side, a/c number, attack value, def value, target, attack result
+      red_victories.push(['red', ...attacker, attk_roll]);
+    }
+  }
+  return {blue_victories, red_victories}
+}
+
+document.getElementById('airToAirSubmit').addEventListener('click', () => {
+  const {blue_victories, red_victories} = furball();
+  const blue_death = new Set();
+  const red_death = new Set();
+  let word_result = '';
+  document.getElementById('resultWords').innerHTML = '';
+  document.getElementById('resultArea').innerHTML = '';
+  for (let shooter of blue_victories) {
+    const theMergeDiv = document.createElement('div')
+    theMergeDiv.classList.add('mergeResult');
+    const shooterP = document.createElement('p');
+    shooterP.classList.add('AAFighters');
+    const defenderP = document.createElement('p');
+    defenderP.classList.add('AAFighters');
+    try {
+      const hit_or_miss = shooter[5] >= red_victories[shooter[4] - 1][3];
+      if (hit_or_miss) {
+        red_death.add(shooter[4])
+      }
+      shooterP.innerHTML = `Blue A/C ${shooter[1]}`
+      defenderP.innerHTML = `Red A/C ${shooter[4]}`
+      theMergeDiv.appendChild(createDefResult(shooter[2], shooter[5], red_victories[shooter[4] - 1][3], hit_or_miss, 0))
+      word_result += `Blue A/C ${shooter[1]} rolled ${shooter[5]} on d${shooter[2]} against Red A/C ${shooter[4]} resulting in a ${hit_or_miss ? 'hit' : 'miss'}. `;
+    }
+    catch(e) {
+      shooterP.innerHTML = `Blue A/C ${shooter[1]} had no target.`
+    }
+    theMergeDiv.insertBefore(shooterP, theMergeDiv.lastChild);
+    theMergeDiv.appendChild(defenderP);
+    document.getElementById('resultArea').appendChild(theMergeDiv);
+    
+  }
+  for (let shooter of red_victories) {
+    const theMergeDiv = document.createElement('div')
+    theMergeDiv.classList.add('mergeResult');
+    const shooterP = document.createElement('p');
+    shooterP.classList.add('AAFighters');
+    const defenderP = document.createElement('p');
+    defenderP.classList.add('AAFighters');
+    try {
+      const hit_or_miss = shooter[5] >= blue_victories[shooter[4] - 1][3];
+      if (hit_or_miss) {
+        blue_death.add(shooter[4])
+      }
+      shooterP.innerHTML = `Red A/C ${shooter[1]}`
+      defenderP.innerHTML = `Blue A/C ${shooter[4]}`
+      theMergeDiv.appendChild(createDefResult(shooter[2], shooter[5], blue_victories[shooter[4] - 1][3], hit_or_miss, 0))
+      word_result += ` Red A/C ${shooter[1]} rolled ${shooter[5]} on d${shooter[2]} against Blue A/C ${shooter[4]} resulting in a ${hit_or_miss ? 'hit' : 'miss'}. `;
+    } 
+    catch(e) {
+      shooterP.innerHTML = `Red A/C ${shooter[1]} had no target.`
+    }
+    theMergeDiv.insertBefore(shooterP, theMergeDiv.lastChild);
+    theMergeDiv.appendChild(defenderP);
+    document.getElementById('resultArea').appendChild(theMergeDiv);
+  }
+  let death_result = (blue_death.size === 0 && red_death.size === 0) ? 'BLUF: No aircraft destroyed' : 'BLUF - The following aircraft were destroyed: ';
+  let blueDeath_result = '';
+  let redDeath_result = '';
+  if (blue_death.size > 0) {
+    const set_array = Array.from(blue_death);
+    if (set_array.length === 1) {
+      blueDeath_result += `Blue ${set_array}`;
+    } else if (set_array.length === 2) {
+      blueDeath_result += `Blue ${set_array.join(' and ')}`
+    } else {
+      blueDeath_result += `Blue ${set_array.slice(0,-1).join(', ')} and ${set_array[-1]}`
+    }
+  }
+  if (red_death.size > 0) {
+    const set_array = Array.from(red_death);
+    if (set_array.length === 1) {
+      redDeath_result += `Red ${set_array}`;
+    } else if (set_array.length === 2) {
+      redDeath_result += `Red ${set_array.join(' and ')}`
+    } else {
+      redDeath_result += `Red ${set_array.slice(0,-1).join(', ')} and ${set_array[-1]}`
+    }
+  }
+  document.getElementById('resultWords').innerHTML = `${death_result}${blueDeath_result ? blueDeath_result : ''}${(blue_death.size > 0 && red_death.size > 0) ? ' and ' : ''}${redDeath_result ? redDeath_result : ''}.<br><br>${word_result}`;
+  document.getElementById('result_log').innerHTML += `Air-to-Air: ${word_result} <br>`;
+}, false);
+
+// SOF Direct Action Tool
+
+function SOFDirectAction() {
+  const detection = {};
+  const directAction = {};
+  let attack_roll = 0;
+  const detection_die = document.getElementById('sofDA_detect_roll').value;
+  const detection_roll = dieRoller(parseInt(detection_die))
+  detection[detection_die] = 1;
+  let message = '';
+  if (detection_roll >= parseInt(document.getElementById('sofDA_ISR_value').value)) {
+    message = `The unit was discovered.`;
+  } else {
+    const attack_die = document.getElementById('sofDA_att').value;
+    attack_roll = dieRoller(parseInt(attack_die))
+    directAction[attack_die] = 1;
+    message =  "The attack was unsuccessful.";
+    if (attack_roll >= parseInt(document.getElementById('sofDA_def').value)) {
+      message =  "One hit was scored.";
+      if (attack_roll >= parseInt(attack_die) * 2) {
+        message =  "Two hits were scored!";
+      } 
+    }
+  }
+  return [detection, detection_roll, directAction, attack_roll, message]
+}
+
+document.getElementById('sofDirectActionSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  let [detection, detection_roll, directAction, attack_roll, message] = SOFDirectAction();
+  let disp_message = '';
+  resultArea.appendChild(createResults(detection, [detection_roll], 'Detection'));
+  if (Object.keys(directAction).length === 0) {
+    disp_message = `SOF DA: The detection roll was ${detection_roll}. ${message}<br>`;
+  } else {
+    resultArea.appendChild(createResults(directAction, [attack_roll], 'Attack'));
+    disp_message = `SOF DA: The detection roll was ${detection_roll}. The attack roll was ${attack_roll}. ${message}<br>`;
+  }
+  document.getElementById('resultWords').innerHTML = disp_message;
+  document.getElementById('result_log').innerHTML += disp_message;
+}, false);
+
+// Ground Combat
+
+function getAttackerModifiers() {
+  let att_modi = 0
+  const att_axis = Array.from(document.getElementsByName('att_ax')).find(radio => radio.checked);
+  if (att_axis.value !== 'ax1') {
+    att_axis.value === 'ax2' ? att_modi += 1 : att_modi += 2;
+  }
+  const terrain_type = document.getElementById('grndCom_weather').value;
+  if (terrain_type !== 'clear') {
+    terrain_type === 'light' ? att_modi -= 1 : att_modi -= 2;
+  }
+  att_modi = document.getElementById('grndCom_att_CAS').value ? att_modi += parseInt(document.getElementById('grndCom_att_CAS').value) : att_modi;
+  att_modi = document.getElementById('grndCom_att_FS').value ? att_modi += parseInt(document.getElementById('grndCom_att_FS').value) : att_modi;
+  att_modi = document.getElementById('grndCom_troop_quality').value ? att_modi += parseInt(document.getElementById('grndCom_troop_quality').value) : att_modi;
+  att_modi = document.getElementById('grndCom_att_disrupted').value ? att_modi -= parseInt(document.getElementById('grndCom_att_disrupted').value) : att_modi;
+  att_modi = document.getElementById('grndCom_att_defender').checked ? att_modi += 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_main_effort').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_SIGINTEMSO').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_tankvsinfOpen').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_infvstankNotOpen').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_SOFenabled').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_overcrowd').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_suppress').checked ? att_modi -= 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_rsoi').checked ? att_modi -= 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_extended').checked ? att_modi -= 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_iso').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_assault').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_crowded').checked ? att_modi -= 1 : att_modi;
+  console.log(`The attacker's support is ${att_modi}.`)
+  return att_modi
+}
+
+function getDefenderModifiers() {
+  let def_modi = 0
+  def_modi = document.getElementById('grndCom_def_CAS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_CAS').value) : def_modi;
+  def_modi = document.getElementById('grndCom_def_FS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_FS').value) : def_modi;
+  def_modi = document.getElementById('grndCom_def_defense').checked ? def_modi -= 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi -= 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_actPassCM').checked ? def_modi -= 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_crowded').checked ? def_modi += 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_suppress').checked ? def_modi += 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_rsoi').checked ? def_modi += 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_assault').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_overcrowd').checked ? def_modi += 2 : def_modi;
+  console.log(`The defender's support is ${def_modi}.`)
+  return def_modi
+}
+
+const grnd_abacus = {
+  '7': {'open': 3, 'for/mtn': 3, 'urban': 3, 'durban': 2},
+  '6': {'open': 3, 'for/mtn': 2, 'urban': 2, 'durban': 2},
+  '5': {'open': 2, 'for/mtn': 2, 'urban': 2, 'durban': 1},
+  '4': {'open': 2, 'for/mtn': 2, 'urban': 1, 'durban': 0},
+  '3': {'open': 1, 'for/mtn': 1, 'urban': 1, 'durban': 0},
+  '2': {'open': 1, 'for/mtn': 0, 'urban': 0, 'durban': -1},
+  '1': {'open': 0, 'for/mtn': 0, 'urban': -1, 'durban': -1},
+  '0': {'open': -1, 'for/mtn': -1, 'urban': -1, 'durban': -2},
+  '-1': {'open': -1, 'for/mtn': -1, 'urban': -2, 'durban': -3},
+  '-2': {'open': -2, 'for/mtn': -2, 'urban': -3, 'durban': -3},
+  '-3': {'open': -3, 'for/mtn': -3, 'urban': -3, 'durban': -3},
+  '-4': {'open': -3, 'for/mtn': -3, 'urban': -4, 'durban': -4}
+}
+
+function groundPromoDemo() {
+  const terrain_type = document.getElementById('grndCom_terr').value;
+  const att_mod = getAttackerModifiers();
+  const def_mod = getDefenderModifiers();
+  const advantage = att_mod + def_mod;
+  console.log(`The final support is ${advantage} in ${terrain_type} terrain.`)
+  let adjustments = 0;
+  if (advantage >= 7) {
+    adjustments = grnd_abacus['7'][terrain_type]
+  } else if (advantage <= -4) {
+    adjustments = grnd_abacus['-4'][terrain_type]
+  } else {
+    switch (advantage) {
+      case 6:
+        adjustments = grnd_abacus['6'][terrain_type]
+        break;
+      case 5:
+        adjustments = grnd_abacus['5'][terrain_type]
+        break;
+      case 4:
+        adjustments = grnd_abacus['4'][terrain_type]
+        break;
+      case 3:
+        adjustments = grnd_abacus['3'][terrain_type]
+        break;
+      case 2:
+        adjustments = grnd_abacus['2'][terrain_type]
+        break;
+      case 1:
+        adjustments = grnd_abacus['1'][terrain_type]
+        break;
+      case -1:
+        adjustments = grnd_abacus['-1'][terrain_type]
+        break;
+      case -2:
+        adjustments = grnd_abacus['-2'][terrain_type]
+        break;
+      case -3:
+        adjustments = grnd_abacus['-3'][terrain_type]
+        break;
+      default:
+        adjustments = grnd_abacus['0'][terrain_type]
+        break;
+    }
+  }
+  console.log(`This accounts for a ${adjustments} adjustment on the abacus.`)
+  return adjustments
+}
+
+function conductGroundAttack() {
+  let attk_dice = {};
+  let adj = groundPromoDemo();
+  const brg_tact = document.getElementById('grndCom_brg_tact').value ? parseInt(document.getElementById('grndCom_brg_tact').value) : 0;
+  const defense = document.getElementById('grndCom_def_val').value ? parseInt(document.getElementById('grndCom_def_val').value) : 0;
+  for (let i = 1; i <= 3; i++) {
+    const attk_val = document.getElementById(`grndCom_att${i}_dice`).value;
+    if (attk_val) {
+      if (attk_dice[attk_val]) {
+        attk_dice[attk_val] += 1;
+      } else {
+        attk_dice[attk_val] = 1;
+      }
+    }
+  }
+  console.log(`The attacker's initial dice are ${JSON.stringify(attk_dice)}.`)
+  if (adj > 0) {
+    for (let i = 0; i < adj; i++) {
+      promoteAll(attk_dice); 
+    }
+  } else if (adj < 0) {
+    for (let i = adj; i < 0; i++) {
+      demoteAll(attk_dice);
+    }
+  }
+  if (brg_tact > 0) {
+    for (let i = 0; i < brg_tact; i++) {
+      removeLow(attk_dice)
+      promoteOne(attk_dice)
+    }
+  }
+  console.log(`The attacker's modified dice are ${JSON.stringify(attk_dice)}.`)
+  let attk_rolls = []
+  for (const [key, value] of Object.entries(attk_dice)) {
+    for (let i = 0; i < value; i++) {
+      attk_rolls.push(dieRoller(key))
+    }
+  }
+  console.log(`The dice rolls are ${attk_rolls}`)
+  return [attk_dice, attk_rolls, attk_rolls.filter(x => x >= defense)]
+}
+
+document.getElementById('groundCombatSubmit').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  while (resultArea.firstChild) {
+    resultArea.removeChild(resultArea.firstChild);
+  }
+  let [attk_dice, attk_rolls, hits] = conductGroundAttack();
+  resultArea.appendChild(createResults(attk_dice, attk_rolls))
+  if (JSON.stringify(attk_dice).search("null") !== -1 || JSON.stringify(attk_dice) === "{}") {
+    document.getElementById('resultWords').innerHTML = 'Ground: No dice were rolled.';
+    document.getElementById('result_log').innerHTML += 'Ground: No dice were rolled.<br>';
+  } else {
+    document.getElementById('resultWords').innerHTML = `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
+    document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }<br>`;
+  }
+}, false);
+  </script>
+</html>

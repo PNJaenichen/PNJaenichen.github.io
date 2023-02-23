@@ -58,13 +58,20 @@ function demoteAll(missiles) {
   return missiles;
 }
 
-function promoteAll(missiles) {
+function promoteAll(missiles, ASW=false) {
   if (missiles['16']) {
-    missiles['20'] = missiles['16'];
+    if (!ASW) {
+      missiles['20'] = missiles['16'];
     delete missiles['16'];
+    }
+    
   }
   if (missiles['12']) {
-    missiles['16'] = missiles['12'];
+    if (missiles.hasOwnProperty('16')) {
+      missiles['16'] += missiles['12'];
+    } else {
+      missiles['16'] = missiles['12'];
+    }    
     delete missiles['12'];
   }
   if (missiles['10']) {
@@ -199,6 +206,9 @@ function removeLow(missiles) {
 function allForOne(missiles, ASW = true) {
   let dice = Object.keys(missiles).map(x => parseInt(x)).reverse();
   let high_missile = dice[0];
+  if ((dice.length == 1) && (missiles[high_missile.toString()] == 1)) {
+    return missiles;
+  }
   switch (high_missile) {
     case 4:
       return {'6': 1};
@@ -258,7 +268,7 @@ function createDie(dieSides, dieResult) {
   return newDiv;
 }
 
-function createDefResult(dieSides, dieResult, defValue, hitRes, d4_hits, typeDef='base') {
+function createDefResult(dieSides, dieResult, defValue, hitRes, typeDef='base') {
   const finalResult = document.createElement('div');
   finalResult.classList.add('def-result');
   finalResult.appendChild(createDie(dieSides, dieResult));
@@ -291,14 +301,15 @@ function createDefResult(dieSides, dieResult, defValue, hitRes, d4_hits, typeDef
   hit_result.appendChild(salvoValue);
   hit_result.appendChild(hitResult);
   finalResult.appendChild(hit_result);
-  if (d4_hits > 0) {
-    const d4result = document.createElement('div');
-    d4result.classList.add('def-result');
-    d4result.appendChild(createDie(4, d4_hits));
-    finalResult.appendChild(d4result);
-  }
   return finalResult;
 }
+
+function checkForHits(roll_result, base_def) {
+  const hits = Math.floor(roll_result / base_def)
+  const capped_hits = hits > 4 ? 4 : hits
+  return roll_result < base_def ? 0 : capped_hits
+}
+
 
 // General Dice Roller
 
@@ -308,18 +319,31 @@ document.getElementById('generalSubmit').addEventListener('click', () => {
     resultArea.removeChild(resultArea.firstChild);
   }
   const dice_to_roll = {};
-  const die_value = document.getElementById('general_value').value ? document.getElementById('general_value').value : '4';
-  const die_total = document.getElementById('gen_total').value ? parseInt(document.getElementById('gen_total').value) : 1;
+  for (let user_input of ['one', 'two', 'three']) {
+    let die_value = document.getElementById(`general_value_${user_input}`).value ? document.getElementById(`general_value_${user_input}`).value : '4';
+    let die_amount = document.getElementById(`gen_total_${user_input}`).value ? parseInt(document.getElementById(`gen_total_${user_input}`).value) : 1;
+    dice_to_roll[die_value] = die_amount;
+  }
+  console.log(dice_to_roll);
   const die_results = [];
-  if (die_value) {
-    for (let i = 0; i < die_total; i++) {
-      die_results.push(dieRoller(die_value))
+  for (let [key,value] of Object.entries(dice_to_roll)) {
+    console.log(key, value);
+    for (let i = 0; i < value; i++) {
+      roll_result = dieRoller(key);
+      console.log(`a d${key} was rolled and the result was ${roll_result}`)
+      die_results.push(roll_result)
     }
   }
-  dice_to_roll[die_value] = die_total;
+  console.log(die_results);
   resultArea.appendChild(createResults(dice_to_roll, die_results));
-  document.getElementById('resultWords').innerText = `General Roll: ${die_total === 1 ? `One ${die_value}-sided die was` : `${die_total} ${die_value}-sided dice were`} rolled, with the following results: ${die_results}`;
-  document.getElementById('result_log').innerHTML += `General Roll: ${die_total === 1 ? `One ${die_value}-sided die was` : `${die_total} ${die_value}-sided dice were`} rolled, with the following results: ${die_results}<br>`;
+  let final_textResult = '';
+  let last_index = 0;
+  for (let [key, value] of Object.entries(dice_to_roll)) {
+    final_textResult += `${value === 1 ? `One ${key}-sided die was` : `${value} ${key}-sided dice were`} rolled, with the following results: ${die_results.slice(last_index,last_index+value)}. `;
+    last_index += value;
+  }
+  document.getElementById('resultWords').innerText = `General Roll: ${final_textResult}`;
+  document.getElementById('result_log').innerHTML += `General Roll: ${final_textResult}<br>`;
 }, false)
 
 // Theater and Local ISR Tool
@@ -340,6 +364,9 @@ function getISRUserInput() {
   }
   if (document.getElementById('isr_combined').checked) {
     ISR_assets = allForOne(ISR_assets, false);
+  }
+  if (document.getElementById('isr_silent').checked) {
+    promoteAll(ISR_assets)
   }
   return [ISR_assets, detect_value]
 }
@@ -406,52 +433,76 @@ document.getElementById('aswSubmit').addEventListener('click', () => {
 // Surface to Surface and Air to Surface Strikes
 
 function getStrikeInputs() {
-  const promos = document.getElementById('promo_input').value ? parseInt(document.getElementById('promo_input').value) : 0;
-  let demos = document.getElementById('demo_input').value ? parseInt(document.getElementById('demo_input').value) : 0;
-  const hyper_inbound = document.getElementById('hyper').checked;
-  const bm_inbound = document.getElementById('ballistic').checked;
-  let cap = 0;
-  if (!hyper_inbound && !bm_inbound) {
-    cap = document.getElementById('cap_input').value ? parseInt(document.getElementById('cap_input').value) : 0;
-  }
-  const base_def = document.getElementById('target_def').value ? parseInt(document.getElementById('target_def').value) : 0;
-  const inbound = {};
-  const defense = {};
+  const hyper_inbound = {};
+  const bm_inbound = {}; 
+  const cruise_inbound = {};
   for (let user_input of ['inbound_one', 'inbound_two', 'inbound_three']) {
     if (document.getElementById(user_input).value && document.getElementById(user_input + '_total').value) {
       const weaponValue = parseInt(document.getElementById(user_input).value);
       const weaponTotal = parseInt(document.getElementById(user_input + '_total').value);
-      if (weaponTotal === 0) {
-        continue;
-      } else if (weaponValue in inbound) {
-        inbound[weaponValue] += weaponTotal
-      } else {;
-        inbound[weaponValue] = weaponTotal;
-      }
-    }
-  }
-  for (let user_input of ['def_one', 'def_two', 'def_three']) {
-    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total')) {
-      const defenseValue = parseInt(document.getElementById(user_input).value);
-      const defenseTotal = parseInt(document.getElementById(user_input + '_total').value);
-      if ((!hyper_inbound && !bm_inbound) || (bm_inbound && document.getElementById(user_input + '_bmd').checked)) {
-        if (defenseValue === 0 || defenseTotal === 0) {
+      const weaponType = document.querySelector(`input[name="${user_input}_type"]:checked`).value
+      if (weaponType == 'hyper') {
+        if (weaponTotal === 0) {
           continue;
-        } else if (defenseValue in defense) {
-          defense[defenseValue] += defenseTotal;
-        } else {
-          defense[defenseValue] = defenseTotal;
+        } else if (weaponValue in hyper_inbound) {
+          hyper_inbound[weaponValue] += weaponTotal
+        } else {;
+          hyper_inbound[weaponValue] = weaponTotal;
+        }
+      } else if (weaponType == 'ballistic') {
+        if (weaponTotal === 0) {
+          continue;
+        } else if (weaponValue in bm_inbound) {
+          bm_inbound[weaponValue] += weaponTotal
+        } else {;
+          bm_inbound[weaponValue] = weaponTotal;
+        }
+      } else {
+        if (weaponTotal === 0) {
+          continue;
+        } else if (weaponValue in cruise_inbound) {
+          cruise_inbound[weaponValue] += weaponTotal
+        } else {;
+          cruise_inbound[weaponValue] = weaponTotal;
         }
       }
     }
   }
-  if (Object.keys(defense).length > 0) {
-    demos += document.getElementById("aew_input").checked ? 2 : 0;
+  const bm_defense = {};
+  const cruise_defense = {};
+  for (let user_input of ['def_one', 'def_two', 'def_three']) {
+    if (document.getElementById(user_input).value && document.getElementById(user_input + '_total')) {
+      const defenseValue = parseInt(document.getElementById(user_input).value);
+      const defenseTotal = parseInt(document.getElementById(user_input + '_total').value);
+      if (document.getElementById(user_input + '_bmd').checked && Object.keys(bm_inbound).length !== 0) {
+        if (defenseValue === 0 || defenseTotal === 0) {
+          continue;
+        } else if (defenseValue in bm_defense) {
+          bm_defense[defenseValue] += defenseTotal;
+        } else {
+          bm_defense[defenseValue] = defenseTotal;
+        }
+      } else {
+        if (defenseValue === 0 || defenseTotal === 0) {
+          continue;
+        } else if (defenseValue in cruise_defense) {
+          cruise_defense[defenseValue] += defenseTotal;
+        } else {
+          cruise_defense[defenseValue] = defenseTotal;
+        }
+      }
+    }
   }
-  return {inbound, defense, base_def, cap, promos, demos, hyper_inbound, bm_inbound};
+  const base_def = document.getElementById('target_def').value ? parseInt(document.getElementById('target_def').value) : 0;
+  const cap = document.getElementById('cap_input').value ? parseInt(document.getElementById('cap_input').value) : 0;
+  const promos = document.getElementById('promo_input').value ? parseInt(document.getElementById('promo_input').value) : 0;
+  const demos = document.getElementById('demo_input').value ? parseInt(document.getElementById('demo_input').value) : 0;
+  const us_cec = document.getElementById("aew_input").checked;
+
+  return {hyper_inbound, bm_inbound, cruise_inbound, bm_defense, cruise_defense, base_def, cap, promos, demos, us_cec};
 }
 
-function strikeBaseAttack(inbound, base_def, d4_hits) {
+function strikeBaseAttack(inbound, base_def) {
   const dieRolls = {};
   for (const x of Object.keys(inbound)) {
     for (let i = 0; i < inbound[x]; i++) {
@@ -466,24 +517,12 @@ function strikeBaseAttack(inbound, base_def, d4_hits) {
   for (const x of Object.keys(inbound).reverse()) {
     for (let i = 0; i < inbound[x]; i++) {
       const result = dieRolls[x][i] >= base_def ? 'HIT' : 'MISS';
-      results.push([x, dieRolls[x][i], base_def, result, (d4_hits && result === 'HIT') ? dieRoller(4) : 0]);
+      results.push([x, dieRolls[x][i], base_def, result, checkForHits(dieRolls[x][i], base_def)]);
     }
   }
   let hit_count = 0;
   for (const result of results) {
-    if (result[4] === 0) {
-      if (result[1] >= (base_def * 2)) {
-        hit_count += 2;
-      } else if (result[1] >= base_def) {
-        hit_count += 1;
-      }
-      if (result[1] === parseInt(result[0]) && parseInt(result[0]) >= 12) {
-      hit_count += 1;
-      }
-    } else {
-      hit_count += result[4]
-    }
-    
+    hit_count += result[4]
   }
   return {results, hit_count}
 }
@@ -547,98 +586,308 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
     resultArea.removeChild(resultArea.firstChild);
     document.getElementById('resultWords').innerText = '';
   }
-  const { inbound, defense, base_def, cap, promos, demos, hyper_inbound, bm_inbound } = getStrikeInputs();
+  document.getElementById('result_log').innerHTML += 'Surface Strike: ';
+  const { hyper_inbound, bm_inbound, cruise_inbound, bm_defense, cruise_defense, base_def, cap, promos, demos, us_cec } = getStrikeInputs();
+  let modifier_adjust = promos - demos;
+  if (modifier_adjust < 0) {
+    for (let i = 0; i > modifier_adjust; i--) {
+      demoteAll(hyper_inbound);
+      demoteAll(bm_inbound);
+      demoteAll(cruise_inbound);
+    } 
+  } else {
+    for (let i = 0; i < modifier_adjust; i++) {
+      promoteAll(hyper_inbound);
+      promoteAll(bm_inbound);
+      promoteAll(cruise_inbound);
+    } 
+  }
+  const total_hyper = Object.values(hyper_inbound).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  const total_bm = Object.values(bm_inbound).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  const total_cruise = Object.values(cruise_inbound).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  const total_defense = Object.values(cruise_defense).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  const total_bmDefense = Object.values(bm_defense).reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0);
+  if (us_cec && (total_bmDefense > 0 || total_defense > 0)) {
+    for (let i = 0; i < 2; i++) {
+      demoteAll(bm_inbound)
+      demoteAll(cruise_inbound)
+    }
+  }
   let finalResult;
   let salvoResult;
-  const totalInbound = Object.values(inbound).reduce(
-    (previousValue, currentValue) => previousValue + currentValue, 0);
-  const totalDefense = Object.values(defense).reduce(
-    (previousValue, currentValue) => previousValue + currentValue, 0);
-  const salvoDelta = totalInbound - totalDefense;
-  const adjInbound = inboundAdjustments(inbound, salvoDelta, cap, promos - demos)
-  if (totalDefense === 0) {
-    finalResult = strikeBaseAttack(adjInbound, base_def, hyper_inbound || bm_inbound);
-  } else if (totalInbound <= totalDefense) {
-    salvoResult = strikeDefSalvoAttack(adjInbound, defense);
-    const closeInbound = {};
-    for (const salvo of salvoResult) {
-      if (salvo[3] === 'HIT') {
-        if (salvo[0] in closeInbound) {
-          closeInbound[salvo[0]] += 1;
-        } else {
-          closeInbound[salvo[0]] = 1;
+  let total_stepsLost = 0;
+  if (total_hyper > 0) {
+    finalResult = strikeBaseAttack(hyper_inbound, base_def);
+    const baseHeader = document.createElement('p');
+    baseHeader.innerText = 'Hypersonic Results:';
+    document.getElementById('resultArea').appendChild(baseHeader);
+    let successfulFinal = 0;
+    for (const result of finalResult.results) {
+      document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+      result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+    }
+    total_stepsLost += finalResult.hit_count
+    const finalText = `Hypersonic Results: ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+    document.getElementById('resultWords').innerText += `${finalText}\n`;
+    document.getElementById('result_log').innerHTML += finalText;
+  }
+  if (total_bm > 0) {
+    if (total_bmDefense === 0) {
+      finalResult = strikeBaseAttack(bm_inbound, base_def);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Ballistic Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = `Ballistic Results: ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    } else if (total_bmDefense >= total_bm) {
+      for (let i = 0; i < (total_bmDefense - total_bm); i++) {
+        demoteOne(bm_inbound);
+      }
+      salvoResult = strikeDefSalvoAttack(bm_inbound, bm_defense);
+      if (salvoResult) {
+        const salvoHeader = document.createElement('p');
+        salvoHeader.innerText = 'BMD Salvo Results:';
+        document.getElementById('resultArea').appendChild(salvoHeader);
+        let successfulSalvo = 0;
+        for (const result of salvoResult) {
+          document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+          result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+        }
+        if (salvoResult) {
+          const salvoText = `Ballistic Results: ${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
+          document.getElementById('resultWords').innerText += salvoText;
+          document.getElementById('result_log').innerHTML += salvoText; 
         }
       }
-    }
-    finalResult = strikeBaseAttack(closeInbound, base_def, bm_inbound);
-  } else {
-    console.log(adjInbound)
-    const allOffensiveSalvos = [];
-    for (const x of Object.keys(adjInbound)) {
-      for (let i = 0; i < adjInbound[x]; i++) {
-        allOffensiveSalvos.push(x);
-      } 
-    }
-    console.log(allOffensiveSalvos, salvoDelta)
-    const defendedSalvoList = allOffensiveSalvos.reverse().slice(0, totalDefense);
-    const undefendedSalvoList = allOffensiveSalvos.slice(totalDefense);
-    console.log(defendedSalvoList, undefendedSalvoList)
-    const defendedSalvoObj = {};
-    const undefendedSalvoObj = {};
-    defendedSalvoList.forEach(x => {
-      if (x in defendedSalvoObj) {
-        defendedSalvoObj[x] += 1;
-      } else {
-        defendedSalvoObj[x] = 1;
-      }
-    })
-    undefendedSalvoList.forEach(x => {
-      if (x in undefendedSalvoObj) {
-        undefendedSalvoObj[x] += 1;
-      } else {
-        undefendedSalvoObj[x] = 1;
-      }
-    })
-    salvoResult = strikeDefSalvoAttack(defendedSalvoObj, defense);
-    for (const salvo of salvoResult) {
-      if (salvo[3] === 'HIT') {
-        if (salvo[0] in undefendedSalvoObj) {
-          undefendedSalvoObj[salvo[0]] += 1;
-        } else {
-          undefendedSalvoObj[salvo[0]] = 1;
+      const closeInbound = {};
+      for (const salvo of salvoResult) {
+        if (salvo[3] === 'HIT') {
+          if (salvo[0] in closeInbound) {
+            closeInbound[salvo[0]] += 1;
+          } else {
+            closeInbound[salvo[0]] = 1;
+          }
         }
       }
-    } 
-    finalResult = strikeBaseAttack(undefendedSalvoObj, base_def, bm_inbound);
-  }
-  let successfulSalvo = 0;
-  if (salvoResult) {
-    const salvoHeader = document.createElement('p');
-    salvoHeader.innerText = 'Defensive Salvo Results:';
-    document.getElementById('resultArea').appendChild(salvoHeader);
-    for (const result of salvoResult) {
-      document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
-      result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+      finalResult = strikeBaseAttack(closeInbound, base_def);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Ballistic Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    } else {
+      const allSalvos = [];
+      for (const x of Object.keys(bm_inbound)) {
+        for (let i = 0; i < bm_inbound[x]; i++) {
+          allSalvos.push(x);
+        }
+      }
+      const defendedSalvos = allSalvos.reverse().slice(0, total_bmDefense);
+      const undefendedSalvos = allSalvos.slice(total_bmDefense);
+      const defendedSalvoObj = {};
+      const undefendedSalvoObj = {};
+      defendedSalvos.forEach(x => {
+        if (x in defendedSalvoObj) {
+          defendedSalvoObj[x] += 1;
+        } else {
+          defendedSalvoObj[x] = 1;
+        }
+      });
+      undefendedSalvos.forEach(x => {
+        if (x in undefendedSalvoObj) {
+          undefendedSalvoObj[x] += 1;
+        } else {
+          undefendedSalvoObj[x] = 1;
+        }
+      });
+      salvoResult = strikeDefSalvoAttack(defendedSalvoObj, total_bmDefense);
+      if (salvoResult) {
+        const salvoHeader = document.createElement('p');
+        salvoHeader.innerText = 'BMD Salvo Results:';
+        document.getElementById('resultArea').appendChild(salvoHeader);
+        let successfulSalvo = 0;
+        for (const result of salvoResult) {
+          document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+          result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+        }
+        if (salvoResult) {
+          const salvoText = `Ballistic Results: ${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
+          document.getElementById('resultWords').innerText += salvoText;
+          document.getElementById('result_log').innerHTML += salvoText; 
+        }
+      }
+      for (const salvo of salvoResult) {
+        if (salvo[3] === 'HIT') {
+          if (salvo[0] in undefendedSalvoObj) {
+            undefendedSalvoObj[salvo[0]] += 1;
+          } else {
+            undefendedSalvoObj[salvo[0]] = 1;
+          }
+        }
+      }
+      finalResult = strikeBaseAttack(undefendedSalvoObj, base_def);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Ballistic Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
     }
   }
-  const baseHeader = document.createElement('p');
-  baseHeader.innerText = 'Final Results:';
-  document.getElementById('resultArea').appendChild(baseHeader);
-  let successfulFinal = 0;
-  for (const result of finalResult.results) {
-    document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
-    result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+  if (total_cruise > 0) {
+    console.log(cruise_inbound, cruise_defense);
+    if (cap > 0) {
+      for (let i = 0; i < cap; i++) {
+        demoteOne(cruise_inbound);
+      }
+    }
+    if (total_defense === 0) {
+      finalResult = strikeBaseAttack(cruise_inbound, base_def);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Cruise Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+    } else if (total_defense >= total_cruise) {
+      for (let i = 0; i < (total_defense - total_cruise); i++) {
+        demoteOne(cruise_inbound);
+      }
+      salvoResult = strikeDefSalvoAttack(cruise_inbound, cruise_defense);
+      if (salvoResult) {
+        const salvoHeader = document.createElement('p');
+        salvoHeader.innerText = 'Defensive Salvo Results:';
+        document.getElementById('resultArea').appendChild(salvoHeader);
+        let successfulSalvo = 0;
+        for (const result of salvoResult) {
+          document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+          result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+        }
+        if (salvoResult) {
+          const salvoText = `Other Results: ${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
+          document.getElementById('resultWords').innerText += salvoText;
+          document.getElementById('result_log').innerHTML += salvoText; 
+        }
+      }
+      const closeInbound = {};
+      for (const salvo of salvoResult) {
+        if (salvo[3] === 'HIT') {
+          if (salvo[0] in closeInbound) {
+            closeInbound[salvo[0]] += 1;
+          } else {
+            closeInbound[salvo[0]] = 1;
+          }
+        }
+      }
+      finalResult = strikeBaseAttack(closeInbound, base_def);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Other Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    } else {
+      const allSalvos = [];
+      for (const x of Object.keys(cruise_inbound)) {
+        for (let i = 0; i < cruise_inbound[x]; i++) {
+          allSalvos.push(x);
+        }
+      }
+      const defendedSalvos = allSalvos.reverse().slice(0, total_defense);
+      const undefendedSalvos = allSalvos.slice(total_defense);
+      const defendedSalvoObj = {};
+      const undefendedSalvoObj = {};
+      defendedSalvos.forEach(x => {
+        if (x in defendedSalvoObj) {
+          defendedSalvoObj[x] += 1;
+        } else {
+          defendedSalvoObj[x] = 1;
+        }
+      });
+      undefendedSalvos.forEach(x => {
+        if (x in undefendedSalvoObj) {
+          undefendedSalvoObj[x] += 1;
+        } else {
+          undefendedSalvoObj[x] = 1;
+        }
+      });
+      salvoResult = strikeDefSalvoAttack(defendedSalvoObj, cruise_defense);
+      console.log(salvoResult);
+      if (salvoResult) {
+        const salvoHeader = document.createElement('p');
+        salvoHeader.innerText = 'Defensive Salvo Results:';
+        document.getElementById('resultArea').appendChild(salvoHeader);
+        let successfulSalvo = 0;
+        for (const result of salvoResult) {
+          document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', 0, 'salvo'));
+          result[3] === 'HIT' ? successfulSalvo += 1 : successfulSalvo += 0;
+        }
+        if (salvoResult) {
+          const salvoText = `Other Results: ${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
+          document.getElementById('resultWords').innerText += salvoText;
+          document.getElementById('result_log').innerHTML += salvoText; 
+        }
+      }
+      for (const salvo of salvoResult) {
+        if (salvo[3] === 'HIT') {
+          if (salvo[0] in undefendedSalvoObj) {
+            undefendedSalvoObj[salvo[0]] += 1;
+          } else {
+            undefendedSalvoObj[salvo[0]] = 1;
+          }
+        }
+      }
+      finalResult = strikeBaseAttack(undefendedSalvoObj, base_def);
+      const baseHeader = document.createElement('p');
+      baseHeader.innerText = 'Cruise Missile Results:';
+      document.getElementById('resultArea').appendChild(baseHeader);
+      let successfulFinal = 0;
+      for (const result of finalResult.results) {
+        document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
+        result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
+      }
+      total_stepsLost += finalResult.hit_count
+      const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
+    }
   }
-  document.getElementById('result_log').innerHTML += 'Missile Strike: ';
-  if (salvoResult) {
-    const salvoText = `${successfulSalvo} inbound salvo${successfulSalvo !== 1 ? 's' : ''} (${salvoResult.map(x => x[1])}) got through the defensive salvos (${salvoResult.map(x => x[2])}). `;
-    document.getElementById('resultWords').innerText = salvoText;
-    document.getElementById('result_log').innerHTML += salvoText; 
-  }
-  const finalText = ` ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost.`;
-  document.getElementById('resultWords').innerText += finalText;
-  document.getElementById('result_log').innerHTML += finalText;
-  document.getElementById('result_log').innerHTML += '<br>';
+  document.getElementById('resultWords').innerText += `Total Steps Lost: ${total_stepsLost}.`
+  document.getElementById('result_log').innerHTML += `Total Steps Lost: ${total_stepsLost}<br>`;
 }, false);
 
 // Torpedo Attack Tool
@@ -648,7 +897,7 @@ function findSub(subDetect, ASW=[0, 0, 0, false, {}]) {
   let promo_demo = ASW.slice(0,-2).reduce((acc, a) => acc + a, 0);
   if (promo_demo > 0) {
     for (let i = 0; i < promo_demo; i++) {
-      ASW_assets = promoteAll(ASW_assets)
+      ASW_assets = promoteAll(ASW_assets, true)
     }
   } else {
     for (let i = 0; i > promo_demo; i--) {
@@ -713,18 +962,10 @@ function subAttackResults() {
 
 document.getElementById('torpedoSubmit').addEventListener('click', () => {
   let [ASW_assets, ASW_rolls, subFound, ASW_attacks, sub_torps, torp_rolls, targDef, subDef] = subAttackResults();
-  const torp_results = torp_rolls.filter(x => x >= targDef)
-  let torp_hits = torp_results.length
-  console.log(torp_hits);
+  const asw_screen = document.getElementById('torp_ASW_screen').checked;
+  let torp_hits = 0
   for (const hit of torp_rolls) {
-    if (hit >= (targDef * 2)) {
-      console.log("double def");
-      torp_hits += 1;
-    }
-    if (hit === parseInt(Object.keys(sub_torps)[0]) && parseInt(Object.keys(sub_torps)[0]) >= 12) {
-      console.log("rolled max");
-      torp_hits += 1;
-    }     
+    torp_hits += checkForHits(hit, targDef)   
   }
   const asw_hits = ASW_attacks.filter(x => x >= subDef)
   const resultArea = document.getElementById('resultArea');
@@ -735,11 +976,26 @@ document.getElementById('torpedoSubmit').addEventListener('click', () => {
   if (ASW_attacks.length !== 0) {
     resultArea.appendChild(createResults(ASW_assets, ASW_attacks, 'ASW Attack'));
   }
-  resultArea.appendChild(createResults(sub_torps, torp_rolls, 'Torpedo Results'));
-  const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. ${subFound ? `The sub was found (${ASW_rolls}) and ${asw_hits.length > 0 ? 'was destroyed' : 'survived'} (${ASW_attacks})` : `The sub was undetected (${ASW_rolls}).`}`
-  const torp_result = `${torp_hits === 0 ? 'The target survived.' : torp_hits === 1 ? 'The target took one hit' : `The target took ${torp_hits} hits`} (${torp_rolls}).`
-  document.getElementById('resultWords').innerText = `Torpedo Attack: ${torp_result} ${ASW_result}`;
-  document.getElementById('result_log').innerHTML += `Torpedo Attack: ${torp_result} ${ASW_result}<br>`;
+  if ((asw_screen && asw_hits.length == 0) || (!asw_screen)) {
+    resultArea.appendChild(createResults(sub_torps, torp_rolls, 'Torpedo Results'));
+  }
+  if (asw_screen) {
+    if (asw_hits.length > 0) {
+      const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. The sub was found by the ASW Screen (${ASW_rolls}) and destroyed (${ASW_attacks}).`
+      document.getElementById('resultWords').innerText = `Torpedo Attack: ${ASW_result}`;
+      document.getElementById('result_log').innerHTML += `Torpedo Attack: ${ASW_result}<br>`;
+    } else {
+      const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. ${subFound ? `The sub was found (${ASW_rolls}) and survived (${ASW_attacks}).` : `The sub was undetected (${ASW_rolls}).`}`
+      const torp_result = `${torp_hits === 0 ? 'The target survived.' : torp_hits === 1 ? 'The target took one hit' : `The target took ${torp_hits} hits`} (${torp_rolls}).`
+      document.getElementById('resultWords').innerText = `Torpedo Attack: ${torp_result} ${ASW_result}`;
+      document.getElementById('result_log').innerHTML += `Torpedo Attack: ${torp_result} ${ASW_result}<br>`;
+    }
+  } else {
+    const ASW_result = `The following assets ${JSON.stringify(ASW_assets)} went looking. ${subFound ? `The sub was found (${ASW_rolls}) and ${asw_hits.length > 0 ? 'was destroyed' : 'survived'} (${ASW_attacks})` : `The sub was undetected (${ASW_rolls}).`}`
+    const torp_result = `${torp_hits === 0 ? 'The target survived.' : torp_hits === 1 ? 'The target took one hit' : `The target took ${torp_hits} hits`} (${torp_rolls}).`
+    document.getElementById('resultWords').innerText = `Torpedo Attack: ${torp_result} ${ASW_result}`;
+    document.getElementById('result_log').innerHTML += `Torpedo Attack: ${torp_result} ${ASW_result}<br>`;
+  }
 }, false);
 
 // Surface to Air Attack Tool
@@ -944,15 +1200,17 @@ function SOFDirectAction() {
     message = `The unit was discovered.`;
   } else {
     const attack_die = document.getElementById('sofDA_att').value;
+    const target_def = parseInt(document.getElementById('sofDA_def').value)
     attack_roll = dieRoller(parseInt(attack_die))
     directAction[attack_die] = 1;
-    message =  "The attack was unsuccessful.";
-    if (attack_roll >= parseInt(document.getElementById('sofDA_def').value)) {
-      message =  "One hit was scored.";
-      if (attack_roll >= parseInt(attack_die) * 2) {
-        message =  "Two hits were scored!";
-      } 
+    message = "The attack was unsuccessful."; 
+    const total_hits = checkForHits(attack_roll, target_def)
+    if (total_hits == 1) {
+      message = "One hit was scored.";
     }
+    if (total_hits > 1) {
+      message = `${total_hits} hits scored!`;
+    } 
   }
   return [detection, detection_roll, directAction, attack_roll, message]
 }
@@ -990,36 +1248,40 @@ function getAttackerModifiers() {
   att_modi = document.getElementById('grndCom_att_CAS').value ? att_modi += parseInt(document.getElementById('grndCom_att_CAS').value) : att_modi;
   att_modi = document.getElementById('grndCom_att_FS').value ? att_modi += parseInt(document.getElementById('grndCom_att_FS').value) : att_modi;
   att_modi = document.getElementById('grndCom_troop_quality').value ? att_modi += parseInt(document.getElementById('grndCom_troop_quality').value) : att_modi;
-  att_modi = document.getElementById('grndCom_att_disrupted').value ? att_modi -= parseInt(document.getElementById('grndCom_att_disrupted').value) : att_modi;
-  att_modi = document.getElementById('grndCom_att_defender').checked ? att_modi += 2 : att_modi;
   att_modi = document.getElementById('grndCom_att_main_effort').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_SIGINTEMSO').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_tankvsinfOpen').checked ? att_modi += 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_infvstankNotOpen').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_SOFenabled').checked ? att_modi += 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_overcrowd').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_eng_enabled').checked ? att_modi += 1 : att_modi;
+  att_modi = document.getElementById('grndCom_att_disrupted').checked ? att_modi -= 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_suppress').checked ? att_modi -= 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_rsoi').checked ? att_modi -= 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_extended').checked ? att_modi -= 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_iso').checked ? att_modi -= 2 : att_modi;
+  att_modi = document.getElementById('grndCom_att_iso').checked ? att_modi -= 3 : att_modi;
   att_modi = document.getElementById('grndCom_att_assault').checked ? att_modi -= 2 : att_modi;
-  att_modi = document.getElementById('grndCom_att_crowded').checked ? att_modi -= 1 : att_modi;
   console.log(`The attacker's support is ${att_modi}.`)
   return att_modi
 }
 
 function getDefenderModifiers() {
   let def_modi = 0
+  const est_def = Array.from(document.getElementsByName('def_amt')).find(radio => radio.checked);
+  if (est_def.value !== 'def1') {
+    est_def.value === 'def2' ? def_modi -= 1 : def_modi -= 2;
+  }
+  const sup_arr = Array.from(document.getElementsByName('def_sup')).find(radio => radio.checked);
+  if (sup_arr.value !== 'sup1') {
+    sup_arr.value === 'sup2' ? def_modi += 1 : def_modi += 2;
+  }
   def_modi = document.getElementById('grndCom_def_CAS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_CAS').value) : def_modi;
   def_modi = document.getElementById('grndCom_def_FS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_FS').value) : def_modi;
-  def_modi = document.getElementById('grndCom_def_defense').checked ? def_modi -= 1 : def_modi;
-  def_modi = document.getElementById('grndCom_def_fortified').checked ? def_modi -= 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_atgm').value ? def_modi -= parseInt(document.getElementById('grndCom_def_atgm').value) : def_modi;
+  def_modi = document.getElementById('grndCom_def_obstacles').value ? def_modi -= parseInt(document.getElementById('grndCom_def_obstacles').value) : def_modi;
   def_modi = document.getElementById('grndCom_def_actPassCM').checked ? def_modi -= 1 : def_modi;
-  def_modi = document.getElementById('grndCom_def_crowded').checked ? def_modi += 1 : def_modi;
+  def_modi = document.getElementById('grndCom_def_unsupported').checked ? def_modi += 2 : def_modi;
   def_modi = document.getElementById('grndCom_def_suppress').checked ? def_modi += 1 : def_modi;
-  def_modi = document.getElementById('grndCom_def_rsoi').checked ? def_modi += 1 : def_modi;
-  def_modi = document.getElementById('grndCom_def_assault').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_crowded').checked ? def_modi += 1 : def_modi;
   def_modi = document.getElementById('grndCom_def_overcrowd').checked ? def_modi += 2 : def_modi;
+  def_modi = document.getElementById('grndCom_def_rsoi').checked ? def_modi += 1 : def_modi;
   console.log(`The defender's support is ${def_modi}.`)
   return def_modi
 }
@@ -1029,9 +1291,9 @@ const grnd_abacus = {
   '6': {'open': 3, 'for/mtn': 2, 'urban': 2, 'durban': 2},
   '5': {'open': 2, 'for/mtn': 2, 'urban': 2, 'durban': 1},
   '4': {'open': 2, 'for/mtn': 2, 'urban': 1, 'durban': 0},
-  '3': {'open': 1, 'for/mtn': 1, 'urban': 1, 'durban': 0},
+  '3': {'open': 1, 'for/mtn': 1, 'urban': 0, 'durban': -1},
   '2': {'open': 1, 'for/mtn': 0, 'urban': 0, 'durban': -1},
-  '1': {'open': 0, 'for/mtn': 0, 'urban': -1, 'durban': -1},
+  '1': {'open': 0, 'for/mtn': 0, 'urban': -1, 'durban': -2},
   '0': {'open': -1, 'for/mtn': -1, 'urban': -1, 'durban': -2},
   '-1': {'open': -1, 'for/mtn': -1, 'urban': -2, 'durban': -3},
   '-2': {'open': -2, 'for/mtn': -2, 'urban': -3, 'durban': -3},
@@ -1039,11 +1301,66 @@ const grnd_abacus = {
   '-4': {'open': -3, 'for/mtn': -3, 'urban': -4, 'durban': -4}
 }
 
+function g_cat(die_roll, red_shield) {
+  switch(die_roll) {
+    case 1:
+      return "Attacker loses 2 steps and all surviving attacking units take a d8 Morale Check."
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+      return "Defender loses 2 steps, survivors must retreat 2 hexes and are suppressed. The attacker may advance 1 more hex and attack again."
+    case 20:
+      return "Defender loses 3 steps, attackers may exploit."
+    default:
+      if (die_roll <= Math.floor(red_shield / 2)) {
+        return "Attacker loses 1 step and all surviving attacking units take a d8 Morale Check."
+      }
+      if (die_roll < red_shield) {
+        return "Attacker loses 1 step and all surviving attacking units take a d6 Morale Check."
+      }
+      if (die_roll == red_shield) {
+        return "Both sides lose 1 step and all surviving units take a d6 Morale Check."
+      }
+      if (die_roll > (red_shield * 4)) {
+        return "Defender loses 3 steps, attackers may exploit."
+      }
+      if (die_roll > (red_shield * 3)) {
+        return "Defender loses 2 steps, survivors must retreat 2 hexes and are suppressed. The attacker may advance 1 more hex and attack again."
+      }
+      if (die_roll > (red_shield * 2)) {
+        return "Defender loses 2 steps and surviving defenders must make a d8 Morale Check."
+      }
+      return "Both sides lose 1 step, all surviving defending units take a d6 Morale Check."
+  }
+}
+
 function groundPromoDemo() {
   const terrain_type = document.getElementById('grndCom_terr').value;
   const att_mod = getAttackerModifiers();
   const def_mod = getDefenderModifiers();
-  const advantage = att_mod + def_mod;
+  const att_battalions = parseInt(document.getElementById('grndCom_att_bn_tot').value)
+  const def_battalions = parseInt(document.getElementById('grndCom_def_bn_tot').value)
+  let advantage = att_mod + def_mod;
+  let odds = 0;
+  if (att_battalions == def_battalions) {
+    odds = 1
+  } else {
+    odds = att_battalions / def_battalions
+  }
+  if (odds >= 5) {
+    advantage += 4
+  } else if (odds >= 4) {
+    advantage += 3
+  } else if (odds >= 3) {
+    advantage += 2 
+  } else if (odds >= 2) {
+    advantage += 1
+  } else if (odds <= 0.33) {
+    advantage -= 2
+  } else if (odds <= 0.5) {
+    advantage -= 1
+  }
   console.log(`The final support is ${advantage} in ${terrain_type} terrain.`)
   let adjustments = 0;
   if (advantage >= 7) {
@@ -1091,18 +1408,9 @@ function groundPromoDemo() {
 function conductGroundAttack() {
   let attk_dice = {};
   let adj = groundPromoDemo();
-  const brg_tact = document.getElementById('grndCom_brg_tact').value ? parseInt(document.getElementById('grndCom_brg_tact').value) : 0;
   const defense = document.getElementById('grndCom_def_val').value ? parseInt(document.getElementById('grndCom_def_val').value) : 0;
-  for (let i = 1; i <= 3; i++) {
-    const attk_val = document.getElementById(`grndCom_att${i}_dice`).value;
-    if (attk_val) {
-      if (attk_dice[attk_val]) {
-        attk_dice[attk_val] += 1;
-      } else {
-        attk_dice[attk_val] = 1;
-      }
-    }
-  }
+  const attk_val = document.getElementById('lead_attack_dice').value;
+  attk_dice[attk_val] = 1
   console.log(`The attacker's initial dice are ${JSON.stringify(attk_dice)}.`)
   if (adj > 0) {
     for (let i = 0; i < adj; i++) {
@@ -1113,12 +1421,6 @@ function conductGroundAttack() {
       demoteAll(attk_dice);
     }
   }
-  if (brg_tact > 0) {
-    for (let i = 0; i < brg_tact; i++) {
-      removeLow(attk_dice)
-      promoteOne(attk_dice)
-    }
-  }
   console.log(`The attacker's modified dice are ${JSON.stringify(attk_dice)}.`)
   let attk_rolls = []
   for (const [key, value] of Object.entries(attk_dice)) {
@@ -1126,8 +1428,10 @@ function conductGroundAttack() {
       attk_rolls.push(dieRoller(key))
     }
   }
-  console.log(`The dice rolls are ${attk_rolls}`)
-  return [attk_dice, attk_rolls, attk_rolls.filter(x => x >= defense)]
+  console.log(`The dice roll is ${attk_rolls}`)
+  const result_message = g_cat(attk_rolls[0], defense)
+  console.log(result_message)
+  return [attk_dice, attk_rolls, defense, result_message]
 }
 
 document.getElementById('groundCombatSubmit').addEventListener('click', () => {
@@ -1135,13 +1439,13 @@ document.getElementById('groundCombatSubmit').addEventListener('click', () => {
   while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
-  let [attk_dice, attk_rolls, hits] = conductGroundAttack();
-  resultArea.appendChild(createResults(attk_dice, attk_rolls))
+  let [attk_dice, attk_rolls, defense, result_message] = conductGroundAttack();
+  resultArea.appendChild(createDefResult(Object.keys(attk_dice), attk_rolls, defense, attk_rolls[0] >= defense, false))
   if (JSON.stringify(attk_dice).search("null") !== -1 || JSON.stringify(attk_dice) === "{}") {
     document.getElementById('resultWords').innerHTML = 'Ground: No dice were rolled.';
     document.getElementById('result_log').innerHTML += 'Ground: No dice were rolled.<br>';
   } else {
-    document.getElementById('resultWords').innerHTML = `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }`;
-    document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}), resulting in ${hits.length === 1 ? 'one hit' : `${hits.length} hits (${hits}).` }<br>`;
+    document.getElementById('resultWords').innerHTML = `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}): ${result_message}`;
+    document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}): ${result_message}<br>`;
   }
 }, false);
