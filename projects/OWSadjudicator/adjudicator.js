@@ -139,74 +139,10 @@ function demoteOne(missiles) {
   return missiles
 }
 
-function promoteOne(missiles) {
-  let dice = Object.keys(missiles).map(x => parseInt(x));
-  let low_missile = dice[0];
-  if (missiles[low_missile] === 0) {
-    if (dice.length > 1) {
-      delete missiles[low_missile];
-      low_missile = dice[1];
-    } else if (dice.length === 1) {
-      missiles[low_missile] += 1;
-      return missiles;
-    }
-  }
-  switch (low_missile) {
-    case 20:
-      break;
-    case 16:
-      missiles.hasOwnProperty(20) ? missiles[20] += 1 : missiles[20] = 1;
-      missiles[16] === 1 ? delete missiles[16] : missiles[16] -= 1;
-      break;
-    case 12:
-      missiles.hasOwnProperty(16) ? missiles[16] += 1 : missiles[16] = 1;
-      missiles[12] === 1 ? delete missiles[12] : missiles[12] -= 1;
-      break;
-    case 10:
-      missiles.hasOwnProperty(12) ? missiles[12] += 1 : missiles[12] = 1;
-      missiles[10] === 1 ? delete missiles[10] : missiles[10] -= 1;
-      break;
-    case 8:
-      missiles.hasOwnProperty(10) ? missiles[10] += 1 : missiles[10] = 1;
-      missiles[8] === 1 ? delete missiles[8] : missiles[8] -= 1;
-      break;
-    case 6:
-      missiles.hasOwnProperty(8) ? missiles[8] += 1 : missiles[8] = 1;
-      missiles[6] === 1 ? delete missiles[6] : missiles[6] -= 1;
-      break;
-    default:
-      missiles.hasOwnProperty(6) ? missiles[6] += 1 : missiles[6] = 1;
-      missiles[4] === 1 ? delete missiles[4] : missiles[4] -= 1;
-  }
-  return missiles
-}
-
-function removeLow(missiles) {
-  let dice = Object.keys(missiles).map(x => parseInt(x));
-  let low_missile = dice[0];
-  if (missiles[low_missile] === 0) {
-    if (dice.length > 1) {
-      delete missiles[low_missile];
-      low_missile = dice[1];
-    } else if (dice.length === 1) {
-      if (missiles[low_missile] === 1) {
-        delete missiles[low_missile];
-        low_missile = dice[1]
-      } else {
-        missiles[low_missile] -= 1;
-      }
-    }
-  }
-  if (missiles[low_missile] >= 1) {
-    missiles[low_missile] -= 1;
-  }
-  return missiles
-}
-
 function allForOne(missiles, ASW = true) {
   let dice = Object.keys(missiles).map(x => parseInt(x)).reverse();
   let high_missile = dice[0];
-  if ((dice.length == 1) && (missiles[high_missile.toString()] == 1)) {
+  if ((dice.length === 1) && (missiles[high_missile.toString()] === 1)) {
     return missiles;
   }
   switch (high_missile) {
@@ -321,29 +257,34 @@ document.getElementById('generalSubmit').addEventListener('click', () => {
   const dice_to_roll = {};
   for (let user_input of ['one', 'two', 'three']) {
     let die_value = document.getElementById(`general_value_${user_input}`).value ? document.getElementById(`general_value_${user_input}`).value : '4';
-    let die_amount = document.getElementById(`gen_total_${user_input}`).value ? parseInt(document.getElementById(`gen_total_${user_input}`).value) : 1;
-    dice_to_roll[die_value] = die_amount;
+    let die_amount = document.getElementById(`gen_total_${user_input}`).value ? parseInt(document.getElementById(`gen_total_${user_input}`).value) : 0;
+    if (die_amount) {
+      if (dice_to_roll.hasOwnProperty(die_value)) {
+        dice_to_roll[die_value] += die_amount
+      } else {
+        dice_to_roll[die_value] = die_amount;
+      }
+    }
   }
-  console.log(dice_to_roll);
   const die_results = [];
   for (let [key,value] of Object.entries(dice_to_roll)) {
-    console.log(key, value);
     for (let i = 0; i < value; i++) {
-      roll_result = dieRoller(key);
-      console.log(`a d${key} was rolled and the result was ${roll_result}`)
+      let roll_result = dieRoller(key);
       die_results.push(roll_result)
     }
   }
-  console.log(die_results);
   resultArea.appendChild(createResults(dice_to_roll, die_results));
   let final_textResult = '';
   let last_index = 0;
-  for (let [key, value] of Object.entries(dice_to_roll)) {
-    final_textResult += `${value === 1 ? `One ${key}-sided die was` : `${value} ${key}-sided dice were`} rolled, with the following results: ${die_results.slice(last_index,last_index+value)}. `;
-    last_index += value;
+  if (!die_results) {
+    for (let [key, value] of Object.entries(dice_to_roll)) {
+      final_textResult += `${value === 1 ? `One ${key}-sided die was` : `${value} ${key}-sided dice were`} rolled, with the following results: ${die_results.slice(last_index,last_index+value)}. `;
+      last_index += value;
+    }
+    document.getElementById('resultWords').innerText = `General Roll: ${final_textResult}`;
+    document.getElementById('result_log').innerHTML += `General Roll: ${final_textResult}<br>`;
   }
-  document.getElementById('resultWords').innerText = `General Roll: ${final_textResult}`;
-  document.getElementById('result_log').innerHTML += `General Roll: ${final_textResult}<br>`;
+  
 }, false)
 
 // Theater and Local ISR Tool
@@ -441,7 +382,7 @@ function getStrikeInputs() {
       const weaponValue = parseInt(document.getElementById(user_input).value);
       const weaponTotal = parseInt(document.getElementById(user_input + '_total').value);
       const weaponType = document.querySelector(`input[name="${user_input}_type"]:checked`).value
-      if (weaponType == 'hyper') {
+      if (weaponType === 'hyper') {
         if (weaponTotal === 0) {
           continue;
         } else if (weaponValue in hyper_inbound) {
@@ -449,7 +390,7 @@ function getStrikeInputs() {
         } else {;
           hyper_inbound[weaponValue] = weaponTotal;
         }
-      } else if (weaponType == 'ballistic') {
+      } else if (weaponType === 'ballistic') {
         if (weaponTotal === 0) {
           continue;
         } else if (weaponValue in bm_inbound) {
@@ -555,29 +496,6 @@ function strikeDefSalvoAttack(inbound, defense) {
     }
   }
   return results;
-}
-
-function inboundAdjustments(inbound, defSalvoDelta, cap, totPromDemo) {
-  const adjInbound = {...inbound}
-  if (defSalvoDelta < 0) {
-    for (let i = defSalvoDelta; i < 0; i++) {
-      demoteOne(adjInbound)
-    }
-  }
-  for (let i = 0; i < cap; i++) {
-    demoteOne(adjInbound)
-
-  }
-  if (totPromDemo > 0) {
-    for (let i = 0; i < totPromDemo; i++) {
-      promoteAll(adjInbound)
-    }
-  } else if (totPromDemo < 0) {
-    for (let i = 0; i > totPromDemo; i--) {
-      demoteAll(adjInbound)
-    }
-  }
-  return adjInbound
 }
 
 document.getElementById('strikeSubmit').addEventListener('click', () => {
@@ -976,7 +894,7 @@ document.getElementById('torpedoSubmit').addEventListener('click', () => {
   if (ASW_attacks.length !== 0) {
     resultArea.appendChild(createResults(ASW_assets, ASW_attacks, 'ASW Attack'));
   }
-  if ((asw_screen && asw_hits.length == 0) || (!asw_screen)) {
+  if ((asw_screen && asw_hits.length === 0) || (!asw_screen)) {
     resultArea.appendChild(createResults(sub_torps, torp_rolls, 'Torpedo Results'));
   }
   if (asw_screen) {
@@ -1205,7 +1123,7 @@ function SOFDirectAction() {
     directAction[attack_die] = 1;
     message = "The attack was unsuccessful."; 
     const total_hits = checkForHits(attack_roll, target_def)
-    if (total_hits == 1) {
+    if (total_hits === 1) {
       message = "One hit was scored.";
     }
     if (total_hits > 1) {
@@ -1258,7 +1176,6 @@ function getAttackerModifiers() {
   att_modi = document.getElementById('grndCom_att_extended').checked ? att_modi -= 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_iso').checked ? att_modi -= 3 : att_modi;
   att_modi = document.getElementById('grndCom_att_assault').checked ? att_modi -= 2 : att_modi;
-  console.log(`The attacker's support is ${att_modi}.`)
   return att_modi
 }
 
@@ -1282,7 +1199,6 @@ function getDefenderModifiers() {
   def_modi = document.getElementById('grndCom_def_crowded').checked ? def_modi += 1 : def_modi;
   def_modi = document.getElementById('grndCom_def_overcrowd').checked ? def_modi += 2 : def_modi;
   def_modi = document.getElementById('grndCom_def_rsoi').checked ? def_modi += 1 : def_modi;
-  console.log(`The defender's support is ${def_modi}.`)
   return def_modi
 }
 
@@ -1319,7 +1235,7 @@ function g_cat(die_roll, red_shield) {
       if (die_roll < red_shield) {
         return "Attacker loses 1 step and all surviving attacking units take a d6 Morale Check."
       }
-      if (die_roll == red_shield) {
+      if (die_roll === red_shield) {
         return "Both sides lose 1 step and all surviving units take a d6 Morale Check."
       }
       if (die_roll > (red_shield * 4)) {
@@ -1343,7 +1259,7 @@ function groundPromoDemo() {
   const def_battalions = parseInt(document.getElementById('grndCom_def_bn_tot').value)
   let advantage = att_mod + def_mod;
   let odds = 0;
-  if (att_battalions == def_battalions) {
+  if (att_battalions === def_battalions) {
     odds = 1
   } else {
     odds = att_battalions / def_battalions
@@ -1361,7 +1277,6 @@ function groundPromoDemo() {
   } else if (odds <= 0.5) {
     advantage -= 1
   }
-  console.log(`The final support is ${advantage} in ${terrain_type} terrain.`)
   let adjustments = 0;
   if (advantage >= 7) {
     adjustments = grnd_abacus['7'][terrain_type]
@@ -1401,7 +1316,6 @@ function groundPromoDemo() {
         break;
     }
   }
-  console.log(`This accounts for a ${adjustments} adjustment on the abacus.`)
   return adjustments
 }
 
@@ -1411,7 +1325,6 @@ function conductGroundAttack() {
   const defense = document.getElementById('grndCom_def_val').value ? parseInt(document.getElementById('grndCom_def_val').value) : 0;
   const attk_val = document.getElementById('lead_attack_dice').value;
   attk_dice[attk_val] = 1
-  console.log(`The attacker's initial dice are ${JSON.stringify(attk_dice)}.`)
   if (adj > 0) {
     for (let i = 0; i < adj; i++) {
       promoteAll(attk_dice); 
@@ -1421,16 +1334,13 @@ function conductGroundAttack() {
       demoteAll(attk_dice);
     }
   }
-  console.log(`The attacker's modified dice are ${JSON.stringify(attk_dice)}.`)
   let attk_rolls = []
   for (const [key, value] of Object.entries(attk_dice)) {
     for (let i = 0; i < value; i++) {
       attk_rolls.push(dieRoller(key))
     }
   }
-  console.log(`The dice roll is ${attk_rolls}`)
   const result_message = g_cat(attk_rolls[0], defense)
-  console.log(result_message)
   return [attk_dice, attk_rolls, defense, result_message]
 }
 

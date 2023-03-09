@@ -27,6 +27,10 @@ body {
   line-height: 1.5;
 }
 
+body, main, header, footer, .tablinks {
+  background-color: #FAF9F6
+}
+
 /* <a> elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
