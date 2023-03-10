@@ -439,7 +439,6 @@ function getStrikeInputs() {
   const promos = document.getElementById('promo_input').value ? parseInt(document.getElementById('promo_input').value) : 0;
   const demos = document.getElementById('demo_input').value ? parseInt(document.getElementById('demo_input').value) : 0;
   const us_cec = document.getElementById("aew_input").checked;
-
   return {hyper_inbound, bm_inbound, cruise_inbound, bm_defense, cruise_defense, base_def, cap, promos, demos, us_cec};
 }
 
@@ -637,7 +636,7 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
           undefendedSalvoObj[x] = 1;
         }
       });
-      salvoResult = strikeDefSalvoAttack(defendedSalvoObj, total_bmDefense);
+      salvoResult = strikeDefSalvoAttack(defendedSalvoObj, bm_defense);
       if (salvoResult) {
         const salvoHeader = document.createElement('p');
         salvoHeader.innerText = 'BMD Salvo Results:';
