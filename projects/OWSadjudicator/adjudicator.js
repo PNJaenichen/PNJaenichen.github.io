@@ -276,7 +276,7 @@ document.getElementById('generalSubmit').addEventListener('click', () => {
   resultArea.appendChild(createResults(dice_to_roll, die_results));
   let final_textResult = '';
   let last_index = 0;
-  if (!die_results) {
+  if (die_results.length > 0) {
     for (let [key, value] of Object.entries(dice_to_roll)) {
       final_textResult += `${value === 1 ? `One ${key}-sided die was` : `${value} ${key}-sided dice were`} rolled, with the following results: ${die_results.slice(last_index,last_index+value)}. `;
       last_index += value;
@@ -291,17 +291,21 @@ document.getElementById('generalSubmit').addEventListener('click', () => {
 
 function getISRUserInput() {
   let ISR_assets = {};
+  let targ_assets = [];
   ISR_assets[document.getElementById('isr_value').value] = parseInt(document.getElementById('isr_value_num').value);
-  const detect_value = parseInt(document.getElementById('isr_detect').value) ? parseInt(document.getElementById('isr_detect').value) : 0;
-  const promo_demo_diff = (document.getElementById('isr_SIGINT_EMSO').checked ? 1 : 0) - (document.getElementById('isr_countermeasures').checked ? 1 : 0);
-  if (promo_demo_diff > 0) {
-    for (let i = 0; i < promo_demo_diff; i++) {
-      promoteAll(ISR_assets);
+  for (let user_input of ['one', 'two', 'three']) {
+    let targ_values = [0, 0, 0];
+    if (document.getElementById('isr_det_' + user_input).value && document.getElementById('isr_total_' + user_input).value) {
+      targ_values[0] = parseInt(document.getElementById('isr_det_' + user_input).value);
+      targ_values[1] = parseInt(document.getElementById('isr_total_' + user_input).value);
+      if (document.getElementById('isr_' + user_input + '_sigint').checked) {
+        targ_values[2] += 1
+      }
+      if (document.getElementById('isr_' + user_input + '_counter').checked) {
+        targ_values[2] -= 1
+      }
     }
-  } else if (promo_demo_diff < 0) {
-    for (let i = 0; i > promo_demo_diff; i--) {
-      demoteAll(ISR_assets);
-    }
+    targ_assets.push(targ_values)
   }
   if (document.getElementById('isr_combined').checked) {
     ISR_assets = allForOne(ISR_assets, false);
@@ -309,19 +313,39 @@ function getISRUserInput() {
   if (document.getElementById('isr_silent').checked) {
     promoteAll(ISR_assets)
   }
-  return [ISR_assets, detect_value]
+  return [ISR_assets, targ_assets]
+}
+
+function getISRblock(isr_assets, targets) {
+  let updated_assets = {...isr_assets}
+  if (targets[2] > 0) {
+    promoteAll(updated_assets)
+  } else if (targets[2] < 0) {
+    demoteAll(updated_assets)
+  }
+  let final_block_result = []
+  for (let [key, value] of Object.entries(isr_assets)) {
+    for (let i = 0; i < targets[1]; i++) {
+      let targ_adjudication = [[]]
+      for (let j = 0; j < value; j++) {
+        targ_adjudication[0].push(dieRoller(key))
+      }
+      targ_adjudication.push(targ_adjudication[0].some((roll => roll >= targets[0])))
+      final_block_result.push(targ_adjudication)
+    }
+  }
+  return [updated_assets, final_block_result, targets[0]]
 }
 
 function getISRresults() {
-  const [ISR_assets, detect_value] = getISRUserInput();
-  let ISR_rolls = [];
-  for (let [key, value] of Object.entries(ISR_assets)) {
-    for (let i = 0; i < value; i++) {
-      ISR_rolls.push(dieRoller(key))
+  const [ISR_assets, targ_assets] = getISRUserInput();
+  let ISR_blocks = [];
+  for (let target_block of targ_assets) {
+    if (target_block[1] > 0) {
+      ISR_blocks.push(getISRblock(ISR_assets, target_block))
     }
   }
-  const filtered_rolls = ISR_rolls.filter(x => x >= detect_value);
-  return [ISR_assets, ISR_rolls, filtered_rolls.length > 0]
+  return ISR_blocks
 }
 
 document.getElementById('isrSubmit').addEventListener('click', () => {
@@ -329,10 +353,54 @@ document.getElementById('isrSubmit').addEventListener('click', () => {
   while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
-  const [ISR_assets, ISR_rolls, targFound] = getISRresults();
-  const resultString = `ISR: The following ISR assets ${JSON.stringify(ISR_assets)} ${targFound ? 'found the target' : 'found nothing'} (${ISR_rolls}).<br>`;
-  document.getElementById('resultArea').appendChild(createResults(ISR_assets, ISR_rolls))
-  document.getElementById('resultWords').innerText = `ISR: The following ISR assets ${JSON.stringify(ISR_assets)} ${targFound ? 'found the target' : 'found nothing'} (${ISR_rolls}).`;
+  let block_results = getISRresults();
+  let resultString = ``;
+  block_results.forEach((value, i) => {
+    const theSearchDiv = document.createElement('div');
+    const theSearchTitle = document.createElement('div');
+    theSearchDiv.classList.add('isr-result');
+    const dieSides = Object.keys(value[0])[0]
+    const targSearchVal = value[2];
+    resultString += `Target Group ${i + 1} results: the following ISR assets ${JSON.stringify(value[0])} went looking ... `
+    theSearchTitle.innerText = `Target Group ${i + 1}`;
+    theSearchDiv.appendChild(theSearchTitle);
+    value[1].forEach((value, i) => {
+      const theTargetResult = document.createElement('div');
+      theTargetResult.classList.add('def-result');
+      const theTargetNumber = document.createElement('p');
+      theTargetNumber.classList.add('target-label');
+      theTargetNumber.innerText = i;
+      theTargetResult.appendChild(theTargetNumber);
+      value[0].forEach((value) => {
+        theTargetResult.appendChild(createDie(dieSides, value))
+      })
+      const search_result = document.createElement('div');
+      search_result.classList.add('hit_result');
+      const searchValue = document.createElement('div');
+      searchValue.classList.add('gg-screen');
+      const salvoPara = document.createElement('p');
+      salvoPara.innerText = targSearchVal;
+      searchValue.appendChild(salvoPara);
+      const searchResult = document.createElement('div');
+      searchResult.classList.add('hit_or_miss');
+      const checkX = document.createElement('p');
+      if (value[1]) {
+        searchResult.classList.add('hit');
+        checkX.innerText = `${String.fromCodePoint(10004)}`;
+      } else {
+        searchResult.classList.add('miss');
+        checkX.innerText = `${String.fromCodePoint(10006)}`;
+      }
+      searchResult.appendChild(checkX);
+      search_result.appendChild(searchValue);
+      search_result.appendChild(searchResult);
+      theTargetResult.appendChild(search_result);
+      theSearchDiv.appendChild(theTargetResult);
+      resultString += `Target ${i + 1} was ${value[1] ? `found (${value[0]}).` : `not found (${value[0]}). `}`
+      document.getElementById('resultArea').appendChild(theSearchDiv)
+    })
+  })
+  document.getElementById('resultWords').innerText = resultString;
   document.getElementById('result_log').innerHTML += resultString;
 }, false)
 
@@ -565,7 +633,7 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
         result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
       }
       total_stepsLost += finalResult.hit_count
-      const finalText = `Ballistic Results: ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}), resulting in ${finalResult.hit_count} step${finalResult.hit_count !== 1 ? 's' : ''} lost. `;
+      const finalText = `Ballistic Results: ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}). `;
       document.getElementById('resultWords').innerText += `${finalText}\n`;
       document.getElementById('result_log').innerHTML += finalText;
     } else if (total_bmDefense >= total_bm) {
@@ -677,7 +745,7 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
     }
   }
   if (total_cruise > 0) {
-    console.log(cruise_inbound, cruise_defense);
+    
     if (cap > 0) {
       for (let i = 0; i < cap; i++) {
         demoteOne(cruise_inbound);
@@ -693,6 +761,9 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
         document.getElementById('resultArea').appendChild(createDefResult(result[0], result[1], result[2], result[3]==='HIT', result[4]));
         result[3] === 'HIT' ? successfulFinal += 1 : successfulFinal += 0;
       }
+      const finalText = `Other Results: ${finalResult.results.length} inbound salvo${finalResult.results.length !== 1 ? 's' : ''} scored a total of ${successfulFinal} hit${successfulFinal !== 1 ? 's' : ''} (${finalResult.results.map(x => x[1])}). `;
+      document.getElementById('resultWords').innerText += `${finalText}\n`;
+      document.getElementById('result_log').innerHTML += finalText;
       total_stepsLost += finalResult.hit_count
     } else if (total_defense >= total_cruise) {
       for (let i = 0; i < (total_defense - total_cruise); i++) {
@@ -763,7 +834,6 @@ document.getElementById('strikeSubmit').addEventListener('click', () => {
         }
       });
       salvoResult = strikeDefSalvoAttack(defendedSalvoObj, cruise_defense);
-      console.log(salvoResult);
       if (salvoResult) {
         const salvoHeader = document.createElement('p');
         salvoHeader.innerText = 'Defensive Salvo Results:';
@@ -1086,7 +1156,7 @@ document.getElementById('airToAirSubmit').addEventListener('click', () => {
     } else if (set_array.length === 2) {
       blueDeath_result += `Blue ${set_array.join(' and ')}`
     } else {
-      blueDeath_result += `Blue ${set_array.slice(0,-1).join(', ')} and ${set_array[-1]}`
+      blueDeath_result += `Blue ${set_array.slice(0,-1).join(', ')} and ${set_array.at(-1)}`
     }
   }
   if (red_death.size > 0) {
@@ -1096,7 +1166,7 @@ document.getElementById('airToAirSubmit').addEventListener('click', () => {
     } else if (set_array.length === 2) {
       redDeath_result += `Red ${set_array.join(' and ')}`
     } else {
-      redDeath_result += `Red ${set_array.slice(0,-1).join(', ')} and ${set_array[-1]}`
+      redDeath_result += `Red ${set_array.slice(0,-1).join(', ')} and ${set_array.at(-1)}`
     }
   }
   document.getElementById('resultWords').innerHTML = `${death_result}${blueDeath_result ? blueDeath_result : ''}${(blue_death.size > 0 && red_death.size > 0) ? ' and ' : ''}${redDeath_result ? redDeath_result : ''}.<br><br>${word_result}`;
@@ -1162,18 +1232,19 @@ function getAttackerModifiers() {
   if (terrain_type !== 'clear') {
     terrain_type === 'light' ? att_modi -= 1 : att_modi -= 2;
   }
+  const sup_arr = Array.from(document.getElementsByName('att_sup')).find(radio => radio.checked);
+  if (sup_arr.value !== 'sup1') {
+    sup_arr.value === 'sup2' ? att_modi -= 1 : att_modi -= 3;
+  }
   att_modi = document.getElementById('grndCom_att_CAS').value ? att_modi += parseInt(document.getElementById('grndCom_att_CAS').value) : att_modi;
   att_modi = document.getElementById('grndCom_att_FS').value ? att_modi += parseInt(document.getElementById('grndCom_att_FS').value) : att_modi;
   att_modi = document.getElementById('grndCom_troop_quality').value ? att_modi += parseInt(document.getElementById('grndCom_troop_quality').value) : att_modi;
   att_modi = document.getElementById('grndCom_att_main_effort').checked ? att_modi += 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_SIGINTEMSO').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_tankvsinfOpen').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_SOFenabled').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_eng_enabled').checked ? att_modi += 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_disrupted').checked ? att_modi -= 1 : att_modi;
   att_modi = document.getElementById('grndCom_att_suppress').checked ? att_modi -= 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_extended').checked ? att_modi -= 1 : att_modi;
-  att_modi = document.getElementById('grndCom_att_iso').checked ? att_modi -= 3 : att_modi;
   att_modi = document.getElementById('grndCom_att_assault').checked ? att_modi -= 2 : att_modi;
   return att_modi
 }
@@ -1192,6 +1263,7 @@ function getDefenderModifiers() {
   def_modi = document.getElementById('grndCom_def_FS').value ? def_modi -= parseInt(document.getElementById('grndCom_def_FS').value) : def_modi;
   def_modi = document.getElementById('grndCom_def_atgm').value ? def_modi -= parseInt(document.getElementById('grndCom_def_atgm').value) : def_modi;
   def_modi = document.getElementById('grndCom_def_obstacles').value ? def_modi -= parseInt(document.getElementById('grndCom_def_obstacles').value) : def_modi;
+  def_modi = document.getElementById('grndCom_def_SIGINTEMSO').checked ? def_modi += 1 : def_modi;
   def_modi = document.getElementById('grndCom_def_actPassCM').checked ? def_modi -= 1 : def_modi;
   def_modi = document.getElementById('grndCom_def_unsupported').checked ? def_modi += 2 : def_modi;
   def_modi = document.getElementById('grndCom_def_suppress').checked ? def_modi += 1 : def_modi;
@@ -1224,7 +1296,7 @@ function g_cat(die_roll, red_shield) {
     case 17:
     case 18:
     case 19:
-      return "Defender loses 2 steps, survivors must retreat 2 hexes and are suppressed. The attacker may advance 1 more hex and attack again."
+      return "Defender loses 2 steps, survivors must retreat 2 hexes and are suppressed. The attacker may advance 1 additional hex and attack again."
     case 20:
       return "Defender loses 3 steps, attackers may exploit."
     default:
@@ -1241,7 +1313,7 @@ function g_cat(die_roll, red_shield) {
         return "Defender loses 3 steps, attackers may exploit."
       }
       if (die_roll > (red_shield * 3)) {
-        return "Defender loses 2 steps, survivors must retreat 2 hexes and are suppressed. The attacker may advance 1 more hex and attack again."
+        return "Defender loses 2 steps, survivors must retreat 2 hexes and are suppressed. The attacker may advance 1 additional hex and attack again."
       }
       if (die_roll > (red_shield * 2)) {
         return "Defender loses 2 steps and surviving defenders must make a d8 Morale Check."
@@ -1315,21 +1387,21 @@ function groundPromoDemo() {
         break;
     }
   }
-  return adjustments
+  return [adjustments, advantage]
 }
 
 function conductGroundAttack() {
   let attk_dice = {};
-  let adj = groundPromoDemo();
+  let [adjustments, advantage] = groundPromoDemo();
   const defense = document.getElementById('grndCom_def_val').value ? parseInt(document.getElementById('grndCom_def_val').value) : 0;
   const attk_val = document.getElementById('lead_attack_dice').value;
   attk_dice[attk_val] = 1
-  if (adj > 0) {
-    for (let i = 0; i < adj; i++) {
+  if (adjustments > 0) {
+    for (let i = 0; i < adjustments; i++) {
       promoteAll(attk_dice); 
     }
-  } else if (adj < 0) {
-    for (let i = adj; i < 0; i++) {
+  } else if (adjustments < 0) {
+    for (let i = adjustments; i < 0; i++) {
       demoteAll(attk_dice);
     }
   }
@@ -1340,7 +1412,7 @@ function conductGroundAttack() {
     }
   }
   const result_message = g_cat(attk_rolls[0], defense)
-  return [attk_dice, attk_rolls, defense, result_message]
+  return [attk_dice, attk_rolls, defense, result_message, advantage]
 }
 
 document.getElementById('groundCombatSubmit').addEventListener('click', () => {
@@ -1348,13 +1420,13 @@ document.getElementById('groundCombatSubmit').addEventListener('click', () => {
   while (resultArea.firstChild) {
     resultArea.removeChild(resultArea.firstChild);
   }
-  let [attk_dice, attk_rolls, defense, result_message] = conductGroundAttack();
+  let [attk_dice, attk_rolls, defense, result_message, advantage] = conductGroundAttack();
   resultArea.appendChild(createDefResult(Object.keys(attk_dice), attk_rolls, defense, attk_rolls[0] >= defense, false))
   if (JSON.stringify(attk_dice).search("null") !== -1 || JSON.stringify(attk_dice) === "{}") {
     document.getElementById('resultWords').innerHTML = 'Ground: No dice were rolled.';
     document.getElementById('result_log').innerHTML += 'Ground: No dice were rolled.<br>';
   } else {
-    document.getElementById('resultWords').innerHTML = `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}): ${result_message}`;
-    document.getElementById('result_log').innerHTML += `Ground: The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}): ${result_message}<br>`;
+    document.getElementById('resultWords').innerHTML = `Ground: (Support Level: ${advantage}) The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}): ${result_message}`;
+    document.getElementById('result_log').innerHTML += `Ground: (Support Level: ${advantage}) The following dice ${JSON.stringify(attk_dice)} were rolled (${attk_rolls}): ${result_message}<br>`;
   }
 }, false);

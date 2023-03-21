@@ -58,7 +58,7 @@
                   <option value=12>D12</option>
                   <option value=16>D16</option>
                   <option value=20>D20</option>
-                </select>
+                </select> 
                 <label id="gen_total_label" for="gen_total_two">Number of Dice:</label>
                 <input id="gen_total_two" type="number" min=0 max=40>
                 <br>
@@ -100,13 +100,33 @@
                 <label id='isr_value_num_label' for='isr_value_num'># of Assets:</label>
                 <input id="isr_value_num" type="number" min=0 max=40>
                 <br>
-                <label id="isr_detect_label" for="isr_detect">Detection Value</label>
-                <input id="isr_detect" type="number" min=0 max=20>
-                <br>
-                <label><input id="isr_SIGINT_EMSO" type="checkbox">SIGINT/EMSO</label>
-                <label><input id="isr_countermeasures" type="checkbox">Active/Passive CMs</label>
                 <label><input id="isr_combined" type="checkbox">Combine Assets</label>
                 <label><input id="isr_silent" type="checkbox">Submarines Only: Running Silent</label>
+              </fieldset>
+              <fieldset>
+                <p>Group 1</p>
+                <label id="isr_det_one_label" for="isr_det_one">Detection Value</label>
+                <input id="isr_det_one" type="number" min=1 max=10>
+                <label id="isr_total_one_label" for="isr_total_one"># of Targets</label>
+                <input id="isr_total_one" type="number" min=0 max=40>
+                <label><input id="isr_one_sigint" type="checkbox">SIGINT/EMSO</label>
+                <label><input id="isr_one_counter" type="checkbox">Active/Passive CMs</label>
+                <br>
+                <p>Group 2</p>
+                <label id="isr_det_two_label" for="isr_det_two">Detection Value</label>
+                <input id="isr_det_two" type="number" min=1 max=10>
+                <label id="isr_total_two_label" for="isr_total_two"># of Targets</label>
+                <input id="isr_total_two" type="number" min=0 max=40>
+                <label><input id="isr_two_sigint" type="checkbox">SIGINT/EMSO</label>
+                <label><input id="isr_two_counter" type="checkbox">Active/Passive CMs</label>
+                <br>
+                <p>Group 3</p>
+                <label id="isr_det_three_label" for="isr_det_three">Detection Value</label>
+                <input id="isr_det_three" type="number" min=1 max=10>
+                <label id="isr_total_three_label" for="isr_total_three"># of Targets</label>
+                <input id="isr_total_three" type="number" min=0 max=40>
+                <label><input id="isr_three_sigint" type="checkbox">SIGINT/EMSO</label>
+                <label><input id="isr_three_counter" type="checkbox">Active/Passive CMs</label>
               </fieldset>
             <button id="isrSubmit" type="button">Adjudicate</button>
             </form>
@@ -771,17 +791,20 @@
                     <label id="grndCom_troop_quality_label" for="grndCom_troop_quality">Troop Quality:</label>
                     <input id="grndCom_troop_quality" type="number"  min=-40 max=40>
                   </div>
+                  <div>
+                    <label><input id="grndCom_att_inSupp" type="radio" name="att_sup" value="sup1" checked>In Supply</label>
+                    <label><input id="grndCom_att_extended" type="radio" name="att_sup" value="sup2">Extended Supply</label>
+                    <label><input id="grndCom_att_outofsupply" type="radio" name="att_sup" value="sup3">Out of Supply</label>
+                  </div>
                 </div>
                 <ul>
                   <li><label><input id="grndCom_att_main_effort" type="checkbox">Main Effort</label></li>
-                  <li><label><input id="grndCom_att_SIGINTEMSO" type="checkbox">SIGINT/EMSO</label></li>
-                  <li><label><input id="grndCom_att_tankvsinfOpen" type="checkbox">Tank vs Lt Inf in the Open</label></li>
+                  
+                  <li><label><input id="grndCom_att_tankvsinfOpen" type="checkbox">Tank attacking Lt Inf in the Open</label></li>
                   <li><label><input id="grndCom_att_SOFenabled" type="checkbox">SOF Enabled</label></li>
                   <li><label><input id="grndCom_eng_enabled" type="checkbox">Engineer vs. Obstacle</label></li>
-                  <li><label><input id="grndCom_att_disrupted" type="checkbox">Disrupted C2</label></li>
-                  <li><label><input id="grndCom_att_suppress" type="checkbox">Suppressed</label></li>
-                  <li><label><input id="grndCom_att_extended" type="checkbox">Extended Supply</label></li>
-                  <li><label><input id="grndCom_att_iso" type="checkbox">Isolated (out of supply)</label></li>
+                  <li><label><input id="grndCom_att_disrupted" type="checkbox">Disrupted C2 or SIGINT/EMSO (on Attacker)</label></li>
+                  <li><label><input id="grndCom_att_suppress" type="checkbox">Suppressed (on Attacker)</label></li>
                   <li><label><input id="grndCom_att_assault" type="checkbox">River / Abn / Amphib Assault</label></li>
                 </ul>
               </fieldset>
@@ -816,10 +839,10 @@
                   <label><input id="grndCom_def_outofsupply" type="radio" name="def_sup" value="sup3">Out of Supply</label>
                 </div>
                 <ul>
-                  <li><label><input id="grndCom_def_actPassCM" type="checkbox">Active/Passive CM</label></li>
-                  
-                  <li><label><input id="grndCom_def_unsupported" type="checkbox">Unsupported Artillery/AD/CSS Unit</label></li>
-                  <li><label><input id="grndCom_def_suppress" type="checkbox">Suppressed</label></li>
+                  <li><label><input id="grndCom_def_actPassCM" type="checkbox">Active/Passive CM (on Defender)</label></li>
+                  <li><label><input id="grndCom_def_SIGINTEMSO" type="checkbox">SIGINT/EMSO (on Defender)</label></li>
+                  <li><label><input id="grndCom_def_unsupported" type="checkbox">Defender is unsupported Artillery/AD/CSS Unit</label></li>
+                  <li><label><input id="grndCom_def_suppress" type="checkbox">Suppressed (on Defender)</label></li>
                   <li><label><input id="grndCom_def_crowded" type="checkbox">Crowded Attack</label></li>
                   <li><label><input id="grndCom_def_overcrowd" type="checkbox">Over-Crowded Attack</label></li>
                   <li><label><input id="grndCom_def_rsoi" type="checkbox">In RSO&I</label></li>

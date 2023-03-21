@@ -291,9 +291,23 @@ footer {
   border-radius: 50% 50% 50% 50% / 12% 12% 88% 88%;
 }
 
+.gg-screen {
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 3px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
 .def-result {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   width: max-content;
 }
 
@@ -340,4 +354,15 @@ footer {
 
 ul li {
   list-style: none;
+}
+
+.target-label {
+  height: 100%;
+  width: 25px;
+  text-align: center;
+  line-height: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 3px;
 }
