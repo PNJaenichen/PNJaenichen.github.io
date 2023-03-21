@@ -369,7 +369,7 @@ document.getElementById('isrSubmit').addEventListener('click', () => {
       theTargetResult.classList.add('def-result');
       const theTargetNumber = document.createElement('p');
       theTargetNumber.classList.add('target-label');
-      theTargetNumber.innerText = i;
+      theTargetNumber.innerText = i + 1;
       theTargetResult.appendChild(theTargetNumber);
       value[0].forEach((value) => {
         theTargetResult.appendChild(createDie(dieSides, value))
